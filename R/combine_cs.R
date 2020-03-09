@@ -11,10 +11,10 @@
 combine_cs <- function(cs1, cs2, data, na.rm = FALSE) {
   cs1 <- data %>% dplyr::select(!!dplyr::enquo(cs1))
   cs2 <- data %>% dplyr::select(!!dplyr::enquo(cs2))
-  data <- data %>% as_tibble()
+  data <- data %>% tibble::as_tibble()
 
   data %>%
-    mutate(cs1_mean = rowMeans(cs1, na.rm = na.rm),
+    dplyr::mutate(cs1_mean = rowMeans(cs1, na.rm = na.rm),
            cs2_mean = rowMeans(cs2, na.rm = na.rm)) -> res
 
   return(res)
