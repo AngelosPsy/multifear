@@ -15,7 +15,7 @@ combine_cs <- function(cs1, cs2, data, na.rm = FALSE) {
 
   data %>%
     dplyr::mutate(cs1_mean = rowMeans(cs1, na.rm = na.rm),
-           cs2_mean = rowMeans(cs2, na.rm = na.rm)) -> res
+                  cs2_mean = rowMeans(cs2, na.rm = na.rm)) -> res
 
   return(res)
 }
