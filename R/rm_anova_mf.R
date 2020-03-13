@@ -78,16 +78,33 @@ rm_anova_mf <- function(cs1,
 
   # You need to have an aov object to feed in glance
   if (time && (!is.null(group))) {
-    tmpANOVA <- ez::ezANOVA(data = data,dv = resp,wid = subj,within = .(cs, time),
-        between = group,type = 3,return_aov = TRUE
+    tmpANOVA <-
+      ez::ezANOVA(
+        data = data,
+        dv = resp,
+        wid = subj,
+        within = .(cs, time),
+        between = group,
+        type = 3,
+        return_aov = TRUE
       )$aov
     res <-
       purrr::map_df(tmpANOVA, .f = broom::tidy) %>% filter(term %in% c("cs", "time", "cs:time")) %>% select(term, statistic)
 
-  } else if(time)  {
-    tmpANOVA <- ez::ezANOVA(data = data,dv = resp,wid = subj,within = .(cs),
-        between = NULL, type = 3,return_aov = TRUE)$aov
-    res <- purrr::map_df(tmpANOVA, .f = broom::tidy) %>% filter(term %in% c("cs")) %>%select(term, statistic)
+  } else if (time)  {
+    tmpANOVA <-
+      ez::ezANOVA(
+        data = data,
+        dv = resp,
+        wid = subj,
+        within = .(cs),
+        between = NULL,
+        type = 3,
+        return_aov = TRUE
+      )$aov
+    res <-
+      purrr::map_df(tmpANOVA, .f = broom::tidy) %>% filter(term %in% c("cs")) %>%
+      select(term, statistic)
   }
 
   return(res)
