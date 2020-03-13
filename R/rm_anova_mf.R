@@ -11,7 +11,7 @@
 #' @param group name of the group variable, if it is present (default to NULL)
 #' @param phase Different tests will be run for different phases. That is why
 #' the phase needs to be specified here. Possible values are \code{acquisition},
-#' or \code{acq}, \code{extnction}, or \code{extinction}. See Details for more
+#' or \code{acq}, \code{extinction}, or \code{extinction}. See Details for more
 #' information.
 #' @return A basic function for running repeated measures ANOVAs
 #' @details In case the \code{time} argument is set to true, the function will
@@ -19,14 +19,15 @@
 #' \code{cs1} and \code{cs2} corrrespond to ascending time points (e.g., cs1
 #' trial 1, cs1 trial 2 ... cs1 trial \code{n}). If this is not the case, the
 #' results are not to be trusted.
+#' @importFrom dplyr select
 #' @export
 
 rm_anova_mf <- function(cs1,
                         cs2,
-                        time = TRUE,
                         subj,
                         data,
-                        group = NULL,
+                        time = TRUE,
+                        group = FALSE,
                         phase = "acquisition") {
   cs1 <-
     data %>% dplyr::select(!!dplyr::enquo(cs1)) %>% tibble::as_tibble()
@@ -35,17 +36,20 @@ rm_anova_mf <- function(cs1,
   subj  <-
     data %>% dplyr::select(!!dplyr::enquo(subj)) %>% tibble::as_tibble()
 
-  if (!is.null(group)) {
-    group  <-
-      data %>% dplyr::select(!!dplyr::enquo(group)) %>% tibble::as_tibble()
-  }
-
-
   # Renaming objects to make life a bit easier
   cs1  <- cs1 %>% dplyr::select(cs1_ = dplyr::everything())
   cs2  <- cs2 %>% dplyr::select(cs2_ = dplyr::everything())
   subj <- subj %>% dplyr::select(subj = dplyr::everything())
-  data <- dplyr::bind_cols(subj, cs1, cs2)
+  if (is.null(group)) {
+    group_new <-
+      data %>% mutate(group = rep("NULL", nrow(data))) %>% select(group)
+    group <- NULL
+  } else{
+    group_new <- data %>% dplyr::select(!!dplyr::enquo(group))
+  }
+
+  print(group)
+  data <- dplyr::bind_cols(subj, cs1, cs2, group_new)
 
   # In case time is selected, create a time object
   if (time) {
@@ -59,7 +63,7 @@ rm_anova_mf <- function(cs1,
     }
     data %>%
       reshape2::melt(
-        id.var = "subj",
+        id.var = c("subj", "group"),
         variable.name = "var_old",
         value.name = "resp",
         factorsAsStrings = TRUE
@@ -67,24 +71,24 @@ rm_anova_mf <- function(cs1,
       dplyr::mutate(
         cs = as.factor(stringr::str_sub(var_old, 1, 3)),
         time = as.factor(sub(".*_", "", .$var_old)),
-        subj = as.factor(subj)
+        subj = as.factor(subj),
+        group = as.factor(group)
       ) -> data # Better than stringr
     }
 
   # You need to have an aov object to feed in glance
-  tmpANOVA <-
-    ez::ezANOVA(
-      data = data,
-      dv = resp,
-      wid = subj,
-      within = .(cs, time),
-      #between = group,
-      type = 3,
-      return_aov = TRUE
-    )$aov
+  if (time && (!is.null(group))) {
+    tmpANOVA <- ez::ezANOVA(data = data,dv = resp,wid = subj,within = .(cs, time),
+        between = group,type = 3,return_aov = TRUE
+      )$aov
+    res <-
+      purrr::map_df(tmpANOVA, .f = broom::tidy) %>% filter(term %in% c("cs", "time", "cs:time")) %>% select(term, statistic)
 
-  res <-
-    purrr::map_df(tmpANOVA, .f = broom::tidy) %>% filter(term %in% c("cs", "time", "cs:time")) %>% select(term, statistic)
+  } else if(time)  {
+    tmpANOVA <- ez::ezANOVA(data = data,dv = resp,wid = subj,within = .(cs),
+        between = NULL, type = 3,return_aov = TRUE)$aov
+    res <- purrr::map_df(tmpANOVA, .f = broom::tidy) %>% filter(term %in% c("cs")) %>%select(term, statistic)
+  }
 
   return(res)
   }
