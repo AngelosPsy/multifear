@@ -7,7 +7,6 @@
 #' @param na.rm Should NAs be removed? Default to FALSE.
 #' @importFrom dplyr %>%
 #' @export
-
 combine_cs <- function(cs1, cs2, data, na.rm = FALSE) {
   cs1 <- data %>% dplyr::select(!!dplyr::enquo(cs1))
   cs2 <- data %>% dplyr::select(!!dplyr::enquo(cs2))

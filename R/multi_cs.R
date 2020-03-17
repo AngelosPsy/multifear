@@ -3,10 +3,11 @@
 #' @description Basic function for conducting multi-verse analyses of conditioning
 #' data
 #' @inheritParams rm_anova_mf
-#' @param na.rm Should NAs be removed? Default set the \code{FALSE}.
+#' @param na.rm Should NAs be removed? Default set the \code{FALSE}
+#' @param print_output Whether to print the output or not. Default set to \code{TRUE}
 #' @export
 
-multi_cs <- function(cs1, cs2, data, subj, group = NULL, phase = "acquisition", na.rm = FALSE) {
+multi_cs <- function(cs1, cs2, data, subj, group = NULL, phase = "acquisition", na.rm = FALSE, print_output = TRUE) {
 
   # Prepare data for multiple analyses
   cs1  <- data %>% dplyr::select(!!dplyr::enquo(cs1)) %>% tibble::as_tibble()
@@ -30,5 +31,10 @@ multi_cs <- function(cs1, cs2, data, subj, group = NULL, phase = "acquisition", 
 
   res <- list(csc = csc, ttestFULL = ttestFULL)
 
-  return(res)
+  if (print_output) {
+    return(res)
+  } else{
+    invisible(res)
+  }
+
 }

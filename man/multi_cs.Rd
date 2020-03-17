@@ -11,7 +11,8 @@ multi_cs(
   subj,
   group = NULL,
   phase = "acquisition",
-  na.rm = FALSE
+  na.rm = FALSE,
+  print_output = TRUE
 )
 }
 \arguments{
@@ -31,7 +32,9 @@ the phase needs to be specified here. Possible values are \code{acquisition},
 or \code{acq}, \code{extinction}, or \code{extinction}. See Details for more
 information.}
 
-\item{na.rm}{Should NAs be removed? Default set the \code{FALSE}.}
+\item{na.rm}{Should NAs be removed? Default set the \code{FALSE}}
+
+\item{print_output}{Whether to print the output or not. Default set to \code{TRUE}}
 }
 \description{
 Basic function for conducting multi-verse analyses of conditioning
