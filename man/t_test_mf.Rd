@@ -25,5 +25,5 @@ a basic function for running a t-test within the \code{multifear}
 package
 }
 \description{
-Basic t.test function for running a t-test
+Basic function for running a t-test
 }
