@@ -20,6 +20,7 @@
 #' trial 1, cs1 trial 2 ... cs1 trial \code{n}). If this is not the case, the
 #' results are not to be trusted.
 #' @importFrom dplyr select
+#' @importFrom dplyr filter
 #' @export
 
 rm_anova_mf <- function(cs1,
@@ -42,7 +43,7 @@ rm_anova_mf <- function(cs1,
   subj <- subj %>% dplyr::select(subj = dplyr::everything())
   if (is.null(group)) {
     group_new <-
-      data %>% mutate(group = rep("NULL", nrow(data))) %>% select(group)
+      data %>% dplyr::mutate(group = rep("NULL", nrow(data))) %>% dplyr::select(group)
     group <- NULL
   } else{
     group_new <- data %>% dplyr::select(!!dplyr::enquo(group))
@@ -89,7 +90,7 @@ rm_anova_mf <- function(cs1,
         return_aov = TRUE
       )$aov
     res <-
-      purrr::map_df(tmpANOVA, .f = broom::tidy) %>% filter(term %in% c("cs", "time", "cs:time")) %>% select(term, statistic)
+      purrr::map_df(tmpANOVA, .f = broom::tidy) %>% dplyr::filter(term %in% c("cs", "time", "cs:time")) %>% dplyr::select(term, statistic)
 
   } else if (time)  {
     tmpANOVA <-
@@ -103,8 +104,8 @@ rm_anova_mf <- function(cs1,
         return_aov = TRUE
       )$aov
     res <-
-      purrr::map_df(tmpANOVA, .f = broom::tidy) %>% filter(term %in% c("cs")) %>%
-      select(term, statistic)
+      purrr::map_df(tmpANOVA, .f = broom::tidy) %>% dplyr::filter(term %in% c("cs")) %>%
+      dplyr::select(term, statistic)
   }
 
   return(res)
