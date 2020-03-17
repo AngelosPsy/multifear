@@ -22,11 +22,10 @@
 #' @importFrom dplyr select
 #' @importFrom dplyr filter
 #' @export
-
 rm_anova_mf <- function(cs1,
                         cs2,
-                        subj,
                         data,
+                        subj,
                         time = TRUE,
                         group = FALSE,
                         phase = "acquisition") {
