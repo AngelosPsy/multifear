@@ -19,6 +19,8 @@
 #' \code{cs1} and \code{cs2} corrrespond to ascending time points (e.g., cs1
 #' trial 1, cs1 trial 2 ... cs1 trial \code{n}). If this is not the case, the
 #' results are not to be trusted.
+#'
+#' The function uses the \code{ez::ezANOVA} function. The function gives by default a warning regarding the collapsing of factors. This function here suppresses this warning but the user should be aware of it.
 #' @importFrom dplyr select
 #' @importFrom dplyr filter
 #' @export
@@ -29,11 +31,12 @@ rm_anova_mf <- function(cs1,
                         time = TRUE,
                         group = NULL,
                         phase = "acquisition") {
-
   cs1 <-
     data %>% dplyr::select(all_of(!!dplyr::enquo(cs1))) %>% tibble::as_tibble()
-  cs2  <- data %>% dplyr::select(all_of(!!dplyr::enquo(cs2))) %>% tibble::as_tibble()
-  subj <- data %>% dplyr::select(all_of(!!dplyr::enquo(subj))) %>% tibble::as_tibble()
+  cs2  <-
+    data %>% dplyr::select(all_of(!!dplyr::enquo(cs2))) %>% tibble::as_tibble()
+  subj <-
+    data %>% dplyr::select(all_of(!!dplyr::enquo(subj))) %>% tibble::as_tibble()
 
   # Renaming objects to make life a bit easier
   cs1  <- cs1 %>% dplyr::select(cs1_ = dplyr::everything())
@@ -63,51 +66,91 @@ rm_anova_mf <- function(cs1,
         now."
       )
     }
-    data %>%
-      reshape2::melt(
-        id.var = c("subj", "group"),
-        variable.name = "var_old",
-        value.name = "resp",
-        factorsAsStrings = TRUE
-      ) %>% # Until pivot_longer gets better
-      dplyr::mutate(
-        cs = as.factor(stringr::str_sub(var_old, 1, 3)),
-        time = as.factor(sub(".*_", "", .$var_old)),
-        subj = as.factor(subj),
-        group = as.factor(group)
-      ) -> data # Better than stringr
     }
+  data %>%
+    reshape2::melt(
+      id.var = c("subj", "group"),
+      variable.name = "var_old",
+      value.name = "resp",
+      factorsAsStrings = TRUE
+    ) %>% # Until pivot_longer gets better
+    dplyr::mutate(
+      cs = as.factor(stringr::str_sub(var_old, 1, 3)),
+      time = as.factor(sub(".*_", "", .$var_old)),
+      subj = as.factor(subj),
+      group = as.factor(group)
+    ) -> data # Better than stringr
+  #}
 
   # You need to have an aov object to feed in glance
   if (time && (!is.null(group))) {
     tmpANOVA <-
-      suppressWarnings(ez::ezANOVA(
-        data = data,
-        dv = resp,
-        wid = subj,
-        within = .(cs, time),
-        between = group,
-        type = 3,
-        return_aov = TRUE
-      )$aov)
-    res <-
-      purrr::map_df(tmpANOVA, .f = broom::tidy) %>% dplyr::filter(term %in% c("cs", "time", "cs:time")) %>% dplyr::select(term, statistic)
+      suppressWarnings(
+        ez::ezANOVA(
+          data = data,
+          dv = resp,
+          wid = subj,
+          within = .(cs, time),
+          between = group,
+          type = 3,
+          return_aov = TRUE
+        )$aov
+      )
+    res <- purrr::map_df(tmpANOVA, .f = broom::tidy) %>%
+      dplyr::filter(term %in% c("cs", "time", "cs:time")) %>%
+      dplyr::select(term, statistic)
 
-  } else if (time)  {
+  } else if (!time && (is.null(group)))  {
     tmpANOVA <-
-      suppressWarnings(ez::ezANOVA(
-        data = data,
-        dv = resp,
-        wid = subj,
-        within = .(cs),
-        between = NULL,
-        type = 3,
-        return_aov = TRUE
-      )$aov)
+      suppressWarnings(
+        ez::ezANOVA(
+          data = data,
+          dv = resp,
+          wid = subj,
+          within = .(cs),
+          between = NULL,
+          type = 3,
+          return_aov = TRUE
+        )$aov
+      )
+    res <- purrr::map_df(tmpANOVA, .f = broom::tidy) %>%
+      dplyr::filter(term %in% c("cs")) %>%
+      dplyr::select(term, statistic)
+  } else if (time  && is.null(group)) {
+    tmpANOVA <-
+      suppressWarnings(
+        ez::ezANOVA(
+          data = data,
+          dv = resp,
+          wid = subj,
+          within = .(cs, time),
+          between = NULL,
+          type = 3,
+          return_aov = TRUE
+        )$aov
+      )
+    res <- purrr::map_df(tmpANOVA, .f = broom::tidy) %>%
+      dplyr::filter(term %in% c("cs", "time", "cs:time")) %>%
+      dplyr::select(term, statistic)
+  } else if (!time && is.null(group)) {
+    tmpANOVA <-
+      suppressWarnings(
+        ez::ezANOVA(
+          data = data,
+          dv = resp,
+          wid = subj,
+          within = .(cs),
+          between = NULL,
+          type = 3,
+          return_aov = TRUE
+        )$aov
+      )
+    res$term <- NA
     res <-
-      purrr::map_df(tmpANOVA, .f = broom::tidy) %>% dplyr::filter(term %in% c("cs")) %>%
+      purrr::map_df(tmpANOVA, .f = broom::tidy) %>%
+      dplyr::filter(term %in% c("cs")) %>%
       dplyr::select(term, statistic)
   }
 
   return(res)
-  }
+    }
