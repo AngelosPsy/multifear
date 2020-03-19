@@ -41,7 +41,8 @@ t_test_mf <-
       ttl <- list(tte, ttg)
     }
 
-    res <- purrr::map_df(ttl, .f = broom::tidy)
+    res <- purrr::map_df(ttl, .f = broom::tidy) %>%
+      dplyr::select(method, p.value)
 
     return(res)
   }

@@ -98,7 +98,7 @@ rm_anova_mf <- function(cs1,
       )
     res <- purrr::map_df(tmpANOVA, .f = broom::tidy) %>%
       dplyr::filter(term %in% c("cs", "time", "cs:time")) %>%
-      dplyr::select(term, statistic)
+      dplyr::select(term, p.value)
 
   } else if (!time && (is.null(group)))  {
     tmpANOVA <-
@@ -115,7 +115,7 @@ rm_anova_mf <- function(cs1,
       )
     res <- purrr::map_df(tmpANOVA, .f = broom::tidy) %>%
       dplyr::filter(term %in% c("cs")) %>%
-      dplyr::select(term, statistic)
+      dplyr::select(term, p.value)
   } else if (time  && is.null(group)) {
     tmpANOVA <-
       suppressWarnings(
@@ -131,7 +131,7 @@ rm_anova_mf <- function(cs1,
       )
     res <- purrr::map_df(tmpANOVA, .f = broom::tidy) %>%
       dplyr::filter(term %in% c("cs", "time", "cs:time")) %>%
-      dplyr::select(term, statistic)
+      dplyr::select(term, p.value)
   } else if (!time && is.null(group)) {
     tmpANOVA <-
       suppressWarnings(
@@ -149,7 +149,7 @@ rm_anova_mf <- function(cs1,
     res <-
       purrr::map_df(tmpANOVA, .f = broom::tidy) %>%
       dplyr::filter(term %in% c("cs")) %>%
-      dplyr::select(term, statistic)
+      dplyr::select(term, p.value)
   }
 
   return(res)
