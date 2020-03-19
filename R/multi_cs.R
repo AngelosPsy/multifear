@@ -5,6 +5,8 @@
 #' @inheritParams rm_anova_mf
 #' @param na.rm Should NAs be removed? Default set the \code{FALSE}
 #' @param print_output Whether to print the output or not. Default set to \code{TRUE}
+#' @details In case of higher order interaction, only the highest order
+#' effect is shown
 #' @export
 
 multi_cs <-
