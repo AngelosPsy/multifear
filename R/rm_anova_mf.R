@@ -81,7 +81,7 @@ rm_anova_mf <- function(cs1,
   # You need to have an aov object to feed in glance
   if (time && (!is.null(group))) {
     tmpANOVA <-
-      ez::ezANOVA(
+      suppressWarnings(ez::ezANOVA(
         data = data,
         dv = resp,
         wid = subj,
@@ -89,13 +89,13 @@ rm_anova_mf <- function(cs1,
         between = group,
         type = 3,
         return_aov = TRUE
-      )$aov
+      )$aov)
     res <-
       purrr::map_df(tmpANOVA, .f = broom::tidy) %>% dplyr::filter(term %in% c("cs", "time", "cs:time")) %>% dplyr::select(term, statistic)
 
   } else if (time)  {
     tmpANOVA <-
-      ez::ezANOVA(
+      suppressWarnings(ez::ezANOVA(
         data = data,
         dv = resp,
         wid = subj,
@@ -103,7 +103,7 @@ rm_anova_mf <- function(cs1,
         between = NULL,
         type = 3,
         return_aov = TRUE
-      )$aov
+      )$aov)
     res <-
       purrr::map_df(tmpANOVA, .f = broom::tidy) %>% dplyr::filter(term %in% c("cs")) %>%
       dplyr::select(term, statistic)
