@@ -27,28 +27,30 @@ rm_anova_mf <- function(cs1,
                         data,
                         subj,
                         time = TRUE,
-                        group = FALSE,
+                        group = NULL,
                         phase = "acquisition") {
+
   cs1 <-
-    data %>% dplyr::select(!!dplyr::enquo(cs1)) %>% tibble::as_tibble()
-  cs2 <-
-    data %>% dplyr::select(!!dplyr::enquo(cs2)) %>% tibble::as_tibble()
-  subj  <-
-    data %>% dplyr::select(!!dplyr::enquo(subj)) %>% tibble::as_tibble()
+    data %>% dplyr::select(all_of(!!dplyr::enquo(cs1))) %>% tibble::as_tibble()
+  cs2  <- data %>% dplyr::select(all_of(!!dplyr::enquo(cs2))) %>% tibble::as_tibble()
+  subj <- data %>% dplyr::select(all_of(!!dplyr::enquo(subj))) %>% tibble::as_tibble()
 
   # Renaming objects to make life a bit easier
   cs1  <- cs1 %>% dplyr::select(cs1_ = dplyr::everything())
   cs2  <- cs2 %>% dplyr::select(cs2_ = dplyr::everything())
   subj <- subj %>% dplyr::select(subj = dplyr::everything())
+
   if (is.null(group)) {
     group_new <-
-      data %>% dplyr::mutate(group = rep("NULL", nrow(data))) %>% dplyr::select(group)
+      data %>%
+      dplyr::mutate(group = rep("NULL", nrow(data))) %>%
+      dplyr::select(group)
     group <- NULL
   } else{
-    group_new <- data %>% dplyr::select(!!dplyr::enquo(group))
+    group_new <- data %>%
+      dplyr::select(tidyselect::all_of(!!dplyr::enquo(group)))
   }
 
-  print(group)
   data <- dplyr::bind_cols(subj, cs1, cs2, group_new)
 
   # In case time is selected, create a time object

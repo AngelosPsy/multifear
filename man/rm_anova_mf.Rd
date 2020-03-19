@@ -10,7 +10,7 @@ rm_anova_mf(
   data,
   subj,
   time = TRUE,
-  group = FALSE,
+  group = NULL,
   phase = "acquisition"
 )
 }

@@ -10,19 +10,54 @@
 multi_cs <- function(cs1, cs2, data, subj, group = NULL, phase = "acquisition", na.rm = FALSE, print_output = TRUE) {
 
   # Prepare data for multiple analyses
-  cs1  <- data %>% dplyr::select(!!dplyr::enquo(cs1)) %>% tibble::as_tibble()
-  cs2  <- data %>% dplyr::select(!!dplyr::enquo(cs2)) %>% tibble::as_tibble()
-  subj <- data %>% dplyr::select(!!dplyr::enquo(subj)) %>% tibble::as_tibble()
+  cs1  <- data %>% dplyr::select(all_of(!!dplyr::enquo(cs1))) %>% tibble::as_tibble()
+  cs2  <- data %>% dplyr::select(all_of(!!dplyr::enquo(cs2))) %>% tibble::as_tibble()
+  subj <- data %>% dplyr::select(all_of(!!dplyr::enquo(subj))) %>% tibble::as_tibble()
 
   # Renaming objects to make life a bit easier
   cs1  <- cs1 %>% dplyr::select(cs1_ = dplyr::everything())
   cs2  <- cs2 %>% dplyr::select(cs2_ = dplyr::everything())
   subj <- subj %>% dplyr::select(subj = dplyr::everything())
-  data <- dplyr::bind_cols(subj, cs1, cs2)
+
+  # What happens in case of groups
+  if (is.null(group)) {
+    group_new <-
+      data %>%
+      dplyr::mutate(group = rep("NULL", nrow(data))) %>%
+      dplyr::select(group)
+    group <- NULL
+  } else{
+    group_new <- data %>%
+      dplyr::select(tidyselect::all_of(!!dplyr::enquo(group)))
+  }
+
+  data <- dplyr::bind_cols(subj, cs1, cs2, group_new)
 
   # Perform ANOVA
-  anovaFULL <- multifear::rm_anova_mf(cs1 = colnames(cs1), cs2 = colnames(cs2), time = TRUE,
-              subj = subj, data, group = group, phase = phase)
+  if(is.null(group)){
+  anovaFULL <-
+    multifear::rm_anova_mf(
+      cs1 = colnames(cs1),
+      cs2 = colnames(cs2),
+      time = TRUE,
+      subj = colnames(subj),
+      data = data,
+      group = NULL,
+      phase = phase
+    )
+  }
+  else{
+    anovaFULL <-
+      multifear::rm_anova_mf(
+        cs1 = colnames(cs1),
+        cs2 = colnames(cs2),
+        time = TRUE,
+        subj = colnames(subj),
+        data = data,
+        group = group,
+        phase = phase
+      )
+  }
 
   # Perform t-test
   # First combine css
