@@ -42,7 +42,21 @@ t_test_mf <-
     }
 
     res <- purrr::map_df(ttl, .f = broom::tidy) %>%
-      dplyr::select(method, estimate, statistic, conf.low, conf.high)
-
+      dplyr::mutate(
+        method = paste("t-test"),
+        x = "cs",
+        y = "cr",
+        model = "t-test",
+        controls = NA
+      ) %>%
+      dplyr::select(x,
+                    y,
+                    model,
+                    controls,
+                    method,
+                    estimate,
+                    statistic,
+                    conf.low,
+                    conf.high)
     return(res)
   }

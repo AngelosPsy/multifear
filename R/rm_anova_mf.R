@@ -129,11 +129,23 @@ rm_anova_mf <- function(cs1,
     dplyr::rename_all(dplyr::funs(stringr::str_replace(., "term", "method"))) %>%
     dplyr::mutate(
       method = paste("rep ANOVA", selected_term),
+      x = selected_term,
+      y = "cs",
+      model = "rep ANOVA",
+      controls = NA,
       estimate = NA,
       conf.low = NA,
       conf.high = NA
     ) %>%
-    dplyr::select(method, estimate, statistic, conf.low, conf.high)
+    dplyr::select(x,
+                  y,
+                  model,
+                  controls,
+                  method,
+                  estimate,
+                  statistic,
+                  conf.low,
+                  conf.high)
 
   return(res)
 
