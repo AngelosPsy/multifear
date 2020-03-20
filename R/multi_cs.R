@@ -100,12 +100,22 @@ multi_cs <-
     ttestFULL <-
       multifear::t_test_mf(cs1_mean, cs2_mean, csc, paired = TRUE, phase = phase)
 
-    res <- list(
-      `Collapsed data` = csc,
+    combRes <- list(
+      #`Collapsed data` = csc,
       `t-test full` = ttestFULL,
       `repeated measures ANOVA with time` = anovaTIME,
       `repeated measures ANOVA without time` = anovaNOTIME
     )
+
+    # Collapse results into one data frame
+    res <- purrr::map_df(combRes, rbind)
+
+    class(res) <- c("multi_fear", class(res))
+    attr(res, "collapsed data") <- csc
+    attr(res, "t-test full") <- ttestFULL
+    attr(res, "repeated measures ANOVA with time")  <- anovaTIME
+    attr(res, "repeated measures ANOVA without time") <- anovaNOTIME
+    attr(res, "main results") <- "multi_cs"
 
     if (print_output) {
       return(res)

@@ -82,7 +82,8 @@ rm_anova_mf <- function(cs1,
     ) -> data # Better than stringr
   #}
 
-  # You need to have an aov object to feed in glance
+  # You need to have an aov object to feed in glance. In case of a higher
+  # order interaction the function returns only the highest order interaction
   if (time && (!is.null(group))) {
     tmpANOVA <-
       suppressWarnings(
@@ -97,7 +98,7 @@ rm_anova_mf <- function(cs1,
         )$aov
       )
     res <- purrr::map_df(tmpANOVA, .f = broom::tidy) %>%
-      dplyr::filter(term %in% c("cs", "time", "cs:time")) %>%
+      dplyr::filter(term %in% c("cs:time:group")) %>%
       dplyr::select(term, p.value)
 
   } else if (!time && (is.null(group)))  {
@@ -130,7 +131,7 @@ rm_anova_mf <- function(cs1,
         )$aov
       )
     res <- purrr::map_df(tmpANOVA, .f = broom::tidy) %>%
-      dplyr::filter(term %in% c("cs", "time", "cs:time")) %>%
+      dplyr::filter(term %in% c("cs:time")) %>%
       dplyr::select(term, p.value)
   } else if (!time && is.null(group)) {
     tmpANOVA <-
@@ -152,5 +153,9 @@ rm_anova_mf <- function(cs1,
       dplyr::select(term, p.value)
   }
 
+  # Change the column name so that you can bind the results
+  res <- res %>% rename_all(funs(str_replace(., "term", "method")))
+
   return(res)
-    }
+
+}
