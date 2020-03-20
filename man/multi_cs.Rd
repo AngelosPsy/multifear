@@ -40,3 +40,7 @@ information.}
 Basic function for conducting multi-verse analyses of conditioning
 data
 }
+\details{
+In case of higher order interaction, only the highest order
+effect is shown
+}
