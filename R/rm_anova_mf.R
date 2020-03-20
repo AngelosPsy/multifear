@@ -82,65 +82,44 @@ rm_anova_mf <- function(cs1,
     ) -> data # Better than stringr
   #}
 
-  # You need to have an aov object to feed in glance. In case of a higher
-  # order interaction the function returns only the highest order interaction
+  # Decide which terms you will have in order to feed in the ANOVA later on
   if (time && (!is.null(group))) {
-    tmpANOVA <-
-      suppressWarnings(
-        ez::ezANOVA(
-          data = data,
-          dv = resp,
-          wid = subj,
-          within = .(cs, time),
-          between = group,
-          type = 3,
-          return_aov = TRUE
-        )$aov
-      )
+    anova_terms <- c("cs", "time")
     selected_term <- "cs:time:group"
   } else if (!time && (is.null(group)))  {
-    tmpANOVA <-
-      suppressWarnings(
-        ez::ezANOVA(
-          data = data,
-          dv = resp,
-          wid = subj,
-          within = .(cs),
-          between = NULL,
-          type = 3,
-          return_aov = TRUE
-        )$aov
-      )
+    anova_terms <- c("cs")
+    group = NULL
     selected_term <- "cs"
   } else if (time  && is.null(group)) {
-    tmpANOVA <-
-      suppressWarnings(
-        ez::ezANOVA(
-          data = data,
-          dv = resp,
-          wid = subj,
-          within = .(cs, time),
-          between = NULL,
-          type = 3,
-          return_aov = TRUE
-        )$aov
-      )
+    anova_terms <- c("cs", "time")
+    group = NULL
     selected_term <- "cs:time"
   } else if (!time && !is.null(group)) {
-    tmpANOVA <-
-      suppressWarnings(
-        ez::ezANOVA(
+    anova_terms <- c("cs")
+    group = NULL
+    selected_term <- "cs:group"
+  }
+
+  # Run the main ANOVA
+  tmpANOVA <-
+    suppressWarnings(eval(parse(
+      text =
+        paste0(
+          'ez::ezANOVA(
           data = data,
           dv = resp,
           wid = subj,
-          within = .(cs),
-          between = NULL,
+          within = ',
+          anova_terms,
+          ',
+          between = ',
+          group,
+          ',
           type = 3,
           return_aov = TRUE
-        )$aov
-      )
-    selected_term <- "cs:group"
-  }
+        )$aov'
+)
+    )))
 
   # Shape the object for the results. The suppressWarnings is there due to
   # warning from broom::tidy.
