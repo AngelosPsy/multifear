@@ -97,10 +97,7 @@ rm_anova_mf <- function(cs1,
           return_aov = TRUE
         )$aov
       )
-    res <- purrr::map_df(tmpANOVA, .f = broom::tidy) %>%
-      dplyr::filter(term %in% c("cs:time:group")) %>%
-      dplyr::select(term, p.value)
-
+    selected_term <- "cs:time:group"
   } else if (!time && (is.null(group)))  {
     tmpANOVA <-
       suppressWarnings(
@@ -114,9 +111,7 @@ rm_anova_mf <- function(cs1,
           return_aov = TRUE
         )$aov
       )
-    res <- purrr::map_df(tmpANOVA, .f = broom::tidy) %>%
-      dplyr::filter(term %in% c("cs")) %>%
-      dplyr::select(term, p.value)
+    selected_term <- "cs"
   } else if (time  && is.null(group)) {
     tmpANOVA <-
       suppressWarnings(
@@ -130,10 +125,8 @@ rm_anova_mf <- function(cs1,
           return_aov = TRUE
         )$aov
       )
-    res <- purrr::map_df(tmpANOVA, .f = broom::tidy) %>%
-      dplyr::filter(term %in% c("cs:time")) %>%
-      dplyr::select(term, p.value)
-  } else if (!time && is.null(group)) {
+    selected_term <- "cs:time"
+  } else if (!time && !is.null(group)) {
     tmpANOVA <-
       suppressWarnings(
         ez::ezANOVA(
@@ -146,15 +139,22 @@ rm_anova_mf <- function(cs1,
           return_aov = TRUE
         )$aov
       )
-    res$term <- NA
-    res <-
-      purrr::map_df(tmpANOVA, .f = broom::tidy) %>%
-      dplyr::filter(term %in% c("cs")) %>%
-      dplyr::select(term, p.value)
+    selected_term <- "cs:group"
   }
 
-  # Change the column name so that you can bind the results
-  res <- res %>% rename_all(funs(str_replace(., "term", "method")))
+  # Shape the object for the results. The suppressWarnings is there due to
+  # warning from broom::tidy.
+  res <-
+    suppressWarnings(purrr::map_df(tmpANOVA, .f = broom::tidy)) %>%
+    dplyr::filter(term %in% selected_term) %>%
+    dplyr::rename_all(dplyr::funs(stringr::str_replace(., "term", "method"))) %>%
+    dplyr::mutate(
+      method = paste("rep ANOVA", selected_term),
+      estimate = NA,
+      conf.low = NA,
+      conf.high = NA
+    ) %>%
+    dplyr::select(method, estimate, statistic, conf.low, conf.high)
 
   return(res)
 
