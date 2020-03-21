@@ -9,6 +9,7 @@
 #' the phase needs to be specified here. Possible values are \code{acquisition},
 #' or \code{acq}, \code{extnction}, or \code{extinction}. See Details for more
 #' information.
+#' @param na.rm Whether NAs should be removed, default to \code{FALSE}.
 #' @return a basic function for running a t-test within the \code{multifear}
 #' package
 #' @importFrom dplyr %>%
@@ -18,10 +19,15 @@ t_test_mf <-
   function(cs1,
            cs2,
            data,
+           na.rm = FALSE,
            paired = TRUE,
            phase = "acquisition") {
-    cs1 <- data %>% dplyr::select(!!dplyr::enquo(cs1)) %>% unlist()
-    cs2 <- data %>% dplyr::select(!!dplyr::enquo(cs2)) %>% unlist()
+
+    # Restructure data. rowMeans is used in case multiple trails have been fed
+    cs1 <-
+      data %>% dplyr::select(!!dplyr::enquo(cs1)) %>% rowMeans(na.rm = na.rm) %>% unlist()
+    cs2 <-
+      data %>% dplyr::select(!!dplyr::enquo(cs2)) %>% rowMeans(na.rm = na.rm) %>% unlist()
 
     # Here we run all t.tests and we select later on which one we wants. It is
     # a bit too much to run all tests but we save all the if else statements
