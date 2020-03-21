@@ -45,8 +45,16 @@ multi_cs <-
 
     data <- dplyr::bind_cols(subj, cs1, cs2, group_new)
 
+    # In case of 1 trial CS or enequal number of CSs, skip ANOVA
+    if ((ncol(cs1) == 1 |
+         ncol(cs2) == 1) |
+        ncol(cs1) != ncol(cs2)) {
+      skip_anova = TRUE
+      message("Skipping ANOVA")
+    }
+
     # Perform ANOVA
-    if (is.null(group)) {
+    if (is.null(group) & !skip_anova) {
       anovaNOTIME <-
         multifear::rm_anova_mf(
           cs1 = colnames(cs1),
@@ -57,7 +65,7 @@ multi_cs <-
           group = NULL,
           phase = phase
         )
-      anovaTIME<-
+      anovaTIME <-
         multifear::rm_anova_mf(
           cs1 = colnames(cs1),
           cs2 = colnames(cs2),
@@ -68,7 +76,8 @@ multi_cs <-
           phase = phase
         )
     }
-    else{
+    else if (!skip_anova) {
+      print("here")
       anovaNOTIME <-
         multifear::rm_anova_mf(
           cs1 = colnames(cs1),
@@ -100,12 +109,13 @@ multi_cs <-
     ttestFULL <-
       multifear::t_test_mf(cs1_mean, cs2_mean, csc, paired = TRUE, phase = phase)
 
-    combRes <- list(
-      #`Collapsed data` = csc,
-      `t-test full` = ttestFULL,
-      `repeated measures ANOVA with time` = anovaTIME,
-      `repeated measures ANOVA without time` = anovaNOTIME
-    )
+    combRes <- list(`Collapsed data` = csc,
+                    `t-test full` = ttestFULL)
+
+    if (!skip_anova) {
+      combRes[[`repeated measures ANOVA with time`]] <- anovaTIME
+      combRes[[`repeated measures ANOVA without time`]] <- anovaNOTIME
+    }
 
     # Collapse results into one data frame
     res <- purrr::map_df(combRes, rbind)
