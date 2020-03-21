@@ -2,13 +2,22 @@
 {
   # set global variables in order to avoid CHECK notes
   utils::globalVariables (".")
+  utils::globalVariables ("all_of")
   utils::globalVariables ("cs")
   utils::globalVariables ("cs1_mean")
   utils::globalVariables ("cs2_mean")
+  utils::globalVariables ("conf.high")
+  utils::globalVariables ("conf.low")
+  utils::globalVariables ("controls")
+  utils::globalVariables ("estimate")
+  utils::globalVariables ("method")
+  utils::globalVariables ("model")
   utils::globalVariables ("res")
   utils::globalVariables ("resp")
   utils::globalVariables ("statistic")
   utils::globalVariables ("term")
   utils::globalVariables ("var_old")
+  utils::globalVariables ("x")
+  utils::globalVariables ("y")
   invisible ()
 }
