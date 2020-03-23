@@ -4,7 +4,15 @@
 \alias{t_test_mf}
 \title{t_test_mf}
 \usage{
-t_test_mf(cs1, cs2, data, paired = TRUE, phase = "acquisition")
+t_test_mf(
+  cs1,
+  cs2,
+  data,
+  subj,
+  na.rm = FALSE,
+  paired = TRUE,
+  phase = "acquisition"
+)
 }
 \arguments{
 \item{cs1}{cs 1}
@@ -12,6 +20,11 @@ t_test_mf(cs1, cs2, data, paired = TRUE, phase = "acquisition")
 \item{cs2}{cs 2}
 
 \item{data}{a data frame containing the dv and iv}
+
+\item{subj}{column nmae with the participant number.
+It should be a unique number.}
+
+\item{na.rm}{Whether NAs should be removed, default to \code{FALSE}.}
 
 \item{paired}{whether the t-test refers to a paired or independent t-test.}
 
