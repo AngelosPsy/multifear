@@ -18,6 +18,7 @@ multi_cs <-
            phase = "acquisition",
            na.rm = FALSE,
            print_output = TRUE) {
+
     # Prepare data for multiple analyses
     cs1  <-
       data %>% dplyr::select(all_of(!!dplyr::enquo(cs1))) %>% tibble::as_tibble()
@@ -46,26 +47,17 @@ multi_cs <-
     data <- dplyr::bind_cols(subj, cs1, cs2, group_new)
 
     # In case of 1 trial CS or enequal number of CSs, skip ANOVA
+    do_anova = TRUE
     if ((ncol(cs1) == 1 |
          ncol(cs2) == 1) |
         ncol(cs1) != ncol(cs2)) {
-      skip_anova = TRUE
+      do_anova = FALSE
       message("Skipping ANOVA")
     }
 
     # Perform ANOVA
-    if (is.null(group) & !skip_anova) {
+    if (is.null(group) & do_anova) {
       anovaNOTIME <-
-        multifear::rm_anova_mf(
-          cs1 = colnames(cs1),
-          cs2 = colnames(cs2),
-          time = TRUE,
-          subj = colnames(subj),
-          data = data,
-          group = NULL,
-          phase = phase
-        )
-      anovaTIME <-
         multifear::rm_anova_mf(
           cs1 = colnames(cs1),
           cs2 = colnames(cs2),
@@ -75,9 +67,18 @@ multi_cs <-
           group = NULL,
           phase = phase
         )
+      anovaTIME <-
+        multifear::rm_anova_mf(
+          cs1 = colnames(cs1),
+          cs2 = colnames(cs2),
+          time = TRUE,
+          subj = colnames(subj),
+          data = data,
+          group = NULL,
+          phase = phase
+        )
     }
-    else if (!skip_anova) {
-      print("here")
+    else if (!is.null(group) & do_anova) {
       anovaNOTIME <-
         multifear::rm_anova_mf(
           cs1 = colnames(cs1),
@@ -107,14 +108,16 @@ multi_cs <-
                             cs2 = colnames(cs2),
                             data = data)
     ttestFULL <-
-      multifear::t_test_mf(cs1_mean, cs2_mean, csc, paired = TRUE, phase = phase)
+      multifear::t_test_mf(cs1 = colnames(cs1),
+                           cs2 = colnames(cs2),
+                          data = data, subj = colnames(subj), paired = TRUE, phase = phase)
 
-    combRes <- list(`Collapsed data` = csc,
+    combRes <- list(#`Collapsed data` = csc,
                     `t-test full` = ttestFULL)
 
-    if (!skip_anova) {
-      combRes[[`repeated measures ANOVA with time`]] <- anovaTIME
-      combRes[[`repeated measures ANOVA without time`]] <- anovaNOTIME
+    if (do_anova) {
+      combRes$`repeated measures ANOVA with time` <- anovaTIME
+      combRes$`repeated measures ANOVA without time` <- anovaNOTIME
     }
 
     # Collapse results into one data frame

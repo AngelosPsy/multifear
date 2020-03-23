@@ -23,6 +23,7 @@
 #' The function uses the \code{ez::ezANOVA} function. The function gives by default a warning regarding the collapsing of factors. This function here suppresses this warning but the user should be aware of it.
 #' @importFrom dplyr select
 #' @importFrom dplyr filter
+#' @importFrom stats time
 #' @export
 rm_anova_mf <- function(cs1,
                         cs2,
@@ -109,9 +110,9 @@ rm_anova_mf <- function(cs1,
           data = data,
           dv = resp,
           wid = subj,
-          within = ',
-          anova_terms,
-          ',
+          within = c(',
+          paste(anova_terms, collapse = ","),
+          '),
           between = ',
           group,
           ',
@@ -130,7 +131,7 @@ rm_anova_mf <- function(cs1,
     dplyr::mutate(
       method = paste("rep ANOVA", selected_term),
       x = selected_term,
-      y = "cs",
+      y = "cr",
       model = "rep ANOVA",
       controls = NA,
       estimate = NA,

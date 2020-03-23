@@ -3,6 +3,8 @@
 #' @description Basic function for running a t-test
 #' @param cs1 cs 1
 #' @param cs2 cs 2
+#' @param subj column nmae with the participant number.
+#' It should be a unique number.
 #' @param data a data frame containing the dv and iv
 #' @param paired whether the t-test refers to a paired or independent t-test.
 #' @param phase Different tests will be run for different phases. That is why
@@ -19,35 +21,51 @@ t_test_mf <-
   function(cs1,
            cs2,
            data,
+           subj,
            na.rm = FALSE,
            paired = TRUE,
            phase = "acquisition") {
-
     # Restructure data. rowMeans is used in case multiple trails have been fed
     cs1 <-
-      data %>% dplyr::select(!!dplyr::enquo(cs1)) %>% rowMeans(na.rm = na.rm) %>% unlist()
+      data %>% dplyr::select(all_of(!!dplyr::enquo(cs1))) %>% rowMeans(na.rm = na.rm) %>% tibble::enframe(name = NULL)  %>% dplyr::rename(cs.1 = value)#dplyr::select(cs.1 = dplyr::everything())
     cs2 <-
-      data %>% dplyr::select(!!dplyr::enquo(cs2)) %>% rowMeans(na.rm = na.rm) %>% unlist()
+      data %>% dplyr::select(all_of(!!dplyr::enquo(cs2))) %>% rowMeans(na.rm = na.rm) %>% tibble::enframe(name = NULL) %>% dplyr::rename(cs.2 = value)#dplyr::select(cs.2 = dplyr::everything())
+    subj <-
+      data %>% dplyr::select(all_of(!!dplyr::enquo(subj))) %>% tibble::as_tibble() %>% dplyr::select(subj = dplyr::everything())
+
+    data <- dplyr::bind_cols(subj, cs1, cs2)
 
     # Here we run all t.tests and we select later on which one we wants. It is
     # a bit too much to run all tests but we save all the if else statements
-    tte <-
-      stats::t.test(cs1, cs2, paired = paired, alternative = "two.sided")
-    ttg <-
-      stats::t.test(cs1, cs2, paired = paired, alternative = "greater")
-    ttg <-
-      stats::t.test(cs1, cs2, paired = paired, alternative = "less")
+    ttest_res <- purrr::map_dfr(.x = seq_len(3), ~ data) %>%
+      dplyr::mutate(alternative = rep(c("two.sided", "less", "greater"),
+                                      each = nrow(data)), group2 = alternative) %>%
+      tidyr::gather(CS, value, -subj, -alternative, -group2) %>%
+      tidyr::separate(CS, c("CS", "N")) %>%
+      dplyr::group_by(group2) %>%
+      dplyr::group_map(
+        ~ stats::t.test(
+          formula = .$value ~ .$N,
+          data = .,
+          paired = TRUE,
+          alternative = .$alternative[1]
+        ) %>%
+          broom::tidy()
+      )
+    ttest_res <- purrr::invoke("rbind", ttest_res)
 
     # List to be pasted to broom functions
     if (!!phase %in% c("acquisition", "acq")) {
-      ttl <- list(tte, ttg)
+      ttl <-
+        ttest_res %>% dplyr::filter(alternative %in% c("two.sided", "greater"))
     }
 
     if (!!phase %in% c("extinction", "ext")) {
-      ttl <- list(tte, ttg)
+      ttl <-
+        ttest_res %>% dplyr::filter(alternative %in% c("two.sided", "less"))
     }
 
-    res <- purrr::map_df(ttl, .f = broom::tidy) %>%
+    res <- ttl %>%
       dplyr::mutate(
         method = paste("t-test"),
         x = "cs",
