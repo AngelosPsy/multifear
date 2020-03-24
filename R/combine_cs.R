@@ -8,8 +8,8 @@
 #' @importFrom dplyr %>%
 #' @export
 combine_cs <- function(cs1, cs2, data, na.rm = FALSE) {
-  cs1 <- data %>% dplyr::select(!!dplyr::enquo(cs1))
-  cs2 <- data %>% dplyr::select(!!dplyr::enquo(cs2))
+  cs1 <- data %>% dplyr::select(all_of(!!dplyr::enquo(cs1)))
+  cs2 <- data %>% dplyr::select(all_of(!!dplyr::enquo(cs2)))
   data <- data %>% tibble::as_tibble()
 
   data %>%
