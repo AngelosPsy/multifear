@@ -9,6 +9,8 @@
 #' @export
 
 chop_cs <- function(cs, data, subj, na.rm = FALSE) {
+  # Check data
+  collection_warning(cs1 = cs, data = data, subj = subj)
 
   cs <- data %>% dplyr::select(all_of(!!dplyr::enquo(cs)))
   subj <- data %>% dplyr::select(all_of(!!dplyr::enquo(subj))) %>%
@@ -59,7 +61,7 @@ chop_cs <- function(cs, data, subj, na.rm = FALSE) {
   cs_half  <- dplyr::bind_cols(cs_fhalf, cs_lhalf)
 
   res <-
-    dplyr::bind_cols(subj, cs_ltrial, cs_l2trial, cs_lftdiff, cs_half)
+    dplyr::bind_cols(subj, cs_ltrial, cs_l2trial, cs_lftdiff, cs_half) %>% tidyr::as_tibble()
 
   return(res)
 }
