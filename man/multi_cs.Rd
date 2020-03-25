@@ -25,7 +25,7 @@ multi_cs(
 \item{subj}{column nmae with the participant number.
 It should be a unique number.}
 
-\item{group}{name of the group variable, if it is present (default to NULL)}
+\item{group}{name of the group variable, if it is present, default to \code{NULL}}
 
 \item{phase}{Different tests will be run for different phases. That is why
 the phase needs to be specified here. Possible values are \code{acquisition},

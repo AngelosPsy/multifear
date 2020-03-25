@@ -8,11 +8,13 @@
 #' @param subj column nmae with the participant number.
 #' It should be a unique number.
 #' @param data a data frame containing the dv and iv
-#' @param group name of the group variable, if it is present (default to NULL)
+#' @param group name of the group variable, if it is present, default to \code{NULL}
 #' @param phase Different tests will be run for different phases. That is why
 #' the phase needs to be specified here. Possible values are \code{acquisition},
 #' or \code{acq}, \code{extinction}, or \code{extinction}. See Details for more
 #' information.
+#' @param dv name of the dependent variable, default to "SCR"
+#' @param exclusion If any exclusion was done, default to \code{full data}
 #' @return A basic function for running repeated measures ANOVAs
 #' @details In case the \code{time} argument is set to true, the function will
 #' include this as a within subjects factor, assuming that the columns in
@@ -31,7 +33,9 @@ rm_anova_mf <- function(cs1,
                         subj,
                         time = TRUE,
                         group = NULL,
-                        phase = "acquisition") {
+                        phase = "acquisition",
+                        dv = "scr",
+                        exclusion = "full data") {
   # Check data
   collection_warning(cs1 = cs, cs2 = cs2, data = data, subj = subj)
 
@@ -135,6 +139,7 @@ rm_anova_mf <- function(cs1,
       method = paste("rep ANOVA", selected_term),
       x = selected_term,
       y = "cr",
+      exclusion = exclusion,
       model = "rep ANOVA",
       controls = NA,
       estimate = NA,
@@ -143,6 +148,7 @@ rm_anova_mf <- function(cs1,
     ) %>%
     dplyr::select(x,
                   y,
+                  exclusion,
                   model,
                   controls,
                   method,

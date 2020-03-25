@@ -11,7 +11,9 @@
 #' the phase needs to be specified here. Possible values are \code{acquisition},
 #' or \code{acq}, \code{extnction}, or \code{extinction}. See Details for more
 #' information.
-#' @param na.rm Whether NAs should be removed, default to \code{FALSE}.
+#' @param dv name of the dependent variable, default to "SCR"
+#' @param na.rm Whether NAs should be removed, default to \code{FALSE}
+#' @param exclusion If any exclusion was done, default to \code{full data}
 #' @return a basic function for running a t-test within the \code{multifear}
 #' package
 #' @importFrom dplyr %>%
@@ -24,7 +26,9 @@ t_test_mf <-
            subj,
            na.rm = FALSE,
            paired = TRUE,
-           phase = "acquisition") {
+           phase = "acquisition",
+           dv = "scr",
+           exclusion = "full data") {
     # Check data
     collection_warning(cs1 = cs, cs2 = cs2, data = data, subj = subj)
 
@@ -72,12 +76,14 @@ t_test_mf <-
       dplyr::mutate(
         method = paste("t-test"),
         x = "cs",
-        y = "cr",
+        y = dv,
+        exclusion = exclusion,
         model = "t-test",
         controls = NA
       ) %>%
       dplyr::select(x,
                     y,
+                    exclusion,
                     model,
                     controls,
                     method,

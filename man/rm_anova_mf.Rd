@@ -11,7 +11,9 @@ rm_anova_mf(
   subj,
   time = TRUE,
   group = NULL,
-  phase = "acquisition"
+  phase = "acquisition",
+  dv = "scr",
+  exclusion = "full data"
 )
 }
 \arguments{
@@ -26,12 +28,16 @@ It should be a unique number.}
 
 \item{time}{should time be included? Default to \code{TRUE}}
 
-\item{group}{name of the group variable, if it is present (default to NULL)}
+\item{group}{name of the group variable, if it is present, default to \code{NULL}}
 
 \item{phase}{Different tests will be run for different phases. That is why
 the phase needs to be specified here. Possible values are \code{acquisition},
 or \code{acq}, \code{extinction}, or \code{extinction}. See Details for more
 information.}
+
+\item{dv}{name of the dependent variable, default to "SCR"}
+
+\item{exclusion}{If any exclusion was done, default to \code{full data}}
 }
 \value{
 A basic function for running repeated measures ANOVAs

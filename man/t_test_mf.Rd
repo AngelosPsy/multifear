@@ -11,7 +11,9 @@ t_test_mf(
   subj,
   na.rm = FALSE,
   paired = TRUE,
-  phase = "acquisition"
+  phase = "acquisition",
+  dv = "scr",
+  exclusion = "full data"
 )
 }
 \arguments{
@@ -24,7 +26,7 @@ t_test_mf(
 \item{subj}{column nmae with the participant number.
 It should be a unique number.}
 
-\item{na.rm}{Whether NAs should be removed, default to \code{FALSE}.}
+\item{na.rm}{Whether NAs should be removed, default to \code{FALSE}}
 
 \item{paired}{whether the t-test refers to a paired or independent t-test.}
 
@@ -32,6 +34,10 @@ It should be a unique number.}
 the phase needs to be specified here. Possible values are \code{acquisition},
 or \code{acq}, \code{extnction}, or \code{extinction}. See Details for more
 information.}
+
+\item{dv}{name of the dependent variable, default to "SCR"}
+
+\item{exclusion}{If any exclusion was done, default to \code{full data}}
 }
 \value{
 a basic function for running a t-test within the \code{multifear}
