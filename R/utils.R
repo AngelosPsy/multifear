@@ -20,6 +20,7 @@
   utils::globalVariables ("resp")
   utils::globalVariables ("repeated measures ANOVA with time")
   utils::globalVariables ("repeated measures ANOVA without time")
+  utils::globalVariables ("rowname")
   utils::globalVariables ("statistic")
   utils::globalVariables ("term")
   utils::globalVariables ("time")
