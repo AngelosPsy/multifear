@@ -32,6 +32,9 @@ rm_anova_mf <- function(cs1,
                         time = TRUE,
                         group = NULL,
                         phase = "acquisition") {
+  # Check data
+  collection_warning(cs1 = cs, cs2 = cs2, data = data, subj = subj)
+
   cs1 <-
     data %>% dplyr::select(all_of(!!dplyr::enquo(cs1))) %>% tibble::as_tibble()
   cs2  <-
@@ -146,7 +149,8 @@ rm_anova_mf <- function(cs1,
                   estimate,
                   statistic,
                   conf.low,
-                  conf.high)
+                  conf.high) %>%
+    dplyr::mutate(data_used = list(data))
 
   return(res)
 

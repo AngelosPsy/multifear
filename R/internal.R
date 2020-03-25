@@ -2,12 +2,8 @@
 #'
 #' @description Internal functions, not available to the user
 #' @noRd
-#' @export subj_warning
-#' @export cs_warning
-#' @export data_warning
-#' @export collection_warning
+#' @noMd
 #' @keywords internal
-
 
 subj_warning = function(subj_name) {
   if (!is.character(subj_name)) {
@@ -27,11 +23,16 @@ data_warning = function(data) {
   }
 }
 
-collection_warning = function(cs1, cs2 = NULL, data, subj) {
-  multifear::cs_warning(cs1)
-  if (!is.null) {
-    multifear::cs_warning(cs2)
+collection_warning = function(cs1,
+                              cs2 = NULL,
+                              data,
+                              subj = NULL) {
+  cs_warning(cs1)
+  if (!is.null(cs2)) {
+    cs_warning(cs2)
   }
-  multifear::data_warning(data)
-  multifear::subj_warning(subj)
+  data_warning(data)
+  if (!is.null(subj)) {
+    subj_warning(subj)
+  }
 }

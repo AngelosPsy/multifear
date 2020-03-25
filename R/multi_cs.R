@@ -18,6 +18,8 @@ multi_cs <-
            phase = "acquisition",
            na.rm = FALSE,
            print_output = TRUE) {
+    # Check data
+    collection_warning(cs1 = cs, cs2 = cs2, data = data, subj = subj)
 
     # Prepare data for multiple analyses
     cs1  <-

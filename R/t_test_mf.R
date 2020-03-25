@@ -25,6 +25,9 @@ t_test_mf <-
            na.rm = FALSE,
            paired = TRUE,
            phase = "acquisition") {
+    # Check data
+    collection_warning(cs1 = cs, cs2 = cs2, data = data, subj = subj)
+
     # Restructure data. rowMeans is used in case multiple trails have been fed
     cs1 <-
       data %>% dplyr::select(all_of(!!dplyr::enquo(cs1))) %>% rowMeans(na.rm = na.rm) %>% tibble::enframe(name = NULL)  %>% dplyr::rename(cs.1 = value)#dplyr::select(cs.1 = dplyr::everything())
@@ -81,6 +84,8 @@ t_test_mf <-
                     estimate,
                     statistic,
                     conf.low,
-                    conf.high)
+                    conf.high) %>%
+      dplyr::mutate(data_used = list(data))
+
     return(res)
   }
