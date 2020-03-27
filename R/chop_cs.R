@@ -10,7 +10,7 @@
 
 chop_cs <- function(cs, data, subj, na.rm = FALSE) {
   # Check data
-  collection_warning(cs1 = cs, data = data, subj = subj)
+  collection_warning(cs1 = cs1, data = data, subj = subj)
 
   cs <- data %>% dplyr::select(all_of(!!dplyr::enquo(cs)))
   subj <- data %>% dplyr::select(all_of(!!dplyr::enquo(subj))) %>%

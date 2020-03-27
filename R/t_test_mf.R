@@ -30,7 +30,7 @@ t_test_mf <-
            dv = "scr",
            exclusion = "full data") {
     # Check data
-    collection_warning(cs1 = cs, cs2 = cs2, data = data, subj = subj)
+    collection_warning(cs1 = cs1, cs2 = cs2, data = data, subj = subj)
 
     # Restructure data. rowMeans is used in case multiple trails have been fed
     cs1 <-

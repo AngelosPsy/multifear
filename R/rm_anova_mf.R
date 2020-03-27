@@ -37,7 +37,7 @@ rm_anova_mf <- function(cs1,
                         dv = "scr",
                         exclusion = "full data") {
   # Check data
-  collection_warning(cs1 = cs, cs2 = cs2, data = data, subj = subj)
+  collection_warning(cs1 = cs1, cs2 = cs2, data = data, subj = subj)
 
   cs1 <-
     data %>% dplyr::select(all_of(!!dplyr::enquo(cs1))) %>% tibble::as_tibble()

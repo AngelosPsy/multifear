@@ -19,7 +19,7 @@ multiverse_cs <-
            na.rm = FALSE,
            print_output = TRUE) {
     # Check data
-    collection_warning(cs1 = cs, cs2 = cs2, data = data, subj = subj)
+    collection_warning(cs1 = cs1, cs2 = cs2, data = data, subj = subj)
 
     # Excluded participants
     excl_data_sets <- multifear::chop_css(cs1, cs2, data, subj) %>%
@@ -38,19 +38,19 @@ multiverse_cs <-
     if (length(excl_data_sets$used_data) !=
         length(excl_data_sets_final$used_data)) {
       warning(paste("Part of the data were excluded due to many excluded cases. Check
-              the following cases: ",
-                    excl_data_sets_final$names[which(excl_data_sets_final$excl == TRUE)], collapse = ","))
+              the following cases: ", excl_data_sets_final$names[which(excl_data_sets_final$excl == TRUE)], collapse = ","))
     }
 
-    res <- purrr::map_df(
+    res <- purrr::map2_dfr(
       excl_data_sets_final$used_data,
+      excl_data_sets_final$names,
       ~ multifear::universe_cs(
         cs1 = cs1,
         cs2 = cs2,
-        data = .,
+        data = .x,
         subj = subj,
         group = group,
-        exclusion = exclusion
+        exclusion = .y
       )
     )
 

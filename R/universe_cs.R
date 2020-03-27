@@ -21,7 +21,7 @@ universe_cs <-
            print_output = TRUE,
            exclusion = "full data") {
     # Check data
-    collection_warning(cs1 = cs, cs2 = cs2, data = data, subj = subj)
+    collection_warning(cs1 = cs1, cs2 = cs2, data = data, subj = subj)
 
     # Prepare data for multiple analyses
     cs1  <-
