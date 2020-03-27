@@ -1,6 +1,6 @@
-#' multi_cs
+#' universe_cs
 #'
-#' @description Basic function for conducting multi-verse analyses of conditioning
+#' @description Basic function for conducting universe analyses of conditioning
 #' data
 #' @inheritParams rm_anova_mf
 #' @param na.rm Should NAs be removed? Default set the \code{FALSE}
@@ -9,7 +9,7 @@
 #' effect is shown
 #' @export
 
-multi_cs <-
+universe_cs <-
   function(cs1,
            cs2,
            data,
