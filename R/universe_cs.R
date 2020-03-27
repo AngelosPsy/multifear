@@ -5,6 +5,7 @@
 #' @inheritParams rm_anova_mf
 #' @param na.rm Should NAs be removed? Default set the \code{FALSE}
 #' @param print_output Whether to print the output or not. Default set to \code{TRUE}
+#' @param exclusion If any exclusion was done, default to \code{full data}
 #' @details In case of higher order interaction, only the highest order
 #' effect is shown
 #' @export
@@ -17,7 +18,8 @@ universe_cs <-
            group = NULL,
            phase = "acquisition",
            na.rm = FALSE,
-           print_output = TRUE) {
+           print_output = TRUE,
+           exclusion = "full data") {
     # Check data
     collection_warning(cs1 = cs, cs2 = cs2, data = data, subj = subj)
 
@@ -41,7 +43,7 @@ universe_cs <-
         dplyr::mutate(group = rep("NULL", nrow(data))) %>%
         dplyr::select(group)
       group <- NULL
-    } else{
+    } else {
       group_new <- data %>%
         dplyr::select(tidyselect::all_of(!!dplyr::enquo(group)))
     }
@@ -67,7 +69,8 @@ universe_cs <-
           subj = colnames(subj),
           data = data,
           group = NULL,
-          phase = phase
+          phase = phase,
+          exclusion = exclusion
         )
       anovaTIME <-
         multifear::rm_anova_mf(
@@ -77,7 +80,8 @@ universe_cs <-
           subj = colnames(subj),
           data = data,
           group = NULL,
-          phase = phase
+          phase = phase,
+          exclusion = exclusion
         )
     }
     else if (!is.null(group) & do_anova) {
@@ -89,7 +93,8 @@ universe_cs <-
           subj = colnames(subj),
           data = data,
           group = group,
-          phase = phase
+          phase = phase,
+          exclusion = exclusion
         )
       anovaTIME <-
         multifear::rm_anova_mf(
@@ -99,7 +104,8 @@ universe_cs <-
           subj = colnames(subj),
           data = data,
           group = group,
-          phase = phase
+          phase = phase,
+          exclusion = exclusion
         )
     }
 
@@ -112,7 +118,9 @@ universe_cs <-
     ttestFULL <-
       multifear::t_test_mf(cs1 = colnames(cs1),
                            cs2 = colnames(cs2),
-                          data = data, subj = colnames(subj), paired = TRUE, phase = phase)
+                           data = data, subj = colnames(subj),
+                           paired = TRUE, phase = phase,
+                           exclusion = exclusion)
 
     combRes <- list(#`Collapsed data` = csc,
                     `t-test full` = ttestFULL)
