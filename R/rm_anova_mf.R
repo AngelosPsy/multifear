@@ -93,19 +93,19 @@ rm_anova_mf <- function(cs1,
   # Decide which terms you will have in order to feed in the ANOVA later on
   if (time && (!is.null(group))) {
     anova_terms <- c("cs", "time")
-    selected_term <- "cs:time:group"
+    selected_term <- "group:cs:time"
   } else if (!time && (is.null(group)))  {
     anova_terms <- c("cs")
     group = NULL
     selected_term <- "cs"
-  } else if (time  && is.null(group)) {
+  } else if (time && is.null(group)) {
     anova_terms <- c("cs", "time")
     group = NULL
     selected_term <- "cs:time"
   } else if (!time && !is.null(group)) {
     anova_terms <- c("cs")
     group = NULL
-    selected_term <- "cs:group"
+    selected_term <- "group:cs"
   }
 
   # Run the main ANOVA
