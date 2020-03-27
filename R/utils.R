@@ -16,6 +16,7 @@
   utils::globalVariables ("controls")
   utils::globalVariables ("difftr")
   utils::globalVariables ("estimate")
+  utils::globalVariables ("excl")
   utils::globalVariables ("group")
   utils::globalVariables ("group2")
   utils::globalVariables ("id")
