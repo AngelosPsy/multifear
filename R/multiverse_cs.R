@@ -9,7 +9,7 @@
 #' effect is shown
 #' @export
 
-universe_cs <-
+multiverse_cs <-
   function(cs1,
            cs2,
            data,
@@ -29,28 +29,37 @@ universe_cs <-
     # if you have removed a lot of participants
     excl_data_sets_final <-
       excl_data_sets %>%
-      mutate(excl = excl_data_sets$used_data %>%
+      dplyr::mutate(excl = excl_data_sets$used_data %>%
                                   lapply(plyr::empty) %>%
-                                  map_df(rbind) %>% t()) %>%
-      filter(excl == FALSE)
+                                  purrr::map_df(rbind) %>% t()) %>%
+      dplyr::filter(excl == FALSE)
 
     # Return warning if you have excluded any of the data sets
     if (length(excl_data_sets$used_data) !=
         length(excl_data_sets_final$used_data)) {
-      warning("Part of the data were excluded due to many excluded cases.")
+      warning(paste("Part of the data were excluded due to many excluded cases. Check
+              the following cases: ",
+                    excl_data_sets_final$names[which(excl_data_sets_final$excl == TRUE)], collapse = ","))
     }
 
-    res <- map_df(excl_data_sets_final$used_data,
-                  function(x) {
-                    multifear::universe_cs(
-                      cs1 = cs1,
-                      cs2 = cs2,
-                      data = data.frame(x),
-                      subj = subj,
-                      group = NULL
-                    )
-                  })
+    res <- purrr::map_df(
+      excl_data_sets_final$used_data,
+      ~ multifear::universe_cs(
+        cs1 = cs1,
+        cs2 = cs2,
+        data = .,
+        subj = subj,
+        group = group,
+        exclusion = exclusion
+      )
+    )
 
-    return(res)
+
+    # Should output been printed
+    if (print_output) {
+      return(res)
+    } else{
+      invisible(res)
+    }
   }
 
