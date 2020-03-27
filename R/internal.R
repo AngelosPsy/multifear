@@ -38,7 +38,7 @@ collection_warning = function(cs1,
 }
 
 chop_css_warning = function(data) {
-  if (!any(class(f) == "chop_css")) {
+  if (!any(class(data) == "chop_css")) {
     stop("The data object is not of class chop_css. Function terminated.")
   }
 }
