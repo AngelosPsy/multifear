@@ -16,6 +16,7 @@ exclusion_criteria <- function(data, cutoff = 0.01) {
 
  res <- tidyr::tibble(
     used_data = list(
+    full_data = data,
     last_trial = last_trial,
     last2_trial = last2_trial,
     last_first_trial = last_first_trial,
