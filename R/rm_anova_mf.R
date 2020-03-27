@@ -138,7 +138,7 @@ rm_anova_mf <- function(cs1,
     dplyr::mutate(
       method = paste("rep ANOVA", selected_term),
       x = selected_term,
-      y = "cr",
+      y = dv,
       exclusion = exclusion,
       model = "rep ANOVA",
       controls = NA,
