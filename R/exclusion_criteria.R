@@ -23,5 +23,9 @@ exclusion_criteria <- function(data, cutoff = 0.01) {
     half_trials = half_trials
   ))
 
+ res <- res %>%
+   dplyr::mutate(names = names(.$used_data),
+                 cutoff = cutoff)
+
   return(res)
 }
