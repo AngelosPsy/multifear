@@ -5,6 +5,8 @@
   utils::globalVariables ("alternative")
   utils::globalVariables ("cs")
   utils::globalVariables ("CS")
+  utils::globalVariables ("cs1")
+  utils::globalVariables ("cs2")
   utils::globalVariables ("cs_fhalf")
   utils::globalVariables ("cs_lftdiff")
   utils::globalVariables ("cs_lhalf")
