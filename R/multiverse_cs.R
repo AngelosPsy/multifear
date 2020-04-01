@@ -35,8 +35,7 @@ multiverse_cs <-
       excl_data_sets %>%
       dplyr::mutate(excl = excl_data_sets$used_data %>%
                       lapply(plyr::empty) %>%
-                      data.frame() %>% t()) #%>%
-      #dplyr::filter(excl == FALSE)
+                      data.frame() %>% t())
 
     # Return warning if you have excluded any of the data sets
     if (any(excl_data_sets_final$excl == TRUE)) {
@@ -55,11 +54,8 @@ multiverse_cs <-
         )
     }
 
-
-
-
-    excl_data_sets_final <-
-      excl_data_sets_final %>%
+    # You exclude the empty cases here
+    excl_data_sets_final <- excl_data_sets_final %>%
       dplyr::filter(excl == FALSE)
 
     res <- purrr::map2_dfr(
@@ -73,14 +69,15 @@ multiverse_cs <-
         group = group,
         exclusion = .y
       )
+    ) %>% dplyr::mutate(
+      cutoff = rep(excl_data_sets_final$cutoff, each = 4),
+      name_cutoff = rep(excl_data_sets_final$nam_cut, each = 4)
     )
 
-
-    # Should output been printed
+    # Should output be printed
     if (print_output) {
       return(res)
     } else{
       invisible(res)
     }
   }
-
