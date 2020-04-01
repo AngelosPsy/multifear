@@ -26,6 +26,7 @@
   utils::globalVariables ("l2trial")
   utils::globalVariables ("method")
   utils::globalVariables ("model")
+  utils::globalVariables ("p.value")
   utils::globalVariables ("res")
   utils::globalVariables ("resp")
   utils::globalVariables ("repeated measures ANOVA with time")
