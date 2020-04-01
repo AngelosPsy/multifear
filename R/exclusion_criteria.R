@@ -25,7 +25,8 @@ exclusion_criteria <- function(data, cutoff = 0.01) {
 
  res <- res %>%
    dplyr::mutate(names = names(.$used_data),
-                 cutoff = cutoff)
+                 cutoff = cutoff,
+                 nam_cut = paste(names, ", cutoff =", cutoff))
 
   return(res)
 }
