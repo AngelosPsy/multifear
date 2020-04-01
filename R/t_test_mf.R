@@ -87,6 +87,7 @@ t_test_mf <-
                     model,
                     controls,
                     method,
+                    p.value,
                     estimate,
                     statistic,
                     conf.low,

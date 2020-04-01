@@ -134,7 +134,7 @@ rm_anova_mf <- function(cs1,
   res <-
     suppressWarnings(purrr::map_df(tmpANOVA, .f = broom::tidy)) %>%
     dplyr::filter(term %in% selected_term) %>%
-    dplyr::rename_all(dplyr::funs(stringr::str_replace(., "term", "method"))) %>%
+    dplyr::rename_all(list(~stringr::str_replace(., "term", "method"))) %>%
     dplyr::mutate(
       method = paste("rep ANOVA", selected_term),
       x = selected_term,
@@ -152,6 +152,7 @@ rm_anova_mf <- function(cs1,
                   model,
                   controls,
                   method,
+                  p.value,
                   estimate,
                   statistic,
                   conf.low,
