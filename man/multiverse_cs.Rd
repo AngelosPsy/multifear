@@ -10,6 +10,7 @@ multiverse_cs(
   data,
   subj,
   group = NULL,
+  cutoff = c(0, 0.1, 0.05),
   phase = "acquisition",
   na.rm = FALSE,
   print_output = TRUE
@@ -26,6 +27,8 @@ multiverse_cs(
 It should be a unique number.}
 
 \item{group}{name of the group variable, if it is present, default to \code{NULL}}
+
+\item{cutoff}{A numeric vector of the cutoff criteria applied. Default to \code{0, 0.05, .1}}
 
 \item{phase}{Different tests will be run for different phases. That is why
 the phase needs to be specified here. Possible values are \code{acquisition},
