@@ -42,3 +42,9 @@ chop_css_warning = function(data) {
     stop("The data object is not of class chop_css. Function terminated.")
   }
 }
+
+inference_warning = function(data){
+  if (!any(class(data) == "data.frame")) {
+    stop("The data object is not of class data frame. Function terminated.")
+  }
+}
