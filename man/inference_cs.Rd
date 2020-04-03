@@ -4,12 +4,14 @@
 \alias{inference_cs}
 \title{inference_cs}
 \usage{
-inference_cs(data, alpha_level = 0.05, na.rm = FALSE)
+inference_cs(data, alpha_level = 0.05, add_line = TRUE, na.rm = FALSE)
 }
 \arguments{
-\item{data}{a tibble with the results of a multiverse analyses}
+\item{data}{a data frame with the results of a multiverse analyses}
 
 \item{alpha_level}{What should be the alpha level used (default to 0.05)}
+
+\item{add_line}{Whether to add a line with the alpha level in the produced histogram (default to TRUE)}
 
 \item{na.rm}{Should NAs be removed? Default to FALSE}
 }

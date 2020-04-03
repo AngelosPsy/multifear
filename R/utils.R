@@ -1,6 +1,7 @@
 .onLoad <- function (libname, pkgname) {
   # set global variables in order to avoid CHECK notes
   utils::globalVariables (".")
+  utils::globalVariables ("..density..")
   utils::globalVariables ("all_of")
   utils::globalVariables ("alternative")
   utils::globalVariables ("cs")
