@@ -34,9 +34,9 @@ t_test_mf <-
 
     # Restructure data. rowMeans is used in case multiple trails have been fed
     cs1 <-
-      data %>% dplyr::select(all_of(!!dplyr::enquo(cs1))) %>% rowMeans(na.rm = na.rm) %>% tibble::enframe(name = NULL)  %>% dplyr::rename(cs.1 = value)#dplyr::select(cs.1 = dplyr::everything())
+      data %>% dplyr::select(all_of(!!dplyr::enquo(cs1))) %>% rowMeans(na.rm = na.rm) %>% tibble::enframe(name = NULL)  %>% dplyr::rename(cs.1 = value)
     cs2 <-
-      data %>% dplyr::select(all_of(!!dplyr::enquo(cs2))) %>% rowMeans(na.rm = na.rm) %>% tibble::enframe(name = NULL) %>% dplyr::rename(cs.2 = value)#dplyr::select(cs.2 = dplyr::everything())
+      data %>% dplyr::select(all_of(!!dplyr::enquo(cs2))) %>% rowMeans(na.rm = na.rm) %>% tibble::enframe(name = NULL) %>% dplyr::rename(cs.2 = value)
     subj <-
       data %>% dplyr::select(all_of(!!dplyr::enquo(subj))) %>% tibble::as_tibble() %>% dplyr::select(subj = dplyr::everything())
 
@@ -54,7 +54,7 @@ t_test_mf <-
         ~ stats::t.test(
           formula = .$value ~ .$N,
           data = .,
-          paired = TRUE,
+          paired = paired,
           alternative = .$alternative[1]
         ) %>%
           broom::tidy()

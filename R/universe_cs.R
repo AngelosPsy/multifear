@@ -43,9 +43,11 @@ universe_cs <-
         dplyr::mutate(group = rep("NULL", nrow(data))) %>%
         dplyr::select(group)
       group <- NULL
+      paired = FALSE
     } else {
       group_new <- data %>%
         dplyr::select(tidyselect::all_of(!!dplyr::enquo(group)))
+      paired = TRUE
     }
 
     data <- dplyr::bind_cols(subj, cs1, cs2, group_new)
@@ -119,7 +121,7 @@ universe_cs <-
       multifear::t_test_mf(cs1 = colnames(cs1),
                            cs2 = colnames(cs2),
                            data = data, subj = colnames(subj),
-                           paired = TRUE, phase = phase,
+                           paired = paired, phase = phase,
                            exclusion = exclusion)
 
     combRes <- list(#`Collapsed data` = csc,
