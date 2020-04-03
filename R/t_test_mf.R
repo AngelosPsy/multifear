@@ -59,6 +59,7 @@ t_test_mf <-
         ) %>%
           broom::tidy()
       )
+
     ttest_res <- purrr::invoke("rbind", ttest_res)
 
     # List to be pasted to broom functions
@@ -79,7 +80,8 @@ t_test_mf <-
         y = dv,
         exclusion = exclusion,
         model = "t-test",
-        controls = NA
+        controls = NA,
+        effect.size = NA
       ) %>%
       dplyr::select(x,
                     y,
@@ -88,6 +90,7 @@ t_test_mf <-
                     controls,
                     method,
                     p.value,
+                    effect.size,
                     estimate,
                     statistic,
                     conf.low,

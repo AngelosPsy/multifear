@@ -18,6 +18,7 @@
   utils::globalVariables ("conf.low")
   utils::globalVariables ("controls")
   utils::globalVariables ("difftr")
+  utils::globalVariables ("effect.size")
   utils::globalVariables ("estimate")
   utils::globalVariables ("excl")
   utils::globalVariables ("group")

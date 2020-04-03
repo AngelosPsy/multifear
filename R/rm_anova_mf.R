@@ -88,7 +88,7 @@ rm_anova_mf <- function(cs1,
       subj = as.factor(subj),
       group = as.factor(group)
     ) -> data # Better than stringr
-  #}
+
 
   # Decide which terms you will have in order to feed in the ANOVA later on
   if (time && (!is.null(group))) {
@@ -144,7 +144,8 @@ rm_anova_mf <- function(cs1,
       controls = NA,
       estimate = NA,
       conf.low = NA,
-      conf.high = NA
+      conf.high = NA,
+      effect.size = sjstats::omega_sq(tmpANOVA)
     ) %>%
     dplyr::select(x,
                   y,
@@ -153,6 +154,7 @@ rm_anova_mf <- function(cs1,
                   controls,
                   method,
                   p.value,
+                  effect.size,
                   estimate,
                   statistic,
                   conf.low,
