@@ -3,7 +3,7 @@
 #' @description Basic function for running a t-test
 #' @param cs1 cs 1
 #' @param cs2 cs 2
-#' @param subj column nmae with the participant number.
+#' @param subj column name with the participant number.
 #' It should be a unique number.
 #' @param data a data frame containing the dv and iv
 #' @param paired whether the t-test refers to a paired or independent t-test.
@@ -14,6 +14,7 @@
 #' @param dv name of the dependent variable, default to "SCR"
 #' @param na.rm Whether NAs should be removed, default to \code{FALSE}
 #' @param exclusion If any exclusion was done, default to \code{full data}
+#' @details At the moment the function returns only paired samples t-test. The effect size is Hedge's g.
 #' @return a basic function for running a t-test within the \code{multifear}
 #' package
 #' @importFrom dplyr %>%
@@ -34,17 +35,24 @@ t_test_mf <-
 
     # Restructure data. rowMeans is used in case multiple trails have been fed
     cs1 <-
-      data %>% dplyr::select(all_of(!!dplyr::enquo(cs1))) %>% rowMeans(na.rm = na.rm) %>% tibble::enframe(name = NULL)  %>% dplyr::rename(cs.1 = value)
+      data %>% dplyr::select(all_of(!!dplyr::enquo(cs1))) %>%
+      rowMeans(na.rm = na.rm) %>% tibble::enframe(name = NULL)  %>%
+      dplyr::rename(cs.1 = value)
     cs2 <-
-      data %>% dplyr::select(all_of(!!dplyr::enquo(cs2))) %>% rowMeans(na.rm = na.rm) %>% tibble::enframe(name = NULL) %>% dplyr::rename(cs.2 = value)
+      data %>% dplyr::select(all_of(!!dplyr::enquo(cs2))) %>%
+      rowMeans(na.rm = na.rm) %>%
+      tibble::enframe(name = NULL) %>%
+      dplyr::rename(cs.2 = value)
     subj <-
-      data %>% dplyr::select(all_of(!!dplyr::enquo(subj))) %>% tibble::as_tibble() %>% dplyr::select(subj = dplyr::everything())
+      data %>% dplyr::select(all_of(!!dplyr::enquo(subj))) %>%
+      tibble::as_tibble() %>%
+      dplyr::select(subj = dplyr::everything())
 
     data <- dplyr::bind_cols(subj, cs1, cs2)
 
     # Here we run all t.tests and we select later on which one we wants. It is
     # a bit too much to run all tests but we save all the if else statements
-    ttest_res <- purrr::map_dfr(.x = seq_len(3), ~ data) %>%
+    ttest_prep <- purrr::map_dfr(.x = seq_len(3), ~ data) %>%
       dplyr::mutate(alternative = rep(c("two.sided", "less", "greater"),
                                       each = nrow(data)), group2 = alternative) %>%
       tidyr::gather(CS, value, -subj, -alternative, -group2) %>%
@@ -60,7 +68,21 @@ t_test_mf <-
           broom::tidy()
       )
 
-    ttest_res <- purrr::invoke("rbind", ttest_res)
+    # Compute effect size
+    ttest_es <-
+      effsize::cohen.d(
+        unlist(cs1),
+        unlist(cs2),
+        pooled = TRUE,
+        paired = TRUE,
+        na.rm = na.rm,
+        hedges.correction = TRUE
+      )
+
+
+    ttest_res <-
+      purrr::invoke("rbind", ttest_prep) %>%
+      dplyr::mutate(effect.size = rep(ttest_es$estimate, 3))
 
     # List to be pasted to broom functions
     if (!!phase %in% c("acquisition", "acq")) {
@@ -80,8 +102,7 @@ t_test_mf <-
         y = dv,
         exclusion = exclusion,
         model = "t-test",
-        controls = NA,
-        effect.size = NA
+        controls = NA
       ) %>%
       dplyr::select(x,
                     y,

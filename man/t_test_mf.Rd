@@ -23,7 +23,7 @@ t_test_mf(
 
 \item{data}{a data frame containing the dv and iv}
 
-\item{subj}{column nmae with the participant number.
+\item{subj}{column name with the participant number.
 It should be a unique number.}
 
 \item{na.rm}{Whether NAs should be removed, default to \code{FALSE}}
@@ -45,4 +45,7 @@ package
 }
 \description{
 Basic function for running a t-test
+}
+\details{
+At the moment the function returns only paired samples t-test. The effect size is Hedge's g.
 }

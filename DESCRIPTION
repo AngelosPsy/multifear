@@ -25,5 +25,6 @@ Imports:
     plyr (>= 1.8.6),
     methods (>= 3.6.2),
     ggplot2 (>= 3.2.1),
-    sjstats (>= 0.17.9)
+    sjstats (>= 0.17.9),
+    effsize (>= 0.7.8)
 RoxygenNote: 7.0.2
