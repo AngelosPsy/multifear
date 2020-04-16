@@ -48,3 +48,13 @@ inference_warning = function(data){
     stop("The data object is not of class data frame. Function terminated.")
   }
 }
+
+select_term = function(obj, term){
+  res <- summary(obj)$tTable %>%
+    data.frame() %>%
+    dplyr::mutate(model = rownames(.)) %>%
+    dplyr::filter(model %in% !!dplyr::enquo(term)) %>%
+    dplyr::select(Value, t.value, p.value)
+
+  return(res)
+}
