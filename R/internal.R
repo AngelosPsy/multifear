@@ -49,12 +49,48 @@ inference_warning = function(data){
   }
 }
 
-select_term = function(obj, term){
-  res <- summary(obj)$tTable %>%
-    data.frame() %>%
-    dplyr::mutate(model = rownames(.)) %>%
-    dplyr::filter(model %in% !!dplyr::enquo(term)) %>%
-    dplyr::select(Value, t.value, p.value)
+select_term = function(obj, term, y = "y", exclusion = "full data"){
+  if(exists("obj")){
+    summ <- summary(obj)
+
+    valz <- summary(obj)$tTable %>%
+      data.frame() %>%
+      dplyr::mutate(model = rownames(.)) %>%
+      dplyr::filter(model %in% !!dplyr::enquo(term)) %>%
+      dplyr::select(Value, t.value, p.value)
+
+    res <- tibble::tibble(
+      x = term,
+      y = y,
+      exclusion = exclusion,
+      model = "mixed_model",
+      controls = NA,
+      method = paste("mixed_model", x),
+      p.value = valz$p.value,
+      effect.size = valz$Value,
+      estimate = valz$Value,
+      statistic = valz$t.value,
+      conf.low = NA,
+      conf.high = NA
+    )
+  } else{
+    tibble::tibble(
+      x = term,
+      y = y,
+      exclusion = exclusion,
+      model = "mixed_model",
+      controls = NA,
+      method = paste("mixed_model", x),
+      p.value = NA,
+      effect.size = NA,
+      estimate = NA,
+      statistic = NA,
+      conf.low = NA,
+      conf.high = NA
+    )
+  }
+  res <- res %>%
+    dplyr::mutate(data_used = list(summ$data))
 
   return(res)
 }

@@ -93,36 +93,187 @@ mixed_mf <- function(cs1,
       group = as.factor(group)
     ) -> data # Better than stringr
 
-  # Now, let's say that you have only 1 trial. These are the models
-  base_model <-
-    nlme::lme(resp ~ 1,
-              random = ~ 1 | subj,
-              data = data,
-              method = "ML",
-              control=list(opt="optim"),
-              correlation = nlme::corAR1())
-
-  cs_model <-
-    nlme::lme(resp ~ cs,
-              random = ~ 1 | subj,
-              data = data,
-              method = "ML",
-              control=list(opt="optim"),
-              correlation = nlme::corAR1())
-
-  m_anova <-
-    stats::anova(base_model, cs_model) %>%
-    dplyr::mutate(models = rownames(.)) %>%
-    dplyr::slice(which.min(BIC)) %>%
-    dplyr::select(models) %>%
-    as.character() %>% parse(text = .) %>%
-    eval()
-
- # Time effects
- # Start cutting the time variable
+  # Time effects contrasts
   cut_point <- mean(1:length(unique(data$time)))
   data <- data %>%
     dplyr::mutate(time2 = as.numeric(as.character(time)) - cut_point)
+
+  # Two standardizations
+  data <- data %>%
+    dplyr::mutate(resp_stand_dv = scale(resp)) %>%
+    dplyr::group_by(subj) %>%
+    dplyr::mutate(resp_stand_pp = scale(resp)) %>%
+    dplyr::ungroup()
+
+  ##########################################
+  ##########################################
+  # ID only as random factor
+  ##########################################
+  ##########################################
+
+  # Run the models 1st standardization
+  base_model_stand_dv <-
+    nlme::lme(resp_stand_dv ~ 1,
+              random = ~ 1 | subj,
+              data = data,
+              method = "ML",
+              control=list(opt = "optim", msMaxIter = 500),
+              na.action = stats::na.omit,
+              correlation = nlme::corAR1())
+
+  cs_model_stand_dv <- stats::update(base_model_stand_dv, . ~ . + cs)
+  cs_time_model_stand_dv <-
+    stats::update(base_model_stand_dv, . ~ . + cs + time2 + cs:time2)
+
+  # Run the models 2st standardization
+  base_model_stand_pp <-
+    nlme::lme(resp_stand_pp ~ 1,
+              random = ~ 1 | subj,
+              data = data,
+              method = "ML",
+              control=list(opt = "optim", msMaxIter = 500),
+              na.action = stats::na.omit,
+              correlation = nlme::corAR1())
+
+  cs_model_stand_pp <- stats::update(base_model_stand_pp, . ~ . + cs)
+  cs_time_model_stand_pp <-
+    stats::update(base_model_stand_pp, . ~ . + cs + time2 + cs:time2)
+
+  ##########################################
+  ##########################################
+  # Add time as random factor
+  ##########################################
+  ##########################################
+
+  # Run the models 1st standardization
+  base_model_rtime_stand_dv <-
+    nlme::lme(resp_stand_dv ~ 1,
+              random = ~ 1 + time2 | subj,
+              data = data,
+              method = "ML",
+              control=list(opt = "optim", msMaxIter = 500),
+              na.action = stats::na.omit,
+              correlation = nlme::corAR1())
+
+  cs_model_rtime_stand_dv <- stats::update(base_model_rtime_stand_dv, . ~ . + cs)
+  cs_time_model_rtime_stand_dv <-
+    stats::update(base_model_rtime_stand_dv, . ~ . + cs + time2 + cs:time2)
+
+  # Run the models 2st standardization
+  base_model_rtime_stand_pp <-
+    nlme::lme(resp_stand_pp ~ 1,
+              random = ~ 1 | subj,
+              data = data,
+              method = "ML",
+              control=list(opt = "optim", msMaxIter = 500),
+              na.action = stats::na.omit,
+              correlation = nlme::corAR1())
+
+  cs_model_rtime_stand_pp <- stats::update(base_model_rtime_stand_pp, . ~ . + cs)
+  cs_time_model_rtime_stand_pp <-
+    stats::update(base_model_rtime_stand_pp, . ~ . + cs + time2 + cs:time2)
+
+  ##########################################
+  ##########################################
+  # Model selection
+  ##########################################
+  ##########################################
+
+
+
+  if (all(sapply(
+    c(
+      "base_model_stand_dv",
+      "cs_model_stand_dv",
+      "cs_time_model_stand_dv"
+    ),
+    exists
+  ))) {
+    b_mc_dv <-
+      stats::anova(base_model_stand_dv,
+            cs_model_stand_dv,
+            cs_time_model_stand_dv) %>%
+      dplyr::mutate(models = rownames(.)) %>%
+      dplyr::slice(which.min(BIC)) %>%
+      dplyr::select(models) %>%
+      as.character() %>% parse(text = .) %>%
+      eval() %>%
+      summary()
+  } else{
+    b_mc_dv <- NA
+  }
+
+
+  if (all(sapply(
+    c(
+      "base_model_stand_pp",
+      "cs_model_stand_pp",
+      "cs_time_model_stand_pp"
+    ),
+    exists
+  ))) {
+    b_mc_pp <-
+      stats::anova(base_model_stand_pp,
+            cs_model_stand_pp,
+            cs_time_model_stand_pp) %>%
+      dplyr::mutate(models = rownames(.)) %>%
+      dplyr::slice(which.min(BIC)) %>%
+      dplyr::select(models) %>%
+      as.character() %>% parse(text = .) %>%
+      eval() %>%
+      summary()
+  } else{
+    b_mc_pp <- NA
+  }
+
+
+  if (all(sapply(
+    c(
+      "base_model_rtime_stand_dv",
+      "cs_model_rtime_stand_dv",
+      "cs_time_model_rtime_stand_dv"
+    ),
+    exists
+  ))) {
+    t_mc_dv <-
+      stats::anova(
+        base_model_rtime_stand_dv,
+        cs_model_rtime_stand_dv,
+        cs_time_model_rtime_stand_dv
+      ) %>%
+      dplyr::mutate(models = rownames(.)) %>%
+      dplyr::slice(which.min(BIC)) %>%
+      dplyr::select(models) %>%
+      as.character() %>% parse(text = .) %>%
+      eval() %>%
+      summary()
+  } else{
+    t_mc_dv <- NA
+  }
+
+  if (all(sapply(
+    c(
+      "base_model_rtime_stand_pp",
+      "cs_model_rtime_stand_pp",
+      "cs_time_model_rtime_stand_pp"
+    ),
+    exists
+  ))) {
+    t_mc_dv <-
+      stats::anova(
+        base_model_rtime_stand_pp,
+        cs_model_rtime_stand_pp,
+        cs_time_model_rtime_stand_pp
+      ) %>%
+      dplyr::mutate(models = rownames(.)) %>%
+      dplyr::slice(which.min(BIC)) %>%
+      dplyr::select(models) %>%
+      as.character() %>% parse(text = .) %>%
+      eval() %>%
+      summary()
+  } else{
+    t_mc_dv <- NA
+  }
 
   base_model_time <-
     nlme::lme(resp ~ time2,
@@ -161,7 +312,8 @@ mixed_mf <- function(cs1,
     dplyr::mutate(models = rownames(.)) %>%
     dplyr::slice(which.min(BIC)) %>%
     dplyr::select(models) %>%
-    as.character() %>% parse(text = .) %>%
+    as.character() %>%
+    parse(text = .) %>%
     eval() %>%
     summary()
 
@@ -176,14 +328,27 @@ mixed_mf <- function(cs1,
     summary()
 
   # Gather the terms now
-  base_model_tab           <- select_term(base_model, "(Intercept)")
-  cs_model_tab             <- select_term(cs_model, "cscs2")
-  base_model_time_tab      <- select_term(base_model_time, "time2")
-  base_model_time_rand_tab <- select_term(base_model_time_rand, "time2")
-  time_cs_model_time_tab   <- select_term(time_cs_model_time, "time2:cscs2")
-  cs_model_time_rand_tab   <- select_term(cs_model_time_rand, "time2:cscs2")
+  base_model_stand_pp_tab <-
+    select_term(base_model_stand_pp, "(Intercept)")
+  cs_model_stand_pp_tab <- select_term(cs_model_stand_pp, "cscs2")
+  cs_time_model_stand_pp_tab <-
+    select_term(cs_time_model_stand_pp, "cscs2:time2")
 
-  # Work on the results
+  base_model_rtime_stand_dv_tab <-
+    select_term(base_model_rtime_stand_dv, "(Intercept)")
+  cs_model_rtime_stand_dv_tab <-
+    select_term(cs_model_rtime_stand_dv, "cscs2")
+  cs_time_model_rtime_stand_dv_tab <-
+    select_term(cs_time_model_rtime_stand_dv, "cscs2:time2")
+
+  base_model_rtime_stand_pp_tab <-
+    select_term(base_model_rtime_stand_pp, "(Intercept)")
+  cs_model_rtime_stand_pp_tab <-
+    select_term(cs_model_rtime_stand_pp, "cscs2")
+  cs_time_model_rtime_stand_pp_tab <-
+    select_term(cs_time_model_rtime_stand_pp, "cscs2:time2")
+
+
   res <- tibble::tibble(
     base_model_tab = base_model_tab,
     cs_model_tab = cs_model_tab,
@@ -193,6 +358,20 @@ mixed_mf <- function(cs1,
     cs_model_time_rand_tab = cs_model_time_rand_tab
   )
 
-              return(res)
+  # Work on the results
+  res <- tibble::tibble(
+    dplyr::bind_rows(
+      base_model_stand_pp_tab,
+      cs_model_stand_pp_tab,
+      cs_time_model_stand_pp_tab,
+      base_model_rtime_stand_dv_tab,
+      cs_model_rtime_stand_dv_tab,
+      cs_time_model_rtime_stand_dv_tab,
+      base_model_rtime_stand_pp_tab,
+      cs_model_rtime_stand_pp_tab,
+      cs_time_model_rtime_stand_pp_tab
+    )
+  )
 
-    }
+  return(res)
+}
