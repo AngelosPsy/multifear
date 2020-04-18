@@ -4,9 +4,10 @@
 # Multifear
 
 Multifear is an R package designed to perform multiverse analyses for
-human conditioning data. The package is currently under heavy
-development and its features change often. You can take the package for
-a spin but please do not use it yet for any publication.
+human conditioning data. **The package is currently under heavy
+development and its features change often. You can give the package for
+a spin but please do not use it yet for any publication as there is much
+more work to be done.**
 
 ## Installing and loading the package
 
