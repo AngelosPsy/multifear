@@ -131,6 +131,12 @@ rm_anova_mf <- function(cs1,
 )
     )))
 
+  # Effect size
+  eff_size <- sjstats::omega_sq(tmpANOVA) %>%
+    dplyr::filter(stratum == paste0("subj:", selected_term)) %>%
+    dplyr::select(omegasq) %>%
+    as.numeric()
+
   # Shape the object for the results. The suppressWarnings is there due to
   # warning from broom::tidy.
   res <-
@@ -147,7 +153,7 @@ rm_anova_mf <- function(cs1,
       estimate = NA,
       conf.low = NA,
       conf.high = NA,
-      effect.size = sjstats::omega_sq(tmpANOVA)
+      effect.size = eff_size
     ) %>%
     dplyr::select(x,
                   y,
