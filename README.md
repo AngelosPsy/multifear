@@ -4,11 +4,11 @@
 # Multifear
 
 Multifear is an R package designed to perform multiverse analyses for
-human conditionin data. The package is currently under heavy development
-and its features change often. You can take the package for a spin but
-please do not use it yet for any publication.
+human conditioning data. The package is currently under heavy
+development and its features change often. You can take the package for
+a spin but please do not use it yet for any publication.
 
-## Instaltion and loading the package
+## Installing and loading the package
 
 ``` r
 # Install devtools package in case it is not yet installed
@@ -108,7 +108,7 @@ we need to provide the following arguments.
     response for the CS- (i.e., CSM1 until CSM10).
 
   - data: This is our data frame that contain that data for the CS+,
-    CS-, as wel as the column with the participant number.
+    CS-, as well as the column with the participant number.
 
   - group. In case of a group, then we need to specify the column with
     the group name. The default option is that there are no groups and
@@ -150,13 +150,13 @@ res
 #> #   data_used <list>
 ```
 
-Let’s go through each column separetely
+Let’s go through each column separately
 
   - x : is the effect that you are testing. For example, the cs means
     that you are testing cs differences. cs:time the cs X time
     interaction is tested. Be careful: when testing interactions, we
     only report the highest order interaction. That means that if you
-    have a cs x time interaciton, you do not get the results of the cs
+    have a cs x time interaction, you do not get the results of the cs
     or the time main effect.
 
   - y: the dependent variable. In the example this is the *scr*
@@ -164,15 +164,15 @@ Let’s go through each column separetely
 
   - exclusion: This columns reports as to what data were included in the
     data set. For example, here you see that we have only full data sets
-    – no exclusion. This is becasue the multifear::universe\_cs() only
+    – no exclusion. This is because the multifear::universe\_cs() only
     analyses full data sets. If we want to apply some exclusion
     criteria, we need to run the multifear::multiverse\_cs() function –
     see later on.
 
   - model: What model was used. For example, here we see t-tests, and
-    rep ANOVA (which means repeated mesures ANOVA).
+    rep ANOVA (which means repeated measures ANOVA).
 
-  - controls: This column is left emtpy. I included it because the specs
+  - controls: This column is left empty. I included it because the specs
     R package had it so we may need to use it later on.
 
   - method: The method is a combination of the *model* and *x* column.
@@ -186,7 +186,7 @@ Let’s go through each column separetely
 
   - statistic. The statistic of the test
 
-  - conf.low nad conf.high In case you have an estimate, this returns
+  - conf.low and conf.high In case you have an estimate, this returns
     the low and high levels of it
 
   - data\_used Here you have a data frame with the data used for the
@@ -247,7 +247,7 @@ of exclusion criteria. So here we are:
 
 3)  CS+/CS- differences in the last half of the trials.
 
-4)  CS+/CS- diffenreces between the last and first trial.
+4)  CS+/CS- differences between the last and first trial.
 
 The cutoff for these differences are defined as 0, 0.05, and 1. So, we
 have every criterion, for every cutoff. So, what the function does is
