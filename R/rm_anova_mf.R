@@ -41,7 +41,7 @@ rm_anova_mf <- function(cs1,
   collection_warning(cs1 = cs1, cs2 = cs2, data = data, subj = subj)
 
   data <-
-    data_preparation(cs1 = cs1, cs2 = cs2, data = data, subj = subj,
+    data_preparation_anova(cs1 = cs1, cs2 = cs2, data = data, subj = subj,
                      time = TRUE, group = NULL)
 
   # Decide which terms you will have in order to feed in the ANOVA later on

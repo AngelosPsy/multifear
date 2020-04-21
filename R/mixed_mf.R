@@ -44,7 +44,7 @@ mixed_mf <- function(cs1,
   )
 
   data <-
-    data_preparation(cs1 = cs1, cs2 = cs2, data = data, subj = subj,
+    data_preparation_anova(cs1 = cs1, cs2 = cs2, data = data, subj = subj,
                      time = TRUE, group = NULL)
   # Time effects contrasts
   cut_point <- mean(1:length(unique(data$time)))

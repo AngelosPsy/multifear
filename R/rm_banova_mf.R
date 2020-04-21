@@ -42,7 +42,7 @@ rm_banova_mf <- function(cs1,
   )
 
   data <-
-    data_preparation(
+    data_preparation_anova(
       cs1 = cs1,
       cs2 = cs2,
       data = data,

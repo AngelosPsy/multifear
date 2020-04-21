@@ -33,22 +33,7 @@ t_test_mf <-
     # Check data
     collection_warning(cs1 = cs1, cs2 = cs2, data = data, subj = subj)
 
-    # Restructure data. rowMeans is used in case multiple trails have been fed
-    cs1 <-
-      data %>% dplyr::select(all_of(!!dplyr::enquo(cs1))) %>%
-      rowMeans(na.rm = na.rm) %>% tibble::enframe(name = NULL)  %>%
-      dplyr::rename(cs.1 = value)
-    cs2 <-
-      data %>% dplyr::select(all_of(!!dplyr::enquo(cs2))) %>%
-      rowMeans(na.rm = na.rm) %>%
-      tibble::enframe(name = NULL) %>%
-      dplyr::rename(cs.2 = value)
-    subj <-
-      data %>% dplyr::select(all_of(!!dplyr::enquo(subj))) %>%
-      tibble::as_tibble() %>%
-      dplyr::select(subj = dplyr::everything())
-
-    data <- dplyr::bind_cols(subj, cs1, cs2)
+    data_preparation_ttest(cs1 = cs1, cs2 = cs2, data = data, subj = subj, na.rm = na.rm)
 
     # Here we run all t.tests and we select later on which one we wants. It is
     # a bit too much to run all tests but we save all the if else statements

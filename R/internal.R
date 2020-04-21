@@ -95,7 +95,7 @@ select_term = function(obj, term, y = "y", exclusion = "full data"){
   return(res)
 }
 
-data_preparation = function(cs1,
+data_preparation_anova = function(cs1,
                             cs2,
                             data,
                             subj,
@@ -159,3 +159,32 @@ data_preparation = function(cs1,
   return(res)
 
 }
+
+
+data_preparation_ttest = function(cs1,
+                                  cs2,
+                                  data,
+                                  subj,
+                                  na.rm = FALSE){
+  collection_warning(cs1 = cs1, cs2 = cs2, data = data, subj = subj)
+
+  # Restructure data. rowMeans is used in case multiple trails have been fed
+  cs1 <-
+    data %>% dplyr::select(all_of(!!dplyr::enquo(cs1))) %>%
+    rowMeans(na.rm = na.rm) %>% tibble::enframe(name = NULL)  %>%
+    dplyr::rename(cs.1 = value)
+  cs2 <-
+    data %>% dplyr::select(all_of(!!dplyr::enquo(cs2))) %>%
+    rowMeans(na.rm = na.rm) %>%
+    tibble::enframe(name = NULL) %>%
+    dplyr::rename(cs.2 = value)
+  subj <-
+    data %>% dplyr::select(all_of(!!dplyr::enquo(subj))) %>%
+    tibble::as_tibble() %>%
+    dplyr::select(subj = dplyr::everything())
+
+  res <- dplyr::bind_cols(subj, cs1, cs2)
+
+  return(res)
+}
+

@@ -8,6 +8,7 @@
   utils::globalVariables ("base_model_time_tab")
   utils::globalVariables ("base_model_time_rand_tab")
   utils::globalVariables ("BIC")
+  utils::globalVariables ("BF")
   utils::globalVariables ("cs")
   utils::globalVariables ("CS")
   utils::globalVariables ("cs1")
