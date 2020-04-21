@@ -94,3 +94,68 @@ select_term = function(obj, term, y = "y", exclusion = "full data"){
 
   return(res)
 }
+
+data_preparation = function(cs1,
+                            cs2,
+                            data,
+                            subj,
+                            time = TRUE,
+                            group = NULL){
+  # Check data
+  collection_warning(cs1 = cs1, cs2 = cs2, data = data, subj = subj)
+
+  cs1 <-
+    data %>% dplyr::select(all_of(!!dplyr::enquo(cs1))) %>% tibble::as_tibble()
+  cs2  <-
+    data %>% dplyr::select(all_of(!!dplyr::enquo(cs2))) %>% tibble::as_tibble()
+  subj <-
+    data %>% dplyr::select(all_of(!!dplyr::enquo(subj))) %>% tibble::as_tibble()
+
+  # Renaming objects to make life a bit easier
+  cs1  <- cs1 %>% dplyr::select(cs1_ = dplyr::everything())
+  cs2  <- cs2 %>% dplyr::select(cs2_ = dplyr::everything())
+  subj <- subj %>% dplyr::select(subj = dplyr::everything())
+
+  if (is.null(group)) {
+    group_new <-
+      data %>%
+      dplyr::mutate(group = rep("NULL", nrow(data))) %>%
+      dplyr::select(group)
+    group <- NULL
+  } else{
+    group_new <- data %>%
+      dplyr::select(tidyselect::all_of(!!dplyr::enquo(group)))
+  }
+
+  data <- dplyr::bind_cols(subj, cs1, cs2, group_new)
+
+  # In case time is selected, create a time object
+  if (time) {
+    # Check if length of cs1 and cs2 is the same. Otherwise stop
+    if (ncol(cs1) != ncol(cs2)) {
+      stop(
+        "You have selected that you want to analyse time effects but the
+        cs1 and cs2 have different number of time points. Stopping function
+        now."
+      )
+    }
+    }
+  data %>%
+    reshape2::melt(
+      id.var = c("subj", "group"),
+      variable.name = "var_old",
+      value.name = "resp",
+      factorsAsStrings = TRUE
+    ) %>% # Until pivot_longer gets better
+    dplyr::mutate(
+      cs = as.factor(stringr::str_sub(var_old, 1, 3)),
+      time = as.factor(sub(".*_", "", .$var_old)),
+      subj = as.factor(subj),
+      group = as.factor(group)
+    ) -> data # Better than stringr
+
+  res <- data
+
+  return(res)
+
+}
