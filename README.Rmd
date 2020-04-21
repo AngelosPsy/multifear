@@ -11,6 +11,10 @@ knitr::opts_chunk$set(
 )
 ```
 
+<!-- badges: start -->
+[![Travis build status](https://travis-ci.org/AngelosPsy/multifear.svg?branch=master)](https://travis-ci.org/AngelosPsy/multifear)
+<!-- badges: end -->
+
 # Multifear
 
 Multifear is an R package designed to perform multiverse analyses for human conditioning data. **The package is currently under heavy development and its features change often. You can give the package for a spin but please do not use it yet for any publication as there is much more work to be done.**
