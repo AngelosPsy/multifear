@@ -53,6 +53,7 @@
   utils::globalVariables ("value")
   utils::globalVariables ("var_old")
   utils::globalVariables ("x")
+  utils::globalVariables ("X1")
   utils::globalVariables ("y")
   invisible ()
 }
