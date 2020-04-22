@@ -6,7 +6,7 @@ Author: Angelos-Miltiadis Krypotos
 Maintainer: Angelos-Miltiadis Krypotos <amkrypotos@gmail.com>
 Description: Functions to perform multiverse analyses, and run a specification
     curve for conditioning data.
-Depends: R (>= 3.4.0)    
+Depends: R (>= 3.0.0)    
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
