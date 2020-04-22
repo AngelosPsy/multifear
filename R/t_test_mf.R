@@ -33,7 +33,14 @@ t_test_mf <-
     # Check data
     collection_warning(cs1 = cs1, cs2 = cs2, data = data, subj = subj)
 
-    data_preparation_ttest(cs1 = cs1, cs2 = cs2, data = data, subj = subj, na.rm = na.rm)
+    data <-
+      data_preparation_ttest(
+        cs1 = cs1,
+        cs2 = cs2,
+        data = data,
+        subj = subj,
+        na.rm = na.rm
+      )
 
     # Here we run all t.tests and we select later on which one we wants. It is
     # a bit too much to run all tests but we save all the if else statements
@@ -56,14 +63,13 @@ t_test_mf <-
     # Compute effect size
     ttest_es <-
       effsize::cohen.d(
-        unlist(cs1),
-        unlist(cs2),
+        unlist(data %>% dplyr::select(all_of("cs.1"))),
+        unlist(data %>% dplyr::select(all_of("cs.2"))),
         pooled = TRUE,
         paired = TRUE,
         na.rm = na.rm,
         hedges.correction = TRUE
       )
-
 
     ttest_res <-
       purrr::invoke("rbind", ttest_prep) %>%

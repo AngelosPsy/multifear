@@ -32,3 +32,5 @@ Imports:
     BayesFactor (>= 0.9.12.4.2),
     bayestestR (>= 0.5.2)
 RoxygenNote: 7.0.2
+Suggests: 
+    testthat (>= 2.1.0)
