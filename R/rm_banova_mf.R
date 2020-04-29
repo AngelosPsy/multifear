@@ -48,13 +48,13 @@ rm_banova_mf <- function(cs1,
       data = data,
       subj = subj,
       time = TRUE,
-      group = NULL
+      group = group
     )
 
   # Decide which terms you will have in order to feed in the ANOVA later on
   if (time && (!is.null(group))) {
     anova_terms <- "resp ~ group*cs*time + subj"
-    selected_term <- "BUG" # Extend to groups
+    selected_term <- "cs:group:subj:time"
   } else if (!time && (is.null(group)))  {
     anova_terms <- "resp ~ cs + subj"
     group = NULL
@@ -66,7 +66,7 @@ rm_banova_mf <- function(cs1,
   } else if (!time && !is.null(group)) {
     anova_terms <- "resp ~ group*cs + subj"
     group = NULL
-    selected_term <- "BUG" # Extend to groups
+    selected_term <- "cs:subj:time"
   }
 
   # Run the main ANOVA
