@@ -9,6 +9,7 @@ t_test_mf(
   cs2,
   data,
   subj,
+  group = NULL,
   na.rm = FALSE,
   paired = TRUE,
   phase = "acquisition",
@@ -25,6 +26,8 @@ t_test_mf(
 
 \item{subj}{column name with the participant number.
 It should be a unique number.}
+
+\item{group}{the name of the group, if included, default to \code{NULL}}
 
 \item{na.rm}{Whether NAs should be removed, default to \code{FALSE}}
 

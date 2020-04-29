@@ -48,20 +48,24 @@ bt_test_mf <-
         cs2 = cs2,
         data = data,
         subj = subj,
+        group = group,
         na.rm = na.rm
       )
 
     # Here we run all t.tests and we select later on which one we wants. It is
     # a bit too much to run all tests but we save all the if else statements
-    ttest_prep <- purrr::map_dfr(.x = seq_len(3), ~ data) %>%
-      dplyr::mutate(alternative = rep(c("c(-Inf, Inf)", "c(-Inf, 0)", "c(0, Inf)"),
-                                      each = nrow(data)), group2 = alternative) %>%
-      tidyr::gather(CS, value, -subj, -alternative, -group2) %>%
-      tidyr::separate(CS, c("CS", "N")) %>%
-      dplyr::group_by(group2)
+
 
     if (is.null(group)) {
-      ttest_run <- ttest_prep %>%
+      ttest_prep <- purrr::map_dfr(.x = seq_len(3), ~ data) %>%
+        dplyr::mutate(alternative = rep(c("c(-Inf, Inf)", "c(-Inf, 0)", "c(0, Inf)"),
+                                        each = nrow(data)), group2 = alternative) %>%
+        tidyr::gather(CS, value, -subj, -alternative, -group2, -group) %>%
+        tidyr::separate(CS, c("CS", "N"),
+                        convert = FALSE, remove = TRUE, fill = "right") %>%
+        dplyr::group_by(group2)
+
+        ttest_run <- ttest_prep %>%
         dplyr::group_map(
           ~ BayesFactor::ttestBF(
             x = .[.$N == 1,]$value,
@@ -75,6 +79,31 @@ bt_test_mf <-
         data.frame() %>%
         select(X1) %>%
         unlist()
+    } else{
+      ttest_prep <- purrr::map_dfr(.x = seq_len(3), ~ data) %>%
+        dplyr::mutate(alternative = rep(c("c(-Inf, Inf)", "c(-Inf, 0)", "c(0, Inf)"),
+                                        each = nrow(data)), group2 = alternative) %>%
+        dplyr::mutate(cs = cs.1 - cs.2) %>%
+        tidyr::gather(CS, value, -subj, -alternative, -group2, -group) %>%
+        tidyr::separate(CS, c("CS", "N"),
+                        convert = FALSE, remove = TRUE, fill = "right") %>%
+        dplyr::group_by(group2)
+
+      ttest_run <- ttest_prep %>%
+        dplyr::group_map(
+          ~ BayesFactor::ttestBF(
+            x = .$value,
+            y = .$group,
+            rscale = rscale,
+            nullInterval = eval(parse(text = .$alternative[1]))
+          ) %>%
+            BayesFactor::extractBF(onlybf = TRUE)
+        ) %>%
+        purrr::invoke(.f = "rbind") %>%
+        data.frame() %>%
+        select(X1) %>%
+        unlist()
+
     }
 
     # List to be pasted to broom functions

@@ -11,6 +11,8 @@
   utils::globalVariables ("BF")
   utils::globalVariables ("cs")
   utils::globalVariables ("CS")
+  utils::globalVariables ("cs.1")
+  utils::globalVariables ("cs.2")
   utils::globalVariables ("cs1")
   utils::globalVariables ("cs2")
   utils::globalVariables ("cs_fhalf")

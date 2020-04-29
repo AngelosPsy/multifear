@@ -165,6 +165,7 @@ data_preparation_ttest = function(cs1,
                                   cs2,
                                   data,
                                   subj,
+                                  group = NULL,
                                   na.rm = FALSE){
   collection_warning(cs1 = cs1, cs2 = cs2, data = data, subj = subj)
 
@@ -183,7 +184,18 @@ data_preparation_ttest = function(cs1,
     tibble::as_tibble() %>%
     dplyr::select(subj = dplyr::everything())
 
-  res <- dplyr::bind_cols(subj, cs1, cs2)
+  tmp_data <- dplyr::bind_cols(subj, cs1, cs2)
+
+
+  if(is.null(group)){
+    tmp_data <- tmp_data %>% dplyr::mutate(group = "NULL")
+  } else{
+    groupz <- data %>% dplyr::select(all_of(!!dplyr::enquo(group))) %>% unlist()
+    tmp_data <- tmp_data %>% dplyr::mutate(group = as.factor(groupz))
+  }
+
+
+  res <- tmp_data
 
   return(res)
 }
