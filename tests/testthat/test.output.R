@@ -43,5 +43,5 @@ test_that("rm_anova_mf works", {
 
 # This one takes a lot of time.
 #test_that("rm_banova_mf for groups works", {
-#  expect_known_output(rm_banova_mf(cs1, cs2, subj = subj, group = group, data = bf_data), tmp)
+#  expect_known_output(rm_banova_mf(cs1, cs2, subj = subj, group = group, data = bf_data, multicore = TRUE), tmp)
 #})

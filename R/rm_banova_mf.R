@@ -10,11 +10,13 @@
 #' @param data a data frame containing the dv and iv
 #' @param group name of the group variable, if it is present, default to \code{NULL}
 #' @param phase Different tests will be run for different phases. That is why
+
 #' the phase needs to be specified here. Possible values are \code{acquisition},
 #' or \code{acq}, \code{extinction}, or \code{extinction}. See Details for more
 #' information.
 #' @param dv name of the dependent variable, default to "SCR"
 #' @param exclusion If any exclusion was done, default to \code{full data}
+#' @param multicore The option to run the analysis in multiple cores, not available under Windows. Default to TRUE
 #' @return A basic function for running repeated measures ANOVAs
 #' @details In case the \code{time} argument is set to true, the function will
 #' include this as a within subjects factor, assuming that the columns in
@@ -33,7 +35,8 @@ rm_banova_mf <- function(cs1,
                          group = NULL,
                          phase = "acquisition",
                          dv = "scr",
-                         exclusion = "full data") {
+                         exclusion = "full data",
+                         multicore = TRUE) {
   collection_warning(
     cs1 = cs1,
     cs2 = cs2,
@@ -75,7 +78,8 @@ rm_banova_mf <- function(cs1,
       formula = eval(parse(text = anova_terms)),
       data = data,
       whichRandom = subj,
-      progress = FALSE
+      progress = FALSE,
+      multicore = multicore
     )
 
   # Bayes factors for matched models
