@@ -69,7 +69,7 @@ rm_banova_mf <- function(cs1,
   } else if (!time && !is.null(group)) {
     anova_terms <- "resp ~ group*cs + subj"
     group = NULL
-    selected_term <- "cs:subj:time"
+    selected_term <- "cs:group:subj"
   }
 
   # Run the main ANOVA
@@ -107,7 +107,7 @@ rm_banova_mf <- function(cs1,
     method = paste("rep BANOVA Matched", selected_term),
     p.value = NA,
     effect.size = NA,
-    estimate = bfmm,
+    estimate = as.character(bfmm),
     statistic = NA,
     conf.low = NA,
     conf.high = NA
@@ -122,13 +122,14 @@ rm_banova_mf <- function(cs1,
     method = paste("rep BANOVA Unmatched", selected_term),
     p.value = NA,
     effect.size = NA,
-    estimate = bfum,
+    estimate = as.character(bfum),
     statistic = NA,
     conf.low = NA,
     conf.high = NA
   )
 
   res <- rbind(bfmm_res, bfum_res) %>%
+    tibble::as_tibble() %>%
     dplyr::mutate(data_used = list(data))
 
   return(res)

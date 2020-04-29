@@ -133,6 +133,7 @@ bt_test_mf <-
       conf.low = NA,
       conf.high = NA
     ) %>%
+      tibble::as_tibble() %>%
       dplyr::mutate(data_used = list(data))
 
     return(res)

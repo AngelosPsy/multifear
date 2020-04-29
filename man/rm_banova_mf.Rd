@@ -13,7 +13,8 @@ rm_banova_mf(
   group = NULL,
   phase = "acquisition",
   dv = "scr",
-  exclusion = "full data"
+  exclusion = "full data",
+  multicore = TRUE
 )
 }
 \arguments{
@@ -38,6 +39,8 @@ information.}
 \item{dv}{name of the dependent variable, default to "SCR"}
 
 \item{exclusion}{If any exclusion was done, default to \code{full data}}
+
+\item{multicore}{The option to run the analysis in multiple cores, not available under Windows. Default to TRUE}
 }
 \value{
 A basic function for running repeated measures ANOVAs

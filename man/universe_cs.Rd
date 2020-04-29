@@ -12,6 +12,7 @@ universe_cs(
   group = NULL,
   phase = "acquisition",
   na.rm = FALSE,
+  dv = "scr",
   print_output = TRUE,
   exclusion = "full data"
 )
@@ -34,6 +35,8 @@ or \code{acq}, \code{extinction}, or \code{extinction}. See Details for more
 information.}
 
 \item{na.rm}{Should NAs be removed? Default set the \code{FALSE}}
+
+\item{dv}{name of the dependent variable, default to "SCR"}
 
 \item{print_output}{Whether to print the output or not. Default set to \code{TRUE}}
 
