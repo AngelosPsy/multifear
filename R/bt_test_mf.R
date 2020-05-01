@@ -1,24 +1,39 @@
 #' bt_test_mf
 #'
-#' @description Basic function for running a Bayesian t-test
-#' @param cs1 cs 1
-#' @param cs2 cs 2
-#' @param subj column name with the participant number.
-#' It should be a unique number.
-#' @param group name of the group variable, if it is present, default to \code{NULL}
-#' @param data a data frame containing the dv and iv
-#' @param paired whether the t-test refers to a paired or independent t-test.
-#' @param phase Different tests will be run for different phases. That is why
-#' the phase needs to be specified here. Possible values are \code{acquisition},
-#' or \code{acq}, \code{extnction}, or \code{extinction}. See Details for more
-#' information.
-#' @param dv name of the dependent variable, default to "SCR"
-#' @param na.rm Whether NAs should be removed, default to \code{FALSE}
-#' @param exclusion If any exclusion was done, default to \code{full data}
-#' @param rscale r scale to be used in the prior of the alternative hypothesis
-#' @details At the moment the function returns only paired samples t-test. The effect size is Hedge's g.
-#' @return a basic function for running a t-test within the \code{multifear}
-#' package
+#' \lifecycle{experimental}
+#'
+#' Basic function for running the Bayesian t-tests included in the main analyses.
+#' @inheritParams t_test_mf
+#' @param rscale r scale to be used in the prior of the alternative hypothesis, default to "medium".
+#' @return A tibble with the following column names:
+#' x: the name of the independent variable (e.g., cs)
+#' y: the name of the dependent variable as this defined in the \code{dv} argument
+#' exclusion: see \code{exclusion} argument
+#' model: the model that was run (e.g., t-test)
+#' controls: ignore this column for this test
+#' method: the model that was ru
+#' p.value: irrelevant here
+#' effect.size: irrelevant here
+#' estimate: the estimate of the test run
+#' statistic: the t-value
+#' conf.low: the lower confidence interval for the estimate
+#' conf.high: the higher confidence interval for the estimate
+#' data_used: a list with the data used for the specific test
+#'
+#' @details This is a wrapper function function around the BayesFactor::ttestBF(),
+#' running multiple Bayesian t-tests. Similar to the \code{t_test_mf} function, the function will run different t-tests based on the phase that the t-tests refer to.
+#'
+#' @examples
+#' # Load example data
+#' data(example_data)
+#'
+#' # Paired sample t-tests
+#' bt_test_mf(cs1 = "CSP1", cs2 = "CSM1", subj = "id", data = example_data)
+#'
+#' # Independent  sample t-tests
+#' bt_test_mf(cs1 = "CSP1", cs2 = "CSM1", subj = "id",  group = "group", data = example_data)
+#'
+#'
 #' @importFrom dplyr %>%
 #' @export
 
@@ -77,7 +92,7 @@ bt_test_mf <-
         ) %>%
         purrr::invoke(.f = "rbind") %>%
         data.frame() %>%
-        select(X1) %>%
+        dplyr::select(X1) %>%
         unlist()
     } else{
       ttest_prep <- purrr::map_dfr(.x = seq_len(3), ~ data) %>%
@@ -101,9 +116,8 @@ bt_test_mf <-
         ) %>%
         purrr::invoke(.f = "rbind") %>%
         data.frame() %>%
-        select(X1) %>%
+        dplyr::select(X1) %>%
         unlist()
-
     }
 
     # List to be pasted to broom functions

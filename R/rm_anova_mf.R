@@ -1,32 +1,48 @@
 #' rm_anova_mf
 #'
-#' @description Basic function for running repeated measures ANOVA
-#' @param cs1 cs 1
-#' @param cs2 cs 2
-#' @param data a data frame containing the dv and iv
+#' @description Basic function for running the frequentist's repeated measures ANOVA
+#'
+#' \lifecycle{experimental}
+#'
+#' @inheritParams t_test_mf
 #' @param time should time be included? Default to \code{TRUE}
-#' @param subj column nmae with the participant number.
-#' It should be a unique number.
-#' @param data a data frame containing the dv and iv
-#' @param group name of the group variable, if it is present, default to \code{NULL}
-#' @param phase Different tests will be run for different phases. That is why
-#' the phase needs to be specified here. Possible values are \code{acquisition},
-#' or \code{acq}, \code{extinction}, or \code{extinction}. See Details for more
-#' information.
-#' @param dv name of the dependent variable, default to "SCR"
-#' @param exclusion If any exclusion was done, default to \code{full data}
 #' @return A basic function for running repeated measures ANOVAs
-#' @details In case the \code{time} argument is set to true, the function will
-#' include this as a within subjects factor, assuming that the columns in
-#' \code{cs1} and \code{cs2} corrrespond to ascending time points (e.g., cs1
+#' @details In case the \code{time} argument is set to \cite{TRUE} (default value), the function will include this as a within subjects factor, assuming that the columns in
+#' \code{cs1} and \code{cs2} correspond to ascending time points (e.g., cs1
 #' trial 1, cs1 trial 2 ... cs1 trial \code{n}). If this is not the case, the
 #' results are not to be trusted.
 #'
-#' The function uses the \code{ez::ezANOVA} function. The function gives by default a warning regarding the collapsing of factors. This function here suppresses this warning but the user should be aware of it.
+#' The function uses the \code{ez::ezANOVA} function. The function gives by default a warning regarding the collapsing of factors. This function here suppresses this warning but the user should be aware of it. Please note that at the moment no sphericity correction is performed. The reported effect size is omega squared.
 #'
-#' The effect size is omega squared.
-#' @importFrom dplyr select
-#' @importFrom dplyr filter
+#' @return A tibble with the following column names:
+#' x: the name of the independent variable (e.g., cs)
+#' y: the name of the dependent variable as this defined in the \code{dv} argument
+#' exclusion: see \code{exclusion} argument
+#' model: the model that was run (e.g., t-test)
+#' controls: ignore this column for this test
+#' method: the model that was ru
+#' p.value: the p-value of the test
+#' effect.size: the estimated effect size
+#' estimate: the estimate of the test run
+#' statistic: the t-value
+#' conf.low: the lower confidence interval for the estimate
+#' conf.high: the higher confidence interval for the estimate
+#' data_used: a list with the data used for the specific test
+#'
+#' @examples
+#' # Load example data
+#' data(example_data)
+#'
+#' # Briefly define argument values that will be plugged in later on in the functions
+#' cs1 <- paste0("CSP", 1:10)
+#' cs2 <- paste0("CSM", 1:10)
+#' subj <- "id"
+#' group <- "group"
+#'
+#' # Repeated measures ANOVA
+#' rm_anova_mf(cs1 = cs1, cs2 = cs2, subj = subj, data = example_data, time = TRUE)
+#'
+#'
 #' @importFrom stats time
 #' @export
 rm_anova_mf <- function(cs1,

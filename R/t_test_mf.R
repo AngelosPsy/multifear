@@ -1,23 +1,47 @@
 #' t_test_mf
 #'
-#' @description Basic function for running a t-test
-#' @param cs1 cs 1
-#' @param cs2 cs 2
-#' @param subj column name with the participant number.
-#' It should be a unique number.
-#' @param data a data frame containing the dv and iv
-#' @param paired whether the t-test refers to a paired or independent t-test.
-#' @param phase Different tests will be run for different phases. That is why
-#' the phase needs to be specified here. Possible values are \code{acquisition},
-#' or \code{acq}, \code{extnction}, or \code{extinction}. See Details for more
-#' information.
-#' @param dv name of the dependent variable, default to "SCR"
-#' @param group the name of the group, if included, default to \code{NULL}
-#' @param na.rm Whether NAs should be removed, default to \code{FALSE}
-#' @param exclusion If any exclusion was done, default to \code{full data}
-#' @details At the moment the function returns only paired samples t-test. The effect size is Hedge's g.
-#' @return a basic function for running a t-test within the \code{multifear}
-#' package
+#' \lifecycle{experimental}
+#'
+#' @description Basic function for running the frequentist's t-tests included in the main analyses
+#' @param cs1 The column name(s) of the conditioned responses for the first conditioned stimulus.
+#' @param cs2 The column name(s) of the conditioned responses for the second conditioned stimulus.
+#' @param subj The name of the column including the participant numbers. Unique numbers are expected.
+#' @param group The name of the column including the group name. Default to \code{NULL} (i.e., no groups).
+#' @param data A data frame containing with all the relevant columns
+#' @param paired Whether the t-test refers to a paired or independent sample(s). Default to \code{TRUE}.
+#' @param phase The conditioned phase that the analyses refer to. Accepted values are  \code{acquisition},  or \code{acq}, \code{extinction}, or \code{ext}.
+#' @param dv name of the measured conditioned response. Default to \code{"SCR"}.
+#' @param group the name of the group, if included, default to \code{NULL}.
+#' @param na.rm Whether NAs should be removed, default to \code{FALSE}.
+#' @param exclusion If any exclusion criteria were applied, default to \code{full data}
+#' @details Given the correct names for the \code{cs1}, \code{cs2}, \code{subj}, and \code{data}, the function will run one- and two-sided frequentist's t-tests. In case \code{cs1} or \code{cs2} refer to multiple columns, the mean -- per row -- for each one of these variables will be computed first before running the test. Please note that cs1 is implicitly referred to the cs that is reinforced, and cs2 to the cs that is not reinforced.
+#' Depending on whether the data refer to an acqusition or extinction phase (as defined in the \code{phase} argument), the function will return a positive one sided, or negative one-sided, t-test in addition to the two-sided t-test. The returned effect size is  Hedge's g.
+#'
+#' @return A tibble with the following column names:
+#' x: the name of the independent variable (e.g., cs)
+#' y: the name of the dependent variable as this defined in the \code{dv} argument
+#' exclusion: see \code{exclusion} argument
+#' model: the model that was run (e.g., t-test)
+#' controls: ignore this column for this test
+#' method: the model that was ru
+#' p.value: the p-value of the test
+#' effect.size: the estimated effect size
+#' estimate: the estimate of the test run
+#' statistic: the t-value
+#' conf.low: the lower confidence interval for the estimate
+#' conf.high: the higher confidence interval for the estimate
+#' data_used: a list with the data used for the specific test
+#'
+#' @examples
+#' # Load example data
+#' data(example_data)
+#'
+#' # Paired sample t-tests
+#' t_test_mf(cs1 = "CSP1", cs2 = "CSM1", subj = "id", data = example_data)
+#'
+#' # Independent  sample t-tests
+#' t_test_mf(cs1 = "CSP1", cs2 = "CSM1", subj = "id",  group = "group", data = example_data)
+#'
 #' @importFrom dplyr %>%
 #' @export
 
@@ -32,6 +56,7 @@ t_test_mf <-
            phase = "acquisition",
            dv = "scr",
            exclusion = "full data") {
+
     # Check data
     collection_warning(
       cs1 = cs1,
@@ -50,12 +75,12 @@ t_test_mf <-
         na.rm = na.rm
       )
 
-    # Here we run all t.tests and we select later on which one we wants. It is
-    # a bit too much to run all tests but we save all the if else
-    #
+    # Here we run all t.tests and we select later on which ones we want.
+
     #####################################
-    # No groups
+    # Paired samples t-test
     #####################################
+
     if (!is.null(group)) {
       ttest_prep_tmp <- purrr::map_dfr(.x = seq_len(3), ~ data) %>%
         dplyr::mutate(
@@ -88,10 +113,11 @@ t_test_mf <-
         )
 
     } else {
+
       #####################################
-      # With groups
+      # Independent samples
       #####################################
-      #
+
       ttest_prep <- purrr::map_dfr(.x = seq_len(3), ~ data) %>%
         dplyr::mutate(alternative = rep(c("two.sided", "less", "greater"),
                                         each = nrow(data)),
@@ -119,7 +145,6 @@ t_test_mf <-
           na.rm = na.rm,
           hedges.correction = TRUE
         )
-
     }
 
     ttest_res <-

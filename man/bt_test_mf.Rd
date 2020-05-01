@@ -19,39 +19,62 @@ bt_test_mf(
 )
 }
 \arguments{
-\item{cs1}{cs 1}
+\item{cs1}{The column name(s) of the conditioned responses for the first conditioned stimulus.}
 
-\item{cs2}{cs 2}
+\item{cs2}{The column name(s) of the conditioned responses for the second conditioned stimulus.}
 
-\item{data}{a data frame containing the dv and iv}
+\item{data}{A data frame containing with all the relevant columns}
 
-\item{subj}{column name with the participant number.
-It should be a unique number.}
+\item{subj}{The name of the column including the participant numbers. Unique numbers are expected.}
 
-\item{group}{name of the group variable, if it is present, default to \code{NULL}}
+\item{group}{the name of the group, if included, default to \code{NULL}.}
 
-\item{na.rm}{Whether NAs should be removed, default to \code{FALSE}}
+\item{na.rm}{Whether NAs should be removed, default to \code{FALSE}.}
 
-\item{paired}{whether the t-test refers to a paired or independent t-test.}
+\item{paired}{Whether the t-test refers to a paired or independent sample(s). Default to \code{TRUE}.}
 
-\item{rscale}{r scale to be used in the prior of the alternative hypothesis}
+\item{rscale}{r scale to be used in the prior of the alternative hypothesis, default to "medium".}
 
-\item{phase}{Different tests will be run for different phases. That is why
-the phase needs to be specified here. Possible values are \code{acquisition},
-or \code{acq}, \code{extnction}, or \code{extinction}. See Details for more
-information.}
+\item{phase}{The conditioned phase that the analyses refer to. Accepted values are  \code{acquisition},  or \code{acq}, \code{extinction}, or \code{ext}.}
 
-\item{dv}{name of the dependent variable, default to "SCR"}
+\item{dv}{name of the measured conditioned response. Default to \code{"SCR"}.}
 
-\item{exclusion}{If any exclusion was done, default to \code{full data}}
+\item{exclusion}{If any exclusion criteria were applied, default to \code{full data}}
 }
 \value{
-a basic function for running a t-test within the \code{multifear}
-package
+A tibble with the following column names:
+x: the name of the independent variable (e.g., cs)
+y: the name of the dependent variable as this defined in the \code{dv} argument
+exclusion: see \code{exclusion} argument
+model: the model that was run (e.g., t-test)
+controls: ignore this column for this test
+method: the model that was ru
+p.value: irrelevant here
+effect.size: irrelevant here
+estimate: the estimate of the test run
+statistic: the t-value
+conf.low: the lower confidence interval for the estimate
+conf.high: the higher confidence interval for the estimate
+data_used: a list with the data used for the specific test
 }
 \description{
-Basic function for running a Bayesian t-test
+\lifecycle{experimental}
 }
 \details{
-At the moment the function returns only paired samples t-test. The effect size is Hedge's g.
+Basic function for running the Bayesian t-tests included in the main analyses.
+
+This is a wrapper function function around the BayesFactor::ttestBF(),
+running multiple Bayesian t-tests. Similar to the \code{t_test_mf} function, the function will run different t-tests based on the phase that the t-tests refer to.
+}
+\examples{
+# Load example data
+data(example_data)
+
+# Paired sample t-tests
+bt_test_mf(cs1 = "CSP1", cs2 = "CSM1", subj = "id", data = example_data)
+
+# Independent  sample t-tests
+bt_test_mf(cs1 = "CSP1", cs2 = "CSM1", subj = "id",  group = "group", data = example_data)
+
+
 }

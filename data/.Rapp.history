@@ -3,3 +3,6 @@ ls()
 example_data
 dim(example_data)
 head(example_data)
+load("/Users/angeloskrypotos/Dropbox/PostDocLeuven/projects/multiverse/multifear/data/example_data.rda")
+ls()
+example_data

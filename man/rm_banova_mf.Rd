@@ -18,35 +18,46 @@ rm_banova_mf(
 )
 }
 \arguments{
-\item{cs1}{cs 1}
+\item{cs1}{The column name(s) of the conditioned responses for the first conditioned stimulus.}
 
-\item{cs2}{cs 2}
+\item{cs2}{The column name(s) of the conditioned responses for the second conditioned stimulus.}
 
-\item{data}{a data frame containing the dv and iv}
+\item{data}{A data frame containing with all the relevant columns}
 
-\item{subj}{column nmae with the participant number.
-It should be a unique number.}
+\item{subj}{The name of the column including the participant numbers. Unique numbers are expected.}
 
 \item{time}{should time be included? Default to \code{TRUE}}
 
-\item{group}{name of the group variable, if it is present, default to \code{NULL}}
+\item{group}{the name of the group, if included, default to \code{NULL}.}
 
-\item{phase}{Different tests will be run for different phases. That is why
-the phase needs to be specified here. Possible values are \code{acquisition},
-or \code{acq}, \code{extinction}, or \code{extinction}. See Details for more
-information.}
+\item{phase}{The conditioned phase that the analyses refer to. Accepted values are  \code{acquisition},  or \code{acq}, \code{extinction}, or \code{ext}.}
 
-\item{dv}{name of the dependent variable, default to "SCR"}
+\item{dv}{name of the measured conditioned response. Default to \code{"SCR"}.}
 
-\item{exclusion}{If any exclusion was done, default to \code{full data}}
+\item{exclusion}{If any exclusion criteria were applied, default to \code{full data}}
 
 \item{multicore}{The option to run the analysis in multiple cores, not available under Windows. Default to TRUE}
 }
 \value{
-A basic function for running repeated measures ANOVAs
+A tibble with the following column names:
+x: the name of the independent variable (e.g., cs)
+y: the name of the dependent variable as this defined in the \code{dv} argument
+exclusion: see \code{exclusion} argument
+model: the model that was run (e.g., t-test)
+controls: ignore this column for this test
+method: the model that was ru
+p.value: irrelevant here
+effect.size: irrelevant here
+estimate: the estimate of the test run
+statistic: the t-value
+conf.low: the lower confidence interval for the estimate
+conf.high: the higher confidence interval for the estimate
+data_used: a list with the data used for the specific test
 }
 \description{
-Basic function for running repeated measures Bayesian ANOVA
+Basic function for running the Bayesian repeated measures ANOVA
+
+\lifecycle{experimental}
 }
 \details{
 In case the \code{time} argument is set to true, the function will
@@ -55,5 +66,12 @@ include this as a within subjects factor, assuming that the columns in
 trial 1, cs1 trial 2 ... cs1 trial \code{n}). If this is not the case, the
 results are not to be trusted.
 
-The function uses the \code{BayesFactor::anovaBF} function.
+# Briefly define argument values that will be plugged in later on in the functions
+cs1 <- paste0("CSP", 1:10)
+cs2 <- paste0("CSM", 1:10)
+subj <- "id"
+group <- "group"
+
+# Repeated measures ANOVA
+rm_banova_mf(cs1 = cs1, cs2 = cs2, subj = subj, data = example_data, time = TRUE)
 }

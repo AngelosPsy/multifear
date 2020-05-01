@@ -33,7 +33,7 @@ chop_css <- function(cs1, cs2, data, subj, na.rm = FALSE) {
     dplyr::group_by(rowname) %>%
     dplyr::summarise_all(diff) %>%
     dplyr::mutate(id = data$id) %>%
-    select(-rowname)
+    dplyr::select(-rowname)
 
   res <- dplyr::bind_cols(data, csbind)
 

@@ -17,23 +17,19 @@ multiverse_cs(
 )
 }
 \arguments{
-\item{cs1}{cs 1}
+\item{cs1}{The column name(s) of the conditioned responses for the first conditioned stimulus.}
 
-\item{cs2}{cs 2}
+\item{cs2}{The column name(s) of the conditioned responses for the second conditioned stimulus.}
 
-\item{data}{a data frame containing the dv and iv}
+\item{data}{A data frame containing with all the relevant columns}
 
-\item{subj}{column nmae with the participant number.
-It should be a unique number.}
+\item{subj}{The name of the column including the participant numbers. Unique numbers are expected.}
 
-\item{group}{name of the group variable, if it is present, default to \code{NULL}}
+\item{group}{the name of the group, if included, default to \code{NULL}.}
 
 \item{cutoff}{A numeric vector of the cutoff criteria applied. Default to \code{0, 0.05, .1}}
 
-\item{phase}{Different tests will be run for different phases. That is why
-the phase needs to be specified here. Possible values are \code{acquisition},
-or \code{acq}, \code{extinction}, or \code{extinction}. See Details for more
-information.}
+\item{phase}{The conditioned phase that the analyses refer to. Accepted values are  \code{acquisition},  or \code{acq}, \code{extinction}, or \code{ext}.}
 
 \item{na.rm}{Should NAs be removed? Default set the \code{FALSE}}
 
