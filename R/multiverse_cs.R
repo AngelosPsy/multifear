@@ -70,8 +70,14 @@ multiverse_cs <-
         exclusion = .y
       )
     ) %>% dplyr::mutate(
-      cutoff = rep(excl_data_sets_final$cutoff, each = 4),
-      name_cutoff = rep(excl_data_sets_final$nam_cut, each = 4)
+      cutoff = rep(
+        excl_data_sets_final$cutoff,
+        each = nrow(.) / length(excl_data_sets_final$cutoff)
+      ),
+      name_cutoff = rep(
+        excl_data_sets_final$nam_cut,
+        each = nrow(.) / length(excl_data_sets_final$nam_cut)
+      )
     )
 
     # Should output be printed

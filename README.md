@@ -7,7 +7,6 @@
 status](https://travis-ci.org/AngelosPsy/multifear.svg?branch=master)](https://travis-ci.org/AngelosPsy/multifear)
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
-[![Last-changedate](https://img.shields.io/badge/last%20change-2020--05--01-yellowgreen.svg)](/commits/master)
 <!-- badges: end -->
 
 # Multifear
@@ -39,16 +38,8 @@ doing that, let’s load some additional packages that we need for our
 example.
 
 ``` r
-library(dplyr)
-#> 
-#> Attaching package: 'dplyr'
-#> The following objects are masked from 'package:stats':
-#> 
-#>     filter, lag
-#> The following objects are masked from 'package:base':
-#> 
-#>     intersect, setdiff, setequal, union
-library(ggplot2)
+suppressPackageStartupMessages(library(dplyr))
+suppressPackageStartupMessages(library(ggplot2))
 ```
 
 Now we will use some simulated data set that are included as example
@@ -155,50 +146,6 @@ res <- multifear::universe_cs(cs1 = cs1, cs2 = cs2, data = example_data, subj = 
 #>   dfbetas.influence.merMod        car
 #> Note: Progress bars and callbacks are suppressed when running multicore.
 #> Note: Progress bars and callbacks are suppressed when running multicore.
-#> Warning in bind_rows_(x, .id): binding character and factor vector, coercing
-#> into character vector
-
-#> Warning in bind_rows_(x, .id): binding character and factor vector, coercing
-#> into character vector
-
-#> Warning in bind_rows_(x, .id): binding character and factor vector, coercing
-#> into character vector
-
-#> Warning in bind_rows_(x, .id): binding character and factor vector, coercing
-#> into character vector
-
-#> Warning in bind_rows_(x, .id): binding character and factor vector, coercing
-#> into character vector
-
-#> Warning in bind_rows_(x, .id): binding character and factor vector, coercing
-#> into character vector
-
-#> Warning in bind_rows_(x, .id): binding character and factor vector, coercing
-#> into character vector
-
-#> Warning in bind_rows_(x, .id): binding character and factor vector, coercing
-#> into character vector
-
-#> Warning in bind_rows_(x, .id): binding character and factor vector, coercing
-#> into character vector
-
-#> Warning in bind_rows_(x, .id): binding character and factor vector, coercing
-#> into character vector
-
-#> Warning in bind_rows_(x, .id): binding character and factor vector, coercing
-#> into character vector
-
-#> Warning in bind_rows_(x, .id): binding character and factor vector, coercing
-#> into character vector
-
-#> Warning in bind_rows_(x, .id): binding character and factor vector, coercing
-#> into character vector
-
-#> Warning in bind_rows_(x, .id): binding character and factor vector, coercing
-#> into character vector
-
-#> Warning in bind_rows_(x, .id): binding character and factor vector, coercing
-#> into character vector
 ```
 
 And here are the results
@@ -269,8 +216,53 @@ So now let’s see how you can run the same analyses but after we apply
 some selection criteria for non-learns. So, here it is
 
 ``` r
-#res_multi <- multifear::multiverse_cs(cs1 = cs1, cs2 = cs2, data = example_data, subj = "id", group = NULL, phase = "acquisition")
-#res_multi
+res_multi <- multifear::multiverse_cs(cs1 = cs1, cs2 = cs2, data = example_data, subj = "id", group = NULL, phase = "acquisition")
+#> Note: Progress bars and callbacks are suppressed when running multicore.
+#> Note: Progress bars and callbacks are suppressed when running multicore.
+#> Note: Progress bars and callbacks are suppressed when running multicore.
+#> Note: Progress bars and callbacks are suppressed when running multicore.
+#> Note: Progress bars and callbacks are suppressed when running multicore.
+#> Note: Progress bars and callbacks are suppressed when running multicore.
+#> Note: Progress bars and callbacks are suppressed when running multicore.
+#> Note: Progress bars and callbacks are suppressed when running multicore.
+#> Note: Progress bars and callbacks are suppressed when running multicore.
+#> Note: Progress bars and callbacks are suppressed when running multicore.
+#> Note: Progress bars and callbacks are suppressed when running multicore.
+#> Note: Progress bars and callbacks are suppressed when running multicore.
+#> Note: Progress bars and callbacks are suppressed when running multicore.
+#> Note: Progress bars and callbacks are suppressed when running multicore.
+#> Note: Progress bars and callbacks are suppressed when running multicore.
+#> Note: Progress bars and callbacks are suppressed when running multicore.
+#> Note: Progress bars and callbacks are suppressed when running multicore.
+#> Note: Progress bars and callbacks are suppressed when running multicore.
+#> Note: Progress bars and callbacks are suppressed when running multicore.
+#> Note: Progress bars and callbacks are suppressed when running multicore.
+#> Note: Progress bars and callbacks are suppressed when running multicore.
+#> Note: Progress bars and callbacks are suppressed when running multicore.
+#> Note: Progress bars and callbacks are suppressed when running multicore.
+#> Note: Progress bars and callbacks are suppressed when running multicore.
+#> Note: Progress bars and callbacks are suppressed when running multicore.
+#> Note: Progress bars and callbacks are suppressed when running multicore.
+#> Note: Progress bars and callbacks are suppressed when running multicore.
+#> Note: Progress bars and callbacks are suppressed when running multicore.
+#> Note: Progress bars and callbacks are suppressed when running multicore.
+#> Note: Progress bars and callbacks are suppressed when running multicore.
+res_multi
+#> # A tibble: 150 x 15
+#>    x     y     exclusion model controls method  p.value effect.size estimate
+#>    <chr> <chr> <chr>     <chr> <lgl>    <chr>     <dbl>       <dbl>    <dbl>
+#>  1 cs    scr   full_data t-te… NA       t-test  3.77e-3      0.455    0.752 
+#>  2 cs    scr   full_data t-te… NA       t-test  7.53e-3      0.455    0.752 
+#>  3 cs    scr   full_data Baye… NA       t-test NA           NA       11.5   
+#>  4 cs    scr   full_data Baye… NA       t-test NA           NA        0.0673
+#>  5 cs:t… scr   full_data rep … NA       rep A…  3.70e-9      0.0247  NA     
+#>  6 cs    scr   full_data rep … NA       rep A…  2.47e-7      0.0863  NA     
+#>  7 cs:s… scr   full_data rep … NA       rep B… NA           NA       NA     
+#>  8 cs:s… scr   full_data rep … NA       rep B… NA           NA       NA     
+#>  9 cs:s… scr   full_data rep … NA       rep B… NA           NA       NA     
+#> 10 cs:s… scr   full_data rep … NA       rep B… NA           NA       NA     
+#> # … with 140 more rows, and 6 more variables: statistic <dbl>, conf.low <dbl>,
+#> #   conf.high <dbl>, data_used <list>, cutoff <dbl>, name_cutoff <chr>
 ```
 
 In terms of calling the function, we see that we need exactly the same
@@ -284,7 +276,9 @@ reproduction criteria. So, the easiest thing to do is to see the
 exclusion column. Now, it has the following levels:
 
 ``` r
-#res_multi$exclusion %>% unique()
+res_multi$exclusion %>% unique()
+#> [1] "full_data"        "last_trial"       "last2_trial"      "last_first_trial"
+#> [5] "half_trials"
 ```
 
 The exclusion criteria actually (largely) follow the criteria reported
@@ -314,7 +308,7 @@ function.
 
 ## Inferences
 
-\#’ This is the most challenging part. For now you can use the following
+This is the most challenging part. For now you can use the following
 function and you will get:
 
 1)  A histogram will all the p value and a red line showing the
@@ -327,5 +321,12 @@ function and you will get:
 <!-- end list -->
 
 ``` r
-#multifear::inference_cs(res_multi)
+multifear::inference_cs(res_multi)
+#> Warning: Removed 90 rows containing non-finite values (stat_bin).
+#> Warning: Removed 90 rows containing non-finite values (stat_density).
 ```
+
+![](README_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
+
+    #>   mean_p_value prop_p_value
+    #> 1           NA           40

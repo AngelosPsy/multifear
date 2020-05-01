@@ -39,8 +39,8 @@ library(multifear)
 We will start with a basic example of how the package works. Before doing that, let's load some additional packages that we need for our example. 
 
 ```{r}
-library(dplyr)
-library(ggplot2)
+suppressPackageStartupMessages(library(dplyr))
+suppressPackageStartupMessages(library(ggplot2))
 ```
 
 Now we will use some simulated data set that are included as example data in the package. In principle, you can use any data including conditioned responses (e.g., skin conductance). You can load the simulated data in your workspace as follows:
@@ -88,7 +88,7 @@ Now we need to analyse the data.  For this we will use the *multifear::universe_
 
 There are some other options in the function, such as defining the type of conditioning response. However, these are not necessary for now. So, let's now run the function
 
-```{r}
+```{r, warning= FALSE}
 cs1 <- paste0("CSP", 1:10)
 cs2 <- paste0("CSM", 1:10)
 res <- multifear::universe_cs(cs1 = cs1, cs2 = cs2, data = example_data, subj = "id", group = NULL, phase = "acquisition")
@@ -127,14 +127,14 @@ Let's go through each column separately
 So now let's see how you can run the same analyses but after we apply some selection criteria for non-learns. So, here it is
 
 ```{r, warning = FALSE}
-#res_multi <- multifear::multiverse_cs(cs1 = cs1, cs2 = cs2, data = example_data, subj = "id", group = NULL, phase = "acquisition")
-#res_multi
+res_multi <- multifear::multiverse_cs(cs1 = cs1, cs2 = cs2, data = example_data, subj = "id", group = NULL, phase = "acquisition")
+res_multi
 ```
 
 In terms of calling the function, we see that we need exactly the same arguments as before. Internally, the function actually applies the multifear::universe_cs but now apart from the full data set, also for the data sets that we have set some exclusion criteria. Whether each line refers to the full data set or any of the exclusion criteria, we can see on the column exclusion criteria or in the data_used column, although there it is difficult to see what happened and it serves only reproduction criteria. So, the easiest thing to do is to see the exclusion column. Now, it has the following levels:
 
 ```{r}
-#res_multi$exclusion %>% unique()
+res_multi$exclusion %>% unique()
 ```
 
 The exclusion criteria actually (largely) follow the criteria reported in the eLife article ("Navigating the garden of forking paths for data exclusions in fear conditioning research"; Lonsdorf et al., 2019). One problem with the criteria is that of course you have different number of trials, some studies exclude participants based on SCR but also on their ratings, etc. This of course makes it difficult to _exactly_ apply all the criteria. To overcome this problem, we are going to form a summary of exclusion criteria. So here we are:
@@ -150,7 +150,7 @@ The exclusion criteria actually (largely) follow the criteria reported in the eL
 The cutoff for these differences are defined as 0, 0.05, and 1. So, we have every criterion, for every cutoff. So, what the function does is actually internally first computing the differences in all the possible combinations (i.e., last half of trials, differences in the last two trials, etc) and also applies the different criteria (0.05, 0.1, 0). Then, it repeats all the analyses performed in multifear::universe_us() function.
 
 ## Inferences
-#' This is the most challenging part. For now you can use the following function
+This is the most challenging part. For now you can use the following function
 and you will get:
 
 1) A histogram will all the p value and a red line showing the significance 
@@ -161,5 +161,5 @@ limit -- by default alpha = 0.05
 3) and the number of p values below the significance level -- i.e., 75
 
 ```{r}
-#multifear::inference_cs(res_multi)
+multifear::inference_cs(res_multi)
 ```
