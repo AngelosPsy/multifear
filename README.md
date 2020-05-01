@@ -5,6 +5,9 @@
 
 [![Travis build
 status](https://travis-ci.org/AngelosPsy/multifear.svg?branch=master)](https://travis-ci.org/AngelosPsy/multifear)
+[![Lifecycle:
+experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+[![Last-changedate](https://img.shields.io/badge/last%20change-2020--05--01-yellowgreen.svg)](/commits/master)
 <!-- badges: end -->
 
 # Multifear
@@ -61,17 +64,27 @@ Here are the first 6 rows of the data set
 
 ``` r
 head(example_data, 6)
-#> # A tibble: 6 x 21
-#>     CSP1   CSP2   CSP3   CSP4  CSP5  CSP6   CSP7   CSP8    CSP9  CSP10   CSM1
-#>    <dbl>  <dbl>  <dbl>  <dbl> <dbl> <dbl>  <dbl>  <dbl>   <dbl>  <dbl>  <dbl>
-#> 1  0.680  0.369  1.22  1.90    3.35  1.38 -1.27   1.71   3.04    2.50   3.86 
-#> 2  1.42   0.375  4.28  2.38    1.66  1.07  7.63   1.11   3.61   -0.501  1.53 
-#> 3  1.32  -0.574  2.10  1.22    1.15  2.34  0.164  1.17  -0.0396  0.374 -0.917
-#> 4  1.36   0.372  0.573 2.39    5.48  5.20  4.56   2.48   0.593   0.989  0.412
-#> 5 -0.241  2.02  -0.398 0.492   1.64  1.08  2.98   3.07   4.93    2.56   2.35 
-#> 6  3.41   1.75   1.41  0.0421  2.52  2.90 -0.560 -0.188  1.28    4.26  -2.12 
-#> # … with 10 more variables: CSM2 <dbl>, CSM3 <dbl>, CSM4 <dbl>, CSM5 <dbl>,
-#> #   CSM6 <dbl>, CSM7 <dbl>, CSM8 <dbl>, CSM9 <dbl>, CSM10 <dbl>, id <int>
+#>   id      CSP1      CSP2       CSP3      CSP4      CSP5      CSP6      CSP7
+#> 1  2 0.6290557 0.9298822  1.0415000 0.9330014 0.9743682 0.8855119 0.8418664
+#> 2  3 7.0795340 4.9765650 12.7791100 8.2847610 4.9798520 8.8685450 8.2468480
+#> 3  4 0.0000000 1.2156950  2.4367400 4.5100300 5.3372170 4.6831920 3.6484020
+#> 4  5 1.4378680 0.9705585  0.3784756 1.4434960 0.4060977 1.6015840 1.5274500
+#> 5  7 0.9454062 3.2935940  3.4376340 2.7078930 3.6439630 3.8878390 3.6174920
+#> 6  8 3.2373590 2.3439360  2.3931960 2.2908990 1.9583950 2.5094320 2.4234050
+#>        CSP8      CSP9     CSP10       CSM1     CSM2      CSM3      CSM4
+#> 1 0.9821523 0.5790559 0.3824215  0.9857365 1.267399 0.0000000 0.6403125
+#> 2 0.7607041 1.7655060 2.1758810 13.6548600 0.906607 0.0000000 2.9130630
+#> 3 2.1018580 6.4756940 2.6422620  0.0000000 3.238002 2.4289650 0.2526294
+#> 4 1.1900760 0.3994079 0.6168466  1.3146440 0.000000 0.6570014 1.3710840
+#> 5 2.2854040 5.2819210 4.5153330  4.2762160 3.196211 3.4280200 1.8877270
+#> 6 2.7189870 3.7545760 0.5508313  2.7552620 2.284332 0.1147742 0.4229828
+#>         CSM5       CSM6      CSM7      CSM8      CSM9     CSM10 group
+#> 1 0.05137117 0.03480838 0.0000000 0.0000000 0.2903607 0.3149624     1
+#> 2 0.60658980 3.72999700 1.1069910 3.6370250 0.0000000 0.0000000     2
+#> 3 0.00000000 2.51429900 0.0000000 0.1862106 0.5207676 0.9575123     1
+#> 4 0.53106310 0.54313130 0.2875019 0.0000000 0.1879596 0.1872537     2
+#> 5 3.06479700 2.91668000 2.7914400 1.2298430 3.3771630 2.7057010     1
+#> 6 2.22446600 0.00000000 0.0000000 1.2159860 0.0000000 0.0000000     2
 ```
 
 A bit of explanation of the column names. With the column name ‘id’ is
@@ -140,19 +153,71 @@ res <- multifear::universe_cs(cs1 = cs1, cs2 = cs2, data = example_data, subj = 
 #>   influence.merMod                car 
 #>   dfbeta.influence.merMod         car 
 #>   dfbetas.influence.merMod        car
+#> Note: Progress bars and callbacks are suppressed when running multicore.
+#> Note: Progress bars and callbacks are suppressed when running multicore.
+#> Warning in bind_rows_(x, .id): binding character and factor vector, coercing
+#> into character vector
+
+#> Warning in bind_rows_(x, .id): binding character and factor vector, coercing
+#> into character vector
+
+#> Warning in bind_rows_(x, .id): binding character and factor vector, coercing
+#> into character vector
+
+#> Warning in bind_rows_(x, .id): binding character and factor vector, coercing
+#> into character vector
+
+#> Warning in bind_rows_(x, .id): binding character and factor vector, coercing
+#> into character vector
+
+#> Warning in bind_rows_(x, .id): binding character and factor vector, coercing
+#> into character vector
+
+#> Warning in bind_rows_(x, .id): binding character and factor vector, coercing
+#> into character vector
+
+#> Warning in bind_rows_(x, .id): binding character and factor vector, coercing
+#> into character vector
+
+#> Warning in bind_rows_(x, .id): binding character and factor vector, coercing
+#> into character vector
+
+#> Warning in bind_rows_(x, .id): binding character and factor vector, coercing
+#> into character vector
+
+#> Warning in bind_rows_(x, .id): binding character and factor vector, coercing
+#> into character vector
+
+#> Warning in bind_rows_(x, .id): binding character and factor vector, coercing
+#> into character vector
+
+#> Warning in bind_rows_(x, .id): binding character and factor vector, coercing
+#> into character vector
+
+#> Warning in bind_rows_(x, .id): binding character and factor vector, coercing
+#> into character vector
+
+#> Warning in bind_rows_(x, .id): binding character and factor vector, coercing
+#> into character vector
 ```
 
 And here are the results
 
 ``` r
 res
-#> # A tibble: 4 x 13
-#>   x     y     exclusion model controls method p.value effect.size estimate
-#>   <chr> <chr> <chr>     <chr> <lgl>    <chr>    <dbl>       <dbl>    <dbl>
-#> 1 cs    scr   full data t-te… NA       t-test 9.91e-9     1.38       0.666
-#> 2 cs    scr   full data t-te… NA       t-test 1.98e-8     1.38       0.666
-#> 3 cs:t… scr   full data rep … NA       rep A… 8.67e-2     0.00745   NA    
-#> 4 cs    scr   full data rep … NA       rep A… 1.50e-8     0.331     NA    
+#> # A tibble: 10 x 13
+#>    x     y     exclusion model controls method  p.value effect.size estimate
+#>    <chr> <chr> <chr>     <chr> <lgl>    <chr>     <dbl>       <dbl>    <dbl>
+#>  1 cs    scr   full data t-te… NA       t-test  3.77e-3      0.455    0.752 
+#>  2 cs    scr   full data t-te… NA       t-test  7.53e-3      0.455    0.752 
+#>  3 cs    scr   full data Baye… NA       t-test NA           NA       11.5   
+#>  4 cs    scr   full data Baye… NA       t-test NA           NA        0.0673
+#>  5 cs:t… scr   full data rep … NA       rep A…  3.70e-9      0.0247  NA     
+#>  6 cs    scr   full data rep … NA       rep A…  2.47e-7      0.0863  NA     
+#>  7 cs:s… scr   full data rep … NA       rep B… NA           NA       NA     
+#>  8 cs:s… scr   full data rep … NA       rep B… NA           NA       NA     
+#>  9 cs:s… scr   full data rep … NA       rep B… NA           NA       NA     
+#> 10 cs:s… scr   full data rep … NA       rep B… NA           NA       NA     
 #> # … with 4 more variables: statistic <dbl>, conf.low <dbl>, conf.high <dbl>,
 #> #   data_used <list>
 ```
@@ -204,23 +269,8 @@ So now let’s see how you can run the same analyses but after we apply
 some selection criteria for non-learns. So, here it is
 
 ``` r
-res_multi <- multifear::multiverse_cs(cs1 = cs1, cs2 = cs2, data = example_data, subj = "id", group = NULL, phase = "acquisition")
-res_multi
-#> # A tibble: 60 x 15
-#>    x     y     exclusion model controls method p.value effect.size estimate
-#>    <chr> <chr> <chr>     <chr> <lgl>    <chr>    <dbl>       <dbl>    <dbl>
-#>  1 cs    scr   full_data t-te… NA       t-test 9.91e-9     1.38       0.666
-#>  2 cs    scr   full_data t-te… NA       t-test 1.98e-8     1.38       0.666
-#>  3 cs:t… scr   full_data rep … NA       rep A… 8.67e-2     0.00745   NA    
-#>  4 cs    scr   full_data rep … NA       rep A… 1.50e-8     0.331     NA    
-#>  5 cs    scr   last_tri… t-te… NA       t-test 7.46e-8     1.51       0.754
-#>  6 cs    scr   last_tri… t-te… NA       t-test 1.49e-7     1.51       0.754
-#>  7 cs:t… scr   last_tri… rep … NA       rep A… 5.10e-1    -0.00113   NA    
-#>  8 cs    scr   last_tri… rep … NA       rep A… 4.53e-8     0.386     NA    
-#>  9 cs    scr   last2_tr… t-te… NA       t-test 1.46e-5     1.48       0.768
-#> 10 cs    scr   last2_tr… t-te… NA       t-test 2.92e-5     1.48       0.768
-#> # … with 50 more rows, and 6 more variables: statistic <dbl>, conf.low <dbl>,
-#> #   conf.high <dbl>, data_used <list>, cutoff <dbl>, name_cutoff <chr>
+#res_multi <- multifear::multiverse_cs(cs1 = cs1, cs2 = cs2, data = example_data, subj = "id", group = NULL, phase = "acquisition")
+#res_multi
 ```
 
 In terms of calling the function, we see that we need exactly the same
@@ -234,9 +284,7 @@ reproduction criteria. So, the easiest thing to do is to see the
 exclusion column. Now, it has the following levels:
 
 ``` r
-res_multi$exclusion %>% unique()
-#> [1] "full_data"        "last_trial"       "last2_trial"      "last_first_trial"
-#> [5] "half_trials"
+#res_multi$exclusion %>% unique()
 ```
 
 The exclusion criteria actually (largely) follow the criteria reported
@@ -279,10 +327,5 @@ function and you will get:
 <!-- end list -->
 
 ``` r
-multifear::inference_cs(res_multi)
+#multifear::inference_cs(res_multi)
 ```
-
-![](README_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
-
-    #>   mean_p_value prop_p_value
-    #> 1   0.08665007           75

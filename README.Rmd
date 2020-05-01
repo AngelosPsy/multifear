@@ -13,6 +13,7 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 [![Travis build status](https://travis-ci.org/AngelosPsy/multifear.svg?branch=master)](https://travis-ci.org/AngelosPsy/multifear)
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 <!-- badges: end -->
 
 # Multifear
@@ -53,9 +54,6 @@ Here are the first 6 rows of the data set
 ```{r}
 head(example_data, 6)
 ```
-
-
-
 
 A bit of explanation of the column names. With the column name 'id' is the participant number. Columns that contain the conditioned responses for conditioned stimulus plus (CS+) are denoted with column names starting with 'CSP'. The number next to this name (1, 2, ..., 10) is the trial number. The same goes for columns starting with 'CSM' but this denotes conditioned responses in CS- trials. At this point the package only supports a single CS+ and a single CS-. Also, the package assumes that trials are following each  -- so trial 2 comes after trial 1 etc.
 Let's see the data:
@@ -129,14 +127,14 @@ Let's go through each column separately
 So now let's see how you can run the same analyses but after we apply some selection criteria for non-learns. So, here it is
 
 ```{r, warning = FALSE}
-res_multi <- multifear::multiverse_cs(cs1 = cs1, cs2 = cs2, data = example_data, subj = "id", group = NULL, phase = "acquisition")
-res_multi
+#res_multi <- multifear::multiverse_cs(cs1 = cs1, cs2 = cs2, data = example_data, subj = "id", group = NULL, phase = "acquisition")
+#res_multi
 ```
 
 In terms of calling the function, we see that we need exactly the same arguments as before. Internally, the function actually applies the multifear::universe_cs but now apart from the full data set, also for the data sets that we have set some exclusion criteria. Whether each line refers to the full data set or any of the exclusion criteria, we can see on the column exclusion criteria or in the data_used column, although there it is difficult to see what happened and it serves only reproduction criteria. So, the easiest thing to do is to see the exclusion column. Now, it has the following levels:
 
 ```{r}
-res_multi$exclusion %>% unique()
+#res_multi$exclusion %>% unique()
 ```
 
 The exclusion criteria actually (largely) follow the criteria reported in the eLife article ("Navigating the garden of forking paths for data exclusions in fear conditioning research"; Lonsdorf et al., 2019). One problem with the criteria is that of course you have different number of trials, some studies exclude participants based on SCR but also on their ratings, etc. This of course makes it difficult to _exactly_ apply all the criteria. To overcome this problem, we are going to form a summary of exclusion criteria. So here we are:
@@ -163,5 +161,5 @@ limit -- by default alpha = 0.05
 3) and the number of p values below the significance level -- i.e., 75
 
 ```{r}
-multifear::inference_cs(res_multi)
+#multifear::inference_cs(res_multi)
 ```

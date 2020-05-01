@@ -30,7 +30,9 @@ Imports:
     effsize (>= 0.7.8),
     nlme (>= 3.0.0),
     BayesFactor (>= 0.9.12.4.2),
-    bayestestR (>= 0.5.2)
+    bayestestR (>= 0.5.2),
+    lifecycle (>= 0.2.0)
 RoxygenNote: 7.0.2
 Suggests: 
     testthat (>= 2.1.0)
+RdMacros: lifecycle
