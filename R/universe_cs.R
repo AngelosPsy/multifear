@@ -34,11 +34,16 @@ universe_cs <-
         group = group
       )
 
+    cs1 = data %>% dplyr::select(dplyr::contains("cs1")) %>% colnames()
+    cs2 = data %>% dplyr::select(dplyr::contains("cs2")) %>% colnames()
+    subj = data %>% dplyr::select("subj") %>% colnames()
+    paired = ifelse(is.null(group), TRUE, FALSE)
+
     # In case of 1 trial CS or enequal number of CSs, skip ANOVA
     do_anova = TRUE
-    if ((ncol(cs1) == 1 |
-         ncol(cs2) == 1) |
-        ncol(cs1) != ncol(cs2)) {
+    if ((length(cs1) == 1 |
+         length(cs2) == 1) |
+        length(cs1) != length(cs2)) {
       do_anova = FALSE
       message("Skipping ANOVA")
     }
@@ -47,10 +52,10 @@ universe_cs <-
     if (is.null(group) & do_anova) {
       anovaNOTIME <-
         multifear::rm_anova_mf(
-          cs1 = colnames(cs1),
-          cs2 = colnames(cs2),
+          cs1 = cs1,
+          cs2 = cs2,
           time = FALSE,
-          subj = colnames(subj),
+          subj = subj,
           data = data,
           group = NULL,
           phase = phase,
@@ -58,10 +63,10 @@ universe_cs <-
         )
       anovaTIME <-
         multifear::rm_anova_mf(
-          cs1 = colnames(cs1),
-          cs2 = colnames(cs2),
+          cs1 = cs1,
+          cs2 = cs2,
           time = TRUE,
-          subj = colnames(subj),
+          subj = subj,
           data = data,
           group = NULL,
           phase = phase,
@@ -70,10 +75,10 @@ universe_cs <-
 
       banovaNOTIME <-
         multifear::rm_banova_mf(
-          cs1 = colnames(cs1),
-          cs2 = colnames(cs2),
+          cs1 = cs1,
+          cs2 = cs2,
           time = FALSE,
-          subj = colnames(subj),
+          subj = subj,
           data = data,
           group = NULL,
           exclusion = exclusion,
@@ -84,10 +89,10 @@ universe_cs <-
 
       banovaTIME <-
         multifear::rm_banova_mf(
-          cs1 = colnames(cs1),
-          cs2 = colnames(cs2),
+          cs1 = cs1,
+          cs2 = cs2,
           time = TRUE,
-          subj = colnames(subj),
+          subj = subj,
           data = data,
           group = NULL,
           phase = phase,
@@ -95,15 +100,14 @@ universe_cs <-
           dv = dv,
           multicore = TRUE
         )
-
 
       } else if (!is.null(group) & do_anova) {
       anovaNOTIME <-
         multifear::rm_anova_mf(
-          cs1 = colnames(cs1),
-          cs2 = colnames(cs2),
+          cs1 = cs1,
+          cs2 = cs2,
           time = FALSE,
-          subj = colnames(subj),
+          subj = subj,
           data = data,
           group = group,
           phase = phase,
@@ -111,10 +115,10 @@ universe_cs <-
         )
       anovaTIME <-
         multifear::rm_anova_mf(
-          cs1 = colnames(cs1),
-          cs2 = colnames(cs2),
+          cs1 = cs1,
+          cs2 = cs2,
           time = TRUE,
-          subj = colnames(subj),
+          subj = subj,
           data = data,
           group = group,
           phase = phase,
@@ -123,10 +127,10 @@ universe_cs <-
 
       banovaNOTIME <-
         multifear::rm_banova_mf(
-          cs1 = colnames(cs1),
-          cs2 = colnames(cs2),
+          cs1 = cs1,
+          cs2 = cs2,
           time = FALSE,
-          subj = colnames(subj),
+          subj = subj,
           data = data,
           group = group,
           phase = phase,
@@ -137,10 +141,10 @@ universe_cs <-
 
       banovaTIME <-
         multifear::rm_banova_mf(
-          cs1 = colnames(cs1),
-          cs2 = colnames(cs2),
+          cs1 = cs1,
+          cs2 = cs2,
           time = TRUE,
-          subj = colnames(subj),
+          subj = subjs,
           data = data,
           group = group,
           phase = phase,
@@ -153,25 +157,32 @@ universe_cs <-
     # Perform t-test
     # First combine css
     csc <-
-      multifear::combine_cs(cs1 = colnames(cs1),
-                            cs2 = colnames(cs2),
+      multifear::combine_cs(cs1 = cs1,
+                            cs2 = cs2,
                             data = data)
     ttestFULL <-
-      multifear::t_test_mf(cs1 = colnames(cs1),
-                           cs2 = colnames(cs2),
-                           data = data, subj = colnames(subj),
-                           paired = paired, phase = phase,
-                           exclusion = exclusion)
+      multifear::t_test_mf(
+        cs1 = cs1,
+        cs2 = cs2,
+        data = data,
+        subj = subj,
+        paired = paired,
+        phase = phase,
+        exclusion = exclusion
+      )
 
     bttestFULL <-
-      multifear::bt_test_mf(cs1 = colnames(cs1),
-                           cs2 = colnames(cs2),
-                           data = data, subj = colnames(subj),
-                           paired = paired, phase = phase,
-                           exclusion = exclusion)
+      multifear::bt_test_mf(
+        cs1 = cs1,
+        cs2 = cs2,
+        data = data,
+        subj = subj,
+        paired = paired,
+        phase = phase,
+        exclusion = exclusion
+      )
 
-    combRes <- list(
-                    `t-test full` = ttestFULL,
+    combRes <- list(`t-test full` = ttestFULL,
                     `bayes t-test full` = bttestFULL)
 
     if (do_anova) {

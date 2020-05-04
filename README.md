@@ -137,7 +137,8 @@ let’s now run the function
 ``` r
 cs1 <- paste0("CSP", 1:10)
 cs2 <- paste0("CSM", 1:10)
-res <- multifear::universe_cs(cs1 = cs1, cs2 = cs2, data = example_data, subj = "id", group = NULL, phase = "acquisition")
+res <- multifear::universe_cs(cs1 = cs1, cs2 = cs2, data = example_data, 
+                              subj = "id", group = NULL, phase = "acquisition")
 #> Registered S3 methods overwritten by 'lme4':
 #>   method                          from
 #>   cooks.distance.influence.merMod car 
@@ -155,8 +156,8 @@ res
 #> # A tibble: 10 x 13
 #>    x     y     exclusion model controls method  p.value effect.size estimate
 #>    <chr> <chr> <chr>     <chr> <lgl>    <chr>     <dbl>       <dbl>    <dbl>
-#>  1 cs    scr   full data t-te… NA       t-test  3.77e-3      0.455    0.752 
-#>  2 cs    scr   full data t-te… NA       t-test  7.53e-3      0.455    0.752 
+#>  1 cs    scr   full data t-te… NA       t-test  1.24e-7      0.455    0.752 
+#>  2 cs    scr   full data t-te… NA       t-test  2.47e-7      0.455    0.752 
 #>  3 cs    scr   full data Baye… NA       t-test NA           NA       11.5   
 #>  4 cs    scr   full data Baye… NA       t-test NA           NA        0.0673
 #>  5 cs:t… scr   full data rep … NA       rep A…  3.70e-9      0.0247  NA     
@@ -251,8 +252,8 @@ res_multi
 #> # A tibble: 150 x 15
 #>    x     y     exclusion model controls method  p.value effect.size estimate
 #>    <chr> <chr> <chr>     <chr> <lgl>    <chr>     <dbl>       <dbl>    <dbl>
-#>  1 cs    scr   full_data t-te… NA       t-test  3.77e-3      0.455    0.752 
-#>  2 cs    scr   full_data t-te… NA       t-test  7.53e-3      0.455    0.752 
+#>  1 cs    scr   full_data t-te… NA       t-test  1.24e-7      0.455    0.752 
+#>  2 cs    scr   full_data t-te… NA       t-test  2.47e-7      0.455    0.752 
 #>  3 cs    scr   full_data Baye… NA       t-test NA           NA       11.5   
 #>  4 cs    scr   full_data Baye… NA       t-test NA           NA        0.0673
 #>  5 cs:t… scr   full_data rep … NA       rep A…  3.70e-9      0.0247  NA     
@@ -314,19 +315,17 @@ function and you will get:
 1)  A histogram will all the p value and a red line showing the
     significance limit – by default alpha = 0.05
 
-2)  Mean p\_value – i.e., 0.086
+2)  Mean p\_value.
 
-3)  and the number of p values below the significance level – i.e., 75
+3)  and the number of p values below the significance level
 
 <!-- end list -->
 
 ``` r
-multifear::inference_cs(res_multi)
-#> Warning: Removed 90 rows containing non-finite values (stat_bin).
-#> Warning: Removed 90 rows containing non-finite values (stat_density).
+multifear::inference_cs(res_multi, na.rm = TRUE)
 ```
 
 ![](README_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
 
     #>   mean_p_value prop_p_value
-    #> 1           NA           40
+    #> 1 2.915891e-05           40

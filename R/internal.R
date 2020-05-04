@@ -227,12 +227,12 @@ data_preparation_verse = function(cs1,
           data %>%
           dplyr::mutate(group = rep("NULL", nrow(data))) %>%
           dplyr::select(group)
-        group <- NULL
-        paired = FALSE
+        group = NULL
+        #paired = FALSE
       } else {
         group_new <- data %>%
           dplyr::select(tidyselect::all_of(!!dplyr::enquo(group)))
-        paired = TRUE
+        #paired = TRUE
       }
 
       res <- dplyr::bind_cols(subj, cs1, cs2, group_new)

@@ -19,6 +19,7 @@ multiverse_cs <-
            cutoff = c(0, 0.1, 0.05),
            phase = "acquisition",
            print_output = TRUE) {
+
     # Check data
     collection_warning(cs1 = cs1, cs2 = cs2, data = data, subj = subj)
 
