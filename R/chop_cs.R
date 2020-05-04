@@ -1,11 +1,8 @@
 #' chop_cs
 #'
 #' @description Function for separating the conditioned responses into multiple pieces
+#' @inheritParams t_test_mf
 #' @param cs index for the CS responses
-#' @param data Data frame containing the CS columns
-#' @param subj column nmae with the participant number.
-#' It should be a unique number.
-#' @param na.rm Should NAs be removed? Default to FALSE.
 #' @export
 
 chop_cs <- function(cs, data, subj, na.rm = FALSE) {

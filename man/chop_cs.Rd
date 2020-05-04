@@ -9,12 +9,11 @@ chop_cs(cs, data, subj, na.rm = FALSE)
 \arguments{
 \item{cs}{index for the CS responses}
 
-\item{data}{Data frame containing the CS columns}
+\item{data}{A data frame containing with all the relevant columns}
 
-\item{subj}{column nmae with the participant number.
-It should be a unique number.}
+\item{subj}{The name of the column including the participant numbers. Unique numbers are expected.}
 
-\item{na.rm}{Should NAs be removed? Default to FALSE.}
+\item{na.rm}{Whether NAs should be removed, default to \code{FALSE}.}
 }
 \description{
 Function for separating the conditioned responses into multiple pieces

@@ -17,27 +17,23 @@ mixed_mf(
 )
 }
 \arguments{
-\item{cs1}{cs 1}
+\item{cs1}{The column name(s) of the conditioned responses for the first conditioned stimulus.}
 
-\item{cs2}{cs 2}
+\item{cs2}{The column name(s) of the conditioned responses for the second conditioned stimulus.}
 
-\item{data}{a data frame containing the dv and iv}
+\item{data}{A data frame containing with all the relevant columns}
 
-\item{subj}{column nmae with the participant number.
-It should be a unique number.}
+\item{subj}{The name of the column including the participant numbers. Unique numbers are expected.}
 
 \item{time}{should time be included? Default to \code{TRUE}}
 
-\item{group}{name of the group variable, if it is present, default to \code{NULL}}
+\item{group}{the name of the group, if included, default to \code{NULL}.}
 
-\item{phase}{Different tests will be run for different phases. That is why
-the phase needs to be specified here. Possible values are \code{acquisition},
-or \code{acq}, \code{extinction}, or \code{extinction}. See Details for more
-information.}
+\item{phase}{The conditioned phase that the analyses refer to. Accepted values are  \code{acquisition},  or \code{acq}, \code{extinction}, or \code{ext}.}
 
-\item{dv}{name of the dependent variable, default to "SCR"}
+\item{dv}{name of the measured conditioned response. Default to \code{"SCR"}.}
 
-\item{exclusion}{If any exclusion was done, default to \code{full data}}
+\item{exclusion}{If any exclusion criteria were applied, default to \code{full data}}
 }
 \value{
 A basic function for running repeated measures ANOVAs
@@ -48,7 +44,7 @@ Mixed model function
 \details{
 In case the \code{time} argument is set to true, the function will
 include this as a within subjects factor, assuming that the columns in
-\code{cs1} and \code{cs2} corrrespond to ascending time points (e.g., cs1
+\code{cs1} and \code{cs2} correspond to ascending time points (e.g., cs1
 trial 1, cs1 trial 2 ... cs1 trial \code{n}). If this is not the case, the
 results are not to be trusted.
 

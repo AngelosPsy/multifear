@@ -4,7 +4,8 @@
 \name{example_data}
 \alias{example_data}
 \title{Simulated data sets of skin conductance responses}
-\format{A data frame with 40 rows and 22 variables:
+\format{
+A data frame with 40 rows and 22 variables:
 \describe{
   \item{CSP1}{Conditioned stimulus plus, trial 1}
   \item{CSP2}{Conditioned stimulus plus, trial 2}
@@ -28,7 +29,8 @@
   \item{CSM10}{Conditioned stimulus minus, trial 10}
   \item{id}{Participant number}
   \item{group}{Group assignment}
-}}
+}
+}
 \usage{
 example_data
 }

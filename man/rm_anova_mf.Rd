@@ -44,7 +44,7 @@ y: the name of the dependent variable as this defined in the \code{dv} argument
 exclusion: see \code{exclusion} argument
 model: the model that was run (e.g., t-test)
 controls: ignore this column for this test
-method: the model that was ru
+method: the model that was run
 p.value: the p-value of the test
 effect.size: the estimated effect size
 estimate: the estimate of the test run

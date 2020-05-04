@@ -1,13 +1,13 @@
 #' multiverse_cs
 #'
-#' @description Basic function for conducting multi-verse analyses of conditioning
+#' \lifecycle{experimental}
+#'
+#' @description Basic function for conducting multiverse analyses of conditioning
 #' data
 #' @inheritParams universe_cs
 #' @param cutoff A numeric vector of the cutoff criteria applied. Default to \code{0, 0.05, .1}
-#' @param na.rm Should NAs be removed? Default set the \code{FALSE}
-#' @param print_output Whether to print the output or not. Default set to \code{TRUE}
 #' @details In case of higher order interaction, only the highest order
-#' effect is shown
+#' effect is returned.
 #' @export
 
 multiverse_cs <-
@@ -18,7 +18,6 @@ multiverse_cs <-
            group = NULL,
            cutoff = c(0, 0.1, 0.05),
            phase = "acquisition",
-           na.rm = FALSE,
            print_output = TRUE) {
     # Check data
     collection_warning(cs1 = cs1, cs2 = cs2, data = data, subj = subj)

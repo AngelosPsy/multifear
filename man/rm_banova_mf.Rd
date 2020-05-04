@@ -45,7 +45,7 @@ y: the name of the dependent variable as this defined in the \code{dv} argument
 exclusion: see \code{exclusion} argument
 model: the model that was run (e.g., t-test)
 controls: ignore this column for this test
-method: the model that was ru
+method: the model that was run
 p.value: irrelevant here
 effect.size: irrelevant here
 estimate: the estimate of the test run
@@ -60,6 +60,8 @@ Basic function for running the Bayesian repeated measures ANOVA
 \lifecycle{experimental}
 }
 \details{
+\lifecycle{experimental}
+
 In case the \code{time} argument is set to true, the function will
 include this as a within subjects factor, assuming that the columns in
 \code{cs1} and \code{cs2} corrrespond to ascending time points (e.g., cs1

@@ -40,6 +40,7 @@
   utils::globalVariables ("models")
   utils::globalVariables ("omegasq")
   utils::globalVariables ("p.value")
+  utils::globalVariables ("paired")
   utils::globalVariables ("res")
   utils::globalVariables ("resp")
   utils::globalVariables ("repeated measures ANOVA with time")

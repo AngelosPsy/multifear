@@ -1,13 +1,14 @@
 #' universe_cs
 #'
-#' @description Basic function for conducting universe analyses of conditioning
+#' \lifecycle{experimental}
+#'
+#' @description Basic function for conducting universe analyses for conditioning data
 #' data
 #' @inheritParams rm_anova_mf
-#' @param na.rm Should NAs be removed? Default set the \code{FALSE}
 #' @param print_output Whether to print the output or not. Default set to \code{TRUE}
-#' @param exclusion If any exclusion was done, default to \code{full data}
 #' @details In case of higher order interaction, only the highest order
-#' effect is shown
+#' effect is shown.
+#' @return A data frame with the results.
 #' @export
 
 universe_cs <-
@@ -17,7 +18,6 @@ universe_cs <-
            subj,
            group = NULL,
            phase = "acquisition",
-           na.rm = FALSE,
            dv = "scr",
            print_output = TRUE,
            exclusion = "full data") {
@@ -25,33 +25,14 @@ universe_cs <-
     collection_warning(cs1 = cs1, cs2 = cs2, data = data, subj = subj)
 
     # Prepare data for multiple analyses
-    cs1  <-
-      data %>% dplyr::select(all_of(!!dplyr::enquo(cs1))) %>% tibble::as_tibble()
-    cs2  <-
-      data %>% dplyr::select(all_of(!!dplyr::enquo(cs2))) %>% tibble::as_tibble()
-    subj <-
-      data %>% dplyr::select(all_of(!!dplyr::enquo(subj))) %>% tibble::as_tibble()
-
-    # Renaming objects to make life a bit easier
-    cs1  <- cs1 %>% dplyr::select(cs1_ = dplyr::everything())
-    cs2  <- cs2 %>% dplyr::select(cs2_ = dplyr::everything())
-    subj <- subj %>% dplyr::select(subj = dplyr::everything())
-
-    # What happens in case of groups
-    if (is.null(group)) {
-      group_new <-
-        data %>%
-        dplyr::mutate(group = rep("NULL", nrow(data))) %>%
-        dplyr::select(group)
-      group <- NULL
-      paired = FALSE
-    } else {
-      group_new <- data %>%
-        dplyr::select(tidyselect::all_of(!!dplyr::enquo(group)))
-      paired = TRUE
-    }
-
-    data <- dplyr::bind_cols(subj, cs1, cs2, group_new)
+    data <-
+      data_preparation_verse(
+        cs1 = cs1,
+        cs2 = cs2,
+        data = data,
+        subj = subj,
+        group = group
+      )
 
     # In case of 1 trial CS or enequal number of CSs, skip ANOVA
     do_anova = TRUE
@@ -167,7 +148,6 @@ universe_cs <-
           dv = dv,
           multicore = TRUE
         )
-
     }
 
     # Perform t-test

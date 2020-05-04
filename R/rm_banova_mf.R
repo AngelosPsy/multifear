@@ -1,5 +1,7 @@
 #' rm_banova_mf
 #'
+#' \lifecycle{experimental}
+#'
 #' @description Basic function for running the Bayesian repeated measures ANOVA
 #'
 #' \lifecycle{experimental}
@@ -13,7 +15,7 @@
 #' exclusion: see \code{exclusion} argument
 #' model: the model that was run (e.g., t-test)
 #' controls: ignore this column for this test
-#' method: the model that was ru
+#' method: the model that was run
 #' p.value: irrelevant here
 #' effect.size: irrelevant here
 #' estimate: the estimate of the test run

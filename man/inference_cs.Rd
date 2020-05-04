@@ -7,20 +7,22 @@
 inference_cs(data, alpha_level = 0.05, add_line = TRUE, na.rm = FALSE)
 }
 \arguments{
-\item{data}{a data frame with the results of a multiverse analyses}
+\item{data}{a data frame with the results of a multiverse analyses.}
 
-\item{alpha_level}{What should be the alpha level used (default to 0.05)}
+\item{alpha_level}{What should be the alpha level used (default to 0.05).}
 
-\item{add_line}{Whether to add a line with the alpha level in the produced histogram (default to TRUE)}
+\item{add_line}{Whether to add a line with the alpha level in the produced histogram (default to \code{TRUE})}
 
-\item{na.rm}{Should NAs be removed? Default to FALSE}
+\item{na.rm}{Should NA's be removed (default to \code{FALSE}). See details.}
 }
 \value{
-A data frame with results
+A data frame with results together with a histogram summarizing the results.
 }
 \description{
-Function for summarizing the multiverse results
+Function for summarizing the multiverse results.
 }
 \details{
-For now the function returns only mean p values and proportion of p values below a criterion defined by the \code{alpha_level} parameter (default to 0.05).
+\lifecycle{experimental}
+
+For now the function returns only mean p values and proportion of p values below a criterion defined by the \code{alpha_level} parameter (default to 0.05). The user may choose to drop the NAs for the summary statistic. However, for the plot the NAs in the \code{p.value} column are removed automatically -- so what \code{ggplot2} does automatically but here no message is returned..
 }

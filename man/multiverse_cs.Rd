@@ -12,7 +12,6 @@ multiverse_cs(
   group = NULL,
   cutoff = c(0, 0.1, 0.05),
   phase = "acquisition",
-  na.rm = FALSE,
   print_output = TRUE
 )
 }
@@ -31,15 +30,15 @@ multiverse_cs(
 
 \item{phase}{The conditioned phase that the analyses refer to. Accepted values are  \code{acquisition},  or \code{acq}, \code{extinction}, or \code{ext}.}
 
-\item{na.rm}{Should NAs be removed? Default set the \code{FALSE}}
-
 \item{print_output}{Whether to print the output or not. Default set to \code{TRUE}}
 }
 \description{
-Basic function for conducting multi-verse analyses of conditioning
+Basic function for conducting multiverse analyses of conditioning
 data
 }
 \details{
+\lifecycle{experimental}
+
 In case of higher order interaction, only the highest order
-effect is shown
+effect is returned.
 }

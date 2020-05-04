@@ -15,7 +15,7 @@
 #' @param na.rm Whether NAs should be removed, default to \code{FALSE}.
 #' @param exclusion If any exclusion criteria were applied, default to \code{full data}
 #' @details Given the correct names for the \code{cs1}, \code{cs2}, \code{subj}, and \code{data}, the function will run one- and two-sided frequentist's t-tests. In case \code{cs1} or \code{cs2} refer to multiple columns, the mean -- per row -- for each one of these variables will be computed first before running the test. Please note that cs1 is implicitly referred to the cs that is reinforced, and cs2 to the cs that is not reinforced.
-#' Depending on whether the data refer to an acqusition or extinction phase (as defined in the \code{phase} argument), the function will return a positive one sided, or negative one-sided, t-test in addition to the two-sided t-test. The returned effect size is  Hedge's g.
+#' Depending on whether the data refer to an acquisition or extinction phase (as defined in the \code{phase} argument), the function will return a positive one sided, or negative one-sided, t-test in addition to the two-sided t-test. The returned effect size is  Hedge's g.
 #'
 #' @return A tibble with the following column names:
 #' x: the name of the independent variable (e.g., cs)
@@ -23,7 +23,7 @@
 #' exclusion: see \code{exclusion} argument
 #' model: the model that was run (e.g., t-test)
 #' controls: ignore this column for this test
-#' method: the model that was ru
+#' method: the model that was run
 #' p.value: the p-value of the test
 #' effect.size: the estimated effect size
 #' estimate: the estimate of the test run

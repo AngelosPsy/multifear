@@ -11,7 +11,6 @@ universe_cs(
   subj,
   group = NULL,
   phase = "acquisition",
-  na.rm = FALSE,
   dv = "scr",
   print_output = TRUE,
   exclusion = "full data"
@@ -30,19 +29,22 @@ universe_cs(
 
 \item{phase}{The conditioned phase that the analyses refer to. Accepted values are  \code{acquisition},  or \code{acq}, \code{extinction}, or \code{ext}.}
 
-\item{na.rm}{Should NAs be removed? Default set the \code{FALSE}}
-
 \item{dv}{name of the measured conditioned response. Default to \code{"SCR"}.}
 
 \item{print_output}{Whether to print the output or not. Default set to \code{TRUE}}
 
-\item{exclusion}{If any exclusion was done, default to \code{full data}}
+\item{exclusion}{If any exclusion criteria were applied, default to \code{full data}}
+}
+\value{
+A data frame with the results.
 }
 \description{
-Basic function for conducting universe analyses of conditioning
+Basic function for conducting universe analyses for conditioning data
 data
 }
 \details{
+\lifecycle{experimental}
+
 In case of higher order interaction, only the highest order
-effect is shown
+effect is shown.
 }
