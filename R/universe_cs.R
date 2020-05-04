@@ -144,7 +144,7 @@ universe_cs <-
           cs1 = cs1,
           cs2 = cs2,
           time = TRUE,
-          subj = subjs,
+          subj = subj,
           data = data,
           group = group,
           phase = phase,

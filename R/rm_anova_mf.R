@@ -44,6 +44,7 @@
 #'
 #'
 #' @importFrom stats time
+#' @importFrom stats na.omit
 #' @export
 rm_anova_mf <- function(cs1,
                         cs2,
