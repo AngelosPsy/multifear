@@ -200,3 +200,43 @@ data_preparation_ttest = function(cs1,
   return(res)
 }
 
+data_preparation_verse = function(cs1,
+                                  cs2,
+                                  data,
+                                  subj,
+                                  group = NULL){
+
+      collection_warning(cs1 = cs1, cs2 = cs2, data = data, subj = subj)
+
+      # Prepare data for multiple analyses
+      cs1  <-
+        data %>% dplyr::select(all_of(!!dplyr::enquo(cs1))) %>% tibble::as_tibble()
+      cs2  <-
+        data %>% dplyr::select(all_of(!!dplyr::enquo(cs2))) %>% tibble::as_tibble()
+      subj <-
+        data %>% dplyr::select(all_of(!!dplyr::enquo(subj))) %>% tibble::as_tibble()
+
+      # Renaming objects to make life a bit easier
+      cs1  <- cs1 %>% dplyr::select(cs1_ = dplyr::everything())
+      cs2  <- cs2 %>% dplyr::select(cs2_ = dplyr::everything())
+      subj <- subj %>% dplyr::select(subj = dplyr::everything())
+
+      # What happens in case of groups
+      if (is.null(group)) {
+        group_new <-
+          data %>%
+          dplyr::mutate(group = rep("NULL", nrow(data))) %>%
+          dplyr::select(group)
+        group <- NULL
+        paired = FALSE
+      } else {
+        group_new <- data %>%
+          dplyr::select(tidyselect::all_of(!!dplyr::enquo(group)))
+        paired = TRUE
+      }
+
+      res <- dplyr::bind_cols(subj, cs1, cs2, group_new)
+
+      return(res)
+
+}
