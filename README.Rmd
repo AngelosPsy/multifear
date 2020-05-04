@@ -91,7 +91,8 @@ There are some other options in the function, such as defining the type of condi
 ```{r, warning= FALSE}
 cs1 <- paste0("CSP", 1:10)
 cs2 <- paste0("CSM", 1:10)
-res <- multifear::universe_cs(cs1 = cs1, cs2 = cs2, data = example_data, subj = "id", group = NULL, phase = "acquisition")
+res <- multifear::universe_cs(cs1 = cs1, cs2 = cs2, data = example_data, 
+                              subj = "id", group = NULL, phase = "acquisition")
 ```
 
 And here are the results
