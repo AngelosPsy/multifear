@@ -20,7 +20,21 @@
 #'
 #' The model comparison is done using `BIC`.
 #'
-#' @return The data frame returned is the standard one returned in all function in the package (see e.g., \code{multifear::rm_anova_mf}). The important difference is of course the `x` column. There, you can see the term of the model that is returned. So, not the full model is returned but only this particular term.
+#' @return The data frame returned is the standard one returned in all function in the package. Specifically we have:
+#' A tibble with the following column names:
+#' x: the name of the independent variable (e.g., cs). There, you can see the term of the model that is returned. So, not the full model is returned but only this particular term.
+#' y: the name of the dependent variable as this defined in the \code{dv} argument
+#' exclusion: see \code{exclusion} argument
+#' model: the model that was run (e.g., t-test)
+#' controls: ignore this column for this test
+#' method: the model that was run
+#' p.value: irrelevant here
+#' effect.size: irrelevant here
+#' estimate: the estimate of the test run
+#' statistic: the t-value
+#' conf.low: the lower confidence interval for the estimate
+#' conf.high: the higher confidence interval for the estimate
+#' data_used: a list with the data used for the specific test
 #'
 #' @seealso
 #' \code{\link[nlme]{lme}}

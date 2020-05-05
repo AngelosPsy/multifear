@@ -1,6 +1,8 @@
 #' chop_css
 #'
-#' @description Function for separating the conditioned responses into multiple pieces for two CSs
+#' \lifecycle{experimental}
+#'
+#' @description Function for separating the conditioned responses into multiple pieces for two CSs.
 #' @inheritParams t_test_mf
 #' @export
 

@@ -7,14 +7,17 @@
 combine_cs(cs1, cs2, data, na.rm = FALSE)
 }
 \arguments{
-\item{cs1}{index for the CS1 responses}
+\item{cs1}{The column name(s) of the conditioned responses for the first conditioned stimulus.}
 
-\item{cs2}{index for the CS2 responses}
+\item{cs2}{The column name(s) of the conditioned responses for the second conditioned stimulus.}
 
-\item{data}{Data frame containing the CS1 and CS2 columns}
+\item{data}{A data frame containing with all the relevant columns}
 
-\item{na.rm}{Should NAs be removed? Default to FALSE.}
+\item{na.rm}{Whether NAs should be removed, default to \code{FALSE}.}
 }
 \description{
 Function for computing mean responses across CSs
+}
+\details{
+\lifecycle{experimental}
 }

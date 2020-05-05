@@ -18,5 +18,8 @@ chop_css(cs1, cs2, data, subj, na.rm = FALSE)
 \item{na.rm}{Whether NAs should be removed, default to \code{FALSE}.}
 }
 \description{
-Function for separating the conditioned responses into multiple pieces for two CSs
+Function for separating the conditioned responses into multiple pieces for two CSs.
+}
+\details{
+\lifecycle{experimental}
 }

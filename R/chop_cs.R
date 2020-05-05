@@ -1,8 +1,10 @@
 #' chop_cs
 #'
+#' \lifecycle{experimental}
+#'
 #' @description Function for separating the conditioned responses into multiple pieces
 #' @inheritParams t_test_mf
-#' @param cs index for the CS responses
+#' @param cs index for the CS responses.
 #' @export
 
 chop_cs <- function(cs, data, subj, na.rm = FALSE) {

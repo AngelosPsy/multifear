@@ -7,7 +7,7 @@
 chop_cs(cs, data, subj, na.rm = FALSE)
 }
 \arguments{
-\item{cs}{index for the CS responses}
+\item{cs}{index for the CS responses.}
 
 \item{data}{A data frame containing with all the relevant columns}
 
@@ -17,4 +17,7 @@ chop_cs(cs, data, subj, na.rm = FALSE)
 }
 \description{
 Function for separating the conditioned responses into multiple pieces
+}
+\details{
+\lifecycle{experimental}
 }

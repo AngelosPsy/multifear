@@ -8,7 +8,20 @@
 #' @param print_output Whether to print the output or not. Default set to \code{TRUE}.
 #' @details In case of higher order interaction, only the highest order
 #' effect is shown.
-#' @return A data frame with the results.
+#' @return A tibble with the following column names:
+#' x: the name of the independent variable (e.g., cs)
+#' y: the name of the dependent variable as this defined in the \code{dv} argument
+#' exclusion: see \code{exclusion} argument
+#' model: the model that was run (e.g., t-test)
+#' controls: ignore this column for this test
+#' method: the model that was run
+#' p.value: irrelevant here
+#' effect.size: irrelevant here
+#' estimate: the estimate of the test run
+#' statistic: the t-value
+#' conf.low: the lower confidence interval for the estimate
+#' conf.high: the higher confidence interval for the estimate
+#' data_used: a list with the data used for the specific test.
 #' @export
 
 universe_cs <-

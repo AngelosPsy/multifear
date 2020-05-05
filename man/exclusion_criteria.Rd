@@ -14,3 +14,8 @@ exclusion_criteria(data, cutoff = 0.01)
 \description{
 Exclusion criteria
 }
+\details{
+\lifecycle{experimental}
+
+Here the different exclusion criteria are applied to the provided data.
+}

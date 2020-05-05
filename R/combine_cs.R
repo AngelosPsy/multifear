@@ -1,10 +1,9 @@
 #' combine_cs
 #'
+#' \lifecycle{experimental}
+#'
 #' @description Function for computing mean responses across CSs
-#' @param cs1 index for the CS1 responses
-#' @param cs2 index for the CS2 responses
-#' @param data Data frame containing the CS1 and CS2 columns
-#' @param na.rm Should NAs be removed? Default to FALSE.
+#' @inheritParams t_test_mf
 #' @importFrom dplyr %>%
 #' @export
 combine_cs <- function(cs1, cs2, data, na.rm = FALSE) {
