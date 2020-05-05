@@ -92,7 +92,7 @@ There are some other options in the function, such as defining the type of condi
 cs1 <- paste0("CSP", 1:10)
 cs2 <- paste0("CSM", 1:10)
 res <- multifear::universe_cs(cs1 = cs1, cs2 = cs2, data = example_data, 
-                              subj = "id", group = NULL, phase = "acquisition")
+                              subj = "id", group = NULL, phase = "acquisition", include_bayes = FALSE)
 ```
 
 And here are the results
@@ -128,7 +128,7 @@ Let's go through each column separately
 So now let's see how you can run the same analyses but after we apply some selection criteria for non-learns. So, here it is
 
 ```{r, warning = FALSE}
-res_multi <- multifear::multiverse_cs(cs1 = cs1, cs2 = cs2, data = example_data, subj = "id", group = NULL, phase = "acquisition")
+res_multi <- multifear::multiverse_cs(cs1 = cs1, cs2 = cs2, data = example_data, subj = "id", group = NULL, phase = "acquisition", include_bayes = FALSE)
 res_multi
 ```
 

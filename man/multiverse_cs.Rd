@@ -10,6 +10,7 @@ multiverse_cs(
   data,
   subj,
   group = NULL,
+  include_bayes = TRUE,
   cutoff = c(0, 0.1, 0.05),
   phase = "acquisition",
   print_output = TRUE
@@ -26,11 +27,13 @@ multiverse_cs(
 
 \item{group}{the name of the group, if included, default to \code{NULL}.}
 
+\item{include_bayes}{Whether the bayesian analyses should be run. Default to \code{TRUE}.}
+
 \item{cutoff}{A numeric vector of the cutoff criteria applied. Default to \code{0, 0.05, .1}}
 
 \item{phase}{The conditioned phase that the analyses refer to. Accepted values are  \code{acquisition},  or \code{acq}, \code{extinction}, or \code{ext}.}
 
-\item{print_output}{Whether to print the output or not. Default set to \code{TRUE}}
+\item{print_output}{Whether to print the output or not. Default set to \code{TRUE}.}
 }
 \description{
 Basic function for conducting multiverse analyses of conditioning

@@ -46,7 +46,7 @@ test_that("rm_anova_mf works", {
 #  expect_known_output(rm_banova_mf(cs1, cs2, subj = subj, group = group, data = bf_data, multicore = TRUE), tmp)
 #})
 
-#test_that("universe works", {
-#  expect_known_output(universe_cs(cs1, cs2, subj = subj, data = bf_data), tmp)
-#})
+test_that("universe works", {
+  expect_known_output(universe_cs(cs1, cs2, subj = subj, data = bf_data, include_bayes = FALSE), tmp)
+})
 

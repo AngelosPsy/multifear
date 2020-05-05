@@ -10,6 +10,7 @@ universe_cs(
   data,
   subj,
   group = NULL,
+  include_bayes = TRUE,
   phase = "acquisition",
   dv = "scr",
   print_output = TRUE,
@@ -27,11 +28,13 @@ universe_cs(
 
 \item{group}{the name of the group, if included, default to \code{NULL}.}
 
+\item{include_bayes}{Whether the bayesian analyses should be run. Default to \code{TRUE}.}
+
 \item{phase}{The conditioned phase that the analyses refer to. Accepted values are  \code{acquisition},  or \code{acq}, \code{extinction}, or \code{ext}.}
 
 \item{dv}{name of the measured conditioned response. Default to \code{"SCR"}.}
 
-\item{print_output}{Whether to print the output or not. Default set to \code{TRUE}}
+\item{print_output}{Whether to print the output or not. Default set to \code{TRUE}.}
 
 \item{exclusion}{If any exclusion criteria were applied, default to \code{full data}}
 }

@@ -138,7 +138,7 @@ let’s now run the function
 cs1 <- paste0("CSP", 1:10)
 cs2 <- paste0("CSM", 1:10)
 res <- multifear::universe_cs(cs1 = cs1, cs2 = cs2, data = example_data, 
-                              subj = "id", group = NULL, phase = "acquisition")
+                              subj = "id", group = NULL, phase = "acquisition", include_bayes = FALSE)
 #> Registered S3 methods overwritten by 'lme4':
 #>   method                          from
 #>   cooks.distance.influence.merMod car 
@@ -151,19 +151,13 @@ And here are the results
 
 ``` r
 res
-#> # A tibble: 10 x 13
-#>    x     y     exclusion model controls method  p.value effect.size estimate
-#>    <chr> <chr> <chr>     <chr> <lgl>    <chr>     <dbl>       <dbl>    <dbl>
-#>  1 cs    scr   full data t-te… NA       t-test  1.24e-7      0.455    0.752 
-#>  2 cs    scr   full data t-te… NA       t-test  2.47e-7      0.455    0.752 
-#>  3 cs    scr   full data Baye… NA       t-test NA           NA       11.5   
-#>  4 cs    scr   full data Baye… NA       t-test NA           NA        0.0673
-#>  5 cs:t… scr   full data rep … NA       rep A…  3.70e-9      0.0247  NA     
-#>  6 cs    scr   full data rep … NA       rep A…  2.47e-7      0.0863  NA     
-#>  7 cs:s… scr   full data rep … NA       rep B… NA           NA       NA     
-#>  8 cs:s… scr   full data rep … NA       rep B… NA           NA       NA     
-#>  9 cs:s… scr   full data rep … NA       rep B… NA           NA       NA     
-#> 10 cs:s… scr   full data rep … NA       rep B… NA           NA       NA     
+#> # A tibble: 4 x 13
+#>   x     y     exclusion model controls method p.value effect.size estimate
+#>   <chr> <chr> <chr>     <chr> <lgl>    <chr>    <dbl>       <dbl>    <dbl>
+#> 1 cs    scr   full data t-te… NA       t-test 1.24e-7      0.455     0.752
+#> 2 cs    scr   full data t-te… NA       t-test 2.47e-7      0.455     0.752
+#> 3 cs:t… scr   full data rep … NA       rep A… 3.70e-9      0.0247   NA    
+#> 4 cs    scr   full data rep … NA       rep A… 2.47e-7      0.0863   NA    
 #> # … with 4 more variables: statistic <dbl>, conf.low <dbl>, conf.high <dbl>,
 #> #   data_used <list>
 ```
@@ -215,22 +209,22 @@ So now let’s see how you can run the same analyses but after we apply
 some selection criteria for non-learns. So, here it is
 
 ``` r
-res_multi <- multifear::multiverse_cs(cs1 = cs1, cs2 = cs2, data = example_data, subj = "id", group = NULL, phase = "acquisition")
+res_multi <- multifear::multiverse_cs(cs1 = cs1, cs2 = cs2, data = example_data, subj = "id", group = NULL, phase = "acquisition", include_bayes = FALSE)
 res_multi
-#> # A tibble: 150 x 15
-#>    x     y     exclusion model controls method  p.value effect.size estimate
-#>    <chr> <chr> <chr>     <chr> <lgl>    <chr>     <dbl>       <dbl>    <dbl>
-#>  1 cs    scr   full_data t-te… NA       t-test  1.24e-7      0.455    0.752 
-#>  2 cs    scr   full_data t-te… NA       t-test  2.47e-7      0.455    0.752 
-#>  3 cs    scr   full_data Baye… NA       t-test NA           NA       11.5   
-#>  4 cs    scr   full_data Baye… NA       t-test NA           NA        0.0673
-#>  5 cs:t… scr   full_data rep … NA       rep A…  3.70e-9      0.0247  NA     
-#>  6 cs    scr   full_data rep … NA       rep A…  2.47e-7      0.0863  NA     
-#>  7 cs:s… scr   full_data rep … NA       rep B… NA           NA       NA     
-#>  8 cs:s… scr   full_data rep … NA       rep B… NA           NA       NA     
-#>  9 cs:s… scr   full_data rep … NA       rep B… NA           NA       NA     
-#> 10 cs:s… scr   full_data rep … NA       rep B… NA           NA       NA     
-#> # … with 140 more rows, and 6 more variables: statistic <dbl>, conf.low <dbl>,
+#> # A tibble: 60 x 15
+#>    x     y     exclusion model controls method p.value effect.size estimate
+#>    <chr> <chr> <chr>     <chr> <lgl>    <chr>    <dbl>       <dbl>    <dbl>
+#>  1 cs    scr   full_data t-te… NA       t-test 1.24e-7      0.455     0.752
+#>  2 cs    scr   full_data t-te… NA       t-test 2.47e-7      0.455     0.752
+#>  3 cs:t… scr   full_data rep … NA       rep A… 3.70e-9      0.0247   NA    
+#>  4 cs    scr   full_data rep … NA       rep A… 2.47e-7      0.0863   NA    
+#>  5 cs    scr   last_tri… t-te… NA       t-test 1.07e-6      0.461     0.791
+#>  6 cs    scr   last_tri… t-te… NA       t-test 2.13e-6      0.461     0.791
+#>  7 cs:t… scr   last_tri… rep … NA       rep A… 8.19e-8      0.0251   NA    
+#>  8 cs    scr   last_tri… rep … NA       rep A… 2.13e-6      0.0902   NA    
+#>  9 cs    scr   last2_tr… t-te… NA       t-test 3.45e-5      0.432     0.756
+#> 10 cs    scr   last2_tr… t-te… NA       t-test 6.91e-5      0.432     0.756
+#> # … with 50 more rows, and 6 more variables: statistic <dbl>, conf.low <dbl>,
 #> #   conf.high <dbl>, data_used <list>, cutoff <dbl>, name_cutoff <chr>
 ```
 

@@ -16,6 +16,7 @@ multiverse_cs <-
            data,
            subj,
            group = NULL,
+           include_bayes = TRUE,
            cutoff = c(0, 0.1, 0.05),
            phase = "acquisition",
            print_output = TRUE) {
@@ -67,6 +68,7 @@ multiverse_cs <-
         data = .x,
         subj = subj,
         group = group,
+        include_bayes = include_bayes,
         exclusion = .y
       )
     ) %>% dplyr::mutate(
