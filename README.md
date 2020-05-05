@@ -145,8 +145,6 @@ res <- multifear::universe_cs(cs1 = cs1, cs2 = cs2, data = example_data,
 #>   influence.merMod                car 
 #>   dfbeta.influence.merMod         car 
 #>   dfbetas.influence.merMod        car
-#> Note: Progress bars and callbacks are suppressed when running multicore.
-#> Note: Progress bars and callbacks are suppressed when running multicore.
 ```
 
 And here are the results
@@ -218,36 +216,6 @@ some selection criteria for non-learns. So, here it is
 
 ``` r
 res_multi <- multifear::multiverse_cs(cs1 = cs1, cs2 = cs2, data = example_data, subj = "id", group = NULL, phase = "acquisition")
-#> Note: Progress bars and callbacks are suppressed when running multicore.
-#> Note: Progress bars and callbacks are suppressed when running multicore.
-#> Note: Progress bars and callbacks are suppressed when running multicore.
-#> Note: Progress bars and callbacks are suppressed when running multicore.
-#> Note: Progress bars and callbacks are suppressed when running multicore.
-#> Note: Progress bars and callbacks are suppressed when running multicore.
-#> Note: Progress bars and callbacks are suppressed when running multicore.
-#> Note: Progress bars and callbacks are suppressed when running multicore.
-#> Note: Progress bars and callbacks are suppressed when running multicore.
-#> Note: Progress bars and callbacks are suppressed when running multicore.
-#> Note: Progress bars and callbacks are suppressed when running multicore.
-#> Note: Progress bars and callbacks are suppressed when running multicore.
-#> Note: Progress bars and callbacks are suppressed when running multicore.
-#> Note: Progress bars and callbacks are suppressed when running multicore.
-#> Note: Progress bars and callbacks are suppressed when running multicore.
-#> Note: Progress bars and callbacks are suppressed when running multicore.
-#> Note: Progress bars and callbacks are suppressed when running multicore.
-#> Note: Progress bars and callbacks are suppressed when running multicore.
-#> Note: Progress bars and callbacks are suppressed when running multicore.
-#> Note: Progress bars and callbacks are suppressed when running multicore.
-#> Note: Progress bars and callbacks are suppressed when running multicore.
-#> Note: Progress bars and callbacks are suppressed when running multicore.
-#> Note: Progress bars and callbacks are suppressed when running multicore.
-#> Note: Progress bars and callbacks are suppressed when running multicore.
-#> Note: Progress bars and callbacks are suppressed when running multicore.
-#> Note: Progress bars and callbacks are suppressed when running multicore.
-#> Note: Progress bars and callbacks are suppressed when running multicore.
-#> Note: Progress bars and callbacks are suppressed when running multicore.
-#> Note: Progress bars and callbacks are suppressed when running multicore.
-#> Note: Progress bars and callbacks are suppressed when running multicore.
 res_multi
 #> # A tibble: 150 x 15
 #>    x     y     exclusion model controls method  p.value effect.size estimate
@@ -328,4 +296,4 @@ multifear::inference_cs(res_multi, na.rm = TRUE)
 ![](README_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
 
     #>   mean_p_value prop_p_value
-    #> 1 2.915891e-05           40
+    #> 1 2.915891e-05          100
