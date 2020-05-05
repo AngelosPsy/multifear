@@ -39,8 +39,7 @@ universe_cs(
 A data frame with the results.
 }
 \description{
-Basic function for conducting universe analyses for conditioning data
-data
+Basic function for running a multiverse analysis for a single data set
 }
 \details{
 \lifecycle{experimental}

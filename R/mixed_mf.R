@@ -1,27 +1,40 @@
 #' mixed_mf
 #'
-#' @description Mixed model function
+#' \lifecycle{experimental}
+#'
+#' @description Basic function for running mixed models for the multiverse analysis
 #' @inheritParams rm_anova_mf
-#' @return A basic function for running repeated measures ANOVAs
-#' @details In case the \code{time} argument is set to true, the function will
-#' include this as a within subjects factor, assuming that the columns in
-#' \code{cs1} and \code{cs2} correspond to ascending time points (e.g., cs1
-#' trial 1, cs1 trial 2 ... cs1 trial \code{n}). If this is not the case, the
-#' results are not to be trusted.
+#' @return A data frame with the results.
+#' @details The function assumes that you include more than 1 trial per CS. The function returns an error if that is not the function.
 #'
-#' The function uses the \code{ez::ezANOVA} function. The function gives by default a warning regarding the collapsing of factors. This function here suppresses this warning but the user should be aware of it.
+#' The function performs by default two dependent variable standardizations, the one per subject
+#' and the other one without taking subject into account.
 #'
-#' The effect size is omega squared.
+#' In case time is included, the function computes the intercept -- i.e., the 0 point -- on the middle of the time sequence.
+#'
+#' The following models are run and compared: a) Intercept only model, b) Intercept plus CS model, and c) Intercept plus CS \code{x} Time interaction.
+#'
+#' Separate models are run with `Subject` as random factor, as well as `Subject and Time` as random factors.
+#'
+#' The model is fit by maximizing the log-likelihood (i.e., "ML" term in nlme::lme).
+#'
+#' The model comparison is done using `BIC`.
+#'
+#' @return The data frame returned is the standard one returned in all function in the package (see e.g., \code{multifear::rm_anova_mf}). The important difference is of course the `x` column. There, you can see the term of the model that is returned. So, not the full model is returned but only this particular term.
+#'
+#' @seealso
+#' \code{\link[nlme]{lme}}
+#'
 #' @export
 mixed_mf <- function(cs1,
                      cs2,
                      data,
                      subj,
-                     time = TRUE,
                      group = NULL,
                      phase = "acquisition",
                      dv = "scr",
                      exclusion = "full data") {
+
   # Check data
   collection_warning(
     cs1 = cs1,
@@ -30,9 +43,16 @@ mixed_mf <- function(cs1,
     subj = subj
   )
 
+  if (length(cs1) < 2 ||
+      length(cs2) < 2) {
+    stop("The CS1 and/or CS2 have smaller than 2 levels.
+         The mixed_mf function was not run.")
+  }
+
   data <-
     data_preparation_anova(cs1 = cs1, cs2 = cs2, data = data, subj = subj,
                      time = TRUE, group = NULL)
+
   # Time effects contrasts
   cut_point <- mean(1:length(unique(data$time)))
   data <- data %>%
@@ -267,37 +287,28 @@ mixed_mf <- function(cs1,
 
   # Gather the terms now
   base_model_stand_pp_tab <-
-    select_term(base_model_stand_pp, "(Intercept)")
-  cs_model_stand_pp_tab <- select_term(cs_model_stand_pp, "cscs2")
+    select_term(base_model_stand_pp, "(Intercept)", dv = dv, exclusion = exclusion)
+  cs_model_stand_pp_tab <-
+    select_term(cs_model_stand_pp, "cscs2", dv = dv,exclusion = exclusion)
   cs_time_model_stand_pp_tab <-
-    select_term(cs_time_model_stand_pp, "cscs2:time2")
+    select_term(cs_time_model_stand_pp, "cscs2:time2", dv = dv, exclusion = exclusion)
 
   base_model_rtime_stand_dv_tab <-
-    select_term(base_model_rtime_stand_dv, "(Intercept)")
+    select_term(base_model_rtime_stand_dv, "(Intercept)", dv = dv, exclusion = exclusion)
   cs_model_rtime_stand_dv_tab <-
-    select_term(cs_model_rtime_stand_dv, "cscs2")
+    select_term(cs_model_rtime_stand_dv, "cscs2", dv = dv,exclusion = exclusion)
   cs_time_model_rtime_stand_dv_tab <-
-    select_term(cs_time_model_rtime_stand_dv, "cscs2:time2")
+    select_term(cs_time_model_rtime_stand_dv, "cscs2:time2", dv = dv,exclusion = exclusion)
 
   base_model_rtime_stand_pp_tab <-
-    select_term(base_model_rtime_stand_pp, "(Intercept)")
+    select_term(base_model_rtime_stand_pp, "(Intercept)", dv = dv,exclusion = exclusion)
   cs_model_rtime_stand_pp_tab <-
-    select_term(cs_model_rtime_stand_pp, "cscs2")
+    select_term(cs_model_rtime_stand_pp, "cscs2", dv = dv,exclusion = exclusion)
   cs_time_model_rtime_stand_pp_tab <-
-    select_term(cs_time_model_rtime_stand_pp, "cscs2:time2")
-
-
-  res <- tibble::tibble(
-    base_model_tab = base_model_tab,
-    cs_model_tab = cs_model_tab,
-    base_model_time_tab = base_model_time_tab,
-    base_model_time_rand_tab = base_model_time_rand_tab,
-    time_cs_model_time_tab = time_cs_model_time_tab,
-    cs_model_time_rand_tab = cs_model_time_rand_tab
-  )
+    select_term(cs_time_model_rtime_stand_pp, "cscs2:time2", dv = dv,exclusion = exclusion)
 
   # Work on the results
-  res <- tibble::tibble(
+  res_tmp <- tibble::tibble(
     dplyr::bind_rows(
       base_model_stand_pp_tab,
       cs_model_stand_pp_tab,
@@ -310,6 +321,8 @@ mixed_mf <- function(cs1,
       cs_time_model_rtime_stand_pp_tab
     )
   )
+
+  res <- res_tmp$`dplyr::bind_rows(...)`
 
   return(res)
 }

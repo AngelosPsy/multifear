@@ -2,8 +2,7 @@
 #'
 #' \lifecycle{experimental}
 #'
-#' @description Basic function for conducting universe analyses for conditioning data
-#' data
+#' @description Basic function for running a multiverse analysis for a single data set
 #' @inheritParams rm_anova_mf
 #' @param print_output Whether to print the output or not. Default set to \code{TRUE}
 #' @details In case of higher order interaction, only the highest order

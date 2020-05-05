@@ -67,6 +67,8 @@ include this as a within subjects factor, assuming that the columns in
 \code{cs1} and \code{cs2} corrrespond to ascending time points (e.g., cs1
 trial 1, cs1 trial 2 ... cs1 trial \code{n}). If this is not the case, the
 results are not to be trusted.
+When possible, the function will use multiple cores. This funcionality does
+not work on Windows.
 
 # Briefly define argument values that will be plugged in later on in the functions
 cs1 <- paste0("CSP", 1:10)

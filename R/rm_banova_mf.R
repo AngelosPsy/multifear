@@ -87,13 +87,13 @@ rm_banova_mf <- function(cs1,
 
   # Run the main ANOVA
   tmpBANOVA <-
-    BayesFactor::anovaBF(
+    suppressMessages(BayesFactor::anovaBF(
       formula = eval(parse(text = anova_terms)),
       data = data,
       whichRandom = subj,
       progress = FALSE,
       multicore = multicore
-    )
+    ))
 
   # Bayes factors for matched models
   bfmm <-

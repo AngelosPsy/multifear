@@ -9,7 +9,6 @@ mixed_mf(
   cs2,
   data,
   subj,
-  time = TRUE,
   group = NULL,
   phase = "acquisition",
   dv = "scr",
@@ -25,8 +24,6 @@ mixed_mf(
 
 \item{subj}{The name of the column including the participant numbers. Unique numbers are expected.}
 
-\item{time}{should time be included? Default to \code{TRUE}}
-
 \item{group}{the name of the group, if included, default to \code{NULL}.}
 
 \item{phase}{The conditioned phase that the analyses refer to. Accepted values are  \code{acquisition},  or \code{acq}, \code{extinction}, or \code{ext}.}
@@ -36,19 +33,31 @@ mixed_mf(
 \item{exclusion}{If any exclusion criteria were applied, default to \code{full data}}
 }
 \value{
-A basic function for running repeated measures ANOVAs
+A data frame with the results.
+
+The data frame returned is the standard one returned in all function in the package (see e.g., \code{multifear::rm_anova_mf}). The important difference is of course the `x` column. There, you can see the term of the model that is returned. So, not the full model is returned but only this particular term.
 }
 \description{
-Mixed model function
+Basic function for running mixed models for the multiverse analysis
 }
 \details{
-In case the \code{time} argument is set to true, the function will
-include this as a within subjects factor, assuming that the columns in
-\code{cs1} and \code{cs2} correspond to ascending time points (e.g., cs1
-trial 1, cs1 trial 2 ... cs1 trial \code{n}). If this is not the case, the
-results are not to be trusted.
+\lifecycle{experimental}
 
-The function uses the \code{ez::ezANOVA} function. The function gives by default a warning regarding the collapsing of factors. This function here suppresses this warning but the user should be aware of it.
+The function assumes that you include more than 1 trial per CS. The function returns an error if that is not the function.
 
-The effect size is omega squared.
+The function performs by default two dependent variable standardizations, the one per subject
+and the other one without taking subject into account.
+
+In case time is included, the function computes the intercept -- i.e., the 0 point -- on the middle of the time sequence.
+
+The following models are run and compared: a) Intercept only model, b) Intercept plus CS model, and c) Intercept plus CS \code{x} Time interaction.
+
+Separate models are run with `Subject` as random factor, as well as `Subject and Time` as random factors.
+
+The model is fit by maximizing the log-likelihood (i.e., "ML" term in nlme::lme).
+
+The model comparison is done using `BIC`.
+}
+\seealso{
+\code{\link[nlme]{lme}}
 }

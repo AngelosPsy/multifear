@@ -49,7 +49,7 @@ inference_warning = function(data){
   }
 }
 
-select_term = function(obj, term, y = "y", exclusion = "full data"){
+select_term = function(obj, term, dv = "scr", exclusion = "full data"){
   if(exists("obj")){
     summ <- summary(obj)
 
@@ -61,7 +61,7 @@ select_term = function(obj, term, y = "y", exclusion = "full data"){
 
     res <- tibble::tibble(
       x = term,
-      y = y,
+      y = dv,
       exclusion = exclusion,
       model = "mixed_model",
       controls = NA,
@@ -76,7 +76,7 @@ select_term = function(obj, term, y = "y", exclusion = "full data"){
   } else{
     tibble::tibble(
       x = term,
-      y = y,
+      y = dv,
       exclusion = exclusion,
       model = "mixed_model",
       controls = NA,
