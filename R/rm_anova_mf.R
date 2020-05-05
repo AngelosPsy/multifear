@@ -5,8 +5,8 @@
 #' \lifecycle{experimental}
 #'
 #' @inheritParams t_test_mf
-#' @param time should time be included? Default to \code{TRUE}
-#' @return A basic function for running repeated measures ANOVAs
+#' @param time should time be included? Default to \code{TRUE}.
+#' @return A basic function for running repeated measures ANOVAs.
 #' @details In case the \code{time} argument is set to \cite{TRUE} (default value), the function will include this as a within subjects factor, assuming that the columns in
 #' \code{cs1} and \code{cs2} correspond to ascending time points (e.g., cs1
 #' trial 1, cs1 trial 2 ... cs1 trial \code{n}). If this is not the case, the
@@ -59,7 +59,7 @@ rm_anova_mf <- function(cs1,
 
   data <-
     data_preparation_anova(cs1 = cs1, cs2 = cs2, data = data, subj = subj,
-                     time = TRUE, group = NULL)
+                     time = time, group = group)
 
   # Decide which terms you will have in order to feed in the ANOVA later on
   if (time && (!is.null(group))) {
@@ -75,7 +75,6 @@ rm_anova_mf <- function(cs1,
     selected_term <- "cs:time"
   } else if (!time && !is.null(group)) {
     anova_terms <- c("cs")
-    group = NULL
     selected_term <- "group:cs"
   }
 
@@ -97,12 +96,12 @@ rm_anova_mf <- function(cs1,
           type = 3,
           return_aov = TRUE
         )$aov'
-)
-    )))
+      ))))
 
   # Effect size
   eff_size <- sjstats::omega_sq(tmpANOVA) %>%
-    dplyr::filter(stratum == paste0("subj:", selected_term)) %>%
+    #dplyr::filter(stratum == paste0("subj:", selected_term)) %>%
+    dplyr::filter(term == selected_term) %>%
     dplyr::select(omegasq) %>%
     as.numeric()
 

@@ -26,7 +26,7 @@ rm_banova_mf(
 
 \item{subj}{The name of the column including the participant numbers. Unique numbers are expected.}
 
-\item{time}{should time be included? Default to \code{TRUE}}
+\item{time}{should time be included? Default to \code{TRUE}.}
 
 \item{group}{the name of the group, if included, default to \code{NULL}.}
 
@@ -36,7 +36,8 @@ rm_banova_mf(
 
 \item{exclusion}{If any exclusion criteria were applied, default to \code{full data}}
 
-\item{multicore}{The option to run the analysis in multiple cores, not available under Windows. Default to TRUE}
+\item{multicore}{The option to run the analysis in multiple cores, not available under Windows.
+Default to \code{TRUE}.}
 }
 \value{
 A tibble with the following column names:
@@ -67,8 +68,6 @@ include this as a within subjects factor, assuming that the columns in
 \code{cs1} and \code{cs2} corrrespond to ascending time points (e.g., cs1
 trial 1, cs1 trial 2 ... cs1 trial \code{n}). If this is not the case, the
 results are not to be trusted.
-When possible, the function will use multiple cores. This funcionality does
-not work on Windows.
 
 # Briefly define argument values that will be plugged in later on in the functions
 cs1 <- paste0("CSP", 1:10)

@@ -8,7 +8,8 @@
 #'
 #' @inheritParams rm_anova_mf
 #'
-#' @param multicore The option to run the analysis in multiple cores, not available under Windows. Default to TRUE
+#' @param multicore The option to run the analysis in multiple cores, not available under Windows.
+#' Default to \code{TRUE}.
 #' @return A tibble with the following column names:
 #' x: the name of the independent variable (e.g., cs)
 #' y: the name of the dependent variable as this defined in the \code{dv} argument

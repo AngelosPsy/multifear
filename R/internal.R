@@ -124,7 +124,9 @@ data_preparation_anova = function(cs1,
     group <- NULL
   } else{
     group_new <- data %>%
-      dplyr::select(tidyselect::all_of(!!dplyr::enquo(group)))
+      dplyr::select(tidyselect::all_of(!!dplyr::enquo(group))) %>%
+      dplyr::mutate(group2 = as.factor(group)) %>% dplyr::select(group2) %>%
+    dplyr::rename(group = group2)
   }
 
   data <- dplyr::bind_cols(subj, cs1, cs2, group_new)
@@ -149,17 +151,16 @@ data_preparation_anova = function(cs1,
     ) %>% # Until pivot_longer gets better
     dplyr::mutate(
       cs = as.factor(stringr::str_sub(var_old, 1, 3)),
-      time = as.factor(sub(".*_", "", .$var_old)),
+      time = as.factor(sub(".*_", "", .$var_old)), # Better than stringr
       subj = as.factor(subj),
       group = as.factor(group)
-    ) -> data # Better than stringr
+    ) -> data
 
   res <- data
 
   return(res)
 
 }
-
 
 data_preparation_ttest = function(cs1,
                                   cs2,
@@ -186,14 +187,12 @@ data_preparation_ttest = function(cs1,
 
   tmp_data <- dplyr::bind_cols(subj, cs1, cs2)
 
-
   if(is.null(group)){
     tmp_data <- tmp_data %>% dplyr::mutate(group = "NULL")
   } else{
     groupz <- data %>% dplyr::select(all_of(!!dplyr::enquo(group))) %>% unlist()
     tmp_data <- tmp_data %>% dplyr::mutate(group = as.factor(groupz))
   }
-
 
   res <- tmp_data
 
@@ -230,7 +229,9 @@ data_preparation_verse = function(cs1,
         group = NULL
       } else {
         group_new <- data %>%
-          dplyr::select(tidyselect::all_of(!!dplyr::enquo(group)))
+          dplyr::select(tidyselect::all_of(!!dplyr::enquo(group))) %>%
+          dplyr::mutate(group2 = as.factor(group)) %>% dplyr::select(group2) %>%
+          dplyr::rename(group = group2)
       }
 
       res <- dplyr::bind_cols(subj, cs1, cs2, group_new)

@@ -25,7 +25,7 @@ rm_anova_mf(
 
 \item{subj}{The name of the column including the participant numbers. Unique numbers are expected.}
 
-\item{time}{should time be included? Default to \code{TRUE}}
+\item{time}{should time be included? Default to \code{TRUE}.}
 
 \item{group}{the name of the group, if included, default to \code{NULL}.}
 
@@ -36,7 +36,7 @@ rm_anova_mf(
 \item{exclusion}{If any exclusion criteria were applied, default to \code{full data}}
 }
 \value{
-A basic function for running repeated measures ANOVAs
+A basic function for running repeated measures ANOVAs.
 
 A tibble with the following column names:
 x: the name of the independent variable (e.g., cs)
