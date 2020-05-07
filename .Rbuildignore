@@ -5,3 +5,5 @@
 ^\.travis\.yml$
 ^\.github$
 ^codecov\.yml$
+^_config.yml$
+^docs$

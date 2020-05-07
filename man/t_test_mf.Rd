@@ -48,20 +48,22 @@ controls: ignore this column for this test
 method: the model that was run
 p.value: the p-value of the test
 effect.size: the estimated effect size
-estimate: the estimate of the test run
+estimate: the estimate of the test run. For the t-test is the mean of the differences
 statistic: the t-value
 conf.low: the lower confidence interval for the estimate
 conf.high: the higher confidence interval for the estimate
 data_used: a list with the data used for the specific test
 }
 \description{
-Basic function for running the frequentist's t-tests included in the main analyses
+Basic function for running the frequentist's t-tests (student t-test) included in the main analyses
 }
 \details{
 \lifecycle{experimental}
 
 Given the correct names for the \code{cs1}, \code{cs2}, \code{subj}, and \code{data}, the function will run one- and two-sided frequentist's t-tests. In case \code{cs1} or \code{cs2} refer to multiple columns, the mean -- per row -- for each one of these variables will be computed first before running the test. Please note that cs1 is implicitly referred to the cs that is reinforced, and cs2 to the cs that is not reinforced.
 Depending on whether the data refer to an acquisition or extinction phase (as defined in the \code{phase} argument), the function will return a positive one sided, or negative one-sided, t-test in addition to the two-sided t-test. The returned effect size is  Hedge's g.
+
+The function by default runs a Welch t-test, meaning it assumes unequal variances. This is due to calls that such a test should be preferred over Student t-test, at least for paired samples t-test. Please note that if we let R decide which test to run -- this is done by default in \code{stats::t.test}, then for some test there would be a Student t-test whereas in some others not.
 }
 \examples{
 # Load example data

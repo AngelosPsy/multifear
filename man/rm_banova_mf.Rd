@@ -61,20 +61,13 @@ Basic function for running the Bayesian repeated measures ANOVA
 \lifecycle{experimental}
 }
 \details{
-\lifecycle{experimental}
-
 In case the \code{time} argument is set to true, the function will
 include this as a within subjects factor, assuming that the columns in
 \code{cs1} and \code{cs2} corrrespond to ascending time points (e.g., cs1
 trial 1, cs1 trial 2 ... cs1 trial \code{n}). If this is not the case, the
 results are not to be trusted.
 
-# Briefly define argument values that will be plugged in later on in the functions
-cs1 <- paste0("CSP", 1:10)
-cs2 <- paste0("CSM", 1:10)
-subj <- "id"
-group <- "group"
-
-# Repeated measures ANOVA
-rm_banova_mf(cs1 = cs1, cs2 = cs2, subj = subj, data = example_data, time = TRUE)
+The ANOVA will run *all* possible models and combinations. Please note that
+in case of many factors, this will mean that the analysis will take a long
+time to be completed.
 }

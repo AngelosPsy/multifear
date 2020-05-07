@@ -2,7 +2,7 @@
 #'
 #' \lifecycle{experimental}
 #'
-#' @description Basic function for running the frequentist's t-tests included in the main analyses
+#' @description Basic function for running the frequentist's t-tests (student t-test) included in the main analyses
 #' @param cs1 The column name(s) of the conditioned responses for the first conditioned stimulus.
 #' @param cs2 The column name(s) of the conditioned responses for the second conditioned stimulus.
 #' @param subj The name of the column including the participant numbers. Unique numbers are expected.
@@ -17,6 +17,8 @@
 #' @details Given the correct names for the \code{cs1}, \code{cs2}, \code{subj}, and \code{data}, the function will run one- and two-sided frequentist's t-tests. In case \code{cs1} or \code{cs2} refer to multiple columns, the mean -- per row -- for each one of these variables will be computed first before running the test. Please note that cs1 is implicitly referred to the cs that is reinforced, and cs2 to the cs that is not reinforced.
 #' Depending on whether the data refer to an acquisition or extinction phase (as defined in the \code{phase} argument), the function will return a positive one sided, or negative one-sided, t-test in addition to the two-sided t-test. The returned effect size is  Hedge's g.
 #'
+#' The function by default runs a Welch t-test, meaning it assumes unequal variances. This is due to calls that such a test should be preferred over Student t-test, at least for paired samples t-test. Please note that if we let R decide which test to run -- this is done by default in \code{stats::t.test}, then for some test there would be a Student t-test whereas in some others not.
+#'
 #' @return A tibble with the following column names:
 #' x: the name of the independent variable (e.g., cs)
 #' y: the name of the dependent variable as this defined in the \code{dv} argument
@@ -26,7 +28,7 @@
 #' method: the model that was run
 #' p.value: the p-value of the test
 #' effect.size: the estimated effect size
-#' estimate: the estimate of the test run
+#' estimate: the estimate of the test run. For the t-test is the mean of the differences
 #' statistic: the t-value
 #' conf.low: the lower confidence interval for the estimate
 #' conf.high: the higher confidence interval for the estimate
@@ -97,7 +99,8 @@ t_test_mf <-
             formula = .$cs ~ .$group,
             data = .,
             paired = FALSE,
-            alternative = .$alternative[1]
+            alternative = .$alternative[1],
+            var.equal = FALSE
           ) %>%
             broom::tidy()
         )
@@ -130,7 +133,8 @@ t_test_mf <-
             formula = .$value ~ .$N,
             data = .,
             paired = paired,
-            alternative = .$alternative[1]
+            alternative = .$alternative[1],
+            var.equal = FALSE
           ) %>%
             broom::tidy()
         )
@@ -155,20 +159,22 @@ t_test_mf <-
     if (!!phase %in% c("acquisition", "acq")) {
       ttl <-
         ttest_res %>% dplyr::filter(alternative %in% c("two.sided", "greater"))
+      used_model = paste("t-test", c("two.sided", "greater"))
     }
 
     if (!!phase %in% c("extinction", "ext")) {
       ttl <-
         ttest_res %>% dplyr::filter(alternative %in% c("two.sided", "less"))
+      used_model = paste("t-test", c("two.sided", "less"))
     }
 
     res <- ttl %>%
       dplyr::mutate(
-        method = paste("t-test"),
+        method = "t-test",
         x = "cs",
         y = dv,
         exclusion = exclusion,
-        model = "t-test",
+        model = used_model,
         controls = NA
       ) %>%
       dplyr::select(

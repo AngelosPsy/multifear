@@ -12,7 +12,7 @@
 #' trial 1, cs1 trial 2 ... cs1 trial \code{n}). If this is not the case, the
 #' results are not to be trusted.
 #'
-#' The function uses the \code{ez::ezANOVA} function. The function gives by default a warning regarding the collapsing of factors. This function here suppresses this warning but the user should be aware of it. Please note that at the moment no sphericity correction is performed. The reported effect size is omega squared.
+#' The function uses the \code{ez::ezANOVA} function. The function gives by default a warning regarding the collapsing of factors. This function here suppresses this warning but the user should be aware of it. Please note that at the moment no sphericity correction is performed. The reported effect size is omega squared as this is computed by  \code{sjstats::omega_sq}.
 #'
 #' @return A tibble with the following column names:
 #' x: the name of the independent variable (e.g., cs)
@@ -100,13 +100,13 @@ rm_anova_mf <- function(cs1,
 
   # Effect size
   eff_size <- sjstats::omega_sq(tmpANOVA) %>%
-    #dplyr::filter(stratum == paste0("subj:", selected_term)) %>%
     dplyr::filter(term == selected_term) %>%
     dplyr::select(omegasq) %>%
     as.numeric()
 
   # Shape the object for the results. The suppressWarnings is there due to
-  # warning from broom::tidy.
+  # the warning returned by broom::tidy.
+  #
   res <-
     suppressWarnings(purrr::map_df(tmpANOVA, .f = broom::tidy)) %>%
     dplyr::filter(term %in% selected_term) %>%
