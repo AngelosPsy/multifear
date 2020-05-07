@@ -4,3 +4,4 @@
 ^README_files
 ^\.travis\.yml$
 ^\.github$
+^codecov\.yml$
