@@ -71,16 +71,3 @@ The ANOVA will run *all* possible models and combinations. Please note that
 in case of many factors, this will mean that the analysis will take a long
 time to be completed.
 }
-\examples{
-# Briefly define argument values that will be plugged in later on in the functions.
-# We only use two trials as the function takes a long time to run.
-
-cs1 <- paste0("CSP", 1:2)
-cs2 <- paste0("CSM", 1:2)
-subj <- "id"
-group <- "group"
-
-# Repeated measures ANOVA
-rm_banova_mf(cs1 = cs1, cs2 = cs2, subj = subj, data = example_data, time = TRUE)
-
-}
