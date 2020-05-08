@@ -191,7 +191,14 @@ data_preparation_ttest = function(cs1,
     tmp_data <- tmp_data %>% dplyr::mutate(group = "NULL")
   } else{
     groupz <- data %>% dplyr::select(all_of(!!dplyr::enquo(group))) %>% unlist()
-    tmp_data <- tmp_data %>% dplyr::mutate(group = as.factor(groupz))
+    if(length(unique(groupz)) != 2){
+      stop("Number of levels for group is different than 2. t-test did not run.")
+    }
+    tmp_data <- tmp_data %>% dplyr::mutate(group = groupz)
+    # Create dummy variable for regression
+    tmp_data <- tmp_data %>%
+      fastDummies::dummy_cols(select_columns = group,
+                              remove_first_dummy = TRUE)
   }
 
   res <- tmp_data
