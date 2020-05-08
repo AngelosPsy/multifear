@@ -50,3 +50,6 @@ test_that("universe works", {
   expect_known_output(universe_cs(cs1, cs2, subj = subj, data = bf_data, include_bayes = FALSE), tmp)
 })
 
+test_that("lm works", {
+  expect_known_output(lm_mf(cs1, cs2, subj = subj, data = bf_data), tmp)
+})
