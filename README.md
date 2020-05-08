@@ -10,6 +10,8 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 [![codecov](https://codecov.io/gh/AngelosPsy/multifear/branch/master/graph/badge.svg)](https://codecov.io/gh/AngelosPsy/multifear)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/multifear)](https://CRAN.R-project.org/package=multifear)
+[![R build
+status](https://github.com/AngelosPsy/multifear/workflows/R-CMD-check/badge.svg)](https://github.com/AngelosPsy/multifear/actions)
 <!-- badges: end -->
 
 # Multifear
