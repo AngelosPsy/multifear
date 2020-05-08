@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>rm_banova_mf — rm_banova_mf • multifear</title>
+<title>lm_mf — lm_mf • multifear</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,8 @@
 
 
 
-<meta property="og:title" content="rm_banova_mf — rm_banova_mf" />
-<meta property="og:description" content="Basic function for running the Bayesian repeated measures ANOVA
-" />
+<meta property="og:title" content="lm_mf — lm_mf" />
+<meta property="og:description" content="Basic function for running frequentist's regression models" />
 
 
 
@@ -109,27 +108,26 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>rm_banova_mf</h1>
-    <small class="dont-index">Source: <a href='https://github.com/AngelosPsy/multifear/blob/master/R/rm_banova_mf.R'><code>R/rm_banova_mf.R</code></a></small>
-    <div class="hidden name"><code>rm_banova_mf.Rd</code></div>
+    <h1>lm_mf</h1>
+    <small class="dont-index">Source: <a href='https://github.com/AngelosPsy/multifear/blob/master/R/lm_mf.R'><code>R/lm_mf.R</code></a></small>
+    <div class="hidden name"><code>lm_mf.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Basic function for running the Bayesian repeated measures ANOVA</p>
-<p><a href='https://www.tidyverse.org/lifecycle/#experimental'><img src='figures/lifecycle-experimental.svg' alt='Experimental lifecycle'></a></p>
+    <p>Basic function for running frequentist's regression models</p>
     </div>
 
-    <pre class="usage"><span class='fu'>rm_banova_mf</span>(
+    <pre class="usage"><span class='fu'>lm_mf</span>(
   <span class='no'>cs1</span>,
   <span class='no'>cs2</span>,
   <span class='no'>data</span>,
   <span class='no'>subj</span>,
-  <span class='kw'>time</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>group</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>paired</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>phase</span> <span class='kw'>=</span> <span class='st'>"acquisition"</span>,
   <span class='kw'>dv</span> <span class='kw'>=</span> <span class='st'>"scr"</span>,
-  <span class='kw'>exclusion</span> <span class='kw'>=</span> <span class='st'>"full data"</span>,
-  <span class='kw'>multicore</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+  <span class='kw'>exclusion</span> <span class='kw'>=</span> <span class='st'>"full data"</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -152,12 +150,16 @@
       <td><p>The name of the column including the participant numbers. Unique numbers are expected.</p></td>
     </tr>
     <tr>
-      <th>time</th>
-      <td><p>should time be included? Default to <code>TRUE</code>.</p></td>
-    </tr>
-    <tr>
       <th>group</th>
       <td><p>the name of the group, if included, default to <code>NULL</code>.</p></td>
+    </tr>
+    <tr>
+      <th>na.rm</th>
+      <td><p>Whether NAs should be removed, default to <code>FALSE</code>.</p></td>
+    </tr>
+    <tr>
+      <th>paired</th>
+      <td><p>Whether the t-test refers to a paired or independent sample(s). Default to <code>TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>phase</th>
@@ -171,11 +173,6 @@
       <th>exclusion</th>
       <td><p>If any exclusion criteria were applied, default to <code>full data</code></p></td>
     </tr>
-    <tr>
-      <th>multicore</th>
-      <td><p>The option to run the analysis in multiple cores, not available under Windows.
-Default to <code>TRUE</code>.</p></td>
-    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -187,36 +184,31 @@ exclusion: see <code>exclusion</code> argument
 model: the model that was run (e.g., t-test)
 controls: ignore this column for this test
 method: the model that was run
-p.value: irrelevant here
-effect.size: irrelevant here
-estimate: the estimate of the test run
+p.value: the p-value of the test
+effect.size: the estimated effect size
+estimate: the estimate of the test run. For the t-test is the mean of the differences
 statistic: the t-value
 conf.low: the lower confidence interval for the estimate
 conf.high: the higher confidence interval for the estimate
 data_used: a list with the data used for the specific test</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>In case the <code>time</code> argument is set to true, the function will
-include this as a within subjects factor, assuming that the columns in
-<code>cs1</code> and <code>cs2</code> corrrespond to ascending time points (e.g., cs1
-trial 1, cs1 trial 2 ... cs1 trial <code>n</code>). If this is not the case, the
-results are not to be trusted.</p>
-<p>The ANOVA will run *all* possible models and combinations. Please note that
-in case of many factors, this will mean that the analysis will take a long
-time to be completed.</p>
+    <p><a href='https://www.tidyverse.org/lifecycle/#experimental'><img src='figures/lifecycle-experimental.svg' alt='Experimental lifecycle'></a></p>
+<p>Given the correct names for the <code>cs1</code>, <code>cs2</code>, <code>subj</code>, and <code>data</code>, the function will run one- and two-sided frequentist's t-tests. In case <code>cs1</code> or <code>cs2</code> refer to multiple columns, the mean -- per row -- for each one of these variables will be computed first before running the test. Please note that cs1 is implicitly referred to the cs that is reinforced, and cs2 to the cs that is not reinforced.
+Depending on whether the data refer to an acquisition or extinction phase (as defined in the <code>phase</code> argument), the function will return a positive one sided, or negative one-sided, t-test in addition to the two-sided t-test. The returned effect size is  Hedge's g.</p>
+<p>The function by default runs a Welch t-test, meaning it assumes unequal variances. This is due to calls that such a test should be preferred over Student t-test, at least for paired samples t-test. Please note that if we let R decide which test to run -- this is done by default in <code><a href='https://rdrr.io/r/stats/t.test.html'>stats::t.test</a></code>, then for some test there would be a Student t-test whereas in some others not.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Briefly define argument values that will be plugged in later on in the functions.</span>
-<span class='co'># We only use two trials as the function takes a long time to run.</span>
+    <pre class="examples"><div class='input'><span class='co'># Load example data</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>example_data</span>)
 
-<span class='no'>cs1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='st'>"CSP"</span>, <span class='fl'>1</span>:<span class='fl'>2</span>)
-<span class='no'>cs2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='st'>"CSM"</span>, <span class='fl'>1</span>:<span class='fl'>2</span>)
-<span class='no'>subj</span> <span class='kw'>&lt;-</span> <span class='st'>"id"</span>
-<span class='no'>group</span> <span class='kw'>&lt;-</span> <span class='st'>"group"</span>
 
-<span class='co'># Repeated measures ANOVA</span>
-<span class='fu'>rm_banova_mf</span>(<span class='kw'>cs1</span> <span class='kw'>=</span> <span class='no'>cs1</span>, <span class='kw'>cs2</span> <span class='kw'>=</span> <span class='no'>cs2</span>, <span class='kw'>subj</span> <span class='kw'>=</span> <span class='no'>subj</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>example_data</span>, <span class='kw'>time</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='error'>Error in BayesFactor::anovaBF(formula = eval(parse(text = anova_terms)),     data = data, whichRandom = subj, progress = FALSE, multicore = multicore): Required package (doMC) missing for multicore functionality.</span></div><div class='input'>
-</div></pre>
+<span class='fu'>lm_mf</span>(<span class='kw'>cs1</span> <span class='kw'>=</span> <span class='st'>"CSP1"</span>, <span class='kw'>cs2</span> <span class='kw'>=</span> <span class='st'>"CSM1"</span>, <span class='kw'>subj</span> <span class='kw'>=</span> <span class='st'>"id"</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>example_data</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 1 x 11</span><span>
+#&gt;   x     y     exclusion model controls method p.value effect.size estimate
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span> cs    scr   full data lm    </span><span style='color: #BB0000;'>NA</span><span>       lm      0.020</span><span style='text-decoration: underline;'>8</span><span>       0.523    0.523
+#&gt; </span><span style='color: #555555;'># … with 2 more variables: statistic </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, data_used </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span></div><div class='input'>
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
