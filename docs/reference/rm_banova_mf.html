@@ -196,19 +196,14 @@ conf.high: the higher confidence interval for the estimate
 data_used: a list with the data used for the specific test</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p><a href='https://www.tidyverse.org/lifecycle/#experimental'><img src='figures/lifecycle-experimental.svg' alt='Experimental lifecycle'></a></p>
-<p>In case the <code>time</code> argument is set to true, the function will
+    <p>In case the <code>time</code> argument is set to true, the function will
 include this as a within subjects factor, assuming that the columns in
 <code>cs1</code> and <code>cs2</code> corrrespond to ascending time points (e.g., cs1
 trial 1, cs1 trial 2 ... cs1 trial <code>n</code>). If this is not the case, the
 results are not to be trusted.</p>
-<p># Briefly define argument values that will be plugged in later on in the functions
-cs1 &lt;- paste0("CSP", 1:10)
-cs2 &lt;- paste0("CSM", 1:10)
-subj &lt;- "id"
-group &lt;- "group"</p>
-<p># Repeated measures ANOVA
-rm_banova_mf(cs1 = cs1, cs2 = cs2, subj = subj, data = example_data, time = TRUE)</p>
+<p>The ANOVA will run *all* possible models and combinations. Please note that
+in case of many factors, this will mean that the analysis will take a long
+time to be completed.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
