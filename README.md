@@ -286,9 +286,11 @@ function and you will get:
 1)  A histogram will all the p value and a red line showing the
     significance limit – by default alpha = 0.05
 
-2)  Mean p\_value.
+2)  Mean p\_value
 
-3)  and the number of p values below the significance level
+3)  the number of p values below the significance level
+
+4)  Mean of Bayes factors.
 
 <!-- end list -->
 
