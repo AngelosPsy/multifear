@@ -21,6 +21,7 @@
 #' statistic: the t-value
 #' conf.low: the lower confidence interval for the estimate
 #' conf.high: the higher confidence interval for the estimate
+#' framework: were the data analysed within a NHST or Bayesian framework?
 #' data_used: a list with the data used for the specific test
 #'
 #' @details In case the \code{time} argument is set to true, the function will
@@ -129,7 +130,8 @@ rm_banova_mf <- function(cs1,
     estimate = as.character(bfmm),
     statistic = NA,
     conf.low = NA,
-    conf.high = NA
+    conf.high = NA,
+    framework = "Bayesian"
   )
 
   bfum_res <- data.frame(
@@ -144,7 +146,8 @@ rm_banova_mf <- function(cs1,
     estimate = as.character(bfum),
     statistic = NA,
     conf.low = NA,
-    conf.high = NA
+    conf.high = NA,
+    framework = "Bayesian"
   )
 
   res <- rbind(bfmm_res, bfum_res) %>%

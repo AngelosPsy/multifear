@@ -32,6 +32,7 @@
 #' statistic: the t-value
 #' conf.low: the lower confidence interval for the estimate
 #' conf.high: the higher confidence interval for the estimate
+#' framework: were the data analysed within a NHST or Bayesian framework?
 #' data_used: a list with the data used for the specific test
 #'
 #' @examples
@@ -96,7 +97,8 @@ lm_mf <-
         controls = NA,
         effect.size = .$estimate,
         conf.low = NA,
-        conf.high = NA
+        conf.high = NA,
+        framework = "NHST"
       ) %>%
       dplyr::select(
         x,
@@ -108,7 +110,10 @@ lm_mf <-
         p.value,
         effect.size,
         estimate,
-        statistic
+        statistic,
+        conf.low,
+        conf.high,
+        framework
       ) %>%
       dplyr::mutate(data_used = list(data))
 

@@ -55,6 +55,7 @@ estimate: the estimate of the test run
 statistic: the t-value
 conf.low: the lower confidence interval for the estimate
 conf.high: the higher confidence interval for the estimate
+framework: were the data analysed within a NHST or Bayesian framework?
 data_used: a list with the data used for the specific test
 }
 \description{

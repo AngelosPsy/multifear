@@ -18,6 +18,7 @@
 #' statistic: the t-value
 #' conf.low: the lower confidence interval for the estimate
 #' conf.high: the higher confidence interval for the estimate
+#' framework: were the data analysed within a NHST or Bayesian framework?
 #' data_used: a list with the data used for the specific test
 #'
 #' @details This is a wrapper function function around the BayesFactor::ttestBF(),
@@ -145,7 +146,8 @@ bt_test_mf <-
       estimate = ttl,
       statistic = NA,
       conf.low = NA,
-      conf.high = NA
+      conf.high = NA,
+      framework = "Bayesian"
     ) %>%
       tibble::as_tibble() %>%
       dplyr::mutate(data_used = list(data))

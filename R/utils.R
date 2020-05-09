@@ -31,6 +31,7 @@
   utils::globalVariables ("effect.size")
   utils::globalVariables ("estimate")
   utils::globalVariables ("excl")
+  utils::globalVariables ("framework")
   utils::globalVariables ("group")
   utils::globalVariables ("group2")
   utils::globalVariables ("id")

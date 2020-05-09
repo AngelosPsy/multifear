@@ -27,6 +27,7 @@
 #' statistic: the t-value
 #' conf.low: the lower confidence interval for the estimate
 #' conf.high: the higher confidence interval for the estimate
+#' framework: were the data analysed within a NHST or Bayesian framework?
 #' data_used: a list with the data used for the specific test
 #'
 #' @examples
@@ -121,7 +122,8 @@ rm_anova_mf <- function(cs1,
       estimate = NA,
       conf.low = NA,
       conf.high = NA,
-      effect.size = eff_size
+      effect.size = eff_size,
+      framework = "NHST"
     ) %>%
     dplyr::select(x,
                   y,
@@ -134,7 +136,8 @@ rm_anova_mf <- function(cs1,
                   estimate,
                   statistic,
                   conf.low,
-                  conf.high) %>%
+                  conf.high,
+                  framework) %>%
     dplyr::mutate(data_used = list(data))
 
   return(res)
