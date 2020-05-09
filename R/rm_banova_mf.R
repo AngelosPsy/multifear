@@ -77,19 +77,23 @@ rm_banova_mf <- function(cs1,
   # Decide which terms you will have in order to feed in the ANOVA later on
   if (time && (!is.null(group))) {
     anova_terms <- "resp ~ group*cs*time + subj"
-    selected_term <- "cs:group:subj:time"
+    #selected_term <- "cs:group:subj:time"
+    selected_term <- "cs:group:time"
   } else if (!time && (is.null(group)))  {
     anova_terms <- "resp ~ cs + subj"
     group = NULL
-    selected_term <- "cs:subj"
+    #selected_term <- "cs:subj"
+    selected_term <- "cs"
   } else if (time && is.null(group)) {
     anova_terms <- "resp ~ cs*time + subj"
     group = NULL
-    selected_term <- "cs:subj:time"
+    #selected_term <- "cs:subj:time"
+    selected_term <- "cs:time"
   } else if (!time && !is.null(group)) {
     anova_terms <- "resp ~ group*cs + subj"
     group = NULL
-    selected_term <- "cs:group:subj"
+    #selected_term <- "cs:group:subj"
+    selected_term <- "cs:group"
   }
 
   # Run the main ANOVA
@@ -127,7 +131,7 @@ rm_banova_mf <- function(cs1,
     method = paste("rep BANOVA Matched", selected_term),
     p.value = NA,
     effect.size = NA,
-    estimate = as.character(bfmm),
+    estimate = bfmm,
     statistic = NA,
     conf.low = NA,
     conf.high = NA,
@@ -143,7 +147,7 @@ rm_banova_mf <- function(cs1,
     method = paste("rep BANOVA Unmatched", selected_term),
     p.value = NA,
     effect.size = NA,
-    estimate = as.character(bfum),
+    estimate = bfum,
     statistic = NA,
     conf.low = NA,
     conf.high = NA,

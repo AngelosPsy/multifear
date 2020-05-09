@@ -36,6 +36,7 @@ universe_cs <-
            dv = "scr",
            print_output = TRUE,
            exclusion = "full data") {
+
     # Check data
     collection_warning(
       cs1 = cs1,
@@ -69,7 +70,6 @@ universe_cs <-
       do_anova = FALSE
       message("Skipping ANOVA due to the number of trials for the cs1 and/or cs2.")
     }
-
 
     # Perform ANOVA
     if (is.null(group) & do_anova) {
@@ -149,6 +149,7 @@ universe_cs <-
           phase = phase,
           exclusion = exclusion
         )
+
       if (include_bayes) {
         banovaNOTIME <-
           multifear::rm_banova_mf(
@@ -177,7 +178,6 @@ universe_cs <-
             dv = dv,
             multicore = TRUE
           )
-
       }
     }
 
@@ -198,7 +198,9 @@ universe_cs <-
         phase = phase,
         exclusion = exclusion
       )
+
     combRes <- list(`t-test full` = ttestFULL)
+
     if (include_bayes) {
       bttestFULL <-
         multifear::bt_test_mf(
