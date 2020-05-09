@@ -209,7 +209,7 @@ universe_cs <-
           phase = phase,
           exclusion = exclusion
         )
-      combRes[`bayes t-test full`] <- bttestFULL
+      combRes$`bayes t-test full` <- bttestFULL
     }
 
     if (do_anova) {
