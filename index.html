@@ -148,15 +148,15 @@
 <span class="co">#&gt;   dfbetas.influence.merMod        car</span></pre></div>
 <p>And here are the results</p>
 <div class="sourceCode" id="cb8"><pre class="r"><span class="no">res</span>
-<span class="co">#&gt; # A tibble: 4 x 13</span>
+<span class="co">#&gt; # A tibble: 4 x 14</span>
 <span class="co">#&gt;   x     y     exclusion model controls method p.value effect.size estimate</span>
 <span class="co">#&gt;   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;     &lt;chr&gt; &lt;lgl&gt;    &lt;chr&gt;    &lt;dbl&gt;       &lt;dbl&gt;    &lt;dbl&gt;</span>
 <span class="co">#&gt; 1 cs    scr   full data t-te… NA       t-test 1.24e-7      0.455     0.752</span>
 <span class="co">#&gt; 2 cs    scr   full data t-te… NA       t-test 2.47e-7      0.455     0.752</span>
 <span class="co">#&gt; 3 cs:t… scr   full data rep … NA       rep A… 3.70e-9      0.0247   NA    </span>
 <span class="co">#&gt; 4 cs    scr   full data rep … NA       rep A… 2.47e-7      0.0863   NA    </span>
-<span class="co">#&gt; # … with 4 more variables: statistic &lt;dbl&gt;, conf.low &lt;dbl&gt;, conf.high &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   data_used &lt;list&gt;</span></pre></div>
+<span class="co">#&gt; # … with 5 more variables: statistic &lt;dbl&gt;, conf.low &lt;dbl&gt;, conf.high &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   framework &lt;chr&gt;, data_used &lt;list&gt;</span></pre></div>
 <p>Let’s go through each column separately</p>
 <ul>
 <li><p>x : is the effect that you are testing. For example, the cs means that you are testing cs differences. cs:time the cs X time interaction is tested. Be careful: when testing interactions, we only report the highest order interaction. That means that if you have a cs x time interaction, you do not get the results of the cs or the time main effect.</p></li>
@@ -169,12 +169,13 @@
 <li><p>estimate: The estimate that is returned from the test. Keep in mind though that this applies only for the t-test at the moment. We need to see what we can do for the ANOVA,</p></li>
 <li><p>statistic. The statistic of the test</p></li>
 <li><p>conf.low and conf.high In case you have an estimate, this returns the low and high levels of it</p></li>
+<li><p>framework were the data analysed within a NHST or Bayesian framework?</p></li>
 <li><p>data_used Here you have a data frame with the data used for the performed analyses. This is because someone maybe wants to recreate the results and also as a check that nothing went wrong.</p></li>
 </ul>
 <p>So now let’s see how you can run the same analyses but after we apply some selection criteria for non-learns. So, here it is</p>
 <div class="sourceCode" id="cb9"><pre class="r"><span class="no">res_multi</span> <span class="kw">&lt;-</span> <span class="kw pkg">multifear</span><span class="kw ns">::</span><span class="fu"><a href="reference/multiverse_cs.html">multiverse_cs</a></span>(<span class="kw">cs1</span> <span class="kw">=</span> <span class="no">cs1</span>, <span class="kw">cs2</span> <span class="kw">=</span> <span class="no">cs2</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">example_data</span>, <span class="kw">subj</span> <span class="kw">=</span> <span class="st">"id"</span>, <span class="kw">group</span> <span class="kw">=</span> <span class="kw">NULL</span>, <span class="kw">phase</span> <span class="kw">=</span> <span class="st">"acquisition"</span>, <span class="kw">include_bayes</span> <span class="kw">=</span> <span class="fl">FALSE</span>)
 <span class="no">res_multi</span>
-<span class="co">#&gt; # A tibble: 60 x 15</span>
+<span class="co">#&gt; # A tibble: 60 x 16</span>
 <span class="co">#&gt;    x     y     exclusion model controls method p.value effect.size estimate</span>
 <span class="co">#&gt;    &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;     &lt;chr&gt; &lt;lgl&gt;    &lt;chr&gt;    &lt;dbl&gt;       &lt;dbl&gt;    &lt;dbl&gt;</span>
 <span class="co">#&gt;  1 cs    scr   full_data t-te… NA       t-test 1.24e-7      0.455     0.752</span>
@@ -187,8 +188,9 @@
 <span class="co">#&gt;  8 cs    scr   last_tri… rep … NA       rep A… 2.13e-6      0.0902   NA    </span>
 <span class="co">#&gt;  9 cs    scr   last2_tr… t-te… NA       t-test 3.45e-5      0.432     0.756</span>
 <span class="co">#&gt; 10 cs    scr   last2_tr… t-te… NA       t-test 6.91e-5      0.432     0.756</span>
-<span class="co">#&gt; # … with 50 more rows, and 6 more variables: statistic &lt;dbl&gt;, conf.low &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   conf.high &lt;dbl&gt;, data_used &lt;list&gt;, cutoff &lt;dbl&gt;, name_cutoff &lt;chr&gt;</span></pre></div>
+<span class="co">#&gt; # … with 50 more rows, and 7 more variables: statistic &lt;dbl&gt;, conf.low &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   conf.high &lt;dbl&gt;, framework &lt;chr&gt;, data_used &lt;list&gt;, cutoff &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   name_cutoff &lt;chr&gt;</span></pre></div>
 <p>In terms of calling the function, we see that we need exactly the same arguments as before. Internally, the function actually applies the multifear::universe_cs but now apart from the full data set, also for the data sets that we have set some exclusion criteria. Whether each line refers to the full data set or any of the exclusion criteria, we can see on the column exclusion criteria or in the data_used column, although there it is difficult to see what happened and it serves only reproduction criteria. So, the easiest thing to do is to see the exclusion column. Now, it has the following levels:</p>
 <div class="sourceCode" id="cb10"><pre class="r"><span class="no">res_multi</span>$<span class="no">exclusion</span> <span class="kw">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span>()
 <span class="co">#&gt; [1] "full_data"        "last_trial"       "last2_trial"      "last_first_trial"</span>

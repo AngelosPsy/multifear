@@ -190,6 +190,7 @@ estimate: the estimate of the test run. For the t-test is the mean of the differ
 statistic: the t-value
 conf.low: the lower confidence interval for the estimate
 conf.high: the higher confidence interval for the estimate
+framework: were the data analysed within a NHST or Bayesian framework?
 data_used: a list with the data used for the specific test</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
@@ -203,11 +204,12 @@ Depending on whether the data refer to an acquisition or extinction phase (as de
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>example_data</span>)
 
 
-<span class='fu'>lm_mf</span>(<span class='kw'>cs1</span> <span class='kw'>=</span> <span class='st'>"CSP1"</span>, <span class='kw'>cs2</span> <span class='kw'>=</span> <span class='st'>"CSM1"</span>, <span class='kw'>subj</span> <span class='kw'>=</span> <span class='st'>"id"</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>example_data</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 1 x 11</span><span>
+<span class='fu'>lm_mf</span>(<span class='kw'>cs1</span> <span class='kw'>=</span> <span class='st'>"CSP1"</span>, <span class='kw'>cs2</span> <span class='kw'>=</span> <span class='st'>"CSM1"</span>, <span class='kw'>subj</span> <span class='kw'>=</span> <span class='st'>"id"</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>example_data</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 1 x 14</span><span>
 #&gt;   x     y     exclusion model controls method p.value effect.size estimate
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
 #&gt; </span><span style='color: #555555;'>1</span><span> cs    scr   full data lm    </span><span style='color: #BB0000;'>NA</span><span>       lm      0.020</span><span style='text-decoration: underline;'>8</span><span>       0.523    0.523
-#&gt; </span><span style='color: #555555;'># … with 2 more variables: statistic </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, data_used </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span></div><div class='input'>
+#&gt; </span><span style='color: #555555;'># … with 5 more variables: statistic </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, conf.low </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span style='color: #555555;'>, conf.high </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span style='color: #555555;'>,</span><span>
+#&gt; </span><span style='color: #555555;'>#   framework </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, data_used </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span></div><div class='input'>
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
