@@ -52,10 +52,10 @@ Now we will use some simulated data set that are included as example data in the
 data("example_data")
 ```
 
-Here are the first 6 rows of the data set
+From these data we are going to select only the 10 first lines -- it saves a lot of time for computation for this example. Here are the first 10 rows of the data set
 
 ```{r}
-head(example_data, 6)
+head(example_data, 10)
 ```
 
 A bit of explanation of the column names. With the column name 'id' is the participant number. Columns that contain the conditioned responses for conditioned stimulus plus (CS+) are denoted with column names starting with 'CSP'. The number next to this name (1, 2, ..., 10) is the trial number. The same goes for columns starting with 'CSM' but this denotes conditioned responses in CS- trials. At this point the package only supports a single CS+ and a single CS-. Also, the package assumes that trials are following each  -- so trial 2 comes after trial 1 etc.
@@ -89,11 +89,12 @@ Now we need to analyse the data.  For this we will use the *multifear::universe_
 
 + phase. Here we define the conditioning phase that the data were collected in (e.g., acquisition phase, extinction phase, etc). Please note that in case the user has multiple phases, she/he needs to run the function separately for each phases.
 
-There are some other options in the function, such as defining the type of conditioning response. However, these are not necessary for now. So, let's now run the function
+There are some other options in the function, such as defining the type of conditioning response. However, these are not necessary for now. So, let's now run the function:
 
 ```{r, warning= FALSE}
 cs1 <- paste0("CSP", 1:10)
 cs2 <- paste0("CSM", 1:10)
+example_data <- example_data[1:10, ]
 res <- multifear::universe_cs(cs1 = cs1, cs2 = cs2, data = example_data, 
                               subj = "id", group = NULL, phase = "acquisition", include_bayes = FALSE)
 ```
@@ -133,7 +134,8 @@ Let's go through each column separately
 So now let's see how you can run the same analyses but after we apply some selection criteria for non-learns. So, here it is
 
 ```{r, warning = FALSE}
-res_multi <- multifear::multiverse_cs(cs1 = cs1, cs2 = cs2, data = example_data, subj = "id", group = NULL, phase = "acquisition", include_bayes = FALSE)
+
+res_multi <- multifear::multiverse_cs(cs1 = cs1, cs2 = cs2, data = example_data, subj = "id", group = NULL, phase = "acquisition", include_bayes = TRUE)
 res_multi
 ```
 

@@ -56,31 +56,45 @@ simulated data in your workspace as follows:
 data("example_data")
 ```
 
-Here are the first 6 rows of the data set
+From these data we are going to select only the 10 first lines – it
+saves a lot of time for computation for this example. Here are the first
+10 rows of the data set
 
 ``` r
-head(example_data, 6)
-#>   id      CSP1      CSP2       CSP3      CSP4      CSP5      CSP6      CSP7
-#> 1  2 0.6290557 0.9298822  1.0415000 0.9330014 0.9743682 0.8855119 0.8418664
-#> 2  3 7.0795340 4.9765650 12.7791100 8.2847610 4.9798520 8.8685450 8.2468480
-#> 3  4 0.0000000 1.2156950  2.4367400 4.5100300 5.3372170 4.6831920 3.6484020
-#> 4  5 1.4378680 0.9705585  0.3784756 1.4434960 0.4060977 1.6015840 1.5274500
-#> 5  7 0.9454062 3.2935940  3.4376340 2.7078930 3.6439630 3.8878390 3.6174920
-#> 6  8 3.2373590 2.3439360  2.3931960 2.2908990 1.9583950 2.5094320 2.4234050
-#>        CSP8      CSP9     CSP10       CSM1     CSM2      CSM3      CSM4
-#> 1 0.9821523 0.5790559 0.3824215  0.9857365 1.267399 0.0000000 0.6403125
-#> 2 0.7607041 1.7655060 2.1758810 13.6548600 0.906607 0.0000000 2.9130630
-#> 3 2.1018580 6.4756940 2.6422620  0.0000000 3.238002 2.4289650 0.2526294
-#> 4 1.1900760 0.3994079 0.6168466  1.3146440 0.000000 0.6570014 1.3710840
-#> 5 2.2854040 5.2819210 4.5153330  4.2762160 3.196211 3.4280200 1.8877270
-#> 6 2.7189870 3.7545760 0.5508313  2.7552620 2.284332 0.1147742 0.4229828
-#>         CSM5       CSM6      CSM7      CSM8      CSM9     CSM10 group
-#> 1 0.05137117 0.03480838 0.0000000 0.0000000 0.2903607 0.3149624     1
-#> 2 0.60658980 3.72999700 1.1069910 3.6370250 0.0000000 0.0000000     2
-#> 3 0.00000000 2.51429900 0.0000000 0.1862106 0.5207676 0.9575123     1
-#> 4 0.53106310 0.54313130 0.2875019 0.0000000 0.1879596 0.1872537     2
-#> 5 3.06479700 2.91668000 2.7914400 1.2298430 3.3771630 2.7057010     1
-#> 6 2.22446600 0.00000000 0.0000000 1.2159860 0.0000000 0.0000000     2
+head(example_data, 10)
+#>    id       CSP1       CSP2       CSP3      CSP4      CSP5      CSP6      CSP7
+#> 1   2 0.62905570 0.92988220  1.0415000 0.9330014 0.9743682 0.8855119 0.8418664
+#> 2   3 7.07953400 4.97656500 12.7791100 8.2847610 4.9798520 8.8685450 8.2468480
+#> 3   4 0.00000000 1.21569500  2.4367400 4.5100300 5.3372170 4.6831920 3.6484020
+#> 4   5 1.43786800 0.97055850  0.3784756 1.4434960 0.4060977 1.6015840 1.5274500
+#> 5   7 0.94540620 3.29359400  3.4376340 2.7078930 3.6439630 3.8878390 3.6174920
+#> 6   8 3.23735900 2.34393600  2.3931960 2.2908990 1.9583950 2.5094320 2.4234050
+#> 7   9 0.43832140 0.04669674  0.2307273 2.2448410 1.6178050 1.8630760 1.7384420
+#> 8  10 0.03912846 0.20814220  0.4654428 0.5395534 0.4498870 0.5519411 0.4144870
+#> 9  11 0.88479390 1.64638700  0.9605724 0.7427042 0.2084812 2.2864430 1.8098150
+#> 10 12 2.61601700 2.23660600  2.5479610 1.8130030 2.6899810 2.0758690 3.1323380
+#>         CSP8      CSP9     CSP10       CSM1      CSM2      CSM3       CSM4
+#> 1  0.9821523 0.5790559 0.3824215  0.9857365 1.2673990 0.0000000 0.64031250
+#> 2  0.7607041 1.7655060 2.1758810 13.6548600 0.9066070 0.0000000 2.91306300
+#> 3  2.1018580 6.4756940 2.6422620  0.0000000 3.2380020 2.4289650 0.25262940
+#> 4  1.1900760 0.3994079 0.6168466  1.3146440 0.0000000 0.6570014 1.37108400
+#> 5  2.2854040 5.2819210 4.5153330  4.2762160 3.1962110 3.4280200 1.88772700
+#> 6  2.7189870 3.7545760 0.5508313  2.7552620 2.2843320 0.1147742 0.42298280
+#> 7  1.5976320 0.8726718 2.5473010  0.3066088 1.5306480 2.1478420 0.46613780
+#> 8  0.3175979 0.4557406 0.3433352  0.2956061 0.1793028 0.2681102 0.05366129
+#> 9  1.7349280 1.8654570 0.9060298  1.2088490 0.4465152 0.8923611 1.56732600
+#> 10 3.2265350 2.5452310 1.8400320  3.1200790 1.4983390 1.4273640 0.24111750
+#>          CSM5       CSM6      CSM7       CSM8       CSM9      CSM10 group
+#> 1  0.05137117 0.03480838 0.0000000 0.00000000 0.29036070 0.31496240     1
+#> 2  0.60658980 3.72999700 1.1069910 3.63702500 0.00000000 0.00000000     2
+#> 3  0.00000000 2.51429900 0.0000000 0.18621060 0.52076760 0.95751230     1
+#> 4  0.53106310 0.54313130 0.2875019 0.00000000 0.18795960 0.18725370     2
+#> 5  3.06479700 2.91668000 2.7914400 1.22984300 3.37716300 2.70570100     1
+#> 6  2.22446600 0.00000000 0.0000000 1.21598600 0.00000000 0.00000000     2
+#> 7  0.16134580 0.91540300 0.0000000 0.30176180 0.08460228 0.09295772     1
+#> 8  0.10903030 0.00000000 0.0000000 0.04329369 0.19495150 0.30379580     2
+#> 9  0.02774107 0.39216860 0.1940482 1.33170800 0.41266960 0.00000000     1
+#> 10 0.72851310 0.96242680 0.0000000 1.27084300 0.03120063 0.00000000     2
 ```
 
 A bit of explanation of the column names. With the column name ‘id’ is
@@ -137,11 +151,12 @@ we need to provide the following arguments.
 
 There are some other options in the function, such as defining the type
 of conditioning response. However, these are not necessary for now. So,
-let’s now run the function
+let’s now run the function:
 
 ``` r
 cs1 <- paste0("CSP", 1:10)
 cs2 <- paste0("CSM", 1:10)
+example_data <- example_data[1:10, ]
 res <- multifear::universe_cs(cs1 = cs1, cs2 = cs2, data = example_data, 
                               subj = "id", group = NULL, phase = "acquisition", include_bayes = FALSE)
 #> Registered S3 methods overwritten by 'lme4':
@@ -159,10 +174,10 @@ res
 #> # A tibble: 4 x 14
 #>   x     y     exclusion model controls method p.value effect.size estimate
 #>   <chr> <chr> <chr>     <chr> <lgl>    <chr>    <dbl>       <dbl>    <dbl>
-#> 1 cs    scr   full data t-te… NA       t-test 1.24e-7      0.455     0.752
-#> 2 cs    scr   full data t-te… NA       t-test 2.47e-7      0.455     0.752
-#> 3 cs:t… scr   full data rep … NA       rep A… 3.70e-9      0.0247   NA    
-#> 4 cs    scr   full data rep … NA       rep A… 2.47e-7      0.0863   NA    
+#> 1 cs    scr   full data t-te… NA       t-test 0.00244      0.577      1.17
+#> 2 cs    scr   full data t-te… NA       t-test 0.00488      0.577      1.17
+#> 3 cs:t… scr   full data rep … NA       rep A… 0.0152       0.0307    NA   
+#> 4 cs    scr   full data rep … NA       rep A… 0.00488      0.157     NA   
 #> # … with 5 more variables: statistic <dbl>, conf.low <dbl>, conf.high <dbl>,
 #> #   framework <chr>, data_used <list>
 ```
@@ -217,22 +232,23 @@ So now let’s see how you can run the same analyses but after we apply
 some selection criteria for non-learns. So, here it is
 
 ``` r
-res_multi <- multifear::multiverse_cs(cs1 = cs1, cs2 = cs2, data = example_data, subj = "id", group = NULL, phase = "acquisition", include_bayes = FALSE)
+
+res_multi <- multifear::multiverse_cs(cs1 = cs1, cs2 = cs2, data = example_data, subj = "id", group = NULL, phase = "acquisition", include_bayes = TRUE)
 res_multi
-#> # A tibble: 60 x 16
-#>    x     y     exclusion model controls method p.value effect.size estimate
-#>    <chr> <chr> <chr>     <chr> <lgl>    <chr>    <dbl>       <dbl>    <dbl>
-#>  1 cs    scr   full_data t-te… NA       t-test 1.24e-7      0.455     0.752
-#>  2 cs    scr   full_data t-te… NA       t-test 2.47e-7      0.455     0.752
-#>  3 cs:t… scr   full_data rep … NA       rep A… 3.70e-9      0.0247   NA    
-#>  4 cs    scr   full_data rep … NA       rep A… 2.47e-7      0.0863   NA    
-#>  5 cs    scr   last_tri… t-te… NA       t-test 1.07e-6      0.461     0.791
-#>  6 cs    scr   last_tri… t-te… NA       t-test 2.13e-6      0.461     0.791
-#>  7 cs:t… scr   last_tri… rep … NA       rep A… 8.19e-8      0.0251   NA    
-#>  8 cs    scr   last_tri… rep … NA       rep A… 2.13e-6      0.0902   NA    
-#>  9 cs    scr   last2_tr… t-te… NA       t-test 3.45e-5      0.432     0.756
-#> 10 cs    scr   last2_tr… t-te… NA       t-test 6.91e-5      0.432     0.756
-#> # … with 50 more rows, and 7 more variables: statistic <dbl>, conf.low <dbl>,
+#> # A tibble: 150 x 16
+#>    x     y     exclusion model controls method  p.value effect.size estimate
+#>    <chr> <chr> <chr>     <chr> <lgl>    <chr>     <dbl>       <dbl>    <dbl>
+#>  1 cs    scr   full_data t-te… NA       t-test  0.00244      0.577   1.17e+0
+#>  2 cs    scr   full_data t-te… NA       t-test  0.00488      0.577   1.17e+0
+#>  3 cs    scr   full_data Baye… NA       t-test NA           NA       2.57e+0
+#>  4 cs    scr   full_data Baye… NA       t-test NA           NA       1.71e-1
+#>  5 cs:t… scr   full_data rep … NA       rep A…  0.0152       0.0307 NA      
+#>  6 cs    scr   full_data rep … NA       rep A…  0.00488      0.157  NA      
+#>  7 cs:t… scr   full_data rep … NA       rep B… NA           NA       1.59e+0
+#>  8 cs:t… scr   full_data rep … NA       rep B… NA           NA       3.81e-1
+#>  9 cs    scr   full_data rep … NA       rep B… NA           NA       5.86e+4
+#> 10 cs    scr   full_data rep … NA       rep B… NA           NA       5.86e+4
+#> # … with 140 more rows, and 7 more variables: statistic <dbl>, conf.low <dbl>,
 #> #   conf.high <dbl>, framework <chr>, data_used <list>, cutoff <dbl>,
 #> #   name_cutoff <chr>
 ```
@@ -300,5 +316,5 @@ multifear::inference_cs(res_multi, na.rm = TRUE)
 
 ![](README_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
 
-    #>   mean_p_value prop_p_value
-    #> 1 2.915891e-05          100
+    #>   mean_p_value prop_p_value  mean_bf
+    #> 1   0.01075551          100 10837.33

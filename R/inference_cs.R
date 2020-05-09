@@ -42,7 +42,7 @@ inference_cs <-
       length(which(tmp_p.value < alpha_level)) / length(tmp_p.value) * 100
     }
 
-    if (framework %in% c("bayesian")){
+    if (framework %in% c("bayesian", "both")){
       dataBayes <-
         data %>% dplyr::filter(framework == "Bayesian") %>% dplyr::select(estimate) %>%
         unlist() %>%
