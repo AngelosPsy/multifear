@@ -156,15 +156,15 @@ And here are the results
 
 ``` r
 res
-#> # A tibble: 4 x 13
+#> # A tibble: 4 x 14
 #>   x     y     exclusion model controls method p.value effect.size estimate
 #>   <chr> <chr> <chr>     <chr> <lgl>    <chr>    <dbl>       <dbl>    <dbl>
 #> 1 cs    scr   full data t-te… NA       t-test 1.24e-7      0.455     0.752
 #> 2 cs    scr   full data t-te… NA       t-test 2.47e-7      0.455     0.752
 #> 3 cs:t… scr   full data rep … NA       rep A… 3.70e-9      0.0247   NA    
 #> 4 cs    scr   full data rep … NA       rep A… 2.47e-7      0.0863   NA    
-#> # … with 4 more variables: statistic <dbl>, conf.low <dbl>, conf.high <dbl>,
-#> #   data_used <list>
+#> # … with 5 more variables: statistic <dbl>, conf.low <dbl>, conf.high <dbl>,
+#> #   framework <chr>, data_used <list>
 ```
 
 Let’s go through each column separately
@@ -206,6 +206,9 @@ Let’s go through each column separately
   - conf.low and conf.high In case you have an estimate, this returns
     the low and high levels of it
 
+  - framework were the data analysed within a NHST or Bayesian
+    framework?
+
   - data\_used Here you have a data frame with the data used for the
     performed analyses. This is because someone maybe wants to recreate
     the results and also as a check that nothing went wrong.
@@ -216,7 +219,7 @@ some selection criteria for non-learns. So, here it is
 ``` r
 res_multi <- multifear::multiverse_cs(cs1 = cs1, cs2 = cs2, data = example_data, subj = "id", group = NULL, phase = "acquisition", include_bayes = FALSE)
 res_multi
-#> # A tibble: 60 x 15
+#> # A tibble: 60 x 16
 #>    x     y     exclusion model controls method p.value effect.size estimate
 #>    <chr> <chr> <chr>     <chr> <lgl>    <chr>    <dbl>       <dbl>    <dbl>
 #>  1 cs    scr   full_data t-te… NA       t-test 1.24e-7      0.455     0.752
@@ -229,8 +232,9 @@ res_multi
 #>  8 cs    scr   last_tri… rep … NA       rep A… 2.13e-6      0.0902   NA    
 #>  9 cs    scr   last2_tr… t-te… NA       t-test 3.45e-5      0.432     0.756
 #> 10 cs    scr   last2_tr… t-te… NA       t-test 6.91e-5      0.432     0.756
-#> # … with 50 more rows, and 6 more variables: statistic <dbl>, conf.low <dbl>,
-#> #   conf.high <dbl>, data_used <list>, cutoff <dbl>, name_cutoff <chr>
+#> # … with 50 more rows, and 7 more variables: statistic <dbl>, conf.low <dbl>,
+#> #   conf.high <dbl>, framework <chr>, data_used <list>, cutoff <dbl>,
+#> #   name_cutoff <chr>
 ```
 
 In terms of calling the function, we see that we need exactly the same

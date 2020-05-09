@@ -126,6 +126,8 @@ Let's go through each column separately
 
 + conf.low and conf.high In case you have an estimate, this returns the low and high levels of it
 
++ framework were the data analysed within a NHST or Bayesian framework?
+
 + data_used Here you have a data frame with the data used for the performed analyses. This is because someone maybe wants to recreate the results and also as a check that nothing went wrong.
 
 So now let's see how you can run the same analyses but after we apply some selection criteria for non-learns. So, here it is

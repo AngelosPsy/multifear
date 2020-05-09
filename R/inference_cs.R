@@ -19,6 +19,8 @@ inference_cs <-
            na.rm = FALSE) {
     # Check data
     inference_warning(data = data)
+    data <-
+      data %>% dplyr::filter(framework == "NHST")
     mean_p_value <-
       data %>% dplyr::select(p.value) %>% unlist() %>% mean(na.rm = na.rm)
 
