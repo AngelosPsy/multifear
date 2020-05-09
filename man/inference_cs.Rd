@@ -4,7 +4,13 @@
 \alias{inference_cs}
 \title{inference_cs}
 \usage{
-inference_cs(data, alpha_level = 0.05, add_line = TRUE, na.rm = FALSE)
+inference_cs(
+  data,
+  alpha_level = 0.05,
+  add_line = TRUE,
+  na.rm = FALSE,
+  framework = "Both"
+)
 }
 \arguments{
 \item{data}{a data frame with the results of a multiverse analyses.}
@@ -14,6 +20,8 @@ inference_cs(data, alpha_level = 0.05, add_line = TRUE, na.rm = FALSE)
 \item{add_line}{Whether to add a line with the alpha level in the produced histogram (default to \code{TRUE})}
 
 \item{na.rm}{Should NA's be removed (default to \code{FALSE}). See details.}
+
+\item{framework}{Inference framework. Values could be "NHST", "Bayesian", or "Both" (no case sensitivity).}
 }
 \value{
 A data frame with results together with a histogram summarizing the results.
@@ -24,5 +32,5 @@ Function for summarizing the multiverse results.
 \details{
 \lifecycle{experimental}
 
-For now the function returns only mean p values and proportion of p values below a criterion defined by the \code{alpha_level} parameter (default to 0.05). The user may choose to drop the NAs for the summary statistic. However, for the plot the NAs in the \code{p.value} column are removed automatically -- so what \code{ggplot2} does automatically but here no message is returned.
+For now the function returns mean p values and proportion of p values below a criterion defined by the \code{alpha_level} parameter (default to 0.05) as well as mean Bayes factors (please see the `framework` arguument). The user may choose to drop the NAs for the summary statistic. However, for the plot the NAs in the \code{p.value} column are removed automatically -- so what \code{ggplot2} does automatically but here no message is returned.
 }
