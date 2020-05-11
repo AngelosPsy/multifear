@@ -41,10 +41,9 @@
 #' cs1 <- paste0("CSP", 1:2)
 #' cs2 <- paste0("CSM", 1:2)
 #' subj <- "id"
-#' group <- "group"
 #'
 #' # Repeated measures ANOVA
-#' rm_banova_mf(cs1 = cs1, cs2 = cs2, subj = subj, data = example_data, time = TRUE)
+#' rm_banova_mf(cs1 = cs1, cs2 = cs2, subj = subj, data = example_data, time = TRUE, multicore = FALSE)
 #'
 #' @export
 rm_banova_mf <- function(cs1,
@@ -101,7 +100,7 @@ rm_banova_mf <- function(cs1,
     suppressMessages(BayesFactor::anovaBF(
       formula = eval(parse(text = anova_terms)),
       data = data,
-      whichRandom = subj,
+      whichRandom = "subj",
       progress = FALSE,
       multicore = multicore
     ))
