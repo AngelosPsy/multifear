@@ -32,7 +32,9 @@ Imports:
     BayesFactor (>= 0.9.12.4.2),
     bayestestR (>= 0.5.2),
     lifecycle (>= 0.2.0),
-    fastDummies (>= 1.6.1)
+    fastDummies (>= 1.6.1),
+    ggraph (>= 2.0.1),
+    igraph (>= 1.2.4.2)
 RoxygenNote: 7.1.0
 Suggests: 
     testthat (>= 2.1.0),
