@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>combine_cs — combine_cs • multifear</title>
+<title>decision_tree_cs — decision_tree_cs • multifear</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,9 @@
 
 
 
-<meta property="og:title" content="combine_cs — combine_cs" />
-<meta property="og:description" content="Function for computing mean responses across CSs" />
+<meta property="og:title" content="decision_tree_cs — decision_tree_cs" />
+<meta property="og:description" content="Plot decision tree
+" />
 
 
 
@@ -108,41 +109,36 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>combine_cs</h1>
-    <small class="dont-index">Source: <a href='https://github.com/AngelosPsy/multifear/blob/master/R/combine_cs.R'><code>R/combine_cs.R</code></a></small>
-    <div class="hidden name"><code>combine_cs.Rd</code></div>
+    <h1>decision_tree_cs</h1>
+    <small class="dont-index">Source: <a href='https://github.com/AngelosPsy/multifear/blob/master/R/decision_tree_cs.R'><code>R/decision_tree_cs.R</code></a></small>
+    <div class="hidden name"><code>decision_tree_cs.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Function for computing mean responses across CSs</p>
+    <p>Plot decision tree</p>
+<p><a href='https://www.tidyverse.org/lifecycle/#experimental'><img src='figures/lifecycle-experimental.svg' alt='Experimental lifecycle'></a></p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/multifear/man/combine_cs.html'>combine_cs</a></span>(<span class='kw'>cs1</span>, <span class='kw'>cs2</span>, <span class='kw'>data</span>, na.rm = <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/multifear/man/decision_tree_cs.html'>decision_tree_cs</a></span>(<span class='kw'>dat</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>cs1</th>
-      <td><p>The column name(s) of the conditioned responses for the first conditioned stimulus</p></td>
-    </tr>
-    <tr>
-      <th>cs2</th>
-      <td><p>The column name(s) of the conditioned responses for the second conditioned stimulus</p></td>
-    </tr>
-    <tr>
-      <th>data</th>
-      <td><p>A data frame containing with all the relevant columns</p></td>
-    </tr>
-    <tr>
-      <th>na.rm</th>
-      <td><p>Whether NAs should be removed, default to <code>FALSE</code>.</p></td>
+      <th>dat</th>
+      <td><p>a dat frame with the results of a multiverse analyses.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A plot</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p><a href='https://www.tidyverse.org/lifecycle/#experimental'><img src='figures/lifecycle-experimental.svg' alt='Experimental lifecycle'></a></p>
+    <p>This plot is a slight modification of the <code>specr::plot_decisiontree</code>. Please check the references.</p>
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+
+    <p>Masur, Philipp K. &amp; Scharkow, M. (2019). specr: Statistical functions for conducting specification curve analyses. Available from https://github.com/masurp/specr.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

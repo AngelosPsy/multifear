@@ -119,16 +119,16 @@
 <p><a href='https://www.tidyverse.org/lifecycle/#experimental'><img src='figures/lifecycle-experimental.svg' alt='Experimental lifecycle'></a></p>
     </div>
 
-    <pre class="usage"><span class='fu'>rm_anova_mf</span>(
-  <span class='no'>cs1</span>,
-  <span class='no'>cs2</span>,
-  <span class='no'>data</span>,
-  <span class='no'>subj</span>,
-  <span class='kw'>time</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>group</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>phase</span> <span class='kw'>=</span> <span class='st'>"acquisition"</span>,
-  <span class='kw'>dv</span> <span class='kw'>=</span> <span class='st'>"scr"</span>,
-  <span class='kw'>exclusion</span> <span class='kw'>=</span> <span class='st'>"full data"</span>
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/multifear/man/rm_anova_mf.html'>rm_anova_mf</a></span>(
+  <span class='kw'>cs1</span>,
+  <span class='kw'>cs2</span>,
+  <span class='kw'>data</span>,
+  <span class='kw'>subj</span>,
+  time = <span class='fl'>TRUE</span>,
+  group = <span class='kw'>NULL</span>,
+  phase = <span class='st'>"acquisition"</span>,
+  dv = <span class='st'>"scr"</span>,
+  exclusion = <span class='st'>"full data"</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -136,11 +136,11 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>cs1</th>
-      <td><p>The column name(s) of the conditioned responses for the first conditioned stimulus.</p></td>
+      <td><p>The column name(s) of the conditioned responses for the first conditioned stimulus</p></td>
     </tr>
     <tr>
       <th>cs2</th>
-      <td><p>The column name(s) of the conditioned responses for the second conditioned stimulus.</p></td>
+      <td><p>The column name(s) of the conditioned responses for the second conditioned stimulus</p></td>
     </tr>
     <tr>
       <th>data</th>
@@ -200,16 +200,16 @@ results are not to be trusted.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Load example data</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>example_data</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>example_data</span>)
 
 <span class='co'># Briefly define argument values that will be plugged in later on in the functions</span>
-<span class='no'>cs1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='st'>"CSP"</span>, <span class='fl'>1</span>:<span class='fl'>10</span>)
-<span class='no'>cs2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='st'>"CSM"</span>, <span class='fl'>1</span>:<span class='fl'>10</span>)
-<span class='no'>subj</span> <span class='kw'>&lt;-</span> <span class='st'>"id"</span>
-<span class='no'>group</span> <span class='kw'>&lt;-</span> <span class='st'>"group"</span>
+<span class='kw'>cs1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='st'>"CSP"</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>)
+<span class='kw'>cs2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='st'>"CSM"</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>)
+<span class='kw'>subj</span> <span class='op'>&lt;-</span> <span class='st'>"id"</span>
+<span class='kw'>group</span> <span class='op'>&lt;-</span> <span class='st'>"group"</span>
 
 <span class='co'># Repeated measures ANOVA</span>
-<span class='fu'>rm_anova_mf</span>(<span class='kw'>cs1</span> <span class='kw'>=</span> <span class='no'>cs1</span>, <span class='kw'>cs2</span> <span class='kw'>=</span> <span class='no'>cs2</span>, <span class='kw'>subj</span> <span class='kw'>=</span> <span class='no'>subj</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>example_data</span>, <span class='kw'>time</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='message'>Registered S3 methods overwritten by 'lme4':</span>
+<span class='fu'><a href='https://rdrr.io/pkg/multifear/man/rm_anova_mf.html'>rm_anova_mf</a></span>(cs1 = <span class='kw'>cs1</span>, cs2 = <span class='kw'>cs2</span>, subj = <span class='kw'>subj</span>, data = <span class='kw'>example_data</span>, time = <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='message'>Registered S3 methods overwritten by 'lme4':</span>
 #&gt; <span class='message'>  method                          from</span>
 #&gt; <span class='message'>  cooks.distance.influence.merMod car </span>
 #&gt; <span class='message'>  influence.merMod                car </span>
@@ -220,7 +220,6 @@ results are not to be trusted.</p>
 #&gt; </span><span style='color: #555555;'>1</span><span> cs:t… scr   full data rep … </span><span style='color: #BB0000;'>NA</span><span>       rep A… 3.70</span><span style='color: #555555;'>e</span><span style='color: #BB0000;'>-9</span><span>          </span><span style='color: #BB0000;'>NA</span><span> </span><span style='color: #BB0000;'>NA</span><span>      
 #&gt; </span><span style='color: #555555;'># … with 5 more variables: statistic </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, conf.low </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span style='color: #555555;'>, conf.high </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span style='color: #555555;'>,</span><span>
 #&gt; </span><span style='color: #555555;'>#   framework </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, data_used </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span></div><div class='input'>
-
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

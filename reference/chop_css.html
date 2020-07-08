@@ -117,18 +117,18 @@
     <p>Function for separating the conditioned responses into multiple pieces for two CSs.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>chop_css</span>(<span class='no'>cs1</span>, <span class='no'>cs2</span>, <span class='no'>data</span>, <span class='no'>subj</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/multifear/man/chop_css.html'>chop_css</a></span>(<span class='kw'>cs1</span>, <span class='kw'>cs2</span>, <span class='kw'>data</span>, <span class='kw'>subj</span>, cs_paired = <span class='kw'>NULL</span>, na.rm = <span class='fl'>FALSE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>cs1</th>
-      <td><p>The column name(s) of the conditioned responses for the first conditioned stimulus.</p></td>
+      <td><p>The column name(s) of the conditioned responses for the first conditioned stimulus</p></td>
     </tr>
     <tr>
       <th>cs2</th>
-      <td><p>The column name(s) of the conditioned responses for the second conditioned stimulus.</p></td>
+      <td><p>The column name(s) of the conditioned responses for the second conditioned stimulus</p></td>
     </tr>
     <tr>
       <th>data</th>
@@ -137,6 +137,10 @@
     <tr>
       <th>subj</th>
       <td><p>The name of the column including the participant numbers. Unique numbers are expected.</p></td>
+    </tr>
+    <tr>
+      <th>cs_paired</th>
+      <td><p>A character vector with the trials that were paired. Default is set to <code>NULL</code>, suggesting that there was full reinforcement</p></td>
     </tr>
     <tr>
       <th>na.rm</th>
