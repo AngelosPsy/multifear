@@ -5,6 +5,7 @@
 #' @description Basic function for conducting multiverse analyses of conditioning
 #' data
 #' @inheritParams universe_cs
+#' @param cs_paired A character vector with the trials that were paired. Default is set to \code{NULL}, suggesting that there was full reinforcement
 #' @param cutoff A numeric vector of the cutoff criteria applied. Default to \code{0, 0.05, .1}
 #' @details In case of higher order interaction, only the highest order
 #' effect is returned.
@@ -31,17 +32,17 @@ multiverse_cs <-
            data,
            subj,
            group = NULL,
+           cs_paired = NULL,
            include_bayes = TRUE,
            cutoff = c(0, 0.1, 0.05),
            phase = "acquisition",
            print_output = TRUE) {
 
     # Check data
-    collection_warning(cs1 = cs1, cs2 = cs2, data = data, subj = subj)
+    collection_warning(cs1 = cs1, cs2 = cs2, data = data, subj = subj, cs_paired = cs_paired)
 
     # Excluded participants
-
-    chop <- multifear::chop_css(cs1, cs2, data, subj)
+    chop <- multifear::chop_css(cs1 = cs1, cs2 = cs2, data = data, subj = subj)
     excl_data_sets <-
       purrr::map_df(cutoff, ~ multifear::exclusion_criteria(chop, cutoff = .))
 
@@ -77,7 +78,7 @@ multiverse_cs <-
     res <- purrr::map2_dfr(
       excl_data_sets_final$used_data,
       excl_data_sets_final$names,
-      ~ multifear::universe_cs(
+      ~multifear::universe_cs(
         cs1 = cs1,
         cs2 = cs2,
         data = .x,

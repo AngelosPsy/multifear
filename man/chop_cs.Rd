@@ -7,7 +7,7 @@
 chop_cs(cs, data, subj, na.rm = FALSE)
 }
 \arguments{
-\item{cs}{index for the CS responses.}
+\item{cs}{The column name(s) of the conditioned responses}
 
 \item{data}{A data frame containing with all the relevant columns}
 

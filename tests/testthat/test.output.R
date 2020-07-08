@@ -1,9 +1,10 @@
-data("example_data")
+data("example_data", package = "multifear")
 cs1 <- paste0("CSP", 1:10)
 cs2 <- paste0("CSM", 1:10)
 subj = "id"
 time = TRUE
 group = "group"
+data = example_data
 bf_data <- example_data %>% dplyr::filter(id %in% c(1, 2, 3, 4, 5, 7, 8, 9, 10))
 
 tmp <- tempfile()

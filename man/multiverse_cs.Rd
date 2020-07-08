@@ -10,6 +10,7 @@ multiverse_cs(
   data,
   subj,
   group = NULL,
+  cs_paired = NULL,
   include_bayes = TRUE,
   cutoff = c(0, 0.1, 0.05),
   phase = "acquisition",
@@ -17,15 +18,17 @@ multiverse_cs(
 )
 }
 \arguments{
-\item{cs1}{The column name(s) of the conditioned responses for the first conditioned stimulus.}
+\item{cs1}{The column name(s) of the conditioned responses for the first conditioned stimulus}
 
-\item{cs2}{The column name(s) of the conditioned responses for the second conditioned stimulus.}
+\item{cs2}{The column name(s) of the conditioned responses for the second conditioned stimulus}
 
 \item{data}{A data frame containing with all the relevant columns}
 
 \item{subj}{The name of the column including the participant numbers. Unique numbers are expected.}
 
 \item{group}{the name of the group, if included, default to \code{NULL}.}
+
+\item{cs_paired}{A character vector with the trials that were paired. Default is set to \code{NULL}, suggesting that there was full reinforcement}
 
 \item{include_bayes}{Whether the bayesian analyses should be run. Default to \code{TRUE}.}
 

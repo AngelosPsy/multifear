@@ -4,16 +4,18 @@
 \alias{chop_css}
 \title{chop_css}
 \usage{
-chop_css(cs1, cs2, data, subj, na.rm = FALSE)
+chop_css(cs1, cs2, data, subj, cs_paired = NULL, na.rm = FALSE)
 }
 \arguments{
-\item{cs1}{The column name(s) of the conditioned responses for the first conditioned stimulus.}
+\item{cs1}{The column name(s) of the conditioned responses for the first conditioned stimulus}
 
-\item{cs2}{The column name(s) of the conditioned responses for the second conditioned stimulus.}
+\item{cs2}{The column name(s) of the conditioned responses for the second conditioned stimulus}
 
 \item{data}{A data frame containing with all the relevant columns}
 
 \item{subj}{The name of the column including the participant numbers. Unique numbers are expected.}
+
+\item{cs_paired}{A character vector with the trials that were paired. Default is set to \code{NULL}, suggesting that there was full reinforcement}
 
 \item{na.rm}{Whether NAs should be removed, default to \code{FALSE}.}
 }

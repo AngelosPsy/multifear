@@ -26,15 +26,14 @@ data_warning = function(data) {
 collection_warning = function(cs1,
                               cs2 = NULL,
                               data,
-                              subj = NULL) {
+                              subj = NULL,
+                              cs_paired = NULL) {
   cs_warning(cs1)
-  if (!is.null(cs2)) {
-    cs_warning(cs2)
-  }
   data_warning(data)
-  if (!is.null(subj)) {
-    subj_warning(subj)
-  }
+
+  if (!is.null(cs2)) { cs_warning(cs2) }
+  if (!is.null(subj)) { subj_warning(subj)}
+  if (!is.null(cs_paired)) { cs_warning(cs_paired)}
 }
 
 chop_css_warning = function(data) {
@@ -245,4 +244,22 @@ data_preparation_verse = function(cs1,
 
       return(res)
 
+}
+
+# formats results. This function is taken from the specr package
+format_results <- function(df, null = 0, desc = FALSE) {
+  if (isFALSE(desc)) {
+    df <- df %>%
+      dplyr::arrange(.data$estimate)
+  } else {
+    df <- df %>%
+      dplyr::arrange(desc(.data$estimate))
+  }
+
+  df <- df %>%
+    dplyr::mutate(specifications = 1:dplyr::n(),
+                  color = case_when(conf.low > null ~ "#377eb8",
+                                    conf.high < null ~ "#e41a1c",
+                                    TRUE ~ "darkgrey"))
+  return(df)
 }

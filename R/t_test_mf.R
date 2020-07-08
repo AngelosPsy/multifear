@@ -3,8 +3,8 @@
 #' \lifecycle{experimental}
 #'
 #' @description Basic function for running the frequentist's t-tests (student t-test) included in the main analyses
-#' @param cs1 The column name(s) of the conditioned responses for the first conditioned stimulus.
-#' @param cs2 The column name(s) of the conditioned responses for the second conditioned stimulus.
+#' @param cs1 The column name(s) of the conditioned responses for the first conditioned stimulus
+#' @param cs2 The column name(s) of the conditioned responses for the second conditioned stimulus
 #' @param subj The name of the column including the participant numbers. Unique numbers are expected.
 #' @param group The name of the column including the group name. Default to \code{NULL} (i.e., no groups).
 #' @param data A data frame containing with all the relevant columns

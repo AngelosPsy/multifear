@@ -7,9 +7,9 @@
 combine_cs(cs1, cs2, data, na.rm = FALSE)
 }
 \arguments{
-\item{cs1}{The column name(s) of the conditioned responses for the first conditioned stimulus.}
+\item{cs1}{The column name(s) of the conditioned responses for the first conditioned stimulus}
 
-\item{cs2}{The column name(s) of the conditioned responses for the second conditioned stimulus.}
+\item{cs2}{The column name(s) of the conditioned responses for the second conditioned stimulus}
 
 \item{data}{A data frame containing with all the relevant columns}
 
