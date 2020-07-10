@@ -14,6 +14,7 @@
 #' @param group the name of the group, if included, default to \code{NULL}.
 #' @param na.rm Whether NAs should be removed, default to \code{FALSE}.
 #' @param exclusion If any exclusion criteria were applied, default to \code{full data}
+#' @param cut_off cut off
 #' @details Given the correct names for the \code{cs1}, \code{cs2}, \code{subj}, and \code{data}, the function will run one- and two-sided frequentist's t-tests. In case \code{cs1} or \code{cs2} refer to multiple columns, the mean -- per row -- for each one of these variables will be computed first before running the test. Please note that cs1 is implicitly referred to the cs that is reinforced, and cs2 to the cs that is not reinforced.
 #' Depending on whether the data refer to an acquisition or extinction phase (as defined in the \code{phase} argument), the function will return a positive one sided, or negative one-sided, t-test in addition to the two-sided t-test. The returned effect size is  Hedge's g.
 #'
@@ -55,7 +56,8 @@ lm_mf <-
            paired = TRUE,
            phase = "acquisition",
            dv = "scr",
-           exclusion = "full data") {
+           exclusion = "full data",
+           cut_off = "full data") {
 
     # Check data
     collection_warning(
@@ -93,6 +95,7 @@ lm_mf <-
         x = "cs",
         y = dv,
         exclusion = exclusion,
+        cut_off = cut_off,
         model = used_model,
         controls = NA,
         effect.size = .$estimate,
@@ -104,6 +107,7 @@ lm_mf <-
         x,
         y,
         exclusion,
+        cut_off,
         model,
         controls,
         method,

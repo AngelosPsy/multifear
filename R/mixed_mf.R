@@ -47,7 +47,8 @@ mixed_mf <- function(cs1,
                      group = NULL,
                      phase = "acquisition",
                      dv = "scr",
-                     exclusion = "full data") {
+                     exclusion = "full data",
+                     cut_off = "full data") {
 
   # Check data
   collection_warning(

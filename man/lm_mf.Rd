@@ -14,7 +14,8 @@ lm_mf(
   paired = TRUE,
   phase = "acquisition",
   dv = "scr",
-  exclusion = "full data"
+  exclusion = "full data",
+  cut_off = "full data"
 )
 }
 \arguments{
@@ -37,6 +38,8 @@ lm_mf(
 \item{dv}{name of the measured conditioned response. Default to \code{"SCR"}.}
 
 \item{exclusion}{If any exclusion criteria were applied, default to \code{full data}}
+
+\item{cut_off}{cut off}
 }
 \value{
 A tibble with the following column names:

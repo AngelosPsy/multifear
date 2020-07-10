@@ -55,7 +55,8 @@ rm_anova_mf <- function(cs1,
                         group = NULL,
                         phase = "acquisition",
                         dv = "scr",
-                        exclusion = "full data") {
+                        exclusion = "full data",
+                        cut_off = "full data") {
   collection_warning(cs1 = cs1, cs2 = cs2, data = data, subj = subj)
 
   data <-
@@ -117,6 +118,7 @@ rm_anova_mf <- function(cs1,
       x = selected_term,
       y = dv,
       exclusion = exclusion,
+      cut_off = cut_off,
       model = "rep ANOVA",
       controls = NA,
       estimate = NA,
@@ -128,6 +130,7 @@ rm_anova_mf <- function(cs1,
     dplyr::select(x,
                   y,
                   exclusion,
+                  cut_off,
                   model,
                   controls,
                   method,

@@ -49,7 +49,8 @@ bt_test_mf <-
            rscale = "medium",
            phase = "acquisition",
            dv = "scr",
-           exclusion = "full data") {
+           exclusion = "full data",
+           cut_off = "full data") {
     # Check data
     collection_warning(
       cs1 = cs1,
@@ -138,6 +139,7 @@ bt_test_mf <-
       x = "cs",
       y = dv,
       exclusion = exclusion,
+      cut_off = cut_off,
       model = paste("Bayesian t-test", type_test),
       controls = NA,
       method = "t-test",

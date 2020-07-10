@@ -6,7 +6,7 @@
 #' data
 #' @inheritParams universe_cs
 #' @param cs_paired A character vector with the trials that were paired. Default is set to \code{NULL}, suggesting that there was full reinforcement
-## @param cutoff A numeric vector of the cutoff criteria applied. Default to \code{0, 0.05, .1}
+#' @param cutoff A numeric vector of the cutoff criteria applied. Default to \code{0, 0.05, .1}
 #' @details In case of higher order interaction, only the highest order
 #' effect is returned.
 #' @return A tibble with the following column names:
@@ -35,6 +35,7 @@ multiverse_cs <-
            cs_paired = NULL,
            include_bayes = TRUE,
            phase = "acquisition",
+           cutoff = c(0, 1, 2, 3),
            print_output = TRUE) {
 
     # Check data
@@ -46,7 +47,7 @@ multiverse_cs <-
 
     # Excluded participants
     chop <- multifear::chop_css(cs1 = cs1, cs2 = cs2, data = data, subj = subj)
-    excl_data_sets  <- multifear::exclusion_criteria(chop) %>%
+    excl_data_sets  <- purrr::map_df(cutoff, ~ multifear::exclusion_criteria(chop, cutoff = .)) %>%
       exclude_cases()
 
     if (!is.null(cs_paired)){
@@ -58,19 +59,36 @@ multiverse_cs <-
       excl_data_sets <- dplyr::bind_rows(excl_data_sets, excl_data_sets_p)
     }
 
-    res <- purrr::map2_dfr(
-      excl_data_sets_final$used_data,
-      excl_data_sets_final$names,
-      ~multifear::universe_cs(
-        cs1 = dplyr::select(data.frame(.x), dplyr::contains("cs1")) %>% colnames(),
-        cs2 = dplyr::select(data.frame(.x), dplyr::contains("cs2")) %>% colnames(),
-        data = data.frame(.x),
-        subj = dplyr::select(data.frame(.x), dplyr::contains("id")) %>% colnames(),
+
+    res <- purrr::pmap_dfr(
+      list(x = excl_data_sets$used_data,
+           y = excl_data_sets$names,
+           z = excl_data_sets$cutoff
+      ),
+      ~with(list(...), multifear::universe_cs(
+        cs1 = dplyr::select(data.frame(x), dplyr::contains("cs1")) %>% colnames(),
+        cs2 = dplyr::select(data.frame(x), dplyr::contains("cs2")) %>% colnames(),
+        data = data.frame(x),
+        subj = dplyr::select(data.frame(x), dplyr::contains("id")) %>% colnames(),
         group = group,
         include_bayes = include_bayes,
-        exclusion = .y
+        exclusion = y,
+        cut_off = z
+      )
       )
     )
+
+
+    #>% dplyr::mutate(
+    #  cutoff = rep(
+    #    excl_data_sets$cutoff,
+    #    each = nrow(.) / length(excl_data_sets$cutoff)
+    #  )#,
+      #name_cutoff = rep(
+      #  excl_data_sets$nam_cut,
+      #  each = nrow(.) / length(excl_data_sets$nam_cut)
+      #)
+    #)
 
     # Should output be printed
     if (print_output) {

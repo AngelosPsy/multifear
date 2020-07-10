@@ -14,6 +14,7 @@ rm_banova_mf(
   phase = "acquisition",
   dv = "scr",
   exclusion = "full data",
+  cut_off = "full data",
   multicore = TRUE
 )
 }
@@ -35,6 +36,8 @@ rm_banova_mf(
 \item{dv}{name of the measured conditioned response. Default to \code{"SCR"}.}
 
 \item{exclusion}{If any exclusion criteria were applied, default to \code{full data}}
+
+\item{cut_off}{cut off}
 
 \item{multicore}{The option to run the analysis in multiple cores, not available under Windows.
 Default to \code{TRUE}.}

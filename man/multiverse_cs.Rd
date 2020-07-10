@@ -13,6 +13,7 @@ multiverse_cs(
   cs_paired = NULL,
   include_bayes = TRUE,
   phase = "acquisition",
+  cutoff = c(0, 1, 2, 3),
   print_output = TRUE
 )
 }
@@ -29,11 +30,13 @@ multiverse_cs(
 
 \item{cs_paired}{A character vector with the trials that were paired. Default is set to \code{NULL}, suggesting that there was full reinforcement}
 
-\item{include_bayes}{Whether the bayesian analyses should be run. Default to \code{TRUE}.}
+\item{include_bayes}{Whether the bayesian analyses should be run. Default to \code{TRUE}}
 
 \item{phase}{The conditioned phase that the analyses refer to. Accepted values are  \code{acquisition},  or \code{acq}, \code{extinction}, or \code{ext}.}
 
-\item{print_output}{Whether to print the output or not. Default set to \code{TRUE}.}
+\item{cutoff}{A numeric vector of the cutoff criteria applied. Default to \code{0, 0.05, .1}}
+
+\item{print_output}{Whether to print the output or not. Default set to \code{TRUE}}
 }
 \value{
 A tibble with the following column names:

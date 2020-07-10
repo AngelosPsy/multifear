@@ -19,14 +19,14 @@ decision_tree_cs  = function (dat) {
 
   # Create data set for graph transformation
   dat <- dat %>%
-    dplyr::select(.data$model, .data$x, .data$y, .data$controls, .data$exclusion) %>%
-    dplyr::arrange(.data$model, .data$x, .data$y, .data$controls, .data$exclusion) %>%
+    dplyr::select(.data$model, .data$x, .data$y, .data$cut_off, .data$exclusion) %>%
+    dplyr::arrange(.data$model, .data$x, .data$y, .data$cut_off, .data$exclusion) %>%
     dplyr::mutate(start = "raw data") %>%
     dplyr::select(start, dplyr::everything()) %>%
     dplyr::mutate(x = paste0(.data$x, " & ", .data$model),
                   y = paste0(.data$y, " & ", .data$x),
-                  controls = paste0(.data$controls, " & ", .data$y),
-                  exclusion = paste0(.data$exclusion, " & ", .data$controls))
+                  cut_off = paste0(.data$cut_off, " & ", .data$y),
+                  exclusion = paste0(.data$exclusion, " & ", .data$cut_off))
 
   # Create edges
   edges_level1 <- dat %>%
@@ -45,12 +45,12 @@ decision_tree_cs  = function (dat) {
     unique %>%
     dplyr::mutate(decisions = "dependent variable")
   edges_level4 <- dat %>%
-    dplyr::select(.data$y, .data$controls) %>%
-    dplyr::rename(from = .data$y, to = .data$controls) %>%
-    dplyr::mutate(decisions = "control variables")
+    dplyr::select(.data$y, .data$cut_off) %>%
+    dplyr::rename(from = .data$y, to = .data$cut_off) %>%
+    dplyr::mutate(decisions = "cut_off variables")
   edges_level5 <- dat %>%
-    dplyr::select(.data$controls, .data$exclusion) %>%
-    dplyr::rename(from = .data$controls, to = .data$exclusion) %>%
+    dplyr::select(.data$cut_off, .data$exclusion) %>%
+    dplyr::rename(from = .data$cut_off, to = .data$exclusion) %>%
     dplyr::mutate(decisions = "exclusion")
 
   # Combine edges
@@ -62,7 +62,7 @@ decision_tree_cs  = function (dat) {
 
   # Plot edges
   plot <- edge_list %>%
-    igraph::graph_from_data_frame %>%
+    graph_from_data_frame %>%
     ggraph::ggraph(layout = "dendrogram",
                    circular = FALSE) +
     ggraph::geom_edge_diagonal() +
@@ -77,7 +77,7 @@ decision_tree_cs  = function (dat) {
                              angle=90,
                              hjust=1,
                              nudge_y = -0.10) +
-      ggplot2::ylim(-1, 5)
+      ggplot2::ylim(-8, 5)
 
   return(plot)
 

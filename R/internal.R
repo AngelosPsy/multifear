@@ -264,22 +264,22 @@ exclude_cases <- function(excl_data_sets){
   # Exclude cases
   # Remove empty data -- this can happen
   # if you have removed too many participants
-  excl_data_sets_final <-
+  excl_data_sets <-
     excl_data_sets %>%
     dplyr::mutate(excl = excl_data_sets$used_data %>%
                     lapply(plyr::empty) %>%
                     data.frame() %>% t())
 
   # Return warning if you have excluded any of the data sets
-  if (any(excl_data_sets_final$excl == TRUE)) {
+  if (any(excl_data_sets$excl == TRUE)) {
     warning(
       paste0(
         "Part of the analyses were excluded due to many excluded cases. Check
         the following cases: ",
         paste(
-          excl_data_sets_final$names[excl_data_sets_final$excl == TRUE],
+          excl_data_sets$names[excl_data_sets$excl == TRUE],
           "with cutoff =",
-          excl_data_sets_final$cutoff[excl_data_sets_final$excl == TRUE]
+          excl_data_sets$cutoff[excl_data_sets$excl == TRUE]
         ),
         ".\n",
         collapse = ""
@@ -288,7 +288,7 @@ exclude_cases <- function(excl_data_sets){
   }
 
   # You exclude the empty cases here
-  res <- excl_data_sets_final %>%
+  res <- excl_data_sets %>%
     dplyr::filter(excl == FALSE)
 
   return(res)

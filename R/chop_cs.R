@@ -112,6 +112,9 @@ chop_cs <- function(cs, data, subj, prefix = "cs", na.rm = FALSE) {
       dplyr::select(cs, x) %>% rowMeans())
   colnames(sp2) <- paste0(prefix, "_per2_", 1:ncol(sp2))
 
+  # Last five trials
+  l5t <- sumz_trial(cs, nc_cs:(nc_cs - 5), prefix, "l5trial")
+
   res <-
     dplyr::bind_cols(
       subj,
@@ -131,7 +134,8 @@ chop_cs <- function(cs, data, subj, prefix = "cs", na.rm = FALSE) {
       b20p,
       f2t,
       l2t,
-      sp2
+      sp2,
+      l5t
     ) %>%
     tidyr::as_tibble()
 

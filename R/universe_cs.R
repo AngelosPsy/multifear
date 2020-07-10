@@ -4,8 +4,9 @@
 #'
 #' @description Basic function for running a multiverse analysis for a single data set
 #' @inheritParams rm_anova_mf
-#' @param include_bayes Whether the bayesian analyses should be run. Default to \code{TRUE}.
-#' @param print_output Whether to print the output or not. Default set to \code{TRUE}.
+#' @param include_bayes Whether the bayesian analyses should be run. Default to \code{TRUE}
+#' @param print_output Whether to print the output or not. Default set to \code{TRUE}
+#' @param cut_off cut off score
 #' @details In case of higher order interaction, only the highest order
 #' effect is shown.
 #' @return A tibble with the following column names:
@@ -35,7 +36,8 @@ universe_cs <-
            phase = "acquisition",
            dv = "scr",
            print_output = TRUE,
-           exclusion = "full data") {
+           exclusion = "full data",
+           cut_off = "full data") {
 
     # Check data
     collection_warning(
@@ -82,7 +84,8 @@ universe_cs <-
           data = data,
           group = NULL,
           phase = phase,
-          exclusion = exclusion
+          exclusion = exclusion,
+          cut_off = cut_off
         )
       anovaTIME <-
         multifear::rm_anova_mf(
@@ -106,6 +109,7 @@ universe_cs <-
             data = data,
             group = NULL,
             exclusion = exclusion,
+            cut_off = cut_off,
             phase = phase,
             dv = dv,
             multicore = TRUE
@@ -121,6 +125,7 @@ universe_cs <-
             group = NULL,
             phase = phase,
             exclusion = exclusion,
+            cut_off = cut_off,
             dv = dv,
             multicore = TRUE
           )
@@ -135,7 +140,8 @@ universe_cs <-
           data = data,
           group = group,
           phase = phase,
-          exclusion = exclusion
+          exclusion = exclusion,
+          cut_off = cut_off
         )
 
       anovaTIME <-
@@ -147,7 +153,8 @@ universe_cs <-
           data = data,
           group = group,
           phase = phase,
-          exclusion = exclusion
+          exclusion = exclusion,
+          cut_off = cut_off
         )
 
       if (include_bayes) {
@@ -161,6 +168,7 @@ universe_cs <-
             group = group,
             phase = phase,
             exclusion = exclusion,
+            cut_off = cut_off,
             dv = dv,
             multicore = TRUE
           )
@@ -175,6 +183,7 @@ universe_cs <-
             group = group,
             phase = phase,
             exclusion = exclusion,
+            cut_off = cut_off,
             dv = dv,
             multicore = TRUE
           )
@@ -196,7 +205,8 @@ universe_cs <-
         subj = subj,
         paired = paired,
         phase = phase,
-        exclusion = exclusion
+        exclusion = exclusion,
+        cut_off = cut_off
       )
 
     combRes <- list(`t-test full` = ttestFULL)
@@ -210,7 +220,8 @@ universe_cs <-
           subj = subj,
           paired = paired,
           phase = phase,
-          exclusion = exclusion
+          exclusion = exclusion,
+          cut_off = cut_off
         )
       combRes$`bayes t-test full` <- bttestFULL
     }

@@ -5,7 +5,6 @@
 #' \lifecycle{experimental}
 #'
 #' @inheritParams rm_anova_mf
-#'
 #' @param multicore The option to run the analysis in multiple cores, not available under Windows.
 #' Default to \code{TRUE}.
 #' @return A tibble with the following column names:
@@ -55,6 +54,7 @@ rm_banova_mf <- function(cs1,
                          phase = "acquisition",
                          dv = "scr",
                          exclusion = "full data",
+                         cut_off = "full data",
                          multicore = TRUE) {
   collection_warning(
     cs1 = cs1,
@@ -125,6 +125,7 @@ rm_banova_mf <- function(cs1,
     x = selected_term,
     y = dv,
     exclusion = exclusion,
+    cut_off = cut_off,
     model = "rep BANOVA Matched",
     controls = NA,
     method = paste("rep BANOVA Matched", selected_term),
@@ -141,6 +142,7 @@ rm_banova_mf <- function(cs1,
     x = selected_term,
     y = dv,
     exclusion = exclusion,
+    cut_off = cut_off,
     model = "rep BANOVA Unmatched",
     controls = NA,
     method = paste("rep BANOVA Unmatched", selected_term),
