@@ -129,6 +129,7 @@
   phase = <span class='st'>"acquisition"</span>,
   dv = <span class='st'>"scr"</span>,
   exclusion = <span class='st'>"full data"</span>,
+  cut_off = <span class='st'>"full data"</span>,
   multicore = <span class='fl'>TRUE</span>
 )</pre>
 
@@ -170,6 +171,10 @@
     <tr>
       <th>exclusion</th>
       <td><p>If any exclusion criteria were applied, default to <code>full data</code></p></td>
+    </tr>
+    <tr>
+      <th>cut_off</th>
+      <td><p>cut off</p></td>
     </tr>
     <tr>
       <th>multicore</th>
@@ -215,19 +220,13 @@ time to be completed.</p>
 <span class='kw'>subj</span> <span class='op'>&lt;-</span> <span class='st'>"id"</span>
 
 <span class='co'># Repeated measures ANOVA</span>
-<span class='fu'><a href='https://rdrr.io/pkg/multifear/man/rm_banova_mf.html'>rm_banova_mf</a></span>(cs1 = <span class='kw'>cs1</span>, cs2 = <span class='kw'>cs2</span>, subj = <span class='kw'>subj</span>, data = <span class='kw'>example_data</span>, time = <span class='fl'>TRUE</span>, multicore = <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: `...` is not empty.</span>
-#&gt; <span class='warning'></span>
-#&gt; <span class='warning'>We detected these problematic arguments:</span>
-#&gt; <span class='warning'>* `needs_dots`</span>
-#&gt; <span class='warning'></span>
-#&gt; <span class='warning'>These dots only exist to allow future extensions and should be empty.</span>
-#&gt; <span class='warning'>Did you misspecify an argument?</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 2 x 14</span><span>
-#&gt;   x     y     exclusion model controls method p.value effect.size estimate
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> cs:t… scr   full data rep … </span><span style='color: #BB0000;'>NA</span><span>       rep B… </span><span style='color: #BB0000;'>NA</span><span>      </span><span style='color: #BB0000;'>NA</span><span>             1.06 
-#&gt; </span><span style='color: #555555;'>2</span><span> cs:t… scr   full data rep … </span><span style='color: #BB0000;'>NA</span><span>       rep B… </span><span style='color: #BB0000;'>NA</span><span>      </span><span style='color: #BB0000;'>NA</span><span>             0.489
-#&gt; </span><span style='color: #555555;'># … with 5 more variables: statistic </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span style='color: #555555;'>, conf.low </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span style='color: #555555;'>, conf.high </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span style='color: #555555;'>,</span><span>
-#&gt; </span><span style='color: #555555;'>#   framework </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, data_used </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span></div><div class='input'></div></span></pre>
+<span class='fu'><a href='https://rdrr.io/pkg/multifear/man/rm_banova_mf.html'>rm_banova_mf</a></span>(cs1 = <span class='kw'>cs1</span>, cs2 = <span class='kw'>cs2</span>, subj = <span class='kw'>subj</span>, data = <span class='kw'>example_data</span>, time = <span class='fl'>TRUE</span>, multicore = <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 2 x 15</span><span>
+#&gt;   x     y     exclusion cut_off model controls method p.value effect.size
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>      
+#&gt; </span><span style='color: #555555;'>1</span><span> cs:t… scr   full data full d… rep … </span><span style='color: #BB0000;'>NA</span><span>       rep B… </span><span style='color: #BB0000;'>NA</span><span>      </span><span style='color: #BB0000;'>NA</span><span>         
+#&gt; </span><span style='color: #555555;'>2</span><span> cs:t… scr   full data full d… rep … </span><span style='color: #BB0000;'>NA</span><span>       rep B… </span><span style='color: #BB0000;'>NA</span><span>      </span><span style='color: #BB0000;'>NA</span><span>         
+#&gt; </span><span style='color: #555555;'># … with 6 more variables: estimate </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, statistic </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span style='color: #555555;'>, conf.low </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span style='color: #555555;'>,</span><span>
+#&gt; </span><span style='color: #555555;'>#   conf.high </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span style='color: #555555;'>, framework </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, data_used </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span></div><div class='input'></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

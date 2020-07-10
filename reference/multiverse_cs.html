@@ -128,6 +128,7 @@ data</p>
   cs_paired = <span class='kw'>NULL</span>,
   include_bayes = <span class='fl'>TRUE</span>,
   phase = <span class='st'>"acquisition"</span>,
+  cutoff = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span>),
   print_output = <span class='fl'>TRUE</span>
 )</pre>
 
@@ -160,15 +161,19 @@ data</p>
     </tr>
     <tr>
       <th>include_bayes</th>
-      <td><p>Whether the bayesian analyses should be run. Default to <code>TRUE</code>.</p></td>
+      <td><p>Whether the bayesian analyses should be run. Default to <code>TRUE</code></p></td>
     </tr>
     <tr>
       <th>phase</th>
       <td><p>The conditioned phase that the analyses refer to. Accepted values are  <code>acquisition</code>,  or <code>acq</code>, <code>extinction</code>, or <code>ext</code>.</p></td>
     </tr>
     <tr>
+      <th>cutoff</th>
+      <td><p>A numeric vector of the cutoff criteria applied. Default to <code>0, 0.05, .1</code></p></td>
+    </tr>
+    <tr>
       <th>print_output</th>
-      <td><p>Whether to print the output or not. Default set to <code>TRUE</code>.</p></td>
+      <td><p>Whether to print the output or not. Default set to <code>TRUE</code></p></td>
     </tr>
     </table>
 
