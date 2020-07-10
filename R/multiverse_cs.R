@@ -43,38 +43,20 @@ multiverse_cs <-
     } else{
         collection_warning(cs1 = cs1, cs2 = cs2, data = data, subj = subj, cs_paired = cs_paired)
     }
+
     # Excluded participants
     chop <- multifear::chop_css(cs1 = cs1, cs2 = cs2, data = data, subj = subj)
-    excl_data_sets  <- multifear::exclusion_criteria(chop)
+    excl_data_sets  <- multifear::exclusion_criteria(chop) %>%
+      exclude_cases()
 
-    # Remove empty data -- this can happen
-    # if you have removed a lot of participants
-    excl_data_sets_final <-
-      excl_data_sets %>%
-      dplyr::mutate(excl = excl_data_sets$used_data %>%
-                      lapply(plyr::empty) %>%
-                      data.frame() %>% t())
-
-    # Return warning if you have excluded any of the data sets
-    if (any(excl_data_sets_final$excl == TRUE)) {
-      warning(
-        paste0(
-          "Part of the analyses were excluded due to many excluded cases. Check
-          the following cases: ",
-          paste(
-            excl_data_sets_final$names[excl_data_sets_final$excl == TRUE],
-            "with cutoff =",
-            excl_data_sets_final$cutoff[excl_data_sets_final$excl == TRUE]
-          ),
-          ".\n",
-          collapse = ""
-        )
-        )
+    if (!is.null(cs_paired)){
+      chop_p <- multifear::chop_css(cs1 = cs1, cs2 = cs2, data = data, subj = subj, cs_paired = cs_paired)
+      excl_data_sets_p  <- multifear::exclusion_criteria(chop_p) %>%
+        exclude_cases()
+      # Change names
+      excl_data_sets_p$names <- paste0(excl_data_sets_p$names, "_p")
+      excl_data_sets <- dplyr::bind_rows(excl_data_sets, excl_data_sets_p)
     }
-
-    # You exclude the empty cases here
-    excl_data_sets_final <- excl_data_sets_final %>%
-      dplyr::filter(excl == FALSE)
 
     res <- purrr::map2_dfr(
       excl_data_sets_final$used_data,

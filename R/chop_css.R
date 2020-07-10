@@ -55,7 +55,7 @@ chop_css <- function(cs1, cs2, data, subj, cs_paired = NULL, na.rm = FALSE) {
 
     colnames(csbind_2) <- paste0(colnames(csbind_2), "_p")
 
-    csbind <- cbind(csbind, csbind_2, csbind_2)
+    csbind <- csbind_2
   }
 
   res <- cbind(cs1_tmp, cs2_tmp[, -1])

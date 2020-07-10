@@ -12,22 +12,15 @@ exclusion_criteria <- function(data){ #, cutoff = 0.01) {
   # Check data
   chop_css_warning(data)
 
-  # For now remove it
-  #last_trial <- data %>% dplyr::filter(cs_ltrial > cutoff)
-  #last2_trial <- data %>% dplyr::filter(l1trial > cutoff & l2trial > cutoff)
-  #last_first_trial <- data %>% dplyr::filter(cs_lftdiff > cutoff)
-  #half_trials <- data %>% dplyr::mutate(difftr = cs_lhalf - cs_fhalf) %>% dplyr::filter(difftr > cutoff)
-
-  #data %>% dplyr::select(contains("cs1_t", "cs2_t"))
-  full_data  = data %>% dplyr::select(dplyr::matches("cs1_t_|cs2_t_"), id)
-  ten_per    = data %>% dplyr::select(cs1_t10per, cs1_b10per, cs2_t10per, cs2_b10per, id)
-  min_first  = data %>% dplyr::select(cs1_minfirst, cs2_minfirst, id)
-  th3_per    = data %>% dplyr::select(dplyr::contains("33per"), id)
-  halves     = data %>% dplyr::select(cs1_fhalf, cs1_lhalf, cs2_fhalf, cs2_lhalf, id)
-  fltrials   =  data %>% dplyr::select(cs1_ftrial, cs1_ltrial, cs2_ftrial, cs2_ltrial, id)
-  twenty_per =  data %>% dplyr::select(dplyr::contains("20per"), id)
-  fl2trials  = data %>% dplyr::select(cs1_f2trial, cs1_l2trial, cs2_f2trial, cs2_l2trial, id)
-  per2trials =  data %>% dplyr::select(dplyr::matches("cs1_per2|cs2_per2"), id)
+  full_data  <- data %>% dplyr::select(dplyr::matches("cs1_t_|cs2_t_"), id)
+  ten_per    <- data %>% dplyr::select(cs1_t10per, cs1_b10per, cs2_t10per, cs2_b10per, id)
+  min_first  <- data %>% dplyr::select(cs1_minfirst, cs2_minfirst, id)
+  th3_per    <- data %>% dplyr::select(dplyr::contains("33per"), id)
+  halves     <- data %>% dplyr::select(cs1_fhalf, cs1_lhalf, cs2_fhalf, cs2_lhalf, id)
+  fltrials   <-  data %>% dplyr::select(cs1_ftrial, cs1_ltrial, cs2_ftrial, cs2_ltrial, id)
+  twenty_per <-  data %>% dplyr::select(dplyr::contains("20per"), id)
+  fl2trials  <- data %>% dplyr::select(cs1_f2trial, cs1_l2trial, cs2_f2trial, cs2_l2trial, id)
+  per2trials <-  data %>% dplyr::select(dplyr::matches("cs1_per2|cs2_per2"), id)
 
  res <- tidyr::tibble(
     used_data = list(

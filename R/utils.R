@@ -52,6 +52,7 @@
   utils::globalVariables ("effect.size")
   utils::globalVariables ("estimate")
   utils::globalVariables ("excl")
+  utils::globalVariables ("excl_data_sets_final")
   utils::globalVariables ("framework")
   utils::globalVariables ("group")
   utils::globalVariables ("group2")
