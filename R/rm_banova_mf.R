@@ -34,7 +34,7 @@
 #' in case of many factors, this will mean that the analysis will take a long
 #' time to be completed.
 #'
-#' @example
+#' @examples
 #' # Briefly define argument values that will be plugged in later on in the functions.
 #' # We only use two trials as the function takes a long time to run.
 #'

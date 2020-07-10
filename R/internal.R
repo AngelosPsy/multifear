@@ -246,6 +246,18 @@ data_preparation_verse = function(cs1,
 
 }
 
+#
+sumz_trial <- function(data,
+           index,
+           prefix = "pre",
+           postfix = "post",
+           na.rm = TRUE) {
+    res <- data %>% dplyr::select(index) %>%
+      rowMeans(na.rm = na.rm) %>%
+      tibble::enframe(name = NULL, value = paste(prefix, postfix, sep = "_"))
+    return(res)
+  }
+
 # formats results. This function is taken from the specr package
 format_results <- function(df, null = 0, desc = FALSE) {
   if (isFALSE(desc)) {

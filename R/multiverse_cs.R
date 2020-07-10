@@ -6,7 +6,7 @@
 #' data
 #' @inheritParams universe_cs
 #' @param cs_paired A character vector with the trials that were paired. Default is set to \code{NULL}, suggesting that there was full reinforcement
-#' @param cutoff A numeric vector of the cutoff criteria applied. Default to \code{0, 0.05, .1}
+## @param cutoff A numeric vector of the cutoff criteria applied. Default to \code{0, 0.05, .1}
 #' @details In case of higher order interaction, only the highest order
 #' effect is returned.
 #' @return A tibble with the following column names:
@@ -34,17 +34,18 @@ multiverse_cs <-
            group = NULL,
            cs_paired = NULL,
            include_bayes = TRUE,
-           cutoff = c(0, 0.1, 0.05),
            phase = "acquisition",
            print_output = TRUE) {
 
     # Check data
-    collection_warning(cs1 = cs1, cs2 = cs2, data = data, subj = subj, cs_paired = cs_paired)
-
+    if(is.null(cs_paired)){
+      collection_warning(cs1 = cs1, cs2 = cs2, data = data, subj = subj)
+    } else{
+        collection_warning(cs1 = cs1, cs2 = cs2, data = data, subj = subj, cs_paired = cs_paired)
+    }
     # Excluded participants
     chop <- multifear::chop_css(cs1 = cs1, cs2 = cs2, data = data, subj = subj)
-    excl_data_sets <-
-      purrr::map_df(cutoff, ~ multifear::exclusion_criteria(chop, cutoff = .))
+    excl_data_sets  <- multifear::exclusion_criteria(chop)
 
     # Remove empty data -- this can happen
     # if you have removed a lot of participants
@@ -79,22 +80,13 @@ multiverse_cs <-
       excl_data_sets_final$used_data,
       excl_data_sets_final$names,
       ~multifear::universe_cs(
-        cs1 = cs1,
-        cs2 = cs2,
-        data = .x,
-        subj = subj,
+        cs1 = dplyr::select(data.frame(.x), dplyr::contains("cs1")) %>% colnames(),
+        cs2 = dplyr::select(data.frame(.x), dplyr::contains("cs2")) %>% colnames(),
+        data = data.frame(.x),
+        subj = dplyr::select(data.frame(.x), dplyr::contains("id")) %>% colnames(),
         group = group,
         include_bayes = include_bayes,
         exclusion = .y
-      )
-    ) %>% dplyr::mutate(
-      cutoff = rep(
-        excl_data_sets_final$cutoff,
-        each = nrow(.) / length(excl_data_sets_final$cutoff)
-      ),
-      name_cutoff = rep(
-        excl_data_sets_final$nam_cut,
-        each = nrow(.) / length(excl_data_sets_final$nam_cut)
       )
     )
 

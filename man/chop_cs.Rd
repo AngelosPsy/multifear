@@ -4,7 +4,7 @@
 \alias{chop_cs}
 \title{chop_cs}
 \usage{
-chop_cs(cs, data, subj, na.rm = FALSE)
+chop_cs(cs, data, subj, prefix = "cs", na.rm = FALSE)
 }
 \arguments{
 \item{cs}{The column name(s) of the conditioned responses}
@@ -13,11 +13,38 @@ chop_cs(cs, data, subj, na.rm = FALSE)
 
 \item{subj}{The name of the column including the participant numbers. Unique numbers are expected.}
 
+\item{prefix}{prefix to be included in the end data frame}
+
 \item{na.rm}{Whether NAs should be removed, default to \code{FALSE}.}
 }
+\value{
+A tibble with the following colnames:
+"id" = id column;
+"top10per" = mean of top 10% of trials;
+"bottom10per" = mean of bottom 10% of the trials;
+"minfirst = all trials minus the first one;
+"all" = mean of all trials;
+"t33per = mean of top 33% of the trials;
+"m33per" = mean of medium 33% of the trials;
+"b33per" = mean of bottom 33% of the trials;
+"fhalf" = mean of first half of the trials;
+"lhalf" = mean of last half of the trials;
+"ftrial" = first trial;
+"ltrial" = last trial;
+"t20per" = mean of top 20% of the trials;
+"b20per" = mean of bottom 20% of the trials;
+"f2trial" = mean of first two trials;
+"l2trial" = mean of last two trials;
+"per2_X" = mean per two trials (i.e., block), with X referring to the number
+of block.
+}
 \description{
-Function for separating the conditioned responses into multiple pieces.
+Function for separating the conditioned responses into multiple pieces
 }
 \details{
 \lifecycle{experimental}
+}
+\examples{
+data(example_data)
+chop_cs(cs = paste0("CSP", 1:10), data = example_data, subj = "id")
 }
