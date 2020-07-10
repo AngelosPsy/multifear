@@ -208,7 +208,13 @@ running multiple Bayesian t-tests. Similar to the <code>t_test_mf</code> functio
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>example_data</span>)
 
 <span class='co'># Paired sample t-tests</span>
-<span class='fu'><a href='https://rdrr.io/pkg/multifear/man/bt_test_mf.html'>bt_test_mf</a></span>(cs1 = <span class='st'>"CSP1"</span>, cs2 = <span class='st'>"CSM1"</span>, subj = <span class='st'>"id"</span>, data = <span class='kw'>example_data</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 2 x 14</span><span>
+<span class='fu'><a href='https://rdrr.io/pkg/multifear/man/bt_test_mf.html'>bt_test_mf</a></span>(cs1 = <span class='st'>"CSP1"</span>, cs2 = <span class='st'>"CSM1"</span>, subj = <span class='st'>"id"</span>, data = <span class='kw'>example_data</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: `...` is not empty.</span>
+#&gt; <span class='warning'></span>
+#&gt; <span class='warning'>We detected these problematic arguments:</span>
+#&gt; <span class='warning'>* `needs_dots`</span>
+#&gt; <span class='warning'></span>
+#&gt; <span class='warning'>These dots only exist to allow future extensions and should be empty.</span>
+#&gt; <span class='warning'>Did you misspecify an argument?</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 2 x 14</span><span>
 #&gt;   x     y     exclusion model controls method p.value effect.size estimate
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
 #&gt; </span><span style='color: #555555;'>1</span><span> cs    scr   full data Baye… </span><span style='color: #BB0000;'>NA</span><span>       t-test </span><span style='color: #BB0000;'>NA</span><span>      </span><span style='color: #BB0000;'>NA</span><span>             0.119
@@ -216,7 +222,13 @@ running multiple Bayesian t-tests. Similar to the <code>t_test_mf</code> functio
 #&gt; </span><span style='color: #555555;'># … with 5 more variables: statistic </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span style='color: #555555;'>, conf.low </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span style='color: #555555;'>, conf.high </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span style='color: #555555;'>,</span><span>
 #&gt; </span><span style='color: #555555;'>#   framework </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, data_used </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span></div><div class='input'>
 <span class='co'># Independent  sample t-tests</span>
-<span class='fu'><a href='https://rdrr.io/pkg/multifear/man/bt_test_mf.html'>bt_test_mf</a></span>(cs1 = <span class='st'>"CSP1"</span>, cs2 = <span class='st'>"CSM1"</span>, subj = <span class='st'>"id"</span>,  group = <span class='st'>"group"</span>, data = <span class='kw'>example_data</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 2 x 14</span><span>
+<span class='fu'><a href='https://rdrr.io/pkg/multifear/man/bt_test_mf.html'>bt_test_mf</a></span>(cs1 = <span class='st'>"CSP1"</span>, cs2 = <span class='st'>"CSM1"</span>, subj = <span class='st'>"id"</span>,  group = <span class='st'>"group"</span>, data = <span class='kw'>example_data</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: `...` is not empty.</span>
+#&gt; <span class='warning'></span>
+#&gt; <span class='warning'>We detected these problematic arguments:</span>
+#&gt; <span class='warning'>* `needs_dots`</span>
+#&gt; <span class='warning'></span>
+#&gt; <span class='warning'>These dots only exist to allow future extensions and should be empty.</span>
+#&gt; <span class='warning'>Did you misspecify an argument?</span></div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 2 x 14</span><span>
 #&gt;   x     y     exclusion model controls method p.value effect.size estimate
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
 #&gt; </span><span style='color: #555555;'>1</span><span> cs    scr   full data Baye… </span><span style='color: #BB0000;'>NA</span><span>       t-test </span><span style='color: #BB0000;'>NA</span><span>      </span><span style='color: #BB0000;'>NA</span><span>           2.11</span><span style='color: #555555;'>e</span><span style='color: #BB0000;'>-2</span><span>
