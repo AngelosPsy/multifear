@@ -12,10 +12,25 @@ exclusion_criteria <- function(data, cutoff = 0) {
   # Check data
   chop_css_warning(data)
 
+  if (is.null(data$group)) {
+    group_new <-
+      data %>%
+      dplyr::mutate(group = rep("NULL", nrow(data))) %>%
+      dplyr::select(group)
+  } else{
+    group_new <- data %>%
+      dplyr::select(group) %>%
+      tibble::as_tibble()
+  }
+
   # Exclude participants with no last 2 trials
-  data <- data %>% dplyr::mutate(diff_2_trials = cs1_l2trial - cs2_l2trial,
-                                 diff_4_trials = cs1_l2trial - cs2_l2trial,
-                                 diff_5_trials = cs1_l5trial - cs2_l5trial)
+  data <-
+    data %>% dplyr::mutate(
+      diff_2_trials = cs1_l2trial - cs2_l2trial,
+      diff_4_trials = cs1_l2trial - cs2_l2trial,
+      diff_5_trials = cs1_l5trial - cs2_l5trial,
+      group = group
+    )
 
   two_thre  <- -99999999
   four_thre <- -99999999
@@ -30,31 +45,31 @@ exclusion_criteria <- function(data, cutoff = 0) {
   # Summarize full data
   full_data  <- data %>%
     dplyr::filter(diff_2_trials > two_thre, diff_4_trials > four_thre, diff_5_trials > five_thre) %>%
-    dplyr::select(dplyr::matches("cs1_t_|cs2_t_"), id)
+    dplyr::select(dplyr::matches("cs1_t_|cs2_t_"), id, group) #%>% cbind(data)
   ten_per    <- data  %>%
     dplyr::filter(diff_2_trials > two_thre, diff_4_trials > four_thre, diff_5_trials > five_thre) %>%
-    dplyr::select(cs1_t10per, cs1_b10per, cs2_t10per, cs2_b10per, id)
+    dplyr::select(cs1_t10per, cs1_b10per, cs2_t10per, cs2_b10per, id, group) # %>% cbind(data)
   min_first  <- data %>%
     dplyr::filter(diff_2_trials > two_thre, diff_4_trials > four_thre, diff_5_trials > five_thre) %>%
-    dplyr::select(cs1_minfirst, cs2_minfirst, id)
+    dplyr::select(cs1_minfirst, cs2_minfirst, id, group) # %>% cbind(data)
   th3_per    <- data %>%
     dplyr::filter(diff_2_trials > two_thre, diff_4_trials > four_thre, diff_5_trials > five_thre) %>%
-    dplyr::select(dplyr::contains("33per"), id)
+    dplyr::select(dplyr::contains("33per"), id, group) # %>% cbind(data)
   halves     <- data %>%
     dplyr::filter(diff_2_trials > two_thre, diff_4_trials > four_thre, diff_5_trials > five_thre) %>%
-    dplyr::select(cs1_fhalf, cs1_lhalf, cs2_fhalf, cs2_lhalf, id)
+    dplyr::select(cs1_fhalf, cs1_lhalf, cs2_fhalf, cs2_lhalf, id, group)  #%>% cbind(data)
   fltrials   <- data %>%
     dplyr::filter(diff_2_trials > two_thre, diff_4_trials > four_thre, diff_5_trials > five_thre) %>%
-    dplyr::select(cs1_ftrial, cs1_ltrial, cs2_ftrial, cs2_ltrial, id)
+    dplyr::select(cs1_ftrial, cs1_ltrial, cs2_ftrial, cs2_ltrial, id, group)  #%>% cbind(data)
   twenty_per <- data %>%
     dplyr::filter(diff_2_trials > two_thre, diff_4_trials > four_thre, diff_5_trials > five_thre) %>%
-    dplyr::select(dplyr::contains("20per"), id)
+    dplyr::select(dplyr::contains("20per"), id, group) # %>% cbind(data)
   fl2trials  <- data %>%
     dplyr::filter(diff_2_trials > two_thre, diff_4_trials > four_thre, diff_5_trials > five_thre) %>%
-    dplyr::select(cs1_f2trial, cs1_l2trial, cs2_f2trial, cs2_l2trial, id)
+    dplyr::select(cs1_f2trial, cs1_l2trial, cs2_f2trial, cs2_l2trial, id, group) # %>% cbind(data)
   per2trials <- data %>%
     dplyr::filter(diff_2_trials > two_thre, diff_4_trials > four_thre, diff_5_trials > five_thre) %>%
-    dplyr::select(dplyr::matches("cs1_per2|cs2_per2"), id)
+    dplyr::select(dplyr::matches("cs1_per2|cs2_per2"), id, group) #%>% cbind(data)
 
 
   #full_data_ex2  <- data %>% dplyr::filter(diff_2_trials > 0) %>% dplyr::select(dplyr::matches("cs1_t_|cs2_t_"), id)

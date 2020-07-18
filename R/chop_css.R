@@ -13,6 +13,7 @@ chop_css <-
            data,
            subj,
            cs_paired = NULL,
+           group = NULL,
            na.rm = FALSE) {
     # Check data
     collection_warning(
@@ -28,6 +29,19 @@ chop_css <-
       stop("No equal length of the two CSs.")
     }
 
+    if (is.null(group)) {
+      group_new <-
+        data %>%
+        dplyr::mutate(group = rep("NULL", nrow(data))) %>%
+        dplyr::select(group)
+      group <- NULL
+    } else{
+      group_new <- data %>%
+        dplyr::select(all_of(!!dplyr::enquo(group))) %>%
+        tibble::as_tibble() %>%
+        dplyr::rename(group = eval(group))
+    }
+
     cs1_tmp <-
       multifear::chop_cs(
         cs = cs1,
@@ -35,6 +49,7 @@ chop_css <-
         subj = subj,
         prefix = "cs1"
       )
+
     cs2_tmp <-
       multifear::chop_cs(
         cs = cs2,
@@ -93,7 +108,7 @@ chop_css <-
       csbind <- csbind_2
     }
 
-    res <- cbind(cs1_tmp, cs2_tmp[, -1])
+    res <- cbind(cs1_tmp, cs2_tmp[, -1], group_new)
 
     class(res) <- c("chop_css", class(res))
 

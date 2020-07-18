@@ -42,11 +42,11 @@ multiverse_cs <-
     if(is.null(cs_paired)){
       collection_warning(cs1 = cs1, cs2 = cs2, data = data, subj = subj)
     } else{
-        collection_warning(cs1 = cs1, cs2 = cs2, data = data, subj = subj, cs_paired = cs_paired)
+      collection_warning(cs1 = cs1, cs2 = cs2, data = data, subj = subj, cs_paired = cs_paired)
     }
 
     # Excluded participants
-    chop <- multifear::chop_css(cs1 = cs1, cs2 = cs2, data = data, subj = subj)
+    chop <- multifear::chop_css(cs1 = cs1, cs2 = cs2, data = data, subj = subj, group = group)
     excl_data_sets  <- purrr::map_df(cutoff, ~ multifear::exclusion_criteria(chop, cutoff = .)) %>%
       exclude_cases()
 
@@ -59,24 +59,64 @@ multiverse_cs <-
       excl_data_sets <- dplyr::bind_rows(excl_data_sets, excl_data_sets_p)
     }
 
+    if(is.null(group)){
+      res <- purrr::pmap_dfr(
+        list(x = excl_data_sets$used_data,
+             y = excl_data_sets$names,
+             z = excl_data_sets$cutoff
+        ),
+        ~with(list(...), multifear::universe_cs(
+          cs1 = dplyr::select(data.frame(x), dplyr::contains("cs1")) %>% colnames(),
+          cs2 = dplyr::select(data.frame(x), dplyr::contains("cs2")) %>% colnames(),
+          data = data.frame(x),
+          subj = dplyr::select(data.frame(x), dplyr::contains("id")) %>% colnames(),
+          group = NULL,
+          include_bayes = include_bayes,
+          exclusion = y,
+          cut_off = z
+        )
+        )
+      )
 
-    res <- purrr::pmap_dfr(
-      list(x = excl_data_sets$used_data,
-           y = excl_data_sets$names,
-           z = excl_data_sets$cutoff
-      ),
-      ~with(list(...), multifear::universe_cs(
-        cs1 = dplyr::select(data.frame(x), dplyr::contains("cs1")) %>% colnames(),
-        cs2 = dplyr::select(data.frame(x), dplyr::contains("cs2")) %>% colnames(),
-        data = data.frame(x),
-        subj = dplyr::select(data.frame(x), dplyr::contains("id")) %>% colnames(),
-        group = group,
-        include_bayes = include_bayes,
-        exclusion = y,
-        cut_off = z
+    } else {
+      res <- purrr::pmap_dfr(
+        list(x = excl_data_sets$used_data,
+             y = excl_data_sets$names,
+             z = excl_data_sets$cutoff
+        ),
+        ~with(list(...), multifear::universe_cs(
+          cs1 = dplyr::select(data.frame(x), dplyr::contains("cs1")) %>% colnames(),
+          cs2 = dplyr::select(data.frame(x), dplyr::contains("cs2")) %>% colnames(),
+          data = data.frame(x),
+          subj = dplyr::select(data.frame(x), dplyr::contains("id")) %>% colnames()
+          %>% data.frame() %>% slice(1) %>% unlist() %>% as.character(),
+          group = dplyr::select(data.frame(x), dplyr::contains("group")) %>% colnames(),
+          include_bayes = include_bayes,
+          exclusion = y,
+          cut_off = z
+        )
+        )
       )
-      )
-    )
+
+    }
+
+   # res <- purrr::pmap_dfr(
+    #  list(x = excl_data_sets$used_data,
+    #       y = excl_data_sets$names,
+    #       z = excl_data_sets$cutoff
+    #  ),
+    #  ~with(list(...), multifear::universe_cs(
+    #    cs1 = dplyr::select(data.frame(x), dplyr::contains("cs1")) %>% colnames(),
+    #    cs2 = dplyr::select(data.frame(x), dplyr::contains("cs2")) %>% colnames(),
+    #    data = data.frame(x),
+    #    subj = dplyr::select(data.frame(x), dplyr::contains("id")) %>% colnames(),
+    #    group = group,
+    #    include_bayes = include_bayes,
+    #    exclusion = y,
+    #    cut_off = z
+    #  )
+    #  )
+  #  )
 
 
     #>% dplyr::mutate(

@@ -123,9 +123,9 @@ data_preparation_anova = function(cs1,
     group <- NULL
   } else{
     group_new <- data %>%
-      dplyr::select(tidyselect::all_of(!!dplyr::enquo(group))) %>%
-      dplyr::mutate(group2 = as.factor(group)) %>% dplyr::select(group2) %>%
-    dplyr::rename(group = group2)
+      dplyr::select(all_of(!!dplyr::enquo(group))) %>%
+      tibble::as_tibble() %>%
+      dplyr::rename(group = eval(group))
   }
 
   data <- dplyr::bind_cols(subj, cs1, cs2, group_new)
@@ -236,14 +236,15 @@ data_preparation_verse = function(cs1,
       } else {
         group_new <- data %>%
           dplyr::select(tidyselect::all_of(!!dplyr::enquo(group))) %>%
-          dplyr::mutate(group2 = as.factor(group)) %>% dplyr::select(group2) %>%
-          dplyr::rename(group = group2)
+          dplyr::rename(group = eval(group))
+          #dplyr::mutate(group2 = as.factor(group)) %>%
+          #dplyr::select(group2) #%>%
+          #dplyr::rename(group = group2)
       }
 
       res <- dplyr::bind_cols(subj, cs1, cs2, group_new)
 
       return(res)
-
 }
 
 #

@@ -64,6 +64,10 @@ universe_cs <-
     subj   <- data %>% dplyr::select("subj") %>% colnames()
     paired <- ifelse(is.null(group), TRUE, FALSE)
 
+    if(!is.null(group)){
+      group   <- data %>% dplyr::select("group") %>% colnames()
+    }
+
     # In case of 1 trial CS or enequal number of CSs, skip ANOVA
     do_anova <- TRUE
     if ((length(cs1) == 1 |

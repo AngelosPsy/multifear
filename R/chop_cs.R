@@ -6,6 +6,7 @@
 #' @inheritParams t_test_mf
 #' @param cs The column name(s) of the conditioned responses
 #' @param prefix prefix to be included in the end data frame
+#' @param group default to \code{NULL}
 #' @return A tibble with the following colnames:
 #' "id" = id column;
 #' "top10per" = mean of top 10% of trials;
@@ -32,7 +33,7 @@
 #' @importFrom tibble enframe
 #' @export
 
-chop_cs <- function(cs, data, subj, prefix = "cs", na.rm = FALSE) {
+chop_cs <- function(cs, data, subj, group = NULL, prefix = "cs", na.rm = FALSE) {
   # Check data
   collection_warning(cs1 = cs, data = data, subj = subj)
 

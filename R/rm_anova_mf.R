@@ -81,6 +81,7 @@ rm_anova_mf <- function(cs1,
   }
 
   # Run the main ANOVA
+  if(is.null(group)){
   tmpANOVA <-
     suppressWarnings(eval(parse(
       text =
@@ -92,14 +93,33 @@ rm_anova_mf <- function(cs1,
           within = c(',
           paste(anova_terms, collapse = ","),
           '),
-          between = ',
-          group,
-          ',
+          between = NULL,
           type = 3,
           return_aov = TRUE
         )$aov'
-      ))))
+        ))))
+  } else{
+    tmpANOVA <-
+      suppressWarnings(eval(parse(
+        text =
+          paste0(
+            'ez::ezANOVA(
+            data = data,
+            dv = resp,
+            wid = subj,
+            within = c(',
+            paste(anova_terms, collapse = ","),
+            '),
+            between = group,
+            type = 3,
+            return_aov = TRUE
+            )$aov'
+        ))))
+  }
 
+
+
+  #"group", # This is what is returned from the data_preparation_anova function
   # Effect size
   eff_size <- sjstats::omega_sq(tmpANOVA) %>%
     dplyr::filter(term == selected_term) %>%

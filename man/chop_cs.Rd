@@ -4,7 +4,7 @@
 \alias{chop_cs}
 \title{chop_cs}
 \usage{
-chop_cs(cs, data, subj, prefix = "cs", na.rm = FALSE)
+chop_cs(cs, data, subj, group = NULL, prefix = "cs", na.rm = FALSE)
 }
 \arguments{
 \item{cs}{The column name(s) of the conditioned responses}
@@ -12,6 +12,8 @@ chop_cs(cs, data, subj, prefix = "cs", na.rm = FALSE)
 \item{data}{A data frame containing with all the relevant columns}
 
 \item{subj}{The name of the column including the participant numbers. Unique numbers are expected.}
+
+\item{group}{default to \code{NULL}}
 
 \item{prefix}{prefix to be included in the end data frame}
 
