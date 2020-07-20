@@ -127,7 +127,8 @@
   <span class='kw'>paired</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>phase</span> <span class='kw'>=</span> <span class='st'>"acquisition"</span>,
   <span class='kw'>dv</span> <span class='kw'>=</span> <span class='st'>"scr"</span>,
-  <span class='kw'>exclusion</span> <span class='kw'>=</span> <span class='st'>"full data"</span>
+  <span class='kw'>exclusion</span> <span class='kw'>=</span> <span class='st'>"full data"</span>,
+  <span class='kw'>cut_off</span> <span class='kw'>=</span> <span class='st'>"full data"</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -173,6 +174,10 @@
       <th>exclusion</th>
       <td><p>If any exclusion criteria were applied, default to <code>full data</code></p></td>
     </tr>
+    <tr>
+      <th>cut_off</th>
+      <td><p>cut off</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -190,6 +195,7 @@ estimate: the estimate of the test run. For the t-test is the mean of the differ
 statistic: the t-value
 conf.low: the lower confidence interval for the estimate
 conf.high: the higher confidence interval for the estimate
+framework: were the data analysed within a NHST or Bayesian framework?
 data_used: a list with the data used for the specific test</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
@@ -203,12 +209,13 @@ Depending on whether the data refer to an acquisition or extinction phase (as de
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>example_data</span>)
 
 
-<span class='fu'>lm_mf</span>(<span class='kw'>cs1</span> <span class='kw'>=</span> <span class='st'>"CSP1"</span>, <span class='kw'>cs2</span> <span class='kw'>=</span> <span class='st'>"CSM1"</span>, <span class='kw'>subj</span> <span class='kw'>=</span> <span class='st'>"id"</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>example_data</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 11
-#&gt;   x     y     exclusion model controls method p.value effect.size estimate
-#&gt;   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;     &lt;chr&gt; &lt;lgl&gt;    &lt;chr&gt;    &lt;dbl&gt;       &lt;dbl&gt;    &lt;dbl&gt;
-#&gt; 1 cs    scr   full data lm    NA       lm      0.0208       0.523    0.523
-#&gt; # … with 2 more variables: statistic &lt;dbl&gt;, data_used &lt;list&gt;</div><div class='input'>
-</div></pre>
+<span class='fu'>lm_mf</span>(<span class='kw'>cs1</span> <span class='kw'>=</span> <span class='st'>"CSP1"</span>, <span class='kw'>cs2</span> <span class='kw'>=</span> <span class='st'>"CSM1"</span>, <span class='kw'>subj</span> <span class='kw'>=</span> <span class='st'>"id"</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>example_data</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 1 x 15</span><span>
+#&gt;   x     y     exclusion cut_off model controls method p.value effect.size
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span> cs    scr   full data full d… lm    </span><span style='color: #BB0000;'>NA</span><span>       lm      0.020</span><span style='text-decoration: underline;'>8</span><span>       0.523
+#&gt; </span><span style='color: #555555;'># … with 6 more variables: estimate </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, statistic </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, conf.low </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span style='color: #555555;'>,</span><span>
+#&gt; </span><span style='color: #555555;'>#   conf.high </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span style='color: #555555;'>, framework </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, data_used </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span></div><div class='input'>
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

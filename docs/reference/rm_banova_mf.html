@@ -129,6 +129,7 @@
   <span class='kw'>phase</span> <span class='kw'>=</span> <span class='st'>"acquisition"</span>,
   <span class='kw'>dv</span> <span class='kw'>=</span> <span class='st'>"scr"</span>,
   <span class='kw'>exclusion</span> <span class='kw'>=</span> <span class='st'>"full data"</span>,
+  <span class='kw'>cut_off</span> <span class='kw'>=</span> <span class='st'>"full data"</span>,
   <span class='kw'>multicore</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
 )</pre>
 
@@ -137,11 +138,11 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>cs1</th>
-      <td><p>The column name(s) of the conditioned responses for the first conditioned stimulus.</p></td>
+      <td><p>The column name(s) of the conditioned responses for the first conditioned stimulus</p></td>
     </tr>
     <tr>
       <th>cs2</th>
-      <td><p>The column name(s) of the conditioned responses for the second conditioned stimulus.</p></td>
+      <td><p>The column name(s) of the conditioned responses for the second conditioned stimulus</p></td>
     </tr>
     <tr>
       <th>data</th>
@@ -172,6 +173,10 @@
       <td><p>If any exclusion criteria were applied, default to <code>full data</code></p></td>
     </tr>
     <tr>
+      <th>cut_off</th>
+      <td><p>cut off</p></td>
+    </tr>
+    <tr>
       <th>multicore</th>
       <td><p>The option to run the analysis in multiple cores, not available under Windows.
 Default to <code>TRUE</code>.</p></td>
@@ -193,6 +198,7 @@ estimate: the estimate of the test run
 statistic: the t-value
 conf.low: the lower confidence interval for the estimate
 conf.high: the higher confidence interval for the estimate
+framework: were the data analysed within a NHST or Bayesian framework?
 data_used: a list with the data used for the specific test</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
@@ -212,17 +218,16 @@ time to be completed.</p>
 <span class='no'>cs1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='st'>"CSP"</span>, <span class='fl'>1</span>:<span class='fl'>2</span>)
 <span class='no'>cs2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='st'>"CSM"</span>, <span class='fl'>1</span>:<span class='fl'>2</span>)
 <span class='no'>subj</span> <span class='kw'>&lt;-</span> <span class='st'>"id"</span>
-<span class='no'>group</span> <span class='kw'>&lt;-</span> <span class='st'>"group"</span>
 
 <span class='co'># Repeated measures ANOVA</span>
-<span class='fu'>rm_banova_mf</span>(<span class='kw'>cs1</span> <span class='kw'>=</span> <span class='no'>cs1</span>, <span class='kw'>cs2</span> <span class='kw'>=</span> <span class='no'>cs2</span>, <span class='kw'>subj</span> <span class='kw'>=</span> <span class='no'>subj</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>example_data</span>, <span class='kw'>time</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; # A tibble: 2 x 13
-#&gt;   x     y     exclusion model controls method p.value effect.size estimate
-#&gt;   &lt;fct&gt; &lt;fct&gt; &lt;fct&gt;     &lt;fct&gt; &lt;lgl&gt;    &lt;fct&gt;  &lt;lgl&gt;   &lt;lgl&gt;       &lt;fct&gt;   
-#&gt; 1 cs:s… scr   full data rep … NA       rep B… NA      NA          5.23955…
-#&gt; 2 cs:s… scr   full data rep … NA       rep B… NA      NA          0.40693…
-#&gt; # … with 4 more variables: statistic &lt;lgl&gt;, conf.low &lt;lgl&gt;, conf.high &lt;lgl&gt;,
-#&gt; #   data_used &lt;list&gt;</div><div class='input'>
-</div></pre>
+<span class='fu'>rm_banova_mf</span>(<span class='kw'>cs1</span> <span class='kw'>=</span> <span class='no'>cs1</span>, <span class='kw'>cs2</span> <span class='kw'>=</span> <span class='no'>cs2</span>, <span class='kw'>subj</span> <span class='kw'>=</span> <span class='no'>subj</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>example_data</span>, <span class='kw'>time</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>multicore</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 2 x 15</span><span>
+#&gt;   x     y     exclusion cut_off model controls method p.value effect.size
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>      
+#&gt; </span><span style='color: #555555;'>1</span><span> cs:t… scr   full data full d… rep … </span><span style='color: #BB0000;'>NA</span><span>       rep B… </span><span style='color: #BB0000;'>NA</span><span>      </span><span style='color: #BB0000;'>NA</span><span>         
+#&gt; </span><span style='color: #555555;'>2</span><span> cs:t… scr   full data full d… rep … </span><span style='color: #BB0000;'>NA</span><span>       rep B… </span><span style='color: #BB0000;'>NA</span><span>      </span><span style='color: #BB0000;'>NA</span><span>         
+#&gt; </span><span style='color: #555555;'># … with 6 more variables: estimate </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, statistic </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span style='color: #555555;'>, conf.low </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span style='color: #555555;'>,</span><span>
+#&gt; </span><span style='color: #555555;'>#   conf.high </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span style='color: #555555;'>, framework </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span style='color: #555555;'>, data_used </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span></div><div class='input'>
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -125,7 +125,8 @@
   <span class='kw'>group</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>phase</span> <span class='kw'>=</span> <span class='st'>"acquisition"</span>,
   <span class='kw'>dv</span> <span class='kw'>=</span> <span class='st'>"scr"</span>,
-  <span class='kw'>exclusion</span> <span class='kw'>=</span> <span class='st'>"full data"</span>
+  <span class='kw'>exclusion</span> <span class='kw'>=</span> <span class='st'>"full data"</span>,
+  <span class='kw'>cut_off</span> <span class='kw'>=</span> <span class='st'>"full data"</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -133,11 +134,11 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>cs1</th>
-      <td><p>The column name(s) of the conditioned responses for the first conditioned stimulus.</p></td>
+      <td><p>The column name(s) of the conditioned responses for the first conditioned stimulus</p></td>
     </tr>
     <tr>
       <th>cs2</th>
-      <td><p>The column name(s) of the conditioned responses for the second conditioned stimulus.</p></td>
+      <td><p>The column name(s) of the conditioned responses for the second conditioned stimulus</p></td>
     </tr>
     <tr>
       <th>data</th>
@@ -162,6 +163,10 @@
     <tr>
       <th>exclusion</th>
       <td><p>If any exclusion criteria were applied, default to <code>full data</code></p></td>
+    </tr>
+    <tr>
+      <th>cut_off</th>
+      <td><p>cut off</p></td>
     </tr>
     </table>
 

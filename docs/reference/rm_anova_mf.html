@@ -128,7 +128,8 @@
   <span class='kw'>group</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>phase</span> <span class='kw'>=</span> <span class='st'>"acquisition"</span>,
   <span class='kw'>dv</span> <span class='kw'>=</span> <span class='st'>"scr"</span>,
-  <span class='kw'>exclusion</span> <span class='kw'>=</span> <span class='st'>"full data"</span>
+  <span class='kw'>exclusion</span> <span class='kw'>=</span> <span class='st'>"full data"</span>,
+  <span class='kw'>cut_off</span> <span class='kw'>=</span> <span class='st'>"full data"</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -136,11 +137,11 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>cs1</th>
-      <td><p>The column name(s) of the conditioned responses for the first conditioned stimulus.</p></td>
+      <td><p>The column name(s) of the conditioned responses for the first conditioned stimulus</p></td>
     </tr>
     <tr>
       <th>cs2</th>
-      <td><p>The column name(s) of the conditioned responses for the second conditioned stimulus.</p></td>
+      <td><p>The column name(s) of the conditioned responses for the second conditioned stimulus</p></td>
     </tr>
     <tr>
       <th>data</th>
@@ -170,6 +171,10 @@
       <th>exclusion</th>
       <td><p>If any exclusion criteria were applied, default to <code>full data</code></p></td>
     </tr>
+    <tr>
+      <th>cut_off</th>
+      <td><p>cut off</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -188,6 +193,7 @@ estimate: the estimate of the test run
 statistic: the t-value
 conf.low: the lower confidence interval for the estimate
 conf.high: the higher confidence interval for the estimate
+framework: were the data analysed within a NHST or Bayesian framework?
 data_used: a list with the data used for the specific test</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
@@ -213,14 +219,14 @@ results are not to be trusted.</p>
 #&gt; <span class='message'>  cooks.distance.influence.merMod car </span>
 #&gt; <span class='message'>  influence.merMod                car </span>
 #&gt; <span class='message'>  dfbeta.influence.merMod         car </span>
-#&gt; <span class='message'>  dfbetas.influence.merMod        car </span></div><div class='output co'>#&gt; # A tibble: 1 x 13
-#&gt;   x     y     exclusion model controls method p.value effect.size estimate
-#&gt;   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;     &lt;chr&gt; &lt;lgl&gt;    &lt;chr&gt;    &lt;dbl&gt;       &lt;dbl&gt; &lt;lgl&gt;   
-#&gt; 1 cs:t… scr   full data rep … NA       rep A… 3.70e-9      0.0247 NA      
-#&gt; # … with 4 more variables: statistic &lt;dbl&gt;, conf.low &lt;lgl&gt;, conf.high &lt;lgl&gt;,
-#&gt; #   data_used &lt;list&gt;</div><div class='input'>
+#&gt; <span class='message'>  dfbetas.influence.merMod        car </span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 1 x 15</span><span>
+#&gt;   x     y     exclusion cut_off model controls method p.value effect.size
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span> cs:t… scr   full data full d… rep … </span><span style='color: #BB0000;'>NA</span><span>       rep A… 3.70</span><span style='color: #555555;'>e</span><span style='color: #BB0000;'>-9</span><span>      0.024</span><span style='text-decoration: underline;'>7</span><span>
+#&gt; </span><span style='color: #555555;'># … with 6 more variables: estimate </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span style='color: #555555;'>, statistic </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, conf.low </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span style='color: #555555;'>,</span><span>
+#&gt; </span><span style='color: #555555;'>#   conf.high </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span style='color: #555555;'>, framework </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, data_used </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span></div><div class='input'>
 
-</div></pre>
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
