@@ -1,3 +1,4 @@
+library(dplyr)
 data("example_data", package = "multifear")
 cs1 <- paste0("CSP", 1:10)
 cs2 <- paste0("CSM", 1:10)
@@ -37,20 +38,47 @@ test_that("rm_anova_mf works", {
   expect_known_output(rm_anova_mf(cs1, cs2, subj = subj, data = example_data), tmp)
 })
 
-# This one takes a lot of time.
+test_that("rm_anova_mf for groups works", {
+  expect_known_output(rm_anova_mf(cs1, cs2, subj = subj, group = group, data = example_data), tmp)
+})
+
 test_that("rm_banova_mf works", {
   expect_known_output(rm_banova_mf(cs1, cs2, subj = subj, data = example_data, multicore = FALSE), tmp)
 })
 
-# This one takes a lot of time.
 test_that("rm_banova_mf for groups works", {
   expect_known_output(rm_banova_mf(cs1, cs2, subj = subj, group = group, data = example_data, multicore = FALSE), tmp)
+})
+
+test_that("lm works", {
+  expect_known_output(lm_mf(cs1, cs2, subj = subj, data = bf_data), tmp)
+})
+
+test_that("lm for groups works", {
+  expect_known_output(lm_mf(cs1, cs2, subj = subj, group = group, data = bf_data), tmp)
+})
+
+test_that("chop cs works", {
+  expect_known_output(chop_cs(cs = cs1, data = bf_data, subj = subj), tmp)
+})
+
+test_that("chop cs for groups works", {
+  expect_known_output(chop_cs(cs = cs1, data = bf_data, subj = subj, group = group), tmp)
+})
+
+test_that("chop css works", {
+  expect_known_output(chop_css(cs1 = cs1, cs2 = cs2, data = bf_data, subj = subj, group = group), tmp)
+})
+
+test_that("combine cs works", {
+  expect_known_output(combine_cs(cs1 = cs1, cs2 = cs2, data = bf_data), tmp)
 })
 
 test_that("universe works", {
   expect_known_output(universe_cs(cs1, cs2, subj = subj, data = example_data, include_bayes = FALSE), tmp)
 })
 
-test_that("lm works", {
-  expect_known_output(lm_mf(cs1, cs2, subj = subj, data = bf_data), tmp)
+test_that("multiverse works", {
+  expect_known_output(multiverse_cs(cs1, cs2, subj = subj, data = example_data, include_bayes = FALSE), tmp)
 })
+
