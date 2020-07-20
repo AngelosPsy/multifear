@@ -53,6 +53,14 @@ statistic: the t-value
 conf.low: the lower confidence interval for the estimate
 conf.high: the higher confidence interval for the estimate
 data_used: a list with the data used for the specific test.
+
+#' # Load data and define argument to be fed in universe_cs
+data("example_data", package = "multifear")
+example_data <- example_data[1:10, ]
+cs1 <- paste0("CSP", 1:10)
+cs2 <- paste0("CSM", 1:10)
+subj = "id"
+multiverse_cs(cs1, cs2, subj = subj, data = example_data)
 }
 \description{
 Basic function for conducting multiverse analyses of conditioning

@@ -67,3 +67,12 @@ Basic function for running a multiverse analysis for a single data set
 In case of higher order interaction, only the highest order
 effect is shown.
 }
+\examples{
+# Load data and define argument to be fed in universe_cs
+data("example_data", package = "multifear")
+example_data <- example_data[1:10, ]
+cs1 <- paste0("CSP", 1:10)
+cs2 <- paste0("CSM", 1:10)
+subj = "id"
+multifear::universe_cs(cs1, cs2, subj = subj, data = example_data, include_bayes = FALSE)
+}

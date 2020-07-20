@@ -89,7 +89,7 @@ lm_mf <-
 
    res <-
      lm_res %>%
-      broom::tidy() %>%
+     broom::tidy() %>%
       dplyr::mutate(
         method = "lm",
         x = "cs",
