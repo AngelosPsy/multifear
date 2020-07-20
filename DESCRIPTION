@@ -34,7 +34,8 @@ Imports:
     lifecycle (>= 0.2.0),
     fastDummies (>= 1.6.1),
     ggraph (>= 2.0.1),
-    igraph (>= 1.2.4.2)
+    igraph (>= 1.2.4.2),
+    vctrs (>= 0.3.1)
 RoxygenNote: 7.1.0
 Suggests: 
     testthat (>= 2.1.0),
