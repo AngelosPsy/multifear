@@ -1,3 +1,5 @@
+context("Functions for statistical tests")
+
 library(dplyr)
 data("example_data", package = "multifear")
 cs1 <- paste0("CSP", 1:10)
@@ -81,4 +83,5 @@ test_that("universe works", {
 test_that("multiverse works", {
   expect_known_output(multiverse_cs(cs1, cs2, subj = subj, data = example_data, include_bayes = FALSE), tmp)
 })
+
 
