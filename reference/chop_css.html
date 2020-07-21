@@ -117,7 +117,7 @@
     <p>Function for separating the conditioned responses into multiple pieces for two CSs.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/multifear/man/chop_css.html'>chop_css</a></span>(<span class='kw'>cs1</span>, <span class='kw'>cs2</span>, <span class='kw'>data</span>, <span class='kw'>subj</span>, cs_paired = <span class='kw'>NULL</span>, na.rm = <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>chop_css</span>(<span class='no'>cs1</span>, <span class='no'>cs2</span>, <span class='no'>data</span>, <span class='no'>subj</span>, <span class='kw'>cs_paired</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>group</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -141,6 +141,10 @@
     <tr>
       <th>cs_paired</th>
       <td><p>A character vector with the trials that were paired. Default is set to <code>NULL</code>, suggesting that there was full reinforcement</p></td>
+    </tr>
+    <tr>
+      <th>group</th>
+      <td><p>the name of the group, if included, default to <code>NULL</code>.</p></td>
     </tr>
     <tr>
       <th>na.rm</th>
@@ -167,7 +171,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>
