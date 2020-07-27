@@ -129,7 +129,8 @@
   <span class='kw'>phase</span> <span class='kw'>=</span> <span class='st'>"acquisition"</span>,
   <span class='kw'>dv</span> <span class='kw'>=</span> <span class='st'>"scr"</span>,
   <span class='kw'>exclusion</span> <span class='kw'>=</span> <span class='st'>"full data"</span>,
-  <span class='kw'>cut_off</span> <span class='kw'>=</span> <span class='st'>"full data"</span>
+  <span class='kw'>cut_off</span> <span class='kw'>=</span> <span class='st'>"full data"</span>,
+  <span class='kw'>correction</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -174,6 +175,10 @@
     <tr>
       <th>cut_off</th>
       <td><p>cut off</p></td>
+    </tr>
+    <tr>
+      <th>correction</th>
+      <td><p>whether the Greenhouse-Geisser correction should be applied or not. Default to <code>FALSE</code></p></td>
     </tr>
     </table>
 
@@ -225,7 +230,6 @@ results are not to be trusted.</p>
 #&gt; </span><span style='color: #555555;'>1</span><span> cs:t… scr   full data full d… rep … </span><span style='color: #BB0000;'>NA</span><span>       rep A… 3.70</span><span style='color: #555555;'>e</span><span style='color: #BB0000;'>-9</span><span>          </span><span style='color: #BB0000;'>NA</span><span>
 #&gt; </span><span style='color: #555555;'># … with 6 more variables: estimate </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span style='color: #555555;'>, statistic </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, conf.low </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span style='color: #555555;'>,</span><span>
 #&gt; </span><span style='color: #555555;'>#   conf.high </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span style='color: #555555;'>, framework </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, data_used </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span></div><div class='input'>
-
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
