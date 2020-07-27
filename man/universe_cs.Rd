@@ -15,7 +15,8 @@ universe_cs(
   dv = "scr",
   print_output = TRUE,
   exclusion = "full data",
-  cut_off = "full data"
+  cut_off = "full data",
+  correction = FALSE
 )
 }
 \arguments{
@@ -40,6 +41,8 @@ universe_cs(
 \item{exclusion}{If any exclusion criteria were applied, default to \code{full data}}
 
 \item{cut_off}{cut off score}
+
+\item{correction}{whether the Greenhouse-Geisser correction should be applied or not. Default to \code{FALSE}}
 }
 \value{
 A tibble with the following column names:

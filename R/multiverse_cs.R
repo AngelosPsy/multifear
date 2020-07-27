@@ -7,6 +7,7 @@
 #' @inheritParams universe_cs
 #' @param cs_paired A character vector with the trials that were paired. Default is set to \code{NULL}, suggesting that there was full reinforcement
 #' @param cutoff A numeric vector of the cutoff criteria applied. Default to \code{0, 0.05, .1}
+#' @param correction whether the Greenhouse-Geisser correction should be applied or not. Default to \code{FALSE}
 #' @details In case of higher order interaction, only the highest order
 #' effect is returned.
 #' @return A tibble with the following column names:
@@ -33,7 +34,6 @@
 #' multiverse_cs(cs1, cs2, subj = subj, data = example_data)
 #'
 #' @export
-
 multiverse_cs <-
   function(cs1,
            cs2,
@@ -44,7 +44,8 @@ multiverse_cs <-
            include_bayes = TRUE,
            phase = "acquisition",
            cutoff = c(0, 1, 2, 3),
-           print_output = TRUE) {
+           print_output = TRUE,
+           correction = FALSE) {
 
     # Check data
     if(is.null(cs_paired)){
@@ -107,36 +108,6 @@ multiverse_cs <-
       )
 
     }
-
-   # res <- purrr::pmap_dfr(
-    #  list(x = excl_data_sets$used_data,
-    #       y = excl_data_sets$names,
-    #       z = excl_data_sets$cutoff
-    #  ),
-    #  ~with(list(...), multifear::universe_cs(
-    #    cs1 = dplyr::select(data.frame(x), dplyr::contains("cs1")) %>% colnames(),
-    #    cs2 = dplyr::select(data.frame(x), dplyr::contains("cs2")) %>% colnames(),
-    #    data = data.frame(x),
-    #    subj = dplyr::select(data.frame(x), dplyr::contains("id")) %>% colnames(),
-    #    group = group,
-    #    include_bayes = include_bayes,
-    #    exclusion = y,
-    #    cut_off = z
-    #  )
-    #  )
-  #  )
-
-
-    #>% dplyr::mutate(
-    #  cutoff = rep(
-    #    excl_data_sets$cutoff,
-    #    each = nrow(.) / length(excl_data_sets$cutoff)
-    #  )#,
-      #name_cutoff = rep(
-      #  excl_data_sets$nam_cut,
-      #  each = nrow(.) / length(excl_data_sets$nam_cut)
-      #)
-    #)
 
     # Should output be printed
     if (print_output) {

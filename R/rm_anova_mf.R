@@ -6,6 +6,7 @@
 #'
 #' @inheritParams t_test_mf
 #' @param time should time be included? Default to \code{TRUE}.
+#' @param correction whether the Greenhouse-Geisser correction should be applied or not. Default to \code{FALSE}
 #' @return A basic function for running repeated measures ANOVAs.
 #' @details In case the \code{time} argument is set to \cite{TRUE} (default value), the function will include this as a within subjects factor, assuming that the columns in
 #' \code{cs1} and \code{cs2} correspond to ascending time points (e.g., cs1
@@ -43,7 +44,6 @@
 #' # Repeated measures ANOVA
 #' rm_anova_mf(cs1 = cs1, cs2 = cs2, subj = subj, data = example_data, time = TRUE)
 #'
-#'
 #' @importFrom stats time
 #' @importFrom stats na.omit
 #' @export
@@ -56,7 +56,8 @@ rm_anova_mf <- function(cs1,
                         phase = "acquisition",
                         dv = "scr",
                         exclusion = "full data",
-                        cut_off = "full data") {
+                        cut_off = "full data",
+                        correction = FALSE) {
   collection_warning(cs1 = cs1, cs2 = cs2, data = data, subj = subj)
 
   data <-
@@ -95,8 +96,9 @@ rm_anova_mf <- function(cs1,
           '),
           between = NULL,
           type = 3,
+          detailed = TRUE,
           return_aov = TRUE
-        )$aov'
+        )'
         ))))
   } else{
     tmpANOVA <-
@@ -112,8 +114,9 @@ rm_anova_mf <- function(cs1,
             '),
             between = group,
             type = 3,
+            detailed = TRUE,
             return_aov = TRUE
-            )$aov'
+            )'
         ))))
   }
 
@@ -121,7 +124,7 @@ rm_anova_mf <- function(cs1,
 
   #"group", # This is what is returned from the data_preparation_anova function
   # Effect size
-  eff_size <- sjstats::omega_sq(tmpANOVA) %>%
+  eff_size <- sjstats::omega_sq(tmpANOVA$aov) %>%
     dplyr::filter(term == selected_term) %>%
     dplyr::select(omegasq) %>%
     as.numeric()
@@ -129,8 +132,8 @@ rm_anova_mf <- function(cs1,
   # Shape the object for the results. The suppressWarnings is there due to
   # the warning returned by broom::tidy.
   #
-  res <-
-    suppressWarnings(purrr::map_df(tmpANOVA, .f = broom::tidy)) %>%
+  res_preparation <-
+    suppressWarnings(purrr::map_df(tmpANOVA$aov, .f = broom::tidy)) %>%
     dplyr::filter(term %in% selected_term) %>%
     dplyr::rename_all(list(~stringr::str_replace(., "term", "method"))) %>%
     dplyr::mutate(
@@ -146,7 +149,17 @@ rm_anova_mf <- function(cs1,
       conf.high = NA,
       effect.size = eff_size,
       framework = "NHST"
-    ) %>%
+    )
+
+  # Check for violation correction and correct it
+  if (!is.null(tmpANOVA$`Sphericity Corrections`) && correction) {
+    res_preparation$p.value <-
+      tmpANOVA$`Sphericity Corrections` %>%
+      dplyr::filter(Effect == selected_term) %>%
+      dplyr::select("p[GG]") %>% as.numeric()
+  }
+
+  res <- res_preparation %>%
     dplyr::select(x,
                   y,
                   exclusion,

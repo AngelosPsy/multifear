@@ -14,7 +14,8 @@ rm_anova_mf(
   phase = "acquisition",
   dv = "scr",
   exclusion = "full data",
-  cut_off = "full data"
+  cut_off = "full data",
+  correction = FALSE
 )
 }
 \arguments{
@@ -37,6 +38,8 @@ rm_anova_mf(
 \item{exclusion}{If any exclusion criteria were applied, default to \code{full data}}
 
 \item{cut_off}{cut off}
+
+\item{correction}{whether the Greenhouse-Geisser correction should be applied or not. Default to \code{FALSE}}
 }
 \value{
 A basic function for running repeated measures ANOVAs.
@@ -82,6 +85,5 @@ group <- "group"
 
 # Repeated measures ANOVA
 rm_anova_mf(cs1 = cs1, cs2 = cs2, subj = subj, data = example_data, time = TRUE)
-
 
 }

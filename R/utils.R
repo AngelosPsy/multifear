@@ -54,6 +54,7 @@
   utils::globalVariables ("diff_4_trials")
   utils::globalVariables ("diff_5_trials")
   utils::globalVariables ("difftr")
+  utils::globalVariables ("Effect")
   utils::globalVariables ("effect.size")
   utils::globalVariables ("estimate")
   utils::globalVariables ("excl")

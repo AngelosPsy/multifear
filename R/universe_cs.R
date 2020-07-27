@@ -7,6 +7,7 @@
 #' @param include_bayes Whether the bayesian analyses should be run. Default to \code{TRUE}
 #' @param print_output Whether to print the output or not. Default set to \code{TRUE}
 #' @param cut_off cut off score
+#' @param correction whether the Greenhouse-Geisser correction should be applied or not. Default to \code{FALSE}
 #' @details In case of higher order interaction, only the highest order
 #' effect is shown.
 #' @return A tibble with the following column names:
@@ -45,7 +46,8 @@ universe_cs <-
            dv = "scr",
            print_output = TRUE,
            exclusion = "full data",
-           cut_off = "full data") {
+           cut_off = "full data",
+           correction = FALSE) {
 
     # Check data
     collection_warning(
@@ -97,7 +99,8 @@ universe_cs <-
           group = NULL,
           phase = phase,
           exclusion = exclusion,
-          cut_off = cut_off
+          cut_off = cut_off,
+          correction = correction
         )
       anovaTIME <-
         multifear::rm_anova_mf(
@@ -108,7 +111,8 @@ universe_cs <-
           data = data,
           group = NULL,
           phase = phase,
-          exclusion = exclusion
+          exclusion = exclusion,
+          correction = correction
         )
 
       if (include_bayes) {

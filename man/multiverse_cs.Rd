@@ -14,7 +14,8 @@ multiverse_cs(
   include_bayes = TRUE,
   phase = "acquisition",
   cutoff = c(0, 1, 2, 3),
-  print_output = TRUE
+  print_output = TRUE,
+  correction = FALSE
 )
 }
 \arguments{
@@ -37,6 +38,8 @@ multiverse_cs(
 \item{cutoff}{A numeric vector of the cutoff criteria applied. Default to \code{0, 0.05, .1}}
 
 \item{print_output}{Whether to print the output or not. Default set to \code{TRUE}}
+
+\item{correction}{whether the Greenhouse-Geisser correction should be applied or not. Default to \code{FALSE}}
 }
 \value{
 A tibble with the following column names:
