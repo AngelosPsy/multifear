@@ -119,14 +119,58 @@
 <p><a href='https://www.tidyverse.org/lifecycle/#experimental'><img src='figures/lifecycle-experimental.svg' alt='Experimental lifecycle'></a></p>
     </div>
 
-    <pre class="usage"><span class='fu'>curve_cs</span>(<span class='no'>data</span>)</pre>
+    <pre class="usage"><span class='fu'>curve_cs</span>(
+  <span class='no'>data</span>,
+  <span class='kw'>choices</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"exclusion"</span>, <span class='st'>"cut_off"</span>),
+  <span class='kw'>labels</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"A"</span>, <span class='st'>"B"</span>),
+  <span class='kw'>rel_heights</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>, <span class='fl'>3</span>),
+  <span class='kw'>null</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+  <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>ribbon</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>sample_perc</span> <span class='kw'>=</span> <span class='fl'>1</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>a data frame with the results of a multiverse analyses.</p></td>
+      <td><p>a data frame with the results of a multiverse analyses</p></td>
+    </tr>
+    <tr>
+      <th>choices</th>
+      <td><p>a vector specifying which analytical choices should be plotted</p></td>
+    </tr>
+    <tr>
+      <th>labels</th>
+      <td><p>labels for the two parts of the plot</p></td>
+    </tr>
+    <tr>
+      <th>rel_heights</th>
+      <td><p>vector indicating the relative heights of the plot</p></td>
+    </tr>
+    <tr>
+      <th>null</th>
+      <td><p>Indicate what value represents the 'null' hypothesis (defaults to
+zero).</p></td>
+    </tr>
+    <tr>
+      <th>ci</th>
+      <td><p>logical value indicating whether confidence intervals should be
+plotted.</p></td>
+    </tr>
+    <tr>
+      <th>ribbon</th>
+      <td><p>logical value indicating whether a ribbon instead should be
+plotted.</p></td>
+    </tr>
+    <tr>
+      <th>sample_perc</th>
+      <td><p>numeric value denoting what percentage of the
+specifications should be plotted. Needs to be strictly greater than 0 and smalle than 1.
+Defaults to 1 (= all specifications). Drawing a sample from all
+specification usually makes only sense of the number of specifications is
+very large and one wants to simplify the visualization.</p></td>
     </tr>
     </table>
 
@@ -135,7 +179,7 @@
     <p>A plot</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This plot is a slight modification of the <code>specr::plot_decisiontree</code>. Please check the references.</p>
+    <p>This plot is a slight modification of the <code><a href='https://masurp.github.io/specr/index.html/reference/plot_specs.html'>specr::plot_specs</a></code> function. Please check the references and credit the original authors.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Masur, Philipp K. &amp; Scharkow, M. (2019). specr: Statistical functions for conducting specification curve analyses. Available from https://github.com/masurp/specr.</p>
