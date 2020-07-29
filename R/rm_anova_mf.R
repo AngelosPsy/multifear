@@ -120,8 +120,6 @@ rm_anova_mf <- function(cs1,
         ))))
   }
 
-
-
   #"group", # This is what is returned from the data_preparation_anova function
   # Effect size
   eff_size <- sjstats::omega_sq(tmpANOVA$aov) %>%

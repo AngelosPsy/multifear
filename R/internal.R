@@ -307,8 +307,8 @@ format_results <- function(df, null = 0, desc = FALSE) {
 
   df <- df %>%
     dplyr::mutate(specifications = 1:dplyr::n(),
-                  color = case_when(conf.low > null ~ "#377eb8",
-                                    conf.high < null ~ "#e41a1c",
+                  color = case_when(conf.low > null ~ "red", #"#377eb8",
+                                    conf.high < null ~ "blue", #"#e41a1c",
                                     TRUE ~ "darkgrey"))
   return(df)
 }

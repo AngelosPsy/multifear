@@ -4,58 +4,63 @@
 #'
 #' \lifecycle{experimental}
 #'
-#' @param data a data frame with the results of a multiverse analyses.
-#'
+#' @param data a data frame with the results of a multiverse analyses
+#' @param choices a vector specifying which analytical choices should be plotted
+#' @param labels labels for the two parts of the plot
+#' @param rel_heights vector indicating the relative heights of the plot
+#' @param ci logical value indicating whether confidence intervals should be
+#'   plotted.
+#' @param ribbon logical value indicating whether a ribbon instead should be
+#'   plotted.
+#' @param null Indicate what value represents the 'null' hypothesis (defaults to
+#'   zero).
+#' @param sample_perc numeric value denoting what percentage of the
+#'   specifications should be plotted. Needs to be strictly greater than 0 and smalle than 1.
+#'   Defaults to 1 (= all specifications). Drawing a sample from all
+#'   specification usually makes only sense of the number of specifications is
+#'   very large and one wants to simplify the visualization.
 #' @return A plot
-#' @details This plot is a slight modification of the \code{specr::plot_decisiontree}. Please check the references.
+#' @details This plot is a slight modification of the \code{specr::plot_specs} function. Please check the references and credit the original authors.
 #'
 #' @references
 #' Masur, Philipp K. & Scharkow, M. (2019). specr: Statistical functions for conducting specification curve analyses. Available from https://github.com/masurp/specr.
 #' @export
 
-curve_cs <- function(data){
+curve_cs <- function(data,
+                     choices = c("exclusion", "cut_off"),
+                     labels = c("A", "B"),
+                     rel_heights = c(2, 3),
+                     null = 0,
+                     ci = TRUE,
+                     ribbon = FALSE,
+                     sample_perc = 1){
 
-  null = 0
-  # Create basic plot
-  plot <- data %>%
-    format_results(desc = desc, null = null) %>%
-    ggplot2::ggplot(ggplot2::aes(x = .data$exclusion,
-               y = .data$estimate,
-               ymin = .data$conf.low,
-               ymax = .data$conf.high,
-               color = .data$color)) +
-    ggplot2::geom_point(ggplot2::aes(color = .data$color),
-               size = 1) +
-    ggplot2::theme_minimal() +
-    ggplot2::scale_color_identity() +
-    ggplot2::theme(strip.text = ggplot2::element_blank(),
-          axis.line = ggplot2::element_line("black", size = .5),
-          legend.position = "none",
-          panel.spacing = ggplot2::unit(.75, "lines"),
-          axis.text = ggplot2::element_text(colour = "black")) +
-    ggplot2::labs(x = "")
 
-  # add legends if necessary
-  #if (isFALSE(legend)) {
-    plot <- plot +
-      ggplot2:: theme(legend.position = "none")
-  #}
 
-  # add CIs if necessary
-  #if (isTRUE(ci)) {
-    plot <- plot +
-      ggplot2::geom_pointrange(alpha = 0.5,
-                      size = .6,
-                      fatten = 1)
- # }
+    if (!is.null(data)) {
 
-  # add ribbon if necessary
-  #if (isTRUE(ribbon)) {
-    plot <- plot +
-      ggplot2::geom_ribbon(ggplot2::aes(ymin = .data$conf.low,
-                      ymax = .data$conf.high,
-                      color = "lightgrey"),
-                  alpha = 0.25)
-  #}
-  return(plot)
-}
+      # Plot only t-tests from the NHST framework
+      data %>% dplyr::filter(framework == "NHST", method == "t-test") -> data
+
+      if (sample_perc > 1 | sample_perc < 0) {
+        stop("`sample_n` must be greater than 0 and less than 1!")
+      }
+
+      # Draw sample
+      df <- dplyr::sample_n(data, size = sample_perc*nrow(data))
+
+      # Create both plots
+      plot_a <- specr::plot_curve(df, ci = ci, ribbon = ribbon, desc = FALSE, null = null)
+      plot_b <- specr::plot_choices(df, choices = choices, desc = FALSE, null = null)
+    }
+
+    # Combine plots
+    cowplot::plot_grid(plot_a,
+                       plot_b,
+                       labels = labels,
+                       align = "v",
+                       axis = "rbl",
+                       rel_heights = rel_heights,
+                       ncol = 1)
+
+  }

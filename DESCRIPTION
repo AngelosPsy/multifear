@@ -36,7 +36,9 @@ Imports:
     igraph (>= 1.2.4.2),
     generics (>= 0.0.2),
     vctrs (>= 0.3.1),
-    broom (>= 0.5.5)
+    broom (>= 0.5.5),
+    cowplot (>= 1.0.0),
+    specr (>= 0.2.1)
 RoxygenNote: 7.1.0
 Suggests: 
     testthat (>= 2.1.0),
