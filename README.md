@@ -171,15 +171,15 @@ And here are the results
 
 ``` r
 res
-#> # A tibble: 4 x 14
-#>   x     y     exclusion model controls method p.value effect.size estimate
-#>   <chr> <chr> <chr>     <chr> <lgl>    <chr>    <dbl>       <dbl>    <dbl>
-#> 1 cs    scr   full data t-te… NA       t-test 0.00244      0.577      1.17
-#> 2 cs    scr   full data t-te… NA       t-test 0.00488      0.577      1.17
-#> 3 cs:t… scr   full data rep … NA       rep A… 0.0152       0.0307    NA   
-#> 4 cs    scr   full data rep … NA       rep A… 0.00488      0.157     NA   
-#> # … with 5 more variables: statistic <dbl>, conf.low <dbl>, conf.high <dbl>,
-#> #   framework <chr>, data_used <list>
+#> # A tibble: 4 x 15
+#>   x     y     exclusion cut_off model controls method p.value effect.size
+#>   <chr> <chr> <chr>     <chr>   <chr> <lgl>    <chr>    <dbl>       <dbl>
+#> 1 cs    scr   full data full d… t-te… NA       t-test 0.00244      0.577 
+#> 2 cs    scr   full data full d… t-te… NA       t-test 0.00488      0.577 
+#> 3 cs:t… scr   full data full d… rep … NA       rep A… 0.0152       0.0307
+#> 4 cs    scr   full data full d… rep … NA       rep A… 0.00488      0.157 
+#> # … with 6 more variables: estimate <dbl>, statistic <dbl>, conf.low <dbl>,
+#> #   conf.high <dbl>, framework <chr>, data_used <list>
 ```
 
 Let’s go through each column separately
@@ -234,23 +234,26 @@ some selection criteria for non-learns. So, here it is
 ``` r
 
 res_multi <- multifear::multiverse_cs(cs1 = cs1, cs2 = cs2, data = example_data, subj = "id", group = NULL, phase = "acquisition", include_bayes = TRUE)
+#> Skipping ANOVA due to the number of trials for the cs1 and/or cs2.
+#> Skipping ANOVA due to the number of trials for the cs1 and/or cs2.
+#> Skipping ANOVA due to the number of trials for the cs1 and/or cs2.
+#> Skipping ANOVA due to the number of trials for the cs1 and/or cs2.
 res_multi
-#> # A tibble: 150 x 16
-#>    x     y     exclusion model controls method  p.value effect.size estimate
-#>    <chr> <chr> <chr>     <chr> <lgl>    <chr>     <dbl>       <dbl>    <dbl>
-#>  1 cs    scr   full_data t-te… NA       t-test  0.00244      0.577   1.17e+0
-#>  2 cs    scr   full_data t-te… NA       t-test  0.00488      0.577   1.17e+0
-#>  3 cs    scr   full_data Baye… NA       t-test NA           NA       2.57e+0
-#>  4 cs    scr   full_data Baye… NA       t-test NA           NA       1.71e-1
-#>  5 cs:t… scr   full_data rep … NA       rep A…  0.0152       0.0307 NA      
-#>  6 cs    scr   full_data rep … NA       rep A…  0.00488      0.157  NA      
-#>  7 cs:t… scr   full_data rep … NA       rep B… NA           NA       1.59e+0
-#>  8 cs:t… scr   full_data rep … NA       rep B… NA           NA       3.81e-1
-#>  9 cs    scr   full_data rep … NA       rep B… NA           NA       5.86e+4
-#> 10 cs    scr   full_data rep … NA       rep B… NA           NA       5.86e+4
-#> # … with 140 more rows, and 7 more variables: statistic <dbl>, conf.low <dbl>,
-#> #   conf.high <dbl>, framework <chr>, data_used <list>, cutoff <dbl>,
-#> #   name_cutoff <chr>
+#> # A tibble: 336 x 15
+#>    x     y     exclusion cut_off model controls method  p.value effect.size
+#>    <chr> <chr> <chr>     <chr>   <chr> <lgl>    <chr>     <dbl>       <dbl>
+#>  1 cs    scr   full_data full_d… t-te… NA       t-test  0.00244      0.577 
+#>  2 cs    scr   full_data full_d… t-te… NA       t-test  0.00488      0.577 
+#>  3 cs    scr   full_data full_d… Baye… NA       t-test NA           NA     
+#>  4 cs    scr   full_data full_d… Baye… NA       t-test NA           NA     
+#>  5 cs:t… scr   full_data full d… rep … NA       rep A…  0.0152       0.0307
+#>  6 cs    scr   full_data full_d… rep … NA       rep A…  0.00488      0.157 
+#>  7 cs:t… scr   full_data full_d… rep … NA       rep B… NA           NA     
+#>  8 cs:t… scr   full_data full_d… rep … NA       rep B… NA           NA     
+#>  9 cs    scr   full_data full_d… rep … NA       rep B… NA           NA     
+#> 10 cs    scr   full_data full_d… rep … NA       rep B… NA           NA     
+#> # … with 326 more rows, and 6 more variables: estimate <dbl>, statistic <dbl>,
+#> #   conf.low <dbl>, conf.high <dbl>, framework <chr>, data_used <list>
 ```
 
 In terms of calling the function, we see that we need exactly the same
@@ -265,8 +268,8 @@ exclusion column. Now, it has the following levels:
 
 ``` r
 res_multi$exclusion %>% unique()
-#> [1] "full_data"        "last_trial"       "last2_trial"      "last_first_trial"
-#> [5] "half_trials"
+#> [1] "full_data"  "ten_per"    "min_first"  "th3_per"    "halves"    
+#> [6] "fltrials"   "twenty_per" "fl2trials"  "per2trials"
 ```
 
 The exclusion criteria actually (largely) follow the criteria reported
@@ -317,4 +320,13 @@ multifear::inference_cs(res_multi, na.rm = TRUE)
 ![](README_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
 
     #>   mean_p_value prop_p_value  mean_bf
-    #> 1   0.01075551          100 10837.33
+    #> 1    0.1074323     82.35294 2518.044
+
+And here we have the specification curves for the performed frequentists
+t-tests.
+
+``` r
+multifear::curve_cs(res_multi)
+```
+
+![](README_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->

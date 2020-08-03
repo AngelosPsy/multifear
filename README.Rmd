@@ -173,3 +173,9 @@ limit -- by default alpha = 0.05
 ```{r}
 multifear::inference_cs(res_multi, na.rm = TRUE)
 ```
+
+And here we have the specification curves for the performed frequentists t-tests.
+
+```{r}
+multifear::curve_cs(res_multi)
+```
