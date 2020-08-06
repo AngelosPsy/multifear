@@ -66,14 +66,14 @@ inference_cs <-
       prop_bf_value <-
         length(which(tmp_bf.value > 1)) / length(tmp_bf.value) * 100
       res_tmp <-
-        data.frame(mean_bf = dataBayes,
+        data.frame(mean_bf_value = dataBayes,
                    prop_bf_value = prop_bf_value)
 
     } else if (framework %in% c("both")) {
       res_tmp <-
         data.frame(mean_p_value = mean_p_value,
                    prop_p_value = prop_p_value,
-                   mean_bf = dataBayes,
+                   mean_bf_value = dataBayes,
                    prop_bf_value = prop_bf_value)
     }
 
@@ -81,13 +81,7 @@ inference_cs <-
     p1 <- data %>%
       tidyr::drop_na(p.value) %>%
       ggplot2::ggplot(ggplot2::aes(x = p.value)) +
-      ggplot2::geom_histogram(
-        ggplot2::aes(y = ..density..),
-        colour = "black",
-        fill = "white",
-        bins = 50
-      ) +
-      #ggplot2::geom_density(alpha = .2, fill = "red") +
+      ggplot2::geom_histogram(bins = 50) +
       ggplot2::xlab("p value") +
       ggplot2::theme_minimal()
 
@@ -97,16 +91,18 @@ inference_cs <-
         data.frame() %>%
         dplyr::filter(framework == "Bayesian") %>%
         ggplot2::ggplot(ggplot2::aes(x = estimate)) +
-        ggplot2::geom_histogram(
-          ggplot2::aes(y = ..density..),
-          colour = "black",
-          fill = "white"
-        ) +
-        #ggplot2::geom_density(alpha = .2, fill = "red") +
+        ggplot2::geom_histogram(bins = 50) +
         ggplot2::xlab("Bayes factor") +
         ggplot2::theme_minimal()
-    }
 
+      p2 <- p2 + ggplot2::geom_vline(
+        ggplot2::aes(xintercept = 1),
+        color = "red",
+        linetype = "dashed",
+        size = 1
+      )
+
+    }
 
     if (add_line) {
       p1 <- p1 + ggplot2::geom_vline(
@@ -118,9 +114,7 @@ inference_cs <-
     }
 
     if (framework %in% c("bayesian", "both")){
-
-    res_tmp_plot <- invisible(gridExtra::grid.arrange(p1, p2, nrow = 1, ncol = 2))
-
+       res_tmp_plot <- invisible(gridExtra::grid.arrange(p1, p2, nrow = 1, ncol = 2))
     } else{
       res_tmp_plot <- p1
     }
