@@ -47,6 +47,7 @@ inference_cs <-
         data %>% dplyr::filter(framework == "Bayesian") %>% dplyr::select(estimate) %>%
         unlist() %>%
         mean(na.rm = na.rm)
+
     }
 
     # Generate output
@@ -54,12 +55,26 @@ inference_cs <-
       res_tmp <-
         data.frame(mean_p_value = mean_p_value, prop_p_value = prop_p_value)
     } else if (framework %in% c("bayesian")) {
-      res_tmp <- data.frame(mean_bf = dataBayes)
+
+      dataBayes <-
+        data %>% dplyr::filter(framework == "Bayesian")
+
+      tmp_bf.value <- dataBayes$estimate
+
+      if(na.rm){tmp_bf.value <- na.omit(tmp_bf.value)}
+
+      prop_bf_value <-
+        length(which(tmp_bf.value > 1)) / length(tmp_bf.value) * 100
+      res_tmp <-
+        data.frame(mean_bf = dataBayes,
+                   prop_bf_value = prop_bf_value)
+
     } else if (framework %in% c("both")) {
       res_tmp <-
         data.frame(mean_p_value = mean_p_value,
                    prop_p_value = prop_p_value,
-                   mean_bf = dataBayes)
+                   mean_bf = dataBayes,
+                   prop_bf_value = prop_bf_value)
     }
 
     # Histogram
@@ -72,9 +87,26 @@ inference_cs <-
         fill = "white",
         bins = 50
       ) +
-      ggplot2::geom_density(alpha = .2, fill = "red") +
+      #ggplot2::geom_density(alpha = .2, fill = "red") +
       ggplot2::xlab("p value") +
       ggplot2::theme_minimal()
+
+
+    if (framework %in% c("bayesian", "both")){
+      p2 <- data %>%
+        data.frame() %>%
+        dplyr::filter(framework == "Bayesian") %>%
+        ggplot2::ggplot(ggplot2::aes(x = estimate)) +
+        ggplot2::geom_histogram(
+          ggplot2::aes(y = ..density..),
+          colour = "black",
+          fill = "white"
+        ) +
+        #ggplot2::geom_density(alpha = .2, fill = "red") +
+        ggplot2::xlab("Bayes factor") +
+        ggplot2::theme_minimal()
+    }
+
 
     if (add_line) {
       p1 <- p1 + ggplot2::geom_vline(
@@ -85,9 +117,15 @@ inference_cs <-
       )
     }
 
-    p1 %>% methods::show()
+    if (framework %in% c("bayesian", "both")){
 
-    res <- res_tmp
+    res_tmp_plot <- invisible(gridExtra::grid.arrange(p1, p2, nrow = 1, ncol = 2))
 
-    return(res)
+    } else{
+      res_tmp_plot <- p1
+    }
+
+    res_tmp_plot %>% methods::show()
+
+    return(res_tmp)
   }
