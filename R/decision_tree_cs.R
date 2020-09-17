@@ -62,14 +62,16 @@ decision_tree_cs  = function (dat) {
 
   # Plot edges
   plot <- edge_list %>%
-    graph_from_data_frame %>%
+    igraph::graph_from_data_frame() %>%
     ggraph::ggraph(layout = "dendrogram",
-                   circular = FALSE) +
+                   circular = FALSE, repel = TRUE) +
     ggraph::geom_edge_diagonal() +
-    ggplot2::theme_void()
+    ggplot2::theme_void() +
+    ggplot2::theme(text = ggplot2::element_text(size=2))
 
     plot <- plot +
-      ggraph::geom_edge_diagonal(ggplot2::aes(color = .data$decisions))
+      ggraph::geom_edge_diagonal(ggplot2::aes(color = .data$decisions)) +
+      ggraph::scale_edge_color_brewer(type='div', palette=2)
 
     plot <- plot +
       ggraph::geom_node_text(ggplot2::aes(label = .data$name,

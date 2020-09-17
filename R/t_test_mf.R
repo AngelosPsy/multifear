@@ -173,12 +173,12 @@ t_test_mf <-
 
     res <- ttl %>%
       dplyr::mutate(
-        method = "t-test",
+        method = used_model,
         x = "cs",
         y = dv,
         exclusion = exclusion,
         cut_off = cut_off,
-        model = used_model,
+        model = "t-test",
         controls = NA,
         framework = "NHST"
       ) %>%

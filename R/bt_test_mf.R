@@ -71,8 +71,6 @@ bt_test_mf <-
 
     # Here we run all t.tests and we select later on which one we wants. It is
     # a bit too much to run all tests but we save all the if else statements
-
-
     if (is.null(group)) {
       ttest_prep <- purrr::map_dfr(.x = seq_len(3), ~ data) %>%
         dplyr::mutate(alternative = rep(c("c(-Inf, Inf)", "c(-Inf, 0)", "c(0, Inf)"),
@@ -140,9 +138,9 @@ bt_test_mf <-
       y = dv,
       exclusion = exclusion,
       cut_off = cut_off,
-      model = paste("Bayesian t-test", type_test),
+      model = "Bayesian t-test",
       controls = NA,
-      method = "t-test",
+      method = paste("Bayesian t-test", type_test),
       p.value = NA,
       effect.size = NA,
       estimate = ttl,
