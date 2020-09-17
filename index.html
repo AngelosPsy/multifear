@@ -76,22 +76,31 @@
 <div id="installing-and-loading-the-package" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installing-and-loading-the-package" class="anchor"></a>Installing and loading the package</h2>
-<div class="sourceCode" id="cb1"><pre class="r"><span class="co"># Install devtools package in case it is not yet installed</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"devtools"</span>)
-<span class="kw pkg">devtools</span><span class="kw ns">::</span><span class="fu">install_github</span>(<span class="st">"AngelosPsy/multifear"</span>)</pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit">
+<span class="co"># Install devtools package in case it is not yet installed</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"devtools"</span>) 
+<span class="kw">devtools</span>::<span class="fu">install_github</span>(<span class="st">"AngelosPsy/multifear"</span>)
+</pre></div>
 <p>The package can be loaded with the following package</p>
-<div class="sourceCode" id="cb2"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">multifear</span>)</pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://github.com/AngelosPsy/multifear">multifear</a></span>)
+</pre></div>
 </div>
 <div id="basic-example" class="section level2">
 <h2 class="hasAnchor">
 <a href="#basic-example" class="anchor"></a>Basic Example</h2>
 <p>We will start with a basic example of how the package works. Before doing that, let’s load some additional packages that we need for our example.</p>
-<div class="sourceCode" id="cb3"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/message.html">suppressPackageStartupMessages</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">dplyr</span>))
-<span class="fu"><a href="https://rdrr.io/r/base/message.html">suppressPackageStartupMessages</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">ggplot2</span>))</pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/base/message.html">suppressPackageStartupMessages</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://dplyr.tidyverse.org">dplyr</a></span>))
+<span class="fu"><a href="https://rdrr.io/r/base/message.html">suppressPackageStartupMessages</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="http://ggplot2.tidyverse.org">ggplot2</a></span>))
+</pre></div>
 <p>Now we will use some simulated data set that are included as example data in the package. In principle, you can use any data including conditioned responses (e.g., skin conductance). You can load the simulated data in your workspace as follows:</p>
-<div class="sourceCode" id="cb4"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"example_data"</span>)</pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"example_data"</span>)
+</pre></div>
 <p>From these data we are going to select only the 10 first lines – it saves a lot of time for computation for this example. Here are the first 10 rows of the data set</p>
-<div class="sourceCode" id="cb5"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">example_data</span>, <span class="fl">10</span>)
+<div class="sourceCode" id="cb5"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw">example_data</span>, <span class="fl">10</span>)
 <span class="co">#&gt;    id       CSP1       CSP2       CSP3      CSP4      CSP5      CSP6      CSP7</span>
 <span class="co">#&gt; 1   2 0.62905570 0.92988220  1.0415000 0.9330014 0.9743682 0.8855119 0.8418664</span>
 <span class="co">#&gt; 2   3 7.07953400 4.97656500 12.7791100 8.2847610 4.9798520 8.8685450 8.2468480</span>
@@ -124,19 +133,22 @@
 <span class="co">#&gt; 7  0.16134580 0.91540300 0.0000000 0.30176180 0.08460228 0.09295772     1</span>
 <span class="co">#&gt; 8  0.10903030 0.00000000 0.0000000 0.04329369 0.19495150 0.30379580     2</span>
 <span class="co">#&gt; 9  0.02774107 0.39216860 0.1940482 1.33170800 0.41266960 0.00000000     1</span>
-<span class="co">#&gt; 10 0.72851310 0.96242680 0.0000000 1.27084300 0.03120063 0.00000000     2</span></pre></div>
+<span class="co">#&gt; 10 0.72851310 0.96242680 0.0000000 1.27084300 0.03120063 0.00000000     2</span>
+</pre></div>
 <p>A bit of explanation of the column names. With the column name ‘id’ is the participant number. Columns that contain the conditioned responses for conditioned stimulus plus (CS+) are denoted with column names starting with ‘CSP’. The number next to this name (1, 2, …, 10) is the trial number. The same goes for columns starting with ‘CSM’ but this denotes conditioned responses in CS- trials. At this point the package only supports a single CS+ and a single CS-. Also, the package assumes that trials are following each – so trial 2 comes after trial 1 etc. Let’s see the data:</p>
-<div class="sourceCode" id="cb6"><pre class="r"><span class="no">datmelt</span> <span class="kw">&lt;-</span> <span class="no">example_data</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(-<span class="no">id</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">colMeans</a></span>() <span class="kw">%&gt;%</span>
-  <span class="kw pkg">reshape2</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/reshape2/man/melt.html">melt</a></span>(<span class="no">dat</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="kw">variable</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(<span class="no">.</span>)) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="kw">cs</span> <span class="kw">=</span> <span class="kw pkg">stringr</span><span class="kw ns">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_sub.html">str_sub</a></span>(<span class="no">variable</span>, <span class="fl">1</span>, <span class="fl">3</span>),
-  <span class="kw">time</span> <span class="kw">=</span> <span class="kw pkg">stringr</span><span class="kw ns">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_sub.html">str_sub</a></span>(<span class="no">variable</span>, <span class="fl">4</span>, <span class="fl">5</span>))
-
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="kw">data</span> <span class="kw">=</span> <span class="no">datmelt</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">time</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">value</span>, <span class="kw">group</span> <span class="kw">=</span> <span class="no">cs</span>)) +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span>(<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">linetype</span> <span class="kw">=</span> <span class="no">cs</span>)) +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span>(<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">shape</span> <span class="kw">=</span> <span class="no">cs</span>))</pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit">
+<span class="kw">datmelt</span> <span class="op">&lt;-</span> <span class="kw">example_data</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="op">-</span><span class="kw">id</span>) <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">colMeans</a></span>() <span class="op">%&gt;%</span>
+  <span class="kw">reshape2</span>::<span class="fu"><a href="https://rdrr.io/pkg/reshape2/man/melt.html">melt</a></span>(<span class="kw">dat</span>) <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(variable = <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(<span class="kw">.</span>)) <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(cs = <span class="kw">stringr</span>::<span class="fu"><a href="https://stringr.tidyverse.org/reference/str_sub.html">str_sub</a></span>(<span class="kw">variable</span>, <span class="fl">1</span>, <span class="fl">3</span>),
+  time = <span class="kw">stringr</span>::<span class="fu"><a href="https://stringr.tidyverse.org/reference/str_sub.html">str_sub</a></span>(<span class="kw">variable</span>, <span class="fl">4</span>, <span class="fl">5</span>))
+  
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(data = <span class="kw">datmelt</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(x = <span class="kw">time</span>, y = <span class="kw">value</span>, group = <span class="kw">cs</span>)) <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span>(<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(linetype = <span class="kw">cs</span>)) <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span>(<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(shape = <span class="kw">cs</span>))
+</pre></div>
 <p><img src="README_files/figure-gfm/unnamed-chunk-7-1.png"><!-- --></p>
 <p>We see the basic learning pattern where CS+ responses end up being higher than CS- responses. The deep in CS+ on trial 2 is in line with the original data set.</p>
 <p>Now we need to analyse the data. For this we will use the <em>multifear::universe_cs</em> function. In order for this function to work, we need to provide the following arguments.</p>
@@ -148,19 +160,22 @@
 <li><p>phase. Here we define the conditioning phase that the data were collected in (e.g., acquisition phase, extinction phase, etc). Please note that in case the user has multiple phases, she/he needs to run the function separately for each phases.</p></li>
 </ul>
 <p>There are some other options in the function, such as defining the type of conditioning response. However, these are not necessary for now. So, let’s now run the function:</p>
-<div class="sourceCode" id="cb7"><pre class="r"><span class="no">cs1</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="st">"CSP"</span>, <span class="fl">1</span>:<span class="fl">10</span>)
-<span class="no">cs2</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="st">"CSM"</span>, <span class="fl">1</span>:<span class="fl">10</span>)
-<span class="no">example_data</span> <span class="kw">&lt;-</span> <span class="no">example_data</span>[<span class="fl">1</span>:<span class="fl">10</span>, ]
-<span class="no">res</span> <span class="kw">&lt;-</span> <span class="kw pkg">multifear</span><span class="kw ns">::</span><span class="fu"><a href="reference/universe_cs.html">universe_cs</a></span>(<span class="kw">cs1</span> <span class="kw">=</span> <span class="no">cs1</span>, <span class="kw">cs2</span> <span class="kw">=</span> <span class="no">cs2</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">example_data</span>,
-                              <span class="kw">subj</span> <span class="kw">=</span> <span class="st">"id"</span>, <span class="kw">group</span> <span class="kw">=</span> <span class="kw">NULL</span>, <span class="kw">phase</span> <span class="kw">=</span> <span class="st">"acquisition"</span>, <span class="kw">include_bayes</span> <span class="kw">=</span> <span class="fl">FALSE</span>)
+<div class="sourceCode" id="cb7"><pre class="downlit">
+<span class="kw">cs1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="st">"CSP"</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">10</span>)
+<span class="kw">cs2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="st">"CSM"</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">10</span>)
+<span class="kw">example_data</span> <span class="op">&lt;-</span> <span class="kw">example_data</span>[<span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, ]
+<span class="kw">res</span> <span class="op">&lt;-</span> <span class="kw">multifear</span>::<span class="fu"><a href="reference/universe_cs.html">universe_cs</a></span>(cs1 = <span class="kw">cs1</span>, cs2 = <span class="kw">cs2</span>, data = <span class="kw">example_data</span>, 
+                              subj = <span class="st">"id"</span>, group = <span class="kw">NULL</span>, phase = <span class="st">"acquisition"</span>, include_bayes = <span class="fl">FALSE</span>)
 <span class="co">#&gt; Registered S3 methods overwritten by 'lme4':</span>
 <span class="co">#&gt;   method                          from</span>
 <span class="co">#&gt;   cooks.distance.influence.merMod car </span>
 <span class="co">#&gt;   influence.merMod                car </span>
 <span class="co">#&gt;   dfbeta.influence.merMod         car </span>
-<span class="co">#&gt;   dfbetas.influence.merMod        car</span></pre></div>
+<span class="co">#&gt;   dfbetas.influence.merMod        car</span>
+</pre></div>
 <p>And here are the results</p>
-<div class="sourceCode" id="cb8"><pre class="r"><span class="no">res</span>
+<div class="sourceCode" id="cb8"><pre class="downlit">
+<span class="kw">res</span>
 <span class="co">#&gt; # A tibble: 4 x 15</span>
 <span class="co">#&gt;   x     y     exclusion cut_off model controls method p.value effect.size</span>
 <span class="co">#&gt;   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt; &lt;lgl&gt;    &lt;chr&gt;    &lt;dbl&gt;       &lt;dbl&gt;</span>
@@ -169,7 +184,8 @@
 <span class="co">#&gt; 3 cs:t… scr   full data full d… rep … NA       rep A… 0.0152       0.0307</span>
 <span class="co">#&gt; 4 cs    scr   full data full d… rep … NA       rep A… 0.00488      0.157 </span>
 <span class="co">#&gt; # … with 6 more variables: estimate &lt;dbl&gt;, statistic &lt;dbl&gt;, conf.low &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   conf.high &lt;dbl&gt;, framework &lt;chr&gt;, data_used &lt;list&gt;</span></pre></div>
+<span class="co">#&gt; #   conf.high &lt;dbl&gt;, framework &lt;chr&gt;, data_used &lt;list&gt;</span>
+</pre></div>
 <p>Let’s go through each column separately</p>
 <ul>
 <li><p>x : is the effect that you are testing. For example, the cs means that you are testing cs differences. cs:time the cs X time interaction is tested. Be careful: when testing interactions, we only report the highest order interaction. That means that if you have a cs x time interaction, you do not get the results of the cs or the time main effect.</p></li>
@@ -186,13 +202,14 @@
 <li><p>data_used Here you have a data frame with the data used for the performed analyses. This is because someone maybe wants to recreate the results and also as a check that nothing went wrong.</p></li>
 </ul>
 <p>So now let’s see how you can run the same analyses but after we apply some selection criteria for non-learns. So, here it is</p>
-<div class="sourceCode" id="cb9"><pre class="r">
-<span class="no">res_multi</span> <span class="kw">&lt;-</span> <span class="kw pkg">multifear</span><span class="kw ns">::</span><span class="fu"><a href="reference/multiverse_cs.html">multiverse_cs</a></span>(<span class="kw">cs1</span> <span class="kw">=</span> <span class="no">cs1</span>, <span class="kw">cs2</span> <span class="kw">=</span> <span class="no">cs2</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">example_data</span>, <span class="kw">subj</span> <span class="kw">=</span> <span class="st">"id"</span>, <span class="kw">group</span> <span class="kw">=</span> <span class="kw">NULL</span>, <span class="kw">phase</span> <span class="kw">=</span> <span class="st">"acquisition"</span>, <span class="kw">include_bayes</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
+<div class="sourceCode" id="cb9"><pre class="downlit">
+
+<span class="kw">res_multi</span> <span class="op">&lt;-</span> <span class="kw">multifear</span>::<span class="fu"><a href="reference/multiverse_cs.html">multiverse_cs</a></span>(cs1 = <span class="kw">cs1</span>, cs2 = <span class="kw">cs2</span>, data = <span class="kw">example_data</span>, subj = <span class="st">"id"</span>, group = <span class="kw">NULL</span>, phase = <span class="st">"acquisition"</span>, include_bayes = <span class="fl">TRUE</span>)
 <span class="co">#&gt; Skipping ANOVA due to the number of trials for the cs1 and/or cs2.</span>
 <span class="co">#&gt; Skipping ANOVA due to the number of trials for the cs1 and/or cs2.</span>
 <span class="co">#&gt; Skipping ANOVA due to the number of trials for the cs1 and/or cs2.</span>
 <span class="co">#&gt; Skipping ANOVA due to the number of trials for the cs1 and/or cs2.</span>
-<span class="no">res_multi</span>
+<span class="kw">res_multi</span>
 <span class="co">#&gt; # A tibble: 336 x 15</span>
 <span class="co">#&gt;    x     y     exclusion cut_off model controls method  p.value effect.size</span>
 <span class="co">#&gt;    &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt; &lt;lgl&gt;    &lt;chr&gt;     &lt;dbl&gt;       &lt;dbl&gt;</span>
@@ -207,11 +224,14 @@
 <span class="co">#&gt;  9 cs    scr   full_data full_d… rep … NA       rep B… NA           NA     </span>
 <span class="co">#&gt; 10 cs    scr   full_data full_d… rep … NA       rep B… NA           NA     </span>
 <span class="co">#&gt; # … with 326 more rows, and 6 more variables: estimate &lt;dbl&gt;, statistic &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   conf.low &lt;dbl&gt;, conf.high &lt;dbl&gt;, framework &lt;chr&gt;, data_used &lt;list&gt;</span></pre></div>
+<span class="co">#&gt; #   conf.low &lt;dbl&gt;, conf.high &lt;dbl&gt;, framework &lt;chr&gt;, data_used &lt;list&gt;</span>
+</pre></div>
 <p>In terms of calling the function, we see that we need exactly the same arguments as before. Internally, the function actually applies the multifear::universe_cs but now apart from the full data set, also for the data sets that we have set some exclusion criteria. Whether each line refers to the full data set or any of the exclusion criteria, we can see on the column exclusion criteria or in the data_used column, although there it is difficult to see what happened and it serves only reproduction criteria. So, the easiest thing to do is to see the exclusion column. Now, it has the following levels:</p>
-<div class="sourceCode" id="cb10"><pre class="r"><span class="no">res_multi</span>$<span class="no">exclusion</span> <span class="kw">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span>()
+<div class="sourceCode" id="cb10"><pre class="downlit">
+<span class="kw">res_multi</span><span class="op">$</span><span class="kw">exclusion</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span>()
 <span class="co">#&gt; [1] "full_data"  "ten_per"    "min_first"  "th3_per"    "halves"    </span>
-<span class="co">#&gt; [6] "fltrials"   "twenty_per" "fl2trials"  "per2trials"</span></pre></div>
+<span class="co">#&gt; [6] "fltrials"   "twenty_per" "fl2trials"  "per2trials"</span>
+</pre></div>
 <p>The exclusion criteria actually (largely) follow the criteria reported in the eLife article (“Navigating the garden of forking paths for data exclusions in fear conditioning research”; Lonsdorf et al., 2019). One problem with the criteria is that of course you have different number of trials, some studies exclude participants based on SCR but also on their ratings, etc. This of course makes it difficult to <em>exactly</em> apply all the criteria. To overcome this problem, we are going to form a summary of exclusion criteria. So here we are:</p>
 <p>1) CS+/CS- differences for the last trial.</p>
 <p>2) CS+/CS- differences for the last two trials.</p>
@@ -228,12 +248,16 @@
 <p>3) the number of p values below the significance level</p>
 <p>4) Mean of Bayes factors.</p>
 <!-- end list -->
-<div class="sourceCode" id="cb11"><pre class="r"><span class="kw pkg">multifear</span><span class="kw ns">::</span><span class="fu"><a href="reference/inference_cs.html">inference_cs</a></span>(<span class="no">res_multi</span>, <span class="kw">na.rm</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></div>
+<div class="sourceCode" id="cb11"><pre class="downlit">
+<span class="kw">multifear</span>::<span class="fu"><a href="reference/inference_cs.html">inference_cs</a></span>(<span class="kw">res_multi</span>, na.rm = <span class="fl">TRUE</span>)
+</pre></div>
 <p><img src="README_files/figure-gfm/unnamed-chunk-12-1.png"><!-- --></p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="co">#&gt;   mean_p_value prop_p_value  mean_bf</span></span>
 <span id="cb12-2"><a href="#cb12-2"></a><span class="co">#&gt; 1    0.1074323     82.35294 2518.044</span></span></code></pre></div>
 <p>And here we have the specification curves for the performed frequentists t-tests.</p>
-<div class="sourceCode" id="cb13"><pre class="r"><span class="kw pkg">multifear</span><span class="kw ns">::</span><span class="fu"><a href="reference/curve_cs.html">curve_cs</a></span>(<span class="no">res_multi</span>)</pre></div>
+<div class="sourceCode" id="cb13"><pre class="downlit">
+<span class="kw">multifear</span>::<span class="fu"><a href="reference/curve_cs.html">curve_cs</a></span>(<span class="kw">res_multi</span>)
+</pre></div>
 <p><img src="README_files/figure-gfm/unnamed-chunk-13-1.png"><!-- --></p>
 </div>
 </div>
@@ -282,7 +306,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
