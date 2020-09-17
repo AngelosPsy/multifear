@@ -26,13 +26,15 @@ inference_cs <-
     framework <- tolower(framework)
     match.arg(framework, c("nhst", "bayesian", "both"))
 
-
     if (framework %in% c("nhst", "both")){
     dataNHST <-
       data %>% dplyr::filter(framework == "NHST")
 
     mean_p_value <-
       dataNHST %>% dplyr::select(p.value) %>% unlist() %>% mean(na.rm = na.rm)
+
+    median_p_value <-
+      dataNHST %>% dplyr::select(p.value) %>% unlist() %>% stats::median(na.rm = na.rm)
 
     tmp_p.value <- dataNHST$p.value
 
@@ -44,10 +46,16 @@ inference_cs <-
 
     if (framework %in% c("bayesian", "both")){
       mean_bf_value <-
-        data %>% dplyr::filter(framework == "Bayesian") %>% dplyr::select(estimate) %>%
+        data %>% dplyr::filter(framework == "Bayesian") %>%
+        dplyr::select(estimate) %>%
         unlist() %>%
         mean(na.rm = na.rm)
 
+      median_bf_value <-
+        data %>% dplyr::filter(framework == "Bayesian") %>%
+        dplyr::select(estimate) %>%
+        unlist() %>%
+        stats::median(na.rm = na.rm)
 
       dataBayes <-
           data %>% dplyr::filter(framework == "Bayesian")
@@ -70,16 +78,18 @@ inference_cs <-
 
       res_tmp <-
         data.frame(mean_bf_value = mean_bf_value,
+                   median_bf_value = median_bf_value,
                    prop_bf_value = prop_bf_value)
 
     } else if (framework %in% c("both")) {
 
-
       res_tmp <-
-        data.frame(mean_p_value = mean_p_value,
-                   prop_p_value = prop_p_value,
-                   mean_bf_value = mean_bf_value,
-                   prop_bf_value = prop_bf_value)
+        data.frame(mean_p_value    = mean_p_value,
+                   median_p_value  = median_p_value,
+                   prop_p_value    = prop_p_value,
+                   mean_bf_value   = mean_bf_value,
+                   median_bf_value = median_bf_value,
+                   prop_bf_value   = prop_bf_value)
     }
 
     # Histogram

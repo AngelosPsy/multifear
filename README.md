@@ -345,8 +345,10 @@ multifear::inference_cs(res_multi, na.rm = TRUE)
     #>   z     cells    name           grob
     #> 1 1 (1-1,1-1) arrange gtable[layout]
     #> 2 2 (1-1,2-2) arrange gtable[layout]
-    #>   mean_p_value prop_p_value mean_bf_value prop_bf_value
-    #> 1    0.1074323     82.35294      2582.968            50
+    #>   mean_p_value median_p_value prop_p_value mean_bf_value median_bf_value
+    #> 1    0.1074323     0.00638261     82.35294      2537.804        1.071591
+    #>   prop_bf_value
+    #> 1            50
 
 And here we have the specification curves for the performed frequentists
 t-tests.
