@@ -179,8 +179,8 @@
 <span class="co">#&gt; # A tibble: 4 x 15</span>
 <span class="co">#&gt;   x     y     exclusion cut_off model controls method p.value effect.size</span>
 <span class="co">#&gt;   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt; &lt;lgl&gt;    &lt;chr&gt;    &lt;dbl&gt;       &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 cs    scr   full data full d… t-te… NA       t-test 0.00244      0.577 </span>
-<span class="co">#&gt; 2 cs    scr   full data full d… t-te… NA       t-test 0.00488      0.577 </span>
+<span class="co">#&gt; 1 cs    scr   full data full d… t-te… NA       t-tes… 0.00244      0.577 </span>
+<span class="co">#&gt; 2 cs    scr   full data full d… t-te… NA       t-tes… 0.00488      0.577 </span>
 <span class="co">#&gt; 3 cs:t… scr   full data full d… rep … NA       rep A… 0.0152       0.0307</span>
 <span class="co">#&gt; 4 cs    scr   full data full d… rep … NA       rep A… 0.00488      0.157 </span>
 <span class="co">#&gt; # … with 6 more variables: estimate &lt;dbl&gt;, statistic &lt;dbl&gt;, conf.low &lt;dbl&gt;,</span>
@@ -213,10 +213,10 @@
 <span class="co">#&gt; # A tibble: 336 x 15</span>
 <span class="co">#&gt;    x     y     exclusion cut_off model controls method  p.value effect.size</span>
 <span class="co">#&gt;    &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt; &lt;lgl&gt;    &lt;chr&gt;     &lt;dbl&gt;       &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 cs    scr   full_data full_d… t-te… NA       t-test  0.00244      0.577 </span>
-<span class="co">#&gt;  2 cs    scr   full_data full_d… t-te… NA       t-test  0.00488      0.577 </span>
-<span class="co">#&gt;  3 cs    scr   full_data full_d… Baye… NA       t-test NA           NA     </span>
-<span class="co">#&gt;  4 cs    scr   full_data full_d… Baye… NA       t-test NA           NA     </span>
+<span class="co">#&gt;  1 cs    scr   full_data full_d… t-te… NA       t-tes…  0.00244      0.577 </span>
+<span class="co">#&gt;  2 cs    scr   full_data full_d… t-te… NA       t-tes…  0.00488      0.577 </span>
+<span class="co">#&gt;  3 cs    scr   full_data full_d… Baye… NA       Bayes… NA           NA     </span>
+<span class="co">#&gt;  4 cs    scr   full_data full_d… Baye… NA       Bayes… NA           NA     </span>
 <span class="co">#&gt;  5 cs:t… scr   full_data full d… rep … NA       rep A…  0.0152       0.0307</span>
 <span class="co">#&gt;  6 cs    scr   full_data full_d… rep … NA       rep A…  0.00488      0.157 </span>
 <span class="co">#&gt;  7 cs:t… scr   full_data full_d… rep … NA       rep B… NA           NA     </span>
@@ -233,11 +233,26 @@
 <span class="co">#&gt; [6] "fltrials"   "twenty_per" "fl2trials"  "per2trials"</span>
 </pre></div>
 <p>The exclusion criteria actually (largely) follow the criteria reported in the eLife article (“Navigating the garden of forking paths for data exclusions in fear conditioning research”; Lonsdorf et al., 2019). One problem with the criteria is that of course you have different number of trials, some studies exclude participants based on SCR but also on their ratings, etc. This of course makes it difficult to <em>exactly</em> apply all the criteria. To overcome this problem, we are going to form a summary of exclusion criteria. So here we are:</p>
-<p>1) CS+/CS- differences for the last trial.</p>
-<p>2) CS+/CS- differences for the last two trials.</p>
-<p>3) CS+/CS- differences in the last half of the trials.</p>
-<p>4) CS+/CS- differences between the last and first trial.</p>
-<p>The cutoff for these differences are defined as 0, 0.05, and 1. So, we have every criterion, for every cutoff. So, what the function does is actually internally first computing the differences in all the possible combinations (i.e., last half of trials, differences in the last two trials, etc) and also applies the different criteria (0.05, 0.1, 0). Then, it repeats all the analyses performed in multifear::universe_us() function.</p>
+<p>1) fl2trials: first and last two trials.</p>
+<p>2) fltrials: first and last trial</p>
+<p>3) full_data: full data set</p>
+<p>4) halves: use the first and last half of the trial. So, if you have 10 trials, you will have the first 5 and last 5 trials</p>
+<p>5) min_first: take all trials apart from the first one</p>
+<p>6) seperate trials per 2</p>
+<p>7) seperate trials per 10%</p>
+<p>8) seperate trials per 33%</p>
+<p>9) seperate trials per 20%</p>
+<p>Another important column is the cut_off column that shows what data have been used. Here we have:</p>
+<div class="sourceCode" id="cb11"><pre class="downlit">
+<span class="kw">res_multi</span><span class="op">$</span><span class="kw">cut_off</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span>()
+<span class="co">#&gt; [1] "full_data"     "full data"     "last_2_trials" "last_4_trials"</span>
+<span class="co">#&gt; [5] "last_5_trials"</span>
+</pre></div>
+<p>which means</p>
+<p>1) full_data: full data set</p>
+<p>2) last_2_trials: last two trials</p>
+<p>3) last_4_trials: last four trials</p>
+<p>4) last_4_trials: last five trials</p>
 </div>
 <div id="inferences" class="section level2">
 <h2 class="hasAnchor">
@@ -246,19 +261,23 @@
 <p>1) A histogram will all the p value and a red line showing the significance limit – by default alpha = 0.05</p>
 <p>2) Mean p_value</p>
 <p>3) the number of p values below the significance level</p>
-<p>4) Mean of Bayes factors.</p>
+<p>4) Mean of Bayes factors</p>
 <!-- end list -->
-<div class="sourceCode" id="cb11"><pre class="downlit">
+<div class="sourceCode" id="cb12"><pre class="downlit">
 <span class="kw">multifear</span>::<span class="fu"><a href="reference/inference_cs.html">inference_cs</a></span>(<span class="kw">res_multi</span>, na.rm = <span class="fl">TRUE</span>)
 </pre></div>
-<p><img src="README_files/figure-gfm/unnamed-chunk-12-1.png"><!-- --></p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="co">#&gt;   mean_p_value prop_p_value  mean_bf</span></span>
-<span id="cb12-2"><a href="#cb12-2"></a><span class="co">#&gt; 1    0.1074323     82.35294 2518.044</span></span></code></pre></div>
+<p><img src="README_files/figure-gfm/unnamed-chunk-13-1.png"><!-- --></p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="co">#&gt; TableGrob (1 x 2) "arrange": 2 grobs</span></span>
+<span id="cb13-2"><a href="#cb13-2"></a><span class="co">#&gt;   z     cells    name           grob</span></span>
+<span id="cb13-3"><a href="#cb13-3"></a><span class="co">#&gt; 1 1 (1-1,1-1) arrange gtable[layout]</span></span>
+<span id="cb13-4"><a href="#cb13-4"></a><span class="co">#&gt; 2 2 (1-1,2-2) arrange gtable[layout]</span></span>
+<span id="cb13-5"><a href="#cb13-5"></a><span class="co">#&gt;   mean_p_value prop_p_value mean_bf_value prop_bf_value</span></span>
+<span id="cb13-6"><a href="#cb13-6"></a><span class="co">#&gt; 1    0.1074323     82.35294      2582.968            50</span></span></code></pre></div>
 <p>And here we have the specification curves for the performed frequentists t-tests.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit">
+<div class="sourceCode" id="cb14"><pre class="downlit">
 <span class="kw">multifear</span>::<span class="fu"><a href="reference/curve_cs.html">curve_cs</a></span>(<span class="kw">res_multi</span>)
 </pre></div>
-<p><img src="README_files/figure-gfm/unnamed-chunk-13-1.png"><!-- --></p>
+<p><img src="README_files/figure-gfm/unnamed-chunk-14-1.png"><!-- --></p>
 </div>
 </div>
 
