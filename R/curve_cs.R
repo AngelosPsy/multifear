@@ -15,7 +15,7 @@
 #' @param null Indicate what value represents the 'null' hypothesis (defaults to
 #'   zero).
 #' @param sample_perc numeric value denoting what percentage of the
-#'   specifications should be plotted. Needs to be strictly greater than 0 and smalle than 1.
+#'   specifications should be plotted. Needs to be strictly greater than 0 and smaller than 1.
 #'   Defaults to 1 (= all specifications). Drawing a sample from all
 #'   specification usually makes only sense of the number of specifications is
 #'   very large and one wants to simplify the visualization.
@@ -40,7 +40,7 @@ curve_cs <- function(data,
     if (!is.null(data)) {
 
       # Plot only t-tests from the NHST framework
-      data %>% dplyr::filter(framework == "NHST", method == "t-test") -> data
+      data %>% dplyr::filter(framework == "NHST", model == "t-test") -> data
 
       if (sample_perc > 1 | sample_perc < 0) {
         stop("`sample_n` must be greater than 0 and less than 1!")

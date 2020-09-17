@@ -43,21 +43,14 @@ inference_cs <-
     }
 
     if (framework %in% c("bayesian", "both")){
-      dataBayes <-
+      mean_bf_value <-
         data %>% dplyr::filter(framework == "Bayesian") %>% dplyr::select(estimate) %>%
         unlist() %>%
         mean(na.rm = na.rm)
 
-    }
-
-    # Generate output
-    if (framework %in% c("nhst")) {
-      res_tmp <-
-        data.frame(mean_p_value = mean_p_value, prop_p_value = prop_p_value)
-    } else if (framework %in% c("bayesian")) {
 
       dataBayes <-
-        data %>% dplyr::filter(framework == "Bayesian")
+          data %>% dplyr::filter(framework == "Bayesian")
 
       tmp_bf.value <- dataBayes$estimate
 
@@ -65,15 +58,27 @@ inference_cs <-
 
       prop_bf_value <-
         length(which(tmp_bf.value > 1)) / length(tmp_bf.value) * 100
+    }
+
+    # Generate output
+    if (framework %in% c("nhst")) {
       res_tmp <-
-        data.frame(mean_bf_value = dataBayes,
+        data.frame(mean_p_value = mean_p_value, prop_p_value = prop_p_value)
+    } else if (framework %in% c("bayesian")) {
+      #dataBayes <-
+      #  data %>% dplyr::filter(framework == "Bayesian")
+
+      res_tmp <-
+        data.frame(mean_bf_value = mean_bf_value,
                    prop_bf_value = prop_bf_value)
 
     } else if (framework %in% c("both")) {
+
+
       res_tmp <-
         data.frame(mean_p_value = mean_p_value,
                    prop_p_value = prop_p_value,
-                   mean_bf_value = dataBayes,
+                   mean_bf_value = mean_bf_value,
                    prop_bf_value = prop_bf_value)
     }
 
