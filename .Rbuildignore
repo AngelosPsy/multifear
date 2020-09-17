@@ -7,3 +7,5 @@
 ^codecov\.yml$
 ^_config.yml$
 ^docs$
+^_pkgdown\.yml$
+^pkgdown$
