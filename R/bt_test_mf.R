@@ -126,13 +126,13 @@ bt_test_mf <-
     if (!!phase %in% c("acquisition", "acq")) {
       ttl <-
         ttest_run[c(3, 1)]
-      type_test = c("higher", "equal")
+      type_test = c("greater", "equal")
     }
 
     if (!!phase %in% c("extinction", "ext")) {
       ttl <-
         ttest_run[c(3, 1)]
-      type_test = c("lower", "equal")
+      type_test = c("less", "equal")
     }
 
     res <- data.frame(
