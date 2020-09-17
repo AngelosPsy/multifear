@@ -174,8 +174,8 @@ res
 #> # A tibble: 4 x 15
 #>   x     y     exclusion cut_off model controls method p.value effect.size
 #>   <chr> <chr> <chr>     <chr>   <chr> <lgl>    <chr>    <dbl>       <dbl>
-#> 1 cs    scr   full data full d… t-te… NA       t-test 0.00244      0.577 
-#> 2 cs    scr   full data full d… t-te… NA       t-test 0.00488      0.577 
+#> 1 cs    scr   full data full d… t-te… NA       t-tes… 0.00244      0.577 
+#> 2 cs    scr   full data full d… t-te… NA       t-tes… 0.00488      0.577 
 #> 3 cs:t… scr   full data full d… rep … NA       rep A… 0.0152       0.0307
 #> 4 cs    scr   full data full d… rep … NA       rep A… 0.00488      0.157 
 #> # … with 6 more variables: estimate <dbl>, statistic <dbl>, conf.low <dbl>,
@@ -242,10 +242,10 @@ res_multi
 #> # A tibble: 336 x 15
 #>    x     y     exclusion cut_off model controls method  p.value effect.size
 #>    <chr> <chr> <chr>     <chr>   <chr> <lgl>    <chr>     <dbl>       <dbl>
-#>  1 cs    scr   full_data full_d… t-te… NA       t-test  0.00244      0.577 
-#>  2 cs    scr   full_data full_d… t-te… NA       t-test  0.00488      0.577 
-#>  3 cs    scr   full_data full_d… Baye… NA       t-test NA           NA     
-#>  4 cs    scr   full_data full_d… Baye… NA       t-test NA           NA     
+#>  1 cs    scr   full_data full_d… t-te… NA       t-tes…  0.00244      0.577 
+#>  2 cs    scr   full_data full_d… t-te… NA       t-tes…  0.00488      0.577 
+#>  3 cs    scr   full_data full_d… Baye… NA       Bayes… NA           NA     
+#>  4 cs    scr   full_data full_d… Baye… NA       Bayes… NA           NA     
 #>  5 cs:t… scr   full_data full d… rep … NA       rep A…  0.0152       0.0307
 #>  6 cs    scr   full_data full_d… rep … NA       rep A…  0.00488      0.157 
 #>  7 cs:t… scr   full_data full_d… rep … NA       rep B… NA           NA     
@@ -281,21 +281,43 @@ ratings, etc. This of course makes it difficult to *exactly* apply all
 the criteria. To overcome this problem, we are going to form a summary
 of exclusion criteria. So here we are:
 
-1)  CS+/CS- differences for the last trial.
+1)  fl2trials: first and last two trials.
 
-2)  CS+/CS- differences for the last two trials.
+2)  fltrials: first and last trial
 
-3)  CS+/CS- differences in the last half of the trials.
+3)  full\_data: full data set
 
-4)  CS+/CS- differences between the last and first trial.
+4)  halves: use the first and last half of the trial. So, if you have 10
+    trials, you will have the first 5 and last 5 trials
 
-The cutoff for these differences are defined as 0, 0.05, and 1. So, we
-have every criterion, for every cutoff. So, what the function does is
-actually internally first computing the differences in all the possible
-combinations (i.e., last half of trials, differences in the last two
-trials, etc) and also applies the different criteria (0.05, 0.1, 0).
-Then, it repeats all the analyses performed in multifear::universe\_us()
-function.
+5)  min\_first: take all trials apart from the first one
+
+6)  seperate trials per 2
+
+7)  seperate trials per 10%
+
+8)  seperate trials per 33%
+
+9)  seperate trials per 20%
+
+Another important column is the cut\_off column that shows what data
+have been used. Here we have:
+
+``` r
+res_multi$cut_off %>% unique()
+#> [1] "full_data"     "full data"     "last_2_trials" "last_4_trials"
+#> [5] "last_5_trials"
+```
+
+which means
+
+1)  full\_data: full data set
+
+2)  last\_2\_trials: last two trials
+
+3)  last\_4\_trials: last four trials
+
+4)  last\_4\_trials: last five trials
 
 ## Inferences
 
@@ -309,7 +331,7 @@ function and you will get:
 
 3)  the number of p values below the significance level
 
-4)  Mean of Bayes factors.
+4)  Mean of Bayes factors
 
 <!-- end list -->
 
@@ -317,10 +339,14 @@ function and you will get:
 multifear::inference_cs(res_multi, na.rm = TRUE)
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
 
-    #>   mean_p_value prop_p_value  mean_bf
-    #> 1    0.1074323     82.35294 2518.044
+    #> TableGrob (1 x 2) "arrange": 2 grobs
+    #>   z     cells    name           grob
+    #> 1 1 (1-1,1-1) arrange gtable[layout]
+    #> 2 2 (1-1,2-2) arrange gtable[layout]
+    #>   mean_p_value prop_p_value mean_bf_value prop_bf_value
+    #> 1    0.1074323     82.35294      2582.968            50
 
 And here we have the specification curves for the performed frequentists
 t-tests.
@@ -329,4 +355,4 @@ t-tests.
 multifear::curve_cs(res_multi)
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-14-1.png)<!-- -->

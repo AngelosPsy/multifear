@@ -147,15 +147,40 @@ res_multi$exclusion %>% unique()
 
 The exclusion criteria actually (largely) follow the criteria reported in the eLife article ("Navigating the garden of forking paths for data exclusions in fear conditioning research"; Lonsdorf et al., 2019). One problem with the criteria is that of course you have different number of trials, some studies exclude participants based on SCR but also on their ratings, etc. This of course makes it difficult to _exactly_ apply all the criteria. To overcome this problem, we are going to form a summary of exclusion criteria. So here we are:
 
-1) CS+/CS- differences for the last trial.
+1) fl2trials: first and last two trials.
 
-2) CS+/CS- differences for the last two trials.
+2) fltrials: first and last trial
 
-3) CS+/CS- differences in the last half of the trials.
+3) full_data: full data set
 
-4) CS+/CS- differences between the last and first trial.
+4) halves: use the first and last half of the trial. So, if you have 10 trials, you will have the first 5 and last 5 trials
 
-The cutoff for these differences are defined as 0, 0.05, and 1. So, we have every criterion, for every cutoff. So, what the function does is actually internally first computing the differences in all the possible combinations (i.e., last half of trials, differences in the last two trials, etc) and also applies the different criteria (0.05, 0.1, 0). Then, it repeats all the analyses performed in multifear::universe_us() function.
+5) min_first: take all trials apart from the first one
+
+6) seperate trials per 2
+
+7) seperate trials per 10%
+
+8) seperate trials per 33%
+
+9) seperate trials per 20%
+
+
+Another important column is the cut_off column that shows what data have been used. Here we have:
+
+```{r}
+res_multi$cut_off %>% unique()
+```
+
+which means
+
+1) full_data: full data set
+
+2) last_2_trials: last two trials
+
+3) last_4_trials: last four trials
+
+5) last_4_trials: last five trials
 
 ## Inferences
 This is the most challenging part. For now you can use the following function
@@ -168,7 +193,7 @@ limit -- by default alpha = 0.05
 
 3) the number of p values below the significance level
 
-4) Mean of Bayes factors.
+4) Mean of Bayes factors
 
 ```{r}
 multifear::inference_cs(res_multi, na.rm = TRUE)
