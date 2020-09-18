@@ -38,6 +38,7 @@
 #'
 #' @seealso
 #' \code{\link[nlme]{lme}}
+#' @importFrom nlme lme
 #'
 #' @export
 mixed_mf <- function(cs1,
@@ -337,7 +338,7 @@ mixed_mf <- function(cs1,
     )
   )
 
-  res <- res_tmp$`dplyr::bind_rows(...)`
-
+  #res <- res_tmp$`dplyr::bind_rows(...)`
+  res <- res_tmp
   return(res)
 }
