@@ -189,11 +189,16 @@ and you will get:
 1) A histogram will all the p value and a red line showing the significance 
 limit -- by default alpha = 0.05
 
-2) Mean p_value
+2) A histogram will all the Bayes factors and a red line showing the limit of
+inconclusive evidence -- by default this is 0
 
-3) the number of p values below the significance level
+3) Mean and median p values
 
-4) Mean of Bayes factors
+4) the number of p values below the significance level
+
+5) Mean and median of Bayes factors
+
+3) the proportion of Bayes factors above 1
 
 ```{r}
 multifear::inference_cs(res_multi, na.rm = TRUE)
