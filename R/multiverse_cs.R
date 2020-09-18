@@ -79,7 +79,9 @@ multiverse_cs <-
           cs1 = dplyr::select(data.frame(x), dplyr::contains("cs1")) %>% colnames(),
           cs2 = dplyr::select(data.frame(x), dplyr::contains("cs2")) %>% colnames(),
           data = data.frame(x),
-          subj = dplyr::select(data.frame(x), dplyr::contains("id")) %>% colnames(),
+          #subj = dplyr::select(data.frame(x), dplyr::contains("id")) %>% colnames(),
+          subj = dplyr::select(data.frame(x), dplyr::contains("id")) %>% colnames() %>%
+            data.frame() %>% slice(1) %>% unlist() %>% as.character(),
           group = NULL,
           include_bayes = include_bayes,
           exclusion = y,
@@ -98,8 +100,8 @@ multiverse_cs <-
           cs1 = dplyr::select(data.frame(x), dplyr::contains("cs1")) %>% colnames(),
           cs2 = dplyr::select(data.frame(x), dplyr::contains("cs2")) %>% colnames(),
           data = data.frame(x),
-          subj = dplyr::select(data.frame(x), dplyr::contains("id")) %>% colnames()
-          %>% data.frame() %>% slice(1) %>% unlist() %>% as.character(),
+          subj = dplyr::select(data.frame(x), dplyr::contains("id")) %>% colnames() %>%
+            data.frame() %>% slice(1) %>% unlist() %>% as.character(),
           group = dplyr::select(data.frame(x), dplyr::contains("group")) %>% colnames(),
           include_bayes = include_bayes,
           exclusion = y,
@@ -107,7 +109,6 @@ multiverse_cs <-
         )
         )
       )
-
     }
 
     # Should output be printed
