@@ -155,7 +155,7 @@ rm_banova_mf <- function(cs1,
     framework = "Bayesian"
   )
 
-  res <- rbind(bfmm_res, bfum_res) %>%
+  res <- rbind(bfmm_res) %>%#, bfum_res) %>%
     tibble::as_tibble() %>%
     dplyr::mutate(data_used = list(data))
 
