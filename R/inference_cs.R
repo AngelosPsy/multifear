@@ -110,13 +110,14 @@ inference_cs <-
         ggplot2::xlab("Bayes factor") +
         ggplot2::theme_minimal()
 
-      p2 <- p2 + ggplot2::geom_vline(
-        ggplot2::aes(xintercept = 1),
-        color = "red",
-        linetype = "dashed",
-        size = 1
-      )
-
+      if (add_line) {
+        p2 <- p2 + ggplot2::geom_vline(
+          ggplot2::aes(xintercept = 1),
+          color = "red",
+          linetype = "dashed",
+          size = 1
+        )
+      }
     }
 
     if (add_line) {
