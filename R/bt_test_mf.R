@@ -86,6 +86,7 @@ bt_test_mf <-
             x = .[.$N == 1,]$value,
             y = .[.$N == 2,]$value,
             rscale = rscale,
+            paired = TRUE,
             nullInterval = eval(parse(text = .$alternative[1]))
           ) %>%
             BayesFactor::extractBF(onlybf = TRUE)
@@ -110,6 +111,7 @@ bt_test_mf <-
             x = .$value,
             y = .$group,
             rscale = rscale,
+            paired = FALSE,
             nullInterval = eval(parse(text = .$alternative[1]))
           ) %>%
             BayesFactor::extractBF(onlybf = TRUE)

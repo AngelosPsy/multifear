@@ -83,7 +83,7 @@ t_test_mf <-
     # Here we run all t.tests and we select later on which ones we want.
 
     #####################################
-    # Paired samples t-test
+    # Independent samples
     #####################################
 
     if (!is.null(group)) {
@@ -121,7 +121,7 @@ t_test_mf <-
     } else {
 
       #####################################
-      # Independent samples
+      # Paired samples t-test
       #####################################
 
       ttest_prep <- purrr::map_dfr(.x = seq_len(3), ~ data) %>%
