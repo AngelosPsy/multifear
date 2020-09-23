@@ -125,13 +125,13 @@ bt_test_mf <-
     # List to be pasted to broom functions
     if (!!phase %in% c("acquisition", "acq")) {
       ttl <-
-        ttest_run[c(3, 1)]
+        ttest_run[c(1, 2)]
       type_test = c("greater", "equal")
     }
 
     if (!!phase %in% c("extinction", "ext")) {
       ttl <-
-        ttest_run[c(3, 1)]
+        ttest_run[c(3, 2)]
       type_test = c("less", "equal")
     }
 
