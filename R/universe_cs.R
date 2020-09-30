@@ -4,7 +4,8 @@
 #'
 #' @description Basic function for running a multiverse analysis for a single data set
 #' @inheritParams rm_anova_mf
-#' @param include_bayes Whether the bayesian analyses should be run. Default to \code{TRUE}
+#' @param include_bayes Whether the Bayesian analyses should be run. Default to \code{TRUE}
+#' @param include_mixed Whether the mixed model results should be run. Default to \code{TRUE}
 #' @param print_output Whether to print the output or not. Default set to \code{TRUE}
 #' @param cut_off cut off score
 #' @param correction whether the Greenhouse-Geisser correction should be applied or not. Default to \code{FALSE}
@@ -42,6 +43,7 @@ universe_cs <-
            subj,
            group = NULL,
            include_bayes = TRUE,
+           include_mixed = TRUE,
            phase = "acquisition",
            dv = "scr",
            print_output = TRUE,
@@ -116,6 +118,22 @@ universe_cs <-
           correction = correction
         )
 
+      if (include_mixed) {
+        # mixed results
+        mixedMod <-
+          multifear::mixed_mf(
+            cs1 = cs1,
+            cs2 = cs2,
+            data = data,
+            subj = subj,
+            group = NULL,
+            phase = phase,
+            dv = dv,
+            exclusion = exclusion,
+            cut_off = cut_off
+          )
+      }
+
       if (include_bayes) {
         banovaNOTIME <-
           multifear::rm_banova_mf(
@@ -173,6 +191,22 @@ universe_cs <-
           exclusion = exclusion,
           cut_off = cut_off
         )
+
+      # mixed results
+      if (include_mixed) {
+        mixedMod <-
+          multifear::mixed_mf(
+            cs1 = cs1,
+            cs2 = cs2,
+            data = data,
+            subj = subj,
+            group = group,
+            phase = phase,
+            dv = dv,
+            exclusion = exclusion,
+            cut_off = cut_off
+          )
+      }
 
       if (include_bayes) {
         banovaNOTIME <-
@@ -246,7 +280,10 @@ universe_cs <-
     if (do_anova) {
       combRes$`repeated measures ANOVA with time` <- anovaTIME
       combRes$`repeated measures ANOVA without time` <- anovaNOTIME
-      if (include_bayes) {
+       if (include_bayes){
+         combRes$`mixed model` <- mixedMod
+       }
+       if (include_bayes) {
         combRes$`repeated measures Bayesian ANOVA with time` <- banovaTIME
         combRes$`repeated measures Bayesian ANOVA without time` <-
           banovaNOTIME

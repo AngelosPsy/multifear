@@ -43,6 +43,7 @@ multiverse_cs <-
            group = NULL,
            cs_paired = NULL,
            include_bayes = TRUE,
+           include_mixed = TRUE,
            phase = "acquisition",
            cutoff = c(0, 1, 2, 3),
            print_output = TRUE,
@@ -61,7 +62,6 @@ multiverse_cs <-
       exclude_cases()
 
     excl_data_sets <- excl_data_sets %>% dplyr::filter(cutoff == "full_data")
-
 
     if (!is.null(cs_paired)){
       chop_p <- multifear::chop_css(cs1 = cs1, cs2 = cs2, data = data, subj = subj, cs_paired = cs_paired)
@@ -85,6 +85,7 @@ multiverse_cs <-
             data.frame() %>% dplyr::slice(1) %>% unlist() %>% as.character(),
           group = NULL,
           include_bayes = include_bayes,
+          include_mixed = include_mixed,
           exclusion = y
         )
         }
@@ -123,6 +124,7 @@ multiverse_cs <-
             data.frame() %>% dplyr::slice(1) %>% unlist() %>% as.character(),
           group = dplyr::select(data.frame(x), dplyr::contains("group")) %>% colnames(),
           include_bayes = include_bayes,
+          include_mixed = include_mixed,
           exclusion = y
         )
         }

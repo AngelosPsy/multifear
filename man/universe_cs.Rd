@@ -11,6 +11,7 @@ universe_cs(
   subj,
   group = NULL,
   include_bayes = TRUE,
+  include_mixed = TRUE,
   phase = "acquisition",
   dv = "scr",
   print_output = TRUE,
@@ -30,7 +31,9 @@ universe_cs(
 
 \item{group}{the name of the group, if included, default to \code{NULL}.}
 
-\item{include_bayes}{Whether the bayesian analyses should be run. Default to \code{TRUE}}
+\item{include_bayes}{Whether the Bayesian analyses should be run. Default to \code{TRUE}}
+
+\item{include_mixed}{Whether the mixed model results should be run. Default to \code{TRUE}}
 
 \item{phase}{The conditioned phase that the analyses refer to. Accepted values are  \code{acquisition},  or \code{acq}, \code{extinction}, or \code{ext}.}
 

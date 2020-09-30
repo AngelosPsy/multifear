@@ -39,7 +39,7 @@
 #' @seealso
 #' \code{\link[nlme]{lme}}
 #' @importFrom nlme lme
-#'
+#' @importFrom nlme lme.formula
 #' @export
 mixed_mf <- function(cs1,
                      cs2,
@@ -74,11 +74,16 @@ mixed_mf <- function(cs1,
   data <- data %>%
     dplyr::mutate(time2 = as.numeric(as.character(time)) - cut_point)
 
+  # Had to change resp column as it was returning this bug in some cases:
+  # Error in array(x, c(length(x), 1L), if (!is.null(names(x))) list(names(x),  :
+  data$resp2 <- data$resp
+
+
   # Two standardizations
   data <- data %>%
-    dplyr::mutate(resp_stand_dv = scale(resp)) %>%
+    dplyr::mutate(resp_stand_dv = scale(resp2)) %>%
     dplyr::group_by(subj) %>%
-    dplyr::mutate(resp_stand_pp = scale(resp)) %>%
+    dplyr::mutate(resp_stand_pp = scale(resp2)) %>%
     dplyr::ungroup()
 
   ##########################################
@@ -254,7 +259,7 @@ mixed_mf <- function(cs1,
               random = ~ 1 |  subj,
               data = data,
               method = "ML",
-              control=list(opt="optim"),
+              control=list(opt = "optim", msMaxIter = 500),
               correlation = nlme::corAR1())
 
   time_cs_model_time <-
@@ -262,7 +267,7 @@ mixed_mf <- function(cs1,
               random = ~ 1 |  subj,
               data = data,
               method = "ML",
-              control=list(opt="optim"),
+              control=list(opt = "optim", msMaxIter = 500),
               correlation = nlme::corAR1())
 
   base_model_time_rand <-
@@ -270,7 +275,7 @@ mixed_mf <- function(cs1,
               random = ~ 1 + time2 |  subj,
               data = data,
               method = "ML",
-              control=list(opt="optim"),
+              control=list(opt = "optim", msMaxIter = 500),
               correlation = nlme::corAR1())
 
   cs_model_time_rand <-
@@ -278,7 +283,7 @@ mixed_mf <- function(cs1,
               random = ~ 1 + time2 |  subj,
               data = data,
               method = "ML",
-              control=list(opt="optim"),
+              control=list(opt = "optim", msMaxIter = 500),
               correlation = nlme::corAR1())
 
   t_anova <-
@@ -339,6 +344,8 @@ mixed_mf <- function(cs1,
   )
 
   #res <- res_tmp$`dplyr::bind_rows(...)`
-  res <- res_tmp
+  res <- res_tmp %>% dplyr::filter(x != "(Intercept)")
+  # Remove intercepts, keep the rest
+
   return(res)
 }

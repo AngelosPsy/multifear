@@ -75,6 +75,7 @@
   utils::globalVariables ("paired")
   utils::globalVariables ("res")
   utils::globalVariables ("resp")
+  utils::globalVariables ("resp2")
   utils::globalVariables ("repeated measures ANOVA with time")
   utils::globalVariables ("repeated measures ANOVA without time")
   utils::globalVariables ("rowname")

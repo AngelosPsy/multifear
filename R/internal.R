@@ -155,6 +155,8 @@ data_preparation_anova = function(cs1,
       group = as.factor(group)
     ) -> data
 
+  colnames(data) <- make.names(colnames(data))
+
   res <- data
 
   return(res)

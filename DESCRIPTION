@@ -27,7 +27,7 @@ Imports:
     ggplot2 (>= 3.2.1),
     sjstats (>= 0.17.9),
     effsize (>= 0.7.8),
-    nlme (>= 3.1.147),
+    nlme (>= 3.1.149),
     BayesFactor (>= 0.9.12.4.2),
     bayestestR (>= 0.5.2),
     lifecycle (>= 0.2.0),
@@ -39,7 +39,9 @@ Imports:
     broom (>= 0.5.5),
     cowplot (>= 1.0.0),
     specr (>= 0.2.1),
-    gridExtra (>= 2.3)
+    gridExtra (>= 2.3),
+    effectsize (>= 0.2.0),
+    esc (>= 0.5.1)
 RoxygenNote: 7.1.0
 Suggests: 
     testthat (>= 2.1.0),

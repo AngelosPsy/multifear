@@ -12,6 +12,7 @@ multiverse_cs(
   group = NULL,
   cs_paired = NULL,
   include_bayes = TRUE,
+  include_mixed = TRUE,
   phase = "acquisition",
   cutoff = c(0, 1, 2, 3),
   print_output = TRUE,
@@ -31,7 +32,9 @@ multiverse_cs(
 
 \item{cs_paired}{A character vector with the trials that were paired. Default is set to \code{NULL}, suggesting that there was full reinforcement}
 
-\item{include_bayes}{Whether the bayesian analyses should be run. Default to \code{TRUE}}
+\item{include_bayes}{Whether the Bayesian analyses should be run. Default to \code{TRUE}}
+
+\item{include_mixed}{Whether the mixed model results should be run. Default to \code{TRUE}}
 
 \item{phase}{The conditioned phase that the analyses refer to. Accepted values are  \code{acquisition},  or \code{acq}, \code{extinction}, or \code{ext}.}
 
