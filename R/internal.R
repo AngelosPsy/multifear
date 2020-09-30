@@ -67,6 +67,7 @@ select_term = function(obj, term, dv = "scr", exclusion = "full data"){
       method = paste("mixed_model", x),
       p.value = valz$p.value,
       effect.size = valz$Value,
+      efffect.size.ma = NA,
       estimate = valz$Value,
       statistic = valz$t.value,
       conf.low = NA,
@@ -83,6 +84,7 @@ select_term = function(obj, term, dv = "scr", exclusion = "full data"){
       p.value = NA,
       effect.size = NA,
       estimate = NA,
+      efffect.size.ma = NA,
       statistic = NA,
       conf.low = NA,
       conf.high = NA

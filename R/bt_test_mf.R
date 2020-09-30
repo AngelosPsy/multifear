@@ -14,6 +14,7 @@
 #' method: the model that was run
 #' p.value: irrelevant here
 #' effect.size: irrelevant here
+#' effect.size.ma: irrelevant here
 #' estimate: the estimate of the test run
 #' statistic: the t-value
 #' conf.low: the lower confidence interval for the estimate
@@ -145,6 +146,7 @@ bt_test_mf <-
       method = paste("Bayesian t-test", type_test),
       p.value = NA,
       effect.size = NA,
+      effect.size.ma = NA,
       estimate = ttl,
       statistic = NA,
       conf.low = NA,

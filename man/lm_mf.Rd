@@ -51,6 +51,7 @@ controls: ignore this column for this test
 method: the model that was run
 p.value: the p-value of the test
 effect.size: the estimated effect size
+effect.size.ma: irrelevant here
 estimate: the estimate of the test run. For the t-test is the mean of the differences
 statistic: the t-value
 conf.low: the lower confidence interval for the estimate

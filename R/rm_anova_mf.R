@@ -24,6 +24,9 @@
 #' method: the model that was run
 #' p.value: the p-value of the test
 #' effect.size: the estimated effect size
+#' effect.size.ma: the estimated effect size for the meta-analytic plots
+#' effect.size.ma.lci: low confidence intervals for the meta-analytic effect size
+#' effect.size.ma.hci: high confidence intervals for the meta-analytic effect size
 #' estimate: the estimate of the test run
 #' statistic: the t-value
 #' conf.low: the lower confidence interval for the estimate
@@ -120,12 +123,34 @@ rm_anova_mf <- function(cs1,
         ))))
   }
 
-  #"group", # This is what is returned from the data_preparation_anova function
+  # This is what is returned from the data_preparation_anova function
   # Effect size
   eff_size <- sjstats::omega_sq(tmpANOVA$aov) %>%
     dplyr::filter(term == selected_term) %>%
     dplyr::select(omegasq) %>%
     as.numeric()
+
+  # meta-analytic effect size
+  data.ma <-
+    data %>%
+    dplyr::group_by(cs, subj) %>%
+    dplyr::summarize(mean = mean(resp)) %>%
+    dplyr::ungroup()
+  cs1.ma <-
+    data.ma %>% dplyr::filter(cs == "cs1") %>% dplyr::select(mean) %>% unlist()
+  cs2.ma <-
+    data.ma %>% dplyr::filter(cs == "cs2") %>% dplyr::select(mean) %>% unlist()
+
+  es.ma <-   esc::esc_mean_se(
+    grp1m = mean(cs1.ma, na.rm = TRUE),
+    grp1se = plotrix::std.error(cs1.ma, na.rm = TRUE),
+    grp1n = length(cs1.ma),
+    grp2m = mean(cs2.ma, na.rm = TRUE),
+    grp2se = plotrix::std.error(cs2.ma, na.rm = TRUE),
+    grp2n = length(cs2.ma),
+    r = .5,
+    es.type = "d"
+  )
 
   # Shape the object for the results. The suppressWarnings is there due to
   # the warning returned by broom::tidy.
@@ -146,6 +171,9 @@ rm_anova_mf <- function(cs1,
       conf.low = NA,
       conf.high = NA,
       effect.size = eff_size,
+      effect.size.ma = es.ma$es,
+      effect.size.ma.lci = es.ma$ci.lo,
+      effect.size.ma.hci = es.ma$ci.hi,
       framework = "NHST"
     )
 
@@ -167,6 +195,9 @@ rm_anova_mf <- function(cs1,
                   method,
                   p.value,
                   effect.size,
+                  effect.size.ma,
+                  effect.size.ma.lci,
+                  effect.size.ma.hci,
                   estimate,
                   statistic,
                   conf.low,

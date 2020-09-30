@@ -41,7 +41,8 @@ Imports:
     specr (>= 0.2.1),
     gridExtra (>= 2.3),
     effectsize (>= 0.2.0),
-    esc (>= 0.5.1)
+    esc (>= 0.5.1),
+    plotrix (>= 3.7.7)
 RoxygenNote: 7.1.0
 Suggests: 
     testthat (>= 2.1.0),

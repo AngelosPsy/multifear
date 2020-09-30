@@ -16,7 +16,7 @@
 #' @param exclusion If any exclusion criteria were applied, default to \code{full data}
 #' @param cut_off cut off
 #' @details Given the correct names for the \code{cs1}, \code{cs2}, \code{subj}, and \code{data}, the function will run one- and two-sided frequentist's t-tests. In case \code{cs1} or \code{cs2} refer to multiple columns, the mean -- per row -- for each one of these variables will be computed first before running the test. Please note that cs1 is implicitly referred to the cs that is reinforced, and cs2 to the cs that is not reinforced.
-#' Depending on whether the data refer to an acquisition or extinction phase (as defined in the \code{phase} argument), the function will return a positive one sided, or negative one-sided, t-test in addition to the two-sided t-test. The returned effect size is  Hedge's g.
+#' Depending on whether the data refer to an acquisition or extinction phase (as defined in the \code{phase} argument), the function will return a positive one sided, or negative one-sided, t-test in addition to the two-sided t-test. The returned effect size is  Hedge's g in the column effect size. For the meta-analytic effect size (effect.size.ma), the returned effect size is Cohen's d.
 #'
 #' The function by default runs a Welch t-test, meaning it assumes unequal variances. This is due to calls that such a test should be preferred over Student t-test, at least for paired samples t-test. Please note that if we let R decide which test to run -- this is done by default in \code{stats::t.test}, then for some test there would be a Student t-test whereas in some others not.
 #'
@@ -29,6 +29,7 @@
 #' method: the model that was run
 #' p.value: the p-value of the test
 #' effect.size: the estimated effect size
+#' effect.size.ma: the estimated effect size for the meta-analytic plots
 #' estimate: the estimate of the test run. For the t-test is the mean of the differences
 #' statistic: the t-value
 #' conf.low: the lower confidence interval for the estimate
@@ -118,12 +119,20 @@ t_test_mf <-
           hedges.correction = TRUE
         )
 
+      ttest_es_ma <-
+        effsize::cohen.d(
+          ttest_prep_tmp$cs ~ ttest_prep_tmp$group,
+          pooled = TRUE,
+          paired = FALSE,
+          na.rm = na.rm,
+          hedges.correction = FALSE
+        )
+
     } else {
 
       #####################################
       # Paired samples t-test
       #####################################
-
       ttest_prep <- purrr::map_dfr(.x = seq_len(3), ~ data) %>%
         dplyr::mutate(alternative = rep(c("two.sided", "less", "greater"),
                                         each = nrow(data)),
@@ -152,11 +161,24 @@ t_test_mf <-
           na.rm = na.rm,
           hedges.correction = TRUE
         )
+
+      ttest_es_ma <-
+        effsize::cohen.d(
+          unlist(data %>% dplyr::select(all_of("cs.1"))),
+          unlist(data %>% dplyr::select(all_of("cs.2"))),
+          pooled = TRUE,
+          paired = TRUE,
+          na.rm = na.rm,
+          hedges.correction = FALSE
+        )
     }
 
     ttest_res <-
       purrr::invoke("rbind", ttest_prep) %>%
-      dplyr::mutate(effect.size = rep(ttest_es$estimate, 3))
+      dplyr::mutate(effect.size = rep(ttest_es$estimate, 3),
+                    effect.size.ma = rep(ttest_es_ma$estimate, 3),
+                    effect.size.ma.lci = rep(as.numeric(ttest_es_ma$conf.int[1]), 3),
+                    effect.size.ma.hci = rep(as.numeric(ttest_es_ma$conf.int[2]), 3))
 
     # List to be pasted to broom functions
     if (!!phase %in% c("acquisition", "acq")) {
@@ -192,6 +214,9 @@ t_test_mf <-
         method,
         p.value,
         effect.size,
+        effect.size.ma,
+        effect.size.ma.lci,
+        effect.size.ma.hci,
         estimate,
         statistic,
         conf.low,

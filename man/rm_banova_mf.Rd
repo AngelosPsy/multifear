@@ -52,6 +52,9 @@ controls: ignore this column for this test
 method: the model that was run
 p.value: irrelevant here
 effect.size: irrelevant here
+effect.size.ma: irrelevant here
+effect.size.lci: irrelevant here
+effect.size.hci: irrelevant here
 estimate: the estimate of the test run
 statistic: the t-value
 conf.low: the lower confidence interval for the estimate

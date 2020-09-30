@@ -16,6 +16,9 @@
 #' method: the model that was run
 #' p.value: irrelevant here
 #' effect.size: irrelevant here
+#' effect.size.ma: irrelevant here
+#' effect.size.lci: irrelevant here
+#' effect.size.hci: irrelevant here
 #' estimate: the estimate of the test run
 #' statistic: the t-value
 #' conf.low: the lower confidence interval for the estimate
@@ -131,6 +134,9 @@ rm_banova_mf <- function(cs1,
     method = paste("rep BANOVA Matched", selected_term),
     p.value = NA,
     effect.size = NA,
+    effect.size.ma = NA,
+    effect.size.ma.lci = NA,
+    effect.size.ma.hci = NA,
     estimate = bfmm,
     statistic = NA,
     conf.low = NA,
@@ -148,6 +154,9 @@ rm_banova_mf <- function(cs1,
     method = paste("rep BANOVA Unmatched", selected_term),
     p.value = NA,
     effect.size = NA,
+    effect.size.ma = NA,
+    effect.size.ma.lci = NA,
+    effect.size.ma.hci = NA,
     estimate = bfum,
     statistic = NA,
     conf.low = NA,
