@@ -95,7 +95,7 @@ inference_cs <-
     # Histogram
     p1 <- data %>%
       tidyr::drop_na(p.value) %>%
-      ggplot2::ggplot(ggplot2::aes(x = p.value)) +
+      ggplot2::ggplot(ggplot2::aes(x = p.value, fill = model)) +
       ggplot2::geom_histogram(bins = 50) +
       ggplot2::xlab("p value") +
       ggplot2::theme_minimal()
@@ -105,7 +105,7 @@ inference_cs <-
       p2 <- data %>%
         data.frame() %>%
         dplyr::filter(framework == "Bayesian") %>%
-        ggplot2::ggplot(ggplot2::aes(x = estimate)) +
+        ggplot2::ggplot(ggplot2::aes(x = estimate, fill = model)) +
         ggplot2::geom_histogram(bins = 50) +
         ggplot2::xlab("Bayes factor") +
         ggplot2::theme_minimal()
