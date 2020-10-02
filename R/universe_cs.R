@@ -5,7 +5,7 @@
 #' @description Basic function for running a multiverse analysis for a single data set
 #' @inheritParams rm_anova_mf
 #' @param include_bayes Whether the Bayesian analyses should be run. Default to \code{TRUE}
-#' @param include_mixed Whether the mixed model results should be run. Default to \code{TRUE}
+#' @param include_mixed Whether the mixed model results should be run. Default to \code{FALSE}
 #' @param print_output Whether to print the output or not. Default set to \code{TRUE}
 #' @param cut_off cut off score
 #' @param correction whether the Greenhouse-Geisser correction should be applied or not. Default to \code{FALSE}
@@ -43,7 +43,7 @@ universe_cs <-
            subj,
            group = NULL,
            include_bayes = TRUE,
-           include_mixed = TRUE,
+           include_mixed = FALSE,
            phase = "acquisition",
            dv = "scr",
            print_output = TRUE,
@@ -280,7 +280,7 @@ universe_cs <-
     if (do_anova) {
       combRes$`repeated measures ANOVA with time` <- anovaTIME
       combRes$`repeated measures ANOVA without time` <- anovaNOTIME
-       if (include_bayes){
+       if (include_mixed){
          combRes$`mixed model` <- mixedMod
        }
        if (include_bayes) {

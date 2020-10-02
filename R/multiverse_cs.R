@@ -43,7 +43,7 @@ multiverse_cs <-
            group = NULL,
            cs_paired = NULL,
            include_bayes = TRUE,
-           include_mixed = TRUE,
+           include_mixed = FALSE,
            phase = "acquisition",
            cutoff = c(0, 1, 2, 3),
            print_output = TRUE,
