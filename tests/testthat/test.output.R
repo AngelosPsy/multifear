@@ -79,6 +79,10 @@ test_that("universe works", {
   expect_known_output(universe_cs(cs1, cs2, subj = subj, data = example_data, include_bayes = FALSE), tmp)
 })
 
+test_that("universe works mixed", {
+  expect_known_output(universe_cs(cs1, cs2, subj = subj, data = example_data, include_bayes = FALSE, include_mixed = TRUE), tmp)
+})
+
 test_that("universe works with groups", {
   expect_known_output(universe_cs(cs1, cs2, subj = subj, data = example_data, group = group, include_bayes = FALSE), tmp)
 })
