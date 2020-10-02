@@ -76,6 +76,7 @@
   utils::globalVariables ("omegasq")
   utils::globalVariables ("p.value")
   utils::globalVariables ("paired")
+  utils::globalVariables ("param")
   utils::globalVariables ("res")
   utils::globalVariables ("resp")
   utils::globalVariables ("resp2")

@@ -48,7 +48,9 @@ controls: ignore this column for this test
 method: the model that was run
 p.value: irrelevant here
 effect.size: irrelevant here
-estimate: the estimate of the test run
+effect.size.ma: the estimated effect size for the meta-analytic plots
+effect.size.ma.lci: low confidence intervals for the meta-analytic effect size
+effect.size.ma.hci: high confidence intervals for the meta-analytic effect size
 statistic: the t-value
 conf.low: the lower confidence interval for the estimate
 conf.high: the higher confidence interval for the estimate

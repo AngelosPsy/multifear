@@ -52,6 +52,13 @@ select_term = function(obj, term, dv = "scr", exclusion = "full data"){
   if(exists("obj")){
     summ <- summary(obj)
 
+    # meta.analytic effect size
+    st <- data.frame(summ$tTable)
+    st_es <-
+      effectsize::t_to_d(t = st$t.value, df = st$DF) %>%
+      dplyr::mutate(param = rownames(st)) %>%
+      dplyr::filter(param == term) %>% data.frame()
+
     valz <- summary(obj)$tTable %>%
       data.frame() %>%
       dplyr::mutate(model = rownames(.)) %>%
@@ -66,8 +73,10 @@ select_term = function(obj, term, dv = "scr", exclusion = "full data"){
       controls = NA,
       method = paste("mixed_model", x),
       p.value = valz$p.value,
-      effect.size = valz$Value,
-      efffect.size.ma = NA,
+      effect.size = NA,
+      efffect.size.ma = st_es$d,
+      effect.size.ma.lci = st_es$CI_low,
+      effect.size.ma.hci = st_es$CI_high,
       estimate = valz$Value,
       statistic = valz$t.value,
       conf.low = NA,
@@ -83,6 +92,9 @@ select_term = function(obj, term, dv = "scr", exclusion = "full data"){
       method = paste("mixed_model", x),
       p.value = NA,
       effect.size = NA,
+      efffect.size.ma = st_es$d,
+      effect.size.ma.lci = st_es$CI_low,
+      effect.size.ma.hci = st_es$CI_high,
       estimate = NA,
       efffect.size.ma = NA,
       statistic = NA,

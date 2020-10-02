@@ -40,7 +40,7 @@ Imports:
     cowplot (>= 1.0.0),
     specr (>= 0.2.1),
     gridExtra (>= 2.3),
-    effectsize (>= 0.2.0),
+    effectsize (>= 0.3.3),
     esc (>= 0.5.1),
     plotrix (>= 3.7.7)
 RoxygenNote: 7.1.0

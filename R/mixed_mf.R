@@ -30,7 +30,9 @@
 #' method: the model that was run
 #' p.value: irrelevant here
 #' effect.size: irrelevant here
-#' estimate: the estimate of the test run
+#' effect.size.ma: the estimated effect size for the meta-analytic plots
+#' effect.size.ma.lci: low confidence intervals for the meta-analytic effect size
+#' effect.size.ma.hci: high confidence intervals for the meta-analytic effect size
 #' statistic: the t-value
 #' conf.low: the lower confidence interval for the estimate
 #' conf.high: the higher confidence interval for the estimate
@@ -77,7 +79,6 @@ mixed_mf <- function(cs1,
   # Had to change resp column as it was returning this bug in some cases:
   # Error in array(x, c(length(x), 1L), if (!is.null(names(x))) list(names(x),  :
   data$resp2 <- data$resp
-
 
   # Two standardizations
   data <- data %>%
@@ -205,7 +206,6 @@ mixed_mf <- function(cs1,
     b_mc_pp <- NA
   }
 
-
   if (all(sapply(
     c(
       "base_model_rtime_stand_dv",
@@ -306,7 +306,7 @@ mixed_mf <- function(cs1,
     eval() %>%
     summary()
 
-  # Gather the terms now
+  # Gather the terms now. Inside the function we compute the meta_analyric effect size as well
   base_model_stand_pp_tab <-
     select_term(base_model_stand_pp, "(Intercept)", dv = dv, exclusion = exclusion)
   cs_model_stand_pp_tab <-

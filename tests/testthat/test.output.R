@@ -20,7 +20,6 @@ test_that("bt_test_mf for groups works", {
   expect_known_output(bt_test_mf(cs1, cs2, subj = subj, group = group, data = example_data), tmp)
 })
 
-
 test_that("t_test_mf works", {
   expect_known_output(t_test_mf(cs1, cs2, subj = subj, data = example_data), tmp)
 })
@@ -80,8 +79,14 @@ test_that("universe works", {
   expect_known_output(universe_cs(cs1, cs2, subj = subj, data = example_data, include_bayes = FALSE), tmp)
 })
 
+test_that("universe works with groups", {
+  expect_known_output(universe_cs(cs1, cs2, subj = subj, data = example_data, group = group, include_bayes = FALSE), tmp)
+})
+
 test_that("multiverse works", {
   expect_known_output(multiverse_cs(cs1, cs2, subj = subj, data = example_data, include_bayes = FALSE), tmp)
 })
 
-
+test_that("multiverse works with groups", {
+  expect_known_output(multiverse_cs(cs1, cs2, subj = subj, data = example_data, group = group, include_bayes = FALSE), tmp)
+})
