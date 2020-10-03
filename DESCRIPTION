@@ -42,7 +42,9 @@ Imports:
     gridExtra (>= 2.3),
     effectsize (>= 0.3.3),
     esc (>= 0.5.1),
-    plotrix (>= 3.7.7)
+    plotrix (>= 3.7.7),
+    forestplot (>= 1.10),
+    vdiffr (>= 0.3.2.2)
 RoxygenNote: 7.1.0
 Suggests: 
     testthat (>= 2.1.0),

@@ -94,3 +94,8 @@ test_that("multiverse works", {
 test_that("multiverse works with groups", {
   expect_known_output(multiverse_cs(cs1, cs2, subj = subj, data = example_data, group = group, include_bayes = FALSE), tmp)
 })
+
+test_that("plots", {
+  tmp <- universe_cs(cs1, cs2, subj = subj, data = example_data, include_bayes = FALSE)
+  vdiffr::expect_doppelganger("forestplot", forestplot_mf(tmp, new_page = FALSE))
+})
