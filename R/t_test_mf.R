@@ -114,7 +114,7 @@ t_test_mf <-
       # Compute effect size
       ttest_es <-
         effsize::cohen.d(
-          ttest_prep_tmp$cs ~ ttest_prep_tmp$group,
+          ttest_prep_tmp$cs ~ as.factor(ttest_prep_tmp$group),
           pooled = TRUE,
           paired = FALSE,
           na.rm = na.rm,
@@ -123,7 +123,7 @@ t_test_mf <-
 
       ttest_es_ma <-
         effsize::cohen.d(
-          ttest_prep_tmp$cs ~ ttest_prep_tmp$group,
+          ttest_prep_tmp$cs ~ as.factor(ttest_prep_tmp$group),
           pooled = TRUE,
           paired = FALSE,
           na.rm = na.rm,

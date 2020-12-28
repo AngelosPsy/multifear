@@ -75,6 +75,8 @@ test_that("combine cs works", {
   expect_known_output(combine_cs(cs1 = cs1, cs2 = cs2, data = bf_data), tmp)
 })
 
+context("Functions for universe")
+
 test_that("universe works", {
   expect_known_output(universe_cs(cs1, cs2, subj = subj, data = example_data, include_bayes = FALSE), tmp)
 })
@@ -87,6 +89,8 @@ test_that("universe works with groups", {
   expect_known_output(universe_cs(cs1, cs2, subj = subj, data = example_data, group = group, include_bayes = FALSE), tmp)
 })
 
+context("Functions for multiverse")
+
 test_that("multiverse works", {
   expect_known_output(multiverse_cs(cs1, cs2, subj = subj, data = example_data, include_bayes = FALSE), tmp)
 })
@@ -94,6 +98,8 @@ test_that("multiverse works", {
 test_that("multiverse works with groups", {
   expect_known_output(multiverse_cs(cs1, cs2, subj = subj, data = example_data, group = group, include_bayes = FALSE), tmp)
 })
+
+context("Functions plots")
 
 test_that("plots", {
   tmp <- universe_cs(cs1, cs2, subj = subj, data = example_data, include_bayes = FALSE)

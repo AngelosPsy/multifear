@@ -45,7 +45,7 @@ Imports:
     plotrix (>= 3.7.7),
     forestplot (>= 1.10),
     vdiffr (>= 0.3.2.2)
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 Suggests: 
     testthat (>= 2.1.0),
     covr
