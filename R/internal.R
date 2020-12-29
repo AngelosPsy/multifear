@@ -328,3 +328,11 @@ format_results <- function(df, null = 0, desc = FALSE) {
                                     TRUE ~ "darkgrey"))
   return(df)
 }
+
+# Convert t valueto r^2
+t_to_r2 <- function(ttestRes){
+  t <- ttestRes$statistic
+  df <- ttestRes$parameter
+  res <- (t^2)/(t^2 + df)
+  return(res)
+}

@@ -121,8 +121,21 @@ t_test_mf <-
           hedges.correction = TRUE
         )
 
-      ttest_es_ma <-
-        effsize::cohen.d(
+        ttest_prep <- ttest_prep_tmp %>%
+        dplyr::group_by(group2) %>%
+        dplyr::group_map(
+          ~ stats::t.test(
+            formula = .$cs ~ .$group,
+            data = .,
+            paired = FALSE,
+            alternative = .$alternative[1],
+            var.equal = FALSE
+          ) %>%
+            broom::tidy()
+        )
+
+
+        ttest_es_ma <-  effsize::cohen.d(
           ttest_prep_tmp$cs ~ as.factor(ttest_prep_tmp$group),
           pooled = TRUE,
           paired = FALSE,
@@ -178,9 +191,9 @@ t_test_mf <-
     ttest_res <-
       purrr::invoke("rbind", ttest_prep) %>%
       dplyr::mutate(effect.size = rep(ttest_es$estimate, 3),
-                    effect.size.ma = rep(ttest_es_ma$estimate, 3),
-                    effect.size.ma.lci = rep(as.numeric(ttest_es_ma$conf.int[1]), 3),
-                    effect.size.ma.hci = rep(as.numeric(ttest_es_ma$conf.int[2]), 3))
+                    effect.size.ma = rep(esc::eta_squared(ttest_es_ma$estimate), 3),
+                    effect.size.ma.lci = rep(esc::eta_squared(as.numeric(ttest_es_ma$conf.int[1])), 3),
+                    effect.size.ma.hci = rep(esc::eta_squared(as.numeric(ttest_es_ma$conf.int[2])), 3))
 
     # List to be pasted to broom functions
     if (!!phase %in% c("acquisition", "acq")) {
