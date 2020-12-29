@@ -34,17 +34,15 @@ Imports:
     fastDummies (>= 1.6.1),
     ggraph (>= 2.0.1),
     igraph (>= 1.2.4.2),
-    generics (>= 0.0.2),
     vctrs (>= 0.3.1),
     broom (>= 0.5.5),
     cowplot (>= 1.0.0),
-    specr (>= 0.2.1),
     gridExtra (>= 2.3),
     effectsize (>= 0.3.3),
     esc (>= 0.5.1),
-    plotrix (>= 3.7.7),
     forestplot (>= 1.10),
-    vdiffr (>= 0.3.2.2)
+    vdiffr (>= 0.3.2.2),
+    specr (>= 0.2.1)
 RoxygenNote: 7.1.1
 Suggests: 
     testthat (>= 2.1.0),
