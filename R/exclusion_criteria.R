@@ -51,7 +51,8 @@ exclusion_criteria <- function(data, cutoff = 0) {
     dplyr::select(cs1_t10per, cs1_b10per, cs2_t10per, cs2_b10per, id, group)
   min_first  <- data %>%
     dplyr::filter(diff_2_trials >= two_thre, diff_4_trials >= four_thre, diff_5_trials >= five_thre) %>%
-    dplyr::select(cs1_minfirst, cs2_minfirst, id, group)
+    #dplyr::select(cs1_minfirst, cs2_minfirst, id, group)
+    dplyr::select(dplyr::contains("minfirst"), id, group)
   th3_per    <- data %>%
     dplyr::filter(diff_2_trials >= two_thre, diff_4_trials >= four_thre, diff_5_trials >= five_thre) %>%
     dplyr::select(dplyr::contains("33per"), id, group)

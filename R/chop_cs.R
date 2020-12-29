@@ -84,7 +84,8 @@ chop_cs <- function(cs, data, subj, group = NULL, prefix = "cs", na.rm = FALSE) 
     tibble::enframe(name = NULL, value = paste(prefix, "minfirst", sep = "_"))
 
   # All trials
-  csall <- cs %>% rowMeans(na.rm = na.rm) %>%
+  csall <- cs %>%
+    rowMeans(na.rm = na.rm) %>%
     tibble::enframe(name = NULL, value = paste(prefix, "all", sep = "_"))
 
   # 33% of the trials

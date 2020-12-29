@@ -30,13 +30,13 @@ forestplot_mf <-
                       exclusion == "per2trials" ~ "per 2 trials",
                     )) -> data
 
-    forestplot::forestplot(
-      labeltext = paste(data$method, rep("| data used:", nrow(data), sep = ""),  data$method2),
-      mean = data$effect.size.ma,
-      lower = data$effect.size.ma.lci,
-      upper = data$effect.size.ma.hci,
-      grid = TRUE,
-      ...
-    )
+      forestplot::forestplot(
+        labeltext = paste(data$method, rep("| data used:", nrow(data), sep = ""),  data$method2),
+        mean = data$effect.size.ma,
+        lower = data$effect.size.ma.lci,
+        upper = data$effect.size.ma.hci,
+        grid = TRUE,
+        ...
+      )
 
 }
