@@ -24,7 +24,7 @@
 #' method: the model that was run
 #' p.value: the p-value of the test
 #' effect.size: the estimated effect size
-#' effect.size.ma: the estimated effect size for the meta-analytic plots
+#' effect.size.ma: the estimated effect size for the meta-analytic plots. Here we computed the eta squared
 #' effect.size.ma.lci: low confidence intervals for the meta-analytic effect size
 #' effect.size.ma.hci: high confidence intervals for the meta-analytic effect size
 #' estimate: the estimate of the test run
