@@ -135,7 +135,6 @@ inference_cs <-
       res_tmp_plot <- p1
     }
 
-    res_tmp_plot %>% methods::show()
-
-    return(res_tmp)
+    res <- res_tmp_plot
+    res
   }
