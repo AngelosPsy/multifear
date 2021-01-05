@@ -86,7 +86,8 @@ multiverse_cs <-
           group = NULL,
           include_bayes = include_bayes,
           include_mixed = include_mixed,
-          exclusion = y
+          exclusion = y,
+          phase = phase
         )
         }
       )
