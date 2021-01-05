@@ -126,7 +126,8 @@ multiverse_cs <-
           group = dplyr::select(data.frame(x), dplyr::contains("group")) %>% colnames(),
           include_bayes = include_bayes,
           include_mixed = include_mixed,
-          exclusion = y
+          exclusion = y,
+          phase = phase
         )
         }
       )
