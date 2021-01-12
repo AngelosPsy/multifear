@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>inference_cs — inference_cs • multifear</title>
+<title>inference_plot — inference_plot • multifear</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="inference_cs — inference_cs" />
-<meta property="og:description" content="Function for summarizing the multiverse results." />
+<meta property="og:title" content="inference_plot — inference_plot" />
+<meta property="og:description" content="Function for plotting the multiverse results." />
 
 
 
@@ -108,16 +108,22 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>inference_cs</h1>
-    <small class="dont-index">Source: <a href='https://github.com/AngelosPsy/multifear/blob/master/R/inference_cs.R'><code>R/inference_cs.R</code></a></small>
-    <div class="hidden name"><code>inference_cs.Rd</code></div>
+    <h1>inference_plot</h1>
+    <small class="dont-index">Source: <a href='https://github.com/AngelosPsy/multifear/blob/master/R/inference_plot.R'><code>R/inference_plot.R</code></a></small>
+    <div class="hidden name"><code>inference_plot.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Function for summarizing the multiverse results.</p>
+    <p>Function for plotting the multiverse results.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>inference_cs</span><span class='op'>(</span><span class='va'>data</span>, alpha_level <span class='op'>=</span> <span class='fl'>0.05</span>, na.rm <span class='op'>=</span> <span class='cn'>FALSE</span>, framework <span class='op'>=</span> <span class='st'>"Both"</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>inference_plot</span><span class='op'>(</span>
+  <span class='va'>data</span>,
+  alpha_level <span class='op'>=</span> <span class='fl'>0.05</span>,
+  add_line <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  na.rm <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  framework <span class='op'>=</span> <span class='st'>"Both"</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -131,6 +137,10 @@
       <td><p>What should be the alpha level used (default to 0.05).</p></td>
     </tr>
     <tr>
+      <th>add_line</th>
+      <td><p>Whether to add a line with the alpha level in the produced histogram (default to <code>TRUE</code>)</p></td>
+    </tr>
+    <tr>
       <th>na.rm</th>
       <td><p>Should NA's be removed (default to <code>FALSE</code>). See details.</p></td>
     </tr>
@@ -142,11 +152,11 @@
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A data frame with summaries of the results.</p>
+    <p>A histogram summarizing the results.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p><a href='https://www.tidyverse.org/lifecycle/#experimental'><img src='figures/lifecycle-experimental.svg' alt='Experimental lifecycle'></a></p>
-<p>For now the function returns mean, median, standard deviations of p values and proportion of p values below a criterion defined by the <code>alpha_level</code> parameter (default to 0.05) as well as mean Bayes factors (please see the `framework` arguument). The user may choose to drop the NAs for the summary statistic.</p>
+<p>For the plot the NAs in the <code>p.value</code> column are removed automatically -- so what <code>ggplot2</code> does automatically but here no message is returned.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
