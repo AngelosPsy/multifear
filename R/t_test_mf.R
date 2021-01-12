@@ -134,7 +134,6 @@ t_test_mf <-
             broom::tidy()
         )
 
-
         ttest_es_ma <-  effsize::cohen.d(
           ttest_prep_tmp$cs ~ as.factor(ttest_prep_tmp$group),
           pooled = TRUE,

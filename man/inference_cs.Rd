@@ -21,7 +21,7 @@ inference_cs(
 
 \item{na.rm}{Should NA's be removed (default to \code{FALSE}). See details.}
 
-\item{framework}{Inference framework. Values could be "NHST", "Bayesian", or "Both" (no case sensitivity).}
+\item{framework}{Inference framework. Values could be "NHST", "Bayesian", or "Both" (no case sensitivity)}
 }
 \value{
 A data frame with results together with a histogram summarizing the results.
