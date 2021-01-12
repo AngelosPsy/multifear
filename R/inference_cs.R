@@ -5,18 +5,16 @@
 #' @description Function for summarizing the multiverse results.
 #' @param data a data frame with the results of a multiverse analyses.
 #' @param alpha_level What should be the alpha level used (default to 0.05).
-#' @param add_line Whether to add a line with the alpha level in the produced histogram (default to \code{TRUE})
 #' @param na.rm Should NA's be removed (default to \code{FALSE}). See details.
 #' @param framework Inference framework. Values could be "NHST", "Bayesian", or "Both" (no case sensitivity)
-#' @return A data frame with results together with a histogram summarizing the results.
-  #' @details For now the function returns mean p values and proportion of p values below a criterion defined by the \code{alpha_level} parameter (default to 0.05) as well as mean Bayes factors (please see the `framework` arguument). The user may choose to drop the NAs for the summary statistic. However, for the plot the NAs in the \code{p.value} column are removed automatically -- so what \code{ggplot2} does automatically but here no message is returned.
+#' @return A data frame with summaries of the results.
+  #' @details For now the function returns mean, median, standard deviations of p values and proportion of p values below a criterion defined by the \code{alpha_level} parameter (default to 0.05) as well as mean Bayes factors (please see the `framework` arguument). The user may choose to drop the NAs for the summary statistic.
 #'
 #' @export
 
 inference_cs <-
   function(data,
            alpha_level = 0.05,
-           add_line = TRUE,
            na.rm = FALSE,
            framework = "Both") {
 
@@ -83,9 +81,6 @@ inference_cs <-
         data.frame(mean_p_value = mean_p_value, median_p_value  = median_p_value,
                    sd_p_value = sd_p_value, prop_p_value = prop_p_value)
     } else if (framework %in% c("bayesian")) {
-      #dataBayes <-
-      #  data %>% dplyr::filter(framework == "Bayesian")
-
       res_tmp <-
         data.frame(mean_bf_value   = mean_bf_value,
                    median_bf_value = median_bf_value,
@@ -104,73 +99,6 @@ inference_cs <-
                    sd_bf_value = sd_bf_value,
                    prop_bf_value   = prop_bf_value)
     }
-
-    # Histogram
-    p1 <- data %>%
-      tidyr::drop_na(p.value) %>%
-      ggplot2::ggplot(ggplot2::aes(x = p.value, fill = model)) +
-      ggplot2::geom_histogram(bins = 50) +
-      ggplot2::xlab("p value") +
-      ggplot2::theme_minimal() +
-      ggplot2::annotate(
-        "text",
-        x = Inf,
-        y = Inf,
-        label = paste0("Mean = ", round(mean_p_value, 3),
-                       "\nMedian = ", round(median_p_value, 3),
-                       "\nSD = ", round(sd_p_value, 3),
-                       "\nProp = ", round(prop_p_value, 2), "%"),
-        vjust = 1,
-        hjust = 1
-      )
-
-
-    if (framework %in% c("bayesian", "both")){
-      p2 <- data %>%
-        data.frame() %>%
-        dplyr::filter(framework == "Bayesian") %>%
-        ggplot2::ggplot(ggplot2::aes(x = estimate, fill = model)) +
-        ggplot2::geom_histogram(bins = 50) +
-        ggplot2::xlab("Bayes factor") +
-        ggplot2::theme_minimal() +
-        ggplot2::annotate(
-          "text",
-          x = Inf,
-          y = Inf,
-          label = paste0("Mean = ", prettyNum(mean_bf_value, 3),
-                         "\nMedian = ", prettyNum(median_bf_value, 3),
-                         "\nSD = ", prettyNum(sd_bf_value, 3),
-                         "\nProp = ", round(prop_bf_value, 3), "%"),
-          vjust = 1,
-          hjust = 1
-        )
-
-      if (add_line) {
-        p2 <- p2 + ggplot2::geom_vline(
-          ggplot2::aes(xintercept = 1),
-          color = "red",
-          linetype = "dashed",
-          size = 1
-        )
-      }
-    }
-
-    if (add_line) {
-      p1 <- p1 + ggplot2::geom_vline(
-        ggplot2::aes(xintercept = alpha_level),
-        color = "red",
-        linetype = "dashed",
-        size = 1
-      )
-    }
-
-    if (framework %in% c("bayesian", "both")){
-       res_tmp_plot <- invisible(gridExtra::grid.arrange(p1, p2, nrow = 1, ncol = 2))
-    } else{
-      res_tmp_plot <- p1
-    }
-
-    res_tmp_plot
 
     res <- res_tmp
     res
