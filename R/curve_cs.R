@@ -20,7 +20,7 @@
 #'   specification usually makes only sense of the number of specifications is
 #'   very large and one wants to simplify the visualization.
 #' @return A plot
-#' @details This plot is a slight modification of the \code{specr::plot_specs} function. Please check the references and credit the original authors.
+#' @details This plot is a slight modification of the \code{plot_specs} function. Please check the references and credit the original authors.
 #'
 #' @references
 #' Masur, Philipp K. & Scharkow, M. (2019). specr: Statistical functions for conducting specification curve analyses. Available from https://github.com/masurp/specr.

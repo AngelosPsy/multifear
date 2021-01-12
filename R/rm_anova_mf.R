@@ -125,14 +125,16 @@ rm_anova_mf <- function(cs1,
 
   # This is what is returned from the data_preparation_anova function
   # Effect size. Here we have the omega squared
-  eff_size <- sjstats::omega_sq(tmpANOVA$aov) %>%
-    dplyr::filter(omegasq %in% c(paste0("subj:", selected_term), selected_term)) %>%
+  eff_size <- effectsize::omega_squared(tmpANOVA$aov, partial = FALSE) %>%
+    data.frame() %>%
+    dplyr::filter(Parameter %in% c(paste0("subj:", selected_term), selected_term)) %>%
     dplyr::select(Omega2) %>%
     as.numeric()
 
   # meta-analytic effect size. We use explained variance so we have eta squared
-  es.ma <- sjstats::eta_sq(tmpANOVA$aov, partial = FALSE, ci.lvl = .95) %>% #sjstats::omega_sq(tmpANOVA$aov) %>%
-    dplyr::filter(etasq %in% c(paste0("subj:", selected_term), selected_term))
+  es.ma <- effectsize::eta_squared(tmpANOVA$aov, partial = FALSE, ci = .95) %>%
+    data.frame() %>%
+    dplyr::filter(Parameter %in% c(paste0("subj:", selected_term), selected_term))
 
   #data.ma <-
   #  data %>%
@@ -175,8 +177,8 @@ rm_anova_mf <- function(cs1,
       conf.high = NA,
       effect.size = eff_size,
       effect.size.ma = es.ma$Eta2, #es.ma$es,
-      effect.size.ma.lci = es.ma$conf.low, #es.ma$ci.lo,
-      effect.size.ma.hci = es.ma$conf.high, #es.ma$ci.hi,
+      effect.size.ma.lci = es.ma$CI_low, #es.ma$ci.lo,
+      effect.size.ma.hci = es.ma$CI_high, #es.ma$ci.hi,
       framework = "NHST"
     )
 

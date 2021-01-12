@@ -18,7 +18,7 @@ Plot decision tree
 \lifecycle{experimental}
 }
 \details{
-This plot is a slight modification of the \code{specr::plot_decisiontree}. Please check the references.
+This plot is a slight modification of the \code{plot_decisiontree} function. Please check the references.
 }
 \references{
 Masur, Philipp K. & Scharkow, M. (2019). specr: Statistical functions for conducting specification curve analyses. Available from https://github.com/masurp/specr.

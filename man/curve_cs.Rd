@@ -48,7 +48,7 @@ Plot the specification curve
 \lifecycle{experimental}
 }
 \details{
-This plot is a slight modification of the \code{specr::plot_specs} function. Please check the references and credit the original authors.
+This plot is a slight modification of the \code{plot_specs} function. Please check the references and credit the original authors.
 }
 \references{
 Masur, Philipp K. & Scharkow, M. (2019). specr: Statistical functions for conducting specification curve analyses. Available from https://github.com/masurp/specr.
