@@ -72,7 +72,7 @@ rm_banova_mf <- function(cs1,
       cs2 = cs2,
       data = data,
       subj = subj,
-      time = TRUE,
+      time = time,
       group = group
     )
 
