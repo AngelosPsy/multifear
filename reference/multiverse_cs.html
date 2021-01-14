@@ -204,13 +204,6 @@ conf.low: the lower confidence interval for the estimate
 conf.high: the higher confidence interval for the estimate
 framework: were the data analysed within a NHST or Bayesian framework?
 data_used: a list with the data used for the specific test</p>
-<p>#' # Load data and define argument to be fed in universe_cs
-data("example_data", package = "multifear")
-example_data &lt;- example_data[1:10, ]
-cs1 &lt;- paste0("CSP", 1:10)
-cs2 &lt;- paste0("CSM", 1:10)
-subj = "id"
-multiverse_cs(cs1, cs2, subj = subj, data = example_data)</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p><a href='https://www.tidyverse.org/lifecycle/#experimental'><img src='figures/lifecycle-experimental.svg' alt='Experimental lifecycle'></a></p>
