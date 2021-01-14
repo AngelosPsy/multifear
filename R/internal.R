@@ -336,3 +336,16 @@ t_to_r2 <- function(ttestRes){
   res <- (t^2)/(t^2 + df)
   return(res)
 }
+
+r_number <- function(num, threeshold_min = 0.001, threeshold_max = 1000) {
+
+  if(num < threeshold_min){
+   res <- paste("<", threeshold_min)
+  } else if(num > threeshold_max){
+    res <- paste(">", threeshold_max)
+  } else {
+    res <- paste(" = ", round(num, 3))
+  }
+
+  return(res)
+}

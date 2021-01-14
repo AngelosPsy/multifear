@@ -116,9 +116,9 @@ inference_plot <-
         "text",
         x = Inf,
         y = Inf,
-        label = paste0("Mean = ", round(mean_p_value, 3),
-                       "\nMedian = ", round(median_p_value, 3),
-                       "\nSD = ", round(sd_p_value, 3),
+        label = paste0("Mean ", r_number(mean_p_value), #round(mean_p_value, 3),
+                       "\nMedian ", r_number(median_p_value),
+                       "\nSD ", r_number(sd_p_value),
                        "\nProp = ", round(prop_p_value, 2), "%"),
         vjust = 1,
         hjust = 1
@@ -126,6 +126,8 @@ inference_plot <-
 
 
     if (framework %in% c("bayesian", "both")){
+
+
       p2 <- data %>%
         data.frame() %>%
         dplyr::filter(framework == "Bayesian") %>%
@@ -137,10 +139,10 @@ inference_plot <-
           "text",
           x = Inf,
           y = Inf,
-          label = paste0("Mean = ", prettyNum(mean_bf_value, 3),
-                         "\nMedian = ", prettyNum(median_bf_value, 3),
-                         "\nSD = ", prettyNum(sd_bf_value, 3),
-                         "\nProp = ", round(prop_bf_value, 3), "%"),
+          label = paste0("Mean ", r_number(mean_bf_value),
+                         "\nMedian ", r_number(median_bf_value),
+                         "\nSD ", r_number(sd_bf_value),
+                         "\nProp ", round(prop_bf_value, 3), "%"),
           vjust = 1,
           hjust = 1
         )
