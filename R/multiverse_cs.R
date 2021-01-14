@@ -25,8 +25,9 @@
 #' conf.high: the higher confidence interval for the estimate
 #' framework: were the data analysed within a NHST or Bayesian framework?
 #' data_used: a list with the data used for the specific test
+#' @example
 #'
-#'#' # Load data and define argument to be fed in universe_cs
+#' # Load data and define argument to be fed in universe_cs
 #' data("example_data", package = "multifear")
 #' example_data <- example_data[1:10, ]
 #' cs1 <- paste0("CSP", 1:10)
