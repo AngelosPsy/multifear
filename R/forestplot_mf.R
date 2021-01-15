@@ -36,7 +36,8 @@ forestplot_mf <-
       hci <- data$effect.size.ma.hci
 
       if(ci == FALSE){
-        lci <- hci <- data$effect.size.ma
+        lci <- data$effect.size.ma - 0.0001 # Zero did not work
+        hci <- data$effect.size.ma + 0.0001
       }
 
       forestplot::forestplot(
