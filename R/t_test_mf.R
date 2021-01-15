@@ -187,12 +187,16 @@ t_test_mf <-
         )
     }
 
+    # Compute CIs and convert them
+    es_ma <- ttest_es_ma$estimate
+    ci_ma <- ttest_es_ma$estimate - ttest_es_ma$conf.int[1]
+
     ttest_res <-
       purrr::invoke("rbind", ttest_prep) %>%
       dplyr::mutate(effect.size = rep(ttest_es$estimate, 3),
-                    effect.size.ma = rep(esc::eta_squared(ttest_es_ma$estimate), 3),
-                    effect.size.ma.lci = rep(esc::eta_squared(as.numeric(ttest_es_ma$conf.int[1])), 3),
-                    effect.size.ma.hci = rep(esc::eta_squared(as.numeric(ttest_es_ma$conf.int[2])), 3))
+                    effect.size.ma = rep(esc::eta_squared(d = es_ma), 3),
+                    effect.size.ma.lci = rep(esc::eta_squared(d = es_ma - ci_ma), 3),
+                    effect.size.ma.hci = rep(esc::eta_squared(d = es_ma + ci_ma), 3))
 
     # List to be pasted to broom functions
     if (!!phase %in% c("acquisition", "acq")) {
