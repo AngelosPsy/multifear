@@ -30,7 +30,8 @@ forestplot_mf <-
                       exclusion == "twenty_per" ~ "trials divided by 20%",
                       exclusion == "fl2trials" ~ "first 2 vs last 2 trials",
                       exclusion == "per2trials" ~ "per 2 trials",
-                    )) -> data
+                    )) %>%
+      arrange(model) -> data
 
       lci <- data$effect.size.ma.lci
       hci <- data$effect.size.ma.hci
