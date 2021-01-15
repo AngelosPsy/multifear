@@ -4,10 +4,12 @@
 \alias{forestplot_mf}
 \title{forestplot_mf}
 \usage{
-forestplot_mf(data, ...)
+forestplot_mf(data, ci = FALSE, ...)
 }
 \arguments{
 \item{data}{a universe_mf or multiverse_mf object}
+
+\item{ci}{should confidence intervals be included -- default to FALSE}
 
 \item{...}{any additional argument}
 }
@@ -22,4 +24,5 @@ Basic function for forest plot
 \lifecycle{experimental}
 
 This is a wrapper around the \code{forestplot::forestplot} function.
+Default for ci is FALSE.
 }

@@ -4,15 +4,17 @@
 #'
 #' @description Basic function for forest plot
 #' @param data a universe_mf or multiverse_mf object
+#' @param ci should confidence intervals be included -- default to FALSE
 #' @param ... any additional argument
 #' @details This is a wrapper around the \code{forestplot::forestplot} function.
+#' Default for ci is FALSE.
 #' @return A plot
 #'#'
 #' @importFrom dplyr %>%
 #' @export
 
 forestplot_mf <-
-  function(data, ...) {
+  function(data, ci = FALSE, ...) {
     data %>%
       dplyr::filter(framework == "NHST") -> data
 
@@ -30,11 +32,18 @@ forestplot_mf <-
                       exclusion == "per2trials" ~ "per 2 trials",
                     )) -> data
 
+      lci <- data$effect.size.ma.lci
+      hci <- data$effect.size.ma.hci
+
+      if(ci == FALSE){
+        lci <- hci <- data$effect.size.ma
+      }
+
       forestplot::forestplot(
         labeltext = paste(data$method, rep("| data used:", nrow(data), sep = ""),  data$method2),
         mean = data$effect.size.ma,
-        lower = data$effect.size.ma.lci,
-        upper = data$effect.size.ma.hci,
+        lower = lci,
+        upper = hci,
         grid = TRUE,
         ...
       )
