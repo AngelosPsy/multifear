@@ -24,7 +24,7 @@
 #' method: the model that was run
 #' p.value: the p-value of the test
 #' effect.size: the estimated effect size
-#' effect.size.ma: the estimated effect size for the meta-analytic plots. Here we computed the eta squared
+#' effect.size.ma: the estimated effect size for the meta-analytic plots
 #' effect.size.ma.lci: low confidence intervals for the meta-analytic effect size
 #' effect.size.ma.hci: high confidence intervals for the meta-analytic effect size
 #' estimate: the estimate of the test run
@@ -132,6 +132,9 @@ rm_anova_mf <- function(cs1,
     as.numeric()
 
   # meta-analytic effect size. We use explained variance so we have eta squared
+  #es.ma <- effectsize::cohens_f(tmpANOVA$aov, partial = FALSE, ci = .95) %>%
+  #  data.frame() %>%
+  #  dplyr::filter(Parameter %in% c(paste0("subj:", selected_term), selected_term))
   es.ma <- effectsize::eta_squared(tmpANOVA$aov, partial = FALSE, ci = .95) %>%
     data.frame() %>%
     dplyr::filter(Parameter %in% c(paste0("subj:", selected_term), selected_term))
@@ -176,7 +179,7 @@ rm_anova_mf <- function(cs1,
       conf.low = NA,
       conf.high = NA,
       effect.size = eff_size,
-      effect.size.ma = es.ma$Eta2, #es.ma$es,
+      effect.size.ma = es.ma$Eta2,#Cohens_f, #Eta2, #es.ma$es,
       effect.size.ma.lci = es.ma$CI_low, #es.ma$ci.lo,
       effect.size.ma.hci = es.ma$CI_high, #es.ma$ci.hi,
       framework = "NHST"
