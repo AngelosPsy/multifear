@@ -189,8 +189,8 @@ t_test_mf <-
     }
 
     # Compute CIs and convert them
-    #es_ma <- ttest_es_ma$estimate
-    #ci_ma <- ttest_es_ma$estimate - ttest_es_ma$conf.int[1]
+    es_ma <- ttest_es_ma$estimate
+    ci_ma <- ttest_es_ma$estimate - ttest_es_ma$conf.int[1]
 
     ttest_res <-
       purrr::invoke("rbind", ttest_prep) %>%
