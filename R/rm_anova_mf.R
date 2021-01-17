@@ -135,7 +135,7 @@ rm_anova_mf <- function(cs1,
   #es.ma <- effectsize::cohens_f(tmpANOVA$aov, partial = FALSE, ci = .95) %>%
   #  data.frame() %>%
   #  dplyr::filter(Parameter %in% c(paste0("subj:", selected_term), selected_term))
-  es.ma <- effectsize::eta_squared(tmpANOVA$aov, partial = FALSE, ci = .95) %>%
+  es.ma <- effectsize::eta_squared(tmpANOVA$aov, partial = FALSE, ci = .90) %>%
     data.frame() %>%
     dplyr::filter(Parameter %in% c(paste0("subj:", selected_term), selected_term))
 
