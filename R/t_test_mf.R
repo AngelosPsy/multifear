@@ -209,18 +209,18 @@ t_test_mf <-
     if (!!phase %in% c("acquisition", "acq")) {
       ttl <-
         ttest_res %>% dplyr::filter(alternative %in% c("two.sided", "greater"))
-      used_model = paste("t-test", c("two.sided", "greater"))
+      #used_model = paste("t-test", c("two.sided", "greater"))
     }
 
     if (!!phase %in% c("extinction", "ext")) {
       ttl <-
         ttest_res %>% dplyr::filter(alternative %in% c("two.sided", "less"))
-      used_model = paste("t-test", c("two.sided", "less"))
+      #used_model = paste("t-test", c("two.sided", "less"))
     }
 
     res <- ttl %>%
       dplyr::mutate(
-        method = used_model,
+        method = ttl$alternative,
         x = "cs",
         y = dv,
         exclusion = exclusion,
