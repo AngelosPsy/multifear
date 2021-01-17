@@ -4,7 +4,7 @@
 \alias{forestplot_mf}
 \title{forestplot_mf}
 \usage{
-forestplot_mf(data, ci = FALSE, ...)
+forestplot_mf(data, ci = TRUE, ...)
 }
 \arguments{
 \item{data}{a universe_mf or multiverse_mf object}
@@ -24,5 +24,5 @@ Basic function for forest plot
 \lifecycle{experimental}
 
 This is a wrapper around the \code{forestplot::forestplot} function.
-Default for ci is FALSE.
+Default for ci is TRUE
 }

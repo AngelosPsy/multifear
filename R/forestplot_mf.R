@@ -7,14 +7,14 @@
 #' @param ci should confidence intervals be included -- default to FALSE
 #' @param ... any additional argument
 #' @details This is a wrapper around the \code{forestplot::forestplot} function.
-#' Default for ci is FALSE.
+#' Default for ci is TRUE
 #' @return A plot
 #'#'
 #' @importFrom dplyr %>%
 #' @export
 
 forestplot_mf <-
-  function(data, ci = FALSE, ...) {
+  function(data, ci = TRUE, ...) {
     data %>%
       dplyr::filter(framework == "NHST") -> data
 
@@ -31,7 +31,7 @@ forestplot_mf <-
                       exclusion == "fl2trials" ~ "first 2 vs last 2 trials",
                       exclusion == "per2trials" ~ "per 2 trials",
                     )) %>%
-      arrange(model) -> data
+      dplyr::arrange(model) -> data
 
       lci <- data$effect.size.ma.lci
       hci <- data$effect.size.ma.hci
