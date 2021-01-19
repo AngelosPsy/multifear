@@ -125,6 +125,7 @@
   group <span class='op'>=</span> <span class='cn'>NULL</span>,
   na.rm <span class='op'>=</span> <span class='cn'>FALSE</span>,
   paired <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  quanz <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.05</span>, <span class='fl'>0.95</span><span class='op'>)</span>,
   phase <span class='op'>=</span> <span class='st'>"acquisition"</span>,
   dv <span class='op'>=</span> <span class='st'>"scr"</span>,
   exclusion <span class='op'>=</span> <span class='st'>"full data"</span>,
@@ -161,6 +162,10 @@
     <tr>
       <th>paired</th>
       <td><p>Whether the t-test refers to a paired or independent sample(s). Default to <code>TRUE</code>.</p></td>
+    </tr>
+    <tr>
+      <th>quanz</th>
+      <td><p>Quantiles for the meta-analytic effect sizes. Default to .05 (lower) and.95 (upper).</p></td>
     </tr>
     <tr>
       <th>phase</th>
