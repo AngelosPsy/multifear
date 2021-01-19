@@ -12,6 +12,7 @@ t_test_mf(
   group = NULL,
   na.rm = FALSE,
   paired = TRUE,
+  quanz = c(0.05, 0.95),
   phase = "acquisition",
   dv = "scr",
   exclusion = "full data",
@@ -32,6 +33,8 @@ t_test_mf(
 \item{na.rm}{Whether NAs should be removed, default to \code{FALSE}.}
 
 \item{paired}{Whether the t-test refers to a paired or independent sample(s). Default to \code{TRUE}.}
+
+\item{quanz}{Quantiles for the meta-analytic effect sizes. Default to .05 (lower) and.95 (upper).}
 
 \item{phase}{The conditioned phase that the analyses refer to. Accepted values are  \code{acquisition},  or \code{acq}, \code{extinction}, or \code{ext}.}
 

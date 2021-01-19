@@ -39,7 +39,8 @@ Imports:
     esc (>= 0.5.1),
     forestplot (>= 1.10),
     vdiffr (>= 0.3.2.2),
-    specr (>= 0.2.1)
+    specr (>= 0.2.1),
+    bootstrap (>= 2019.6)
 RoxygenNote: 7.1.1
 Suggests: 
     testthat (>= 2.1.0),

@@ -9,6 +9,7 @@
 #' @param group The name of the column including the group name. Default to \code{NULL} (i.e., no groups).
 #' @param data A data frame containing with all the relevant columns
 #' @param paired Whether the t-test refers to a paired or independent sample(s). Default to \code{TRUE}.
+#' @param quanz Quantiles for the meta-analytic effect sizes. Default to .05 (lower) and.95 (upper).
 #' @param phase The conditioned phase that the analyses refer to. Accepted values are  \code{acquisition},  or \code{acq}, \code{extinction}, or \code{ext}.
 #' @param dv name of the measured conditioned response. Default to \code{"SCR"}.
 #' @param group the name of the group, if included, default to \code{NULL}.
@@ -60,6 +61,7 @@ t_test_mf <-
            group = NULL,
            na.rm = FALSE,
            paired = TRUE,
+           quanz = c(.05, .95),
            phase = "acquisition",
            dv = "scr",
            exclusion = "full data",
@@ -190,14 +192,24 @@ t_test_mf <-
 
     # Compute CIs and convert them
     es_ma <- ttest_es_ma$estimate
-    ci_ma <- ttest_es_ma$estimate - ttest_es_ma$conf.int[1]
+    #ci_ma <- ttest_es_ma$estimate - ttest_es_ma$conf.int[1]
+    ci_boot <- t_boot(data, paired = TRUE, quanz = c(.05, .95))
 
     ttest_res <-
-      purrr::invoke("rbind", ttest_prep) %>%
-      dplyr::mutate(effect.size = rep(ttest_es$estimate, 3),
-                    effect.size.ma = rep(esc::eta_squared(d = es_ma), 3),
-                    effect.size.ma.lci = rep(esc::eta_squared(d = es_ma - ci_ma), 3),
-                    effect.size.ma.hci = rep(esc::eta_squared(d = es_ma + ci_ma), 3))
+        purrr::invoke("rbind", ttest_prep) %>%
+        dplyr::mutate(effect.size = rep(ttest_es$estimate, 3),
+                      effect.size.ma = rep(esc::eta_squared(d = es_ma), 3),
+                      effect.size.ma.lci = rep(ci_boot[1], 3),
+                      effect.size.ma.hci = rep(ci_boot[2], 3))
+                      #effect.size.ma.lci = rep(esc::eta_squared(d = es_ma - ci_ma), 3),
+                      #effect.size.ma.hci = rep(esc::eta_squared(d = es_ma + ci_ma), 3))
+
+   # ttest_res <-
+    #  purrr::invoke("rbind", ttest_prep) %>%
+    #  dplyr::mutate(effect.size = rep(ttest_es$estimate, 3),
+    #                effect.size.ma = rep(esc::eta_squared(d = es_ma), 3),
+    #                effect.size.ma.lci = rep(esc::eta_squared(d = es_ma - ci_ma), 3),
+    #                effect.size.ma.hci = rep(esc::eta_squared(d = es_ma + ci_ma), 3))
 
    # ttest_res <-
   #    purrr::invoke("rbind", ttest_prep) %>%

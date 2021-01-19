@@ -329,13 +329,77 @@ format_results <- function(df, null = 0, desc = FALSE) {
   return(df)
 }
 
-# Convert t valueto r^2
-t_to_r2 <- function(ttestRes){
+# Convert t value to eta^2
+# See here: https://sites.google.com/site/fundamentalstatistics/chapter-13
+t_to_eta2 <- function(ttestRes){
   t <- ttestRes$statistic
   df <- ttestRes$parameter
   res <- (t^2)/(t^2 + df)
   return(res)
 }
+
+# paired t test for bootstrap
+t_test_paired_boot <- function(x, datz) {
+  datz <- dplyr::sample_n(datz, nrow(datz) - 1, replace = TRUE)
+  t_test <- stats::t.test(
+    x = datz$cs.1, y = datz$cs.2,
+    paired = TRUE,
+    alternative = "two.sided",
+    var.equal = TRUE
+  )
+  res <- t_to_eta2(t_test)
+
+  return(res)
+}
+
+# independent t test for bootstrap
+t_test_ind_boot <- function(x, datz){
+  datz <- dplyr::sample_n(datz, nrow(datz) - 1, replace = TRUE)
+  t_test <- stats::t.test(
+    formula = datz$cs ~ datz$group,
+    data = datz,
+    paired = FALSE,
+    alternative = "two.sided",
+    var.equal = TRUE
+  )
+
+  res <- t_to_eta2(t_test)
+
+  return(res)
+}
+
+t_boot <- function(data_t_test, paired = TRUE, quanz = c(.05, .95)){
+  # Add column
+  data_t_test <- data_t_test %>%
+    dplyr::mutate(cs = cs.1 - cs.2)
+
+  # Determine whether you have independent or
+  # dependent test
+  #group_prep <- unique(data_t_test$group)
+  #if(length(group) == 1){ group_prep <- NULL}
+
+  #if(is.null(group_prep)){
+  if(paired){
+    res_tmp <- bootstrap::bootstrap(x = 1:nrow(data_t_test), nboot = 1000,
+                                    theta = t_test_paired_boot, datz =  data_t_test)
+
+  } else{
+
+    res_tmp <- bootstrap::bootstrap(x = 1:nrow(data_t_test), nboot = 1000,
+                                    theta = t_test_ind_boot, datz =  data_t_test)
+
+  }
+
+  res <- stats::quantile(esc::eta_squared(res_tmp$thetastar), quanz)
+
+
+  return(res)
+
+}
+
+
+
+#bootstrap(x = data_t_test, nboot = 1000, theta = t_test_paired_boot)
 
 r_number <- function(num, threeshold_min = 0.001, threeshold_max = 1000) {
 
