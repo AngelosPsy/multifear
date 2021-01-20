@@ -136,13 +136,20 @@ t_test_mf <-
             broom::tidy()
         )
 
-        ttest_es_ma <-  effsize::cohen.d(
+        ttest_es_ma <-  stats::t.test(
           ttest_prep_tmp$cs ~ as.factor(ttest_prep_tmp$group),
           pooled = TRUE,
           paired = FALSE,
-          na.rm = na.rm,
-          hedges.correction = FALSE
-        )
+          alternative = "two.sided",
+          hedges.correction = FALSE)
+
+          #effsize::cohen.d(
+          #ttest_prep_tmp$cs ~ as.factor(ttest_prep_tmp$group),
+          #pooled = TRUE,
+          #paired = FALSE,
+          #na.rm = na.rm,
+          #hedges.correction = FALSE
+        #)
 
     } else {
 
@@ -178,16 +185,23 @@ t_test_mf <-
           hedges.correction = TRUE
         )
 
-      ttest_es_ma <-
-        effsize::cohen.d(
+      ttest_es_ma <- ttest_es <-
+        stats::t.test(
           unlist(data %>% dplyr::select(all_of("cs.1"))),
           unlist(data %>% dplyr::select(all_of("cs.2"))),
           pooled = TRUE,
           paired = TRUE,
-          na.rm = na.rm,
-          hedges.correction = FALSE,
-          conf.level = .90
+          hedges.correction = FALSE
         )
+       # effsize::cohen.d(
+      #    unlist(data %>% dplyr::select(all_of("cs.1"))),
+      #    unlist(data %>% dplyr::select(all_of("cs.2"))),
+      #    pooled = TRUE,
+      #    paired = TRUE,
+      #    na.rm = na.rm,
+      #    hedges.correction = FALSE,
+      #    conf.level = .90
+      #  )
     }
 
     # Compute CIs and convert them
@@ -198,7 +212,8 @@ t_test_mf <-
     ttest_res <-
         purrr::invoke("rbind", ttest_prep) %>%
         dplyr::mutate(effect.size = rep(ttest_es$estimate, 3),
-                      effect.size.ma = rep(esc::eta_squared(d = es_ma), 3),
+                      effect.size.ma = rep(t_to_eta2(ttest_es_ma), 3),
+                       # rep(esc::eta_squared(d = es_ma), 3),
                       effect.size.ma.lci = rep(ci_boot[1], 3),
                       effect.size.ma.hci = rep(ci_boot[2], 3))
                       #effect.size.ma.lci = rep(esc::eta_squared(d = es_ma - ci_ma), 3),

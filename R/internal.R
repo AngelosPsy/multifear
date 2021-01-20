@@ -334,13 +334,13 @@ format_results <- function(df, null = 0, desc = FALSE) {
 t_to_eta2 <- function(ttestRes){
   t <- ttestRes$statistic
   df <- ttestRes$parameter
-  res <- (t^2)/(t^2 + df)
+  res <- as.numeric((t^2)/(t^2 + df))
   return(res)
 }
 
 # paired t test for bootstrap
 t_test_paired_boot <- function(x, datz) {
-  datz <- dplyr::sample_n(datz, nrow(datz) - 1, replace = TRUE)
+  datz <- dplyr::sample_n(datz, nrow(datz), replace = TRUE)
   t_test <- stats::t.test(
     x = datz$cs.1, y = datz$cs.2,
     paired = TRUE,
@@ -354,7 +354,7 @@ t_test_paired_boot <- function(x, datz) {
 
 # independent t test for bootstrap
 t_test_ind_boot <- function(x, datz){
-  datz <- dplyr::sample_n(datz, nrow(datz) - 1, replace = TRUE)
+  datz <- dplyr::sample_n(datz, nrow(datz), replace = TRUE)
   t_test <- stats::t.test(
     formula = datz$cs ~ datz$group,
     data = datz,
@@ -396,8 +396,6 @@ t_boot <- function(data_t_test, paired = TRUE, quanz = c(.05, .95)){
   return(res)
 
 }
-
-
 
 #bootstrap(x = data_t_test, nboot = 1000, theta = t_test_paired_boot)
 
