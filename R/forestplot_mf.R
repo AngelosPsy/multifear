@@ -33,7 +33,7 @@ forestplot_mf <-
                       exclusion == "fl2trials" ~ "first 2 vs last 2 trials",
                       exclusion == "per2trials" ~ "per 2 trials",
                     )) %>%
-      dplyr::arrange(model) %>%
+      dplyr::arrange(model, method) %>%
       dplyr::filter(!method %in% c("greater", "less")) -> data
 
       lci <- data$effect.size.ma.lci
