@@ -4,10 +4,12 @@
 #'
 #' @description Basic function for forest plot
 #' @param data a universe_mf or multiverse_mf object
-#' @param ci should confidence intervals be included -- default to FALSE
+#' @param ci should confidence intervals be included -- default to TRUE
 #' @param ... any additional argument
 #' @details This is a wrapper around the \code{forestplot::forestplot} function.
-#' Default for ci is TRUE
+#' The function only uses the ANOVAs and the t-tests. For the t-tests though
+#' it includes only the two-sided, as they are the same with the one-sided ones
+#' and having both would probably give a false picture of the effect.
 #' @return A plot
 #'#'
 #' @importFrom dplyr %>%
@@ -31,7 +33,8 @@ forestplot_mf <-
                       exclusion == "fl2trials" ~ "first 2 vs last 2 trials",
                       exclusion == "per2trials" ~ "per 2 trials",
                     )) %>%
-      dplyr::arrange(model) -> data
+      dplyr::arrange(model) %>%
+      dplyr::filter(!method %in% c("greater", "less")) -> data
 
       lci <- data$effect.size.ma.lci
       hci <- data$effect.size.ma.hci

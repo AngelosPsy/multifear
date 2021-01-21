@@ -9,7 +9,7 @@ forestplot_mf(data, ci = TRUE, ...)
 \arguments{
 \item{data}{a universe_mf or multiverse_mf object}
 
-\item{ci}{should confidence intervals be included -- default to FALSE}
+\item{ci}{should confidence intervals be included -- default to TRUE}
 
 \item{...}{any additional argument}
 }
@@ -24,5 +24,7 @@ Basic function for forest plot
 \lifecycle{experimental}
 
 This is a wrapper around the \code{forestplot::forestplot} function.
-Default for ci is TRUE
+The function only uses the ANOVAs and the t-tests. For the t-tests though
+it includes only the two-sided, as they are the same with the one-sided ones
+and having both would probably give a false picture of the effect.
 }
