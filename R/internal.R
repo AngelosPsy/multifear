@@ -348,7 +348,6 @@ t_test_paired_boot <- function(x, datz) {
     var.equal = TRUE
   )
   res <- t_to_eta2(t_test)
-
   return(res)
 }
 
@@ -362,9 +361,7 @@ t_test_ind_boot <- function(x, datz){
     alternative = "two.sided",
     var.equal = TRUE
   )
-
   res <- t_to_eta2(t_test)
-
   return(res)
 }
 
@@ -389,10 +386,8 @@ t_boot <- function(data_t_test, paired = TRUE, quanz = c(.05, .95)){
                                     theta = t_test_ind_boot, datz =  data_t_test)
 
   }
-
-  res <- stats::quantile(esc::eta_squared(res_tmp$thetastar), quanz)
-
-
+  #res <- stats::quantile(esc::eta_squared(res_tmp$thetastar), quanz)
+  res <- stats::quantile(res_tmp$thetastar, quanz)
   return(res)
 
 }
