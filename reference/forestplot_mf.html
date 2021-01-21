@@ -128,7 +128,7 @@
     </tr>
     <tr>
       <th>ci</th>
-      <td><p>should confidence intervals be included -- default to FALSE</p></td>
+      <td><p>should confidence intervals be included -- default to TRUE</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -144,7 +144,9 @@
 
     <p><a href='https://www.tidyverse.org/lifecycle/#experimental'><img src='figures/lifecycle-experimental.svg' alt='Experimental lifecycle'></a></p>
 <p>This is a wrapper around the <code><a href='https://rdrr.io/pkg/forestplot/man/forestplot.html'>forestplot::forestplot</a></code> function.
-Default for ci is TRUE</p>
+The function only uses the ANOVAs and the t-tests. For the t-tests though
+it includes only the two-sided, as they are the same with the one-sided ones
+and having both would probably give a false picture of the effect.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
