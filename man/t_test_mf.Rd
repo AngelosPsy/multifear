@@ -13,6 +13,7 @@ t_test_mf(
   na.rm = FALSE,
   paired = TRUE,
   quanz = c(0.05, 0.95),
+  meta.effect = "d_to_eta2",
   phase = "acquisition",
   dv = "scr",
   exclusion = "full data",
@@ -35,6 +36,8 @@ t_test_mf(
 \item{paired}{Whether the t-test refers to a paired or independent sample(s). Default to \code{TRUE}.}
 
 \item{quanz}{Quantiles for the meta-analytic effect sizes. Default to .05 (lower) and.95 (upper).}
+
+\item{meta.effect}{How the meta-analytic effect should be computed.}
 
 \item{phase}{The conditioned phase that the analyses refer to. Accepted values are  \code{acquisition},  or \code{acq}, \code{extinction}, or \code{ext}.}
 
@@ -74,6 +77,9 @@ Given the correct names for the \code{cs1}, \code{cs2}, \code{subj}, and \code{d
 Depending on whether the data refer to an acquisition or extinction phase (as defined in the \code{phase} argument), the function will return a positive one sided, or negative one-sided, t-test in addition to the two-sided t-test. The returned effect size is  Hedge's g in the column effect size. For the meta-analytic effect size (effect.size.ma), the returned effect size is Cohen's d.
 
 The function by default runs a Welch t-test, meaning it assumes unequal variances. This is due to calls that such a test should be preferred over Student t-test, at least for paired samples t-test. Please note that if we let R decide which test to run -- this is done by default in \code{stats::t.test}, then for some test there would be a Student t-test whereas in some others not.
+There are two different ways to compute the meta-analytic effect sizes but the results may differ. The option
+"t_to_eta2" computes the eta squared via the t values whereas the "d_to_eta2" the eta squared is computed via
+the Cohen's d value.
 }
 \examples{
 # Load example data

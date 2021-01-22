@@ -17,7 +17,8 @@ universe_cs(
   print_output = TRUE,
   exclusion = "full data",
   cut_off = "full data",
-  correction = FALSE
+  correction = FALSE,
+  meta.effect = "d_to_eta2"
 )
 }
 \arguments{
@@ -46,6 +47,8 @@ universe_cs(
 \item{cut_off}{cut off score}
 
 \item{correction}{whether the Greenhouse-Geisser correction should be applied or not. Default to \code{FALSE}}
+
+\item{meta.effect}{How the meta-analytic effect should be computed.}
 }
 \value{
 A tibble with the following column names:

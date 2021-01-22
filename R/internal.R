@@ -338,8 +338,41 @@ t_to_eta2 <- function(ttestRes){
   return(res)
 }
 
-# paired t test for bootstrap
-t_test_paired_boot <- function(x, datz) {
+# paired t test for bootstrap first for d to eta2 and then from t to eta2
+
+t_test_ind_boot_d_to_eta2 <- function(x, datz) {
+  datz <- dplyr::sample_n(datz, nrow(datz), replace = TRUE)
+ttest_es_ma <- effsize::cohen.d(
+  datz$cs ~ as.factor(datz$group),
+  pooled = TRUE,
+  paired = FALSE,
+  hedges.correction = FALSE
+)
+res <- esc::eta_squared(d = ttest_es_ma$estimate)
+return(res)
+}
+
+
+t_test_paired_boot_d_to_eta2 <- function(x, datz) {
+  datz <- dplyr::sample_n(datz, nrow(datz), replace = TRUE)
+  ttest_es_ma <-  effsize::cohen.d(
+    unlist(datz %>% dplyr::select(all_of("cs.1"))),
+    unlist(datz %>% dplyr::select(all_of("cs.2"))),
+    pooled = TRUE,
+    paired = TRUE,
+    hedges.correction = FALSE,
+    conf.level = .90
+  )
+  res <- esc::eta_squared(d = ttest_es_ma$estimate)
+  return(res)
+}
+
+
+
+
+
+# Paired t-test for bootstrap
+t_test_paired_boot_t_to_eta2 <- function(x, datz) {
   datz <- dplyr::sample_n(datz, nrow(datz), replace = TRUE)
   t_test <- stats::t.test(
     x = datz$cs.1, y = datz$cs.2,
@@ -352,7 +385,7 @@ t_test_paired_boot <- function(x, datz) {
 }
 
 # independent t test for bootstrap
-t_test_ind_boot <- function(x, datz){
+t_test_ind_boot_t_to_eta2 <- function(x, datz){
   datz <- dplyr::sample_n(datz, nrow(datz), replace = TRUE)
   t_test <- stats::t.test(
     formula = datz$cs ~ datz$group,
@@ -365,32 +398,57 @@ t_test_ind_boot <- function(x, datz){
   return(res)
 }
 
-t_boot <- function(data_t_test, paired = TRUE, quanz = c(.05, .95)){
-  # Add column
-  data_t_test <- data_t_test %>%
-    dplyr::mutate(cs = cs.1 - cs.2)
+t_boot <-
+  function(data_t_test,
+           paired = TRUE,
+           meta.effect = "d_to_eta2",
+           quanz = c(.05, .95)) {
+    # Add column
+    data_t_test <- data_t_test %>%
+      dplyr::mutate(cs = cs.1 - cs.2)
+    #if(is.null(group_prep)){
+    if (paired) {
+      if (meta.effect == "d_to_eta2") {
+        res_tmp <-
+          bootstrap::bootstrap(
+            x = 1:nrow(data_t_test),
+            nboot = 1000,
+            theta = t_test_paired_boot_d_to_eta2,
+            datz =  data_t_test
+          )
 
-  # Determine whether you have independent or
-  # dependent test
-  #group_prep <- unique(data_t_test$group)
-  #if(length(group) == 1){ group_prep <- NULL}
-
-  #if(is.null(group_prep)){
-  if(paired){
-    res_tmp <- bootstrap::bootstrap(x = 1:nrow(data_t_test), nboot = 1000,
-                                    theta = t_test_paired_boot, datz =  data_t_test)
-
-  } else{
-
-    res_tmp <- bootstrap::bootstrap(x = 1:nrow(data_t_test), nboot = 1000,
-                                    theta = t_test_ind_boot, datz =  data_t_test)
-
+      } else{
+        res_tmp <-
+          bootstrap::bootstrap(
+            x = 1:nrow(data_t_test),
+            nboot = 1000,
+            theta = t_test_paired_boot_t_to_eta2,
+            datz =  data_t_test
+          )
+      }
+    } else{
+      if (meta.effect == "d_to_eta2") {
+        res_tmp <-
+          bootstrap::bootstrap(
+            x = 1:nrow(data_t_test),
+            nboot = 1000,
+            theta = t_test_ind_boot_d_to_eta2,
+            datz =  data_t_test
+          )
+      } else{
+        res_tmp <-
+          bootstrap::bootstrap(
+            x = 1:nrow(data_t_test),
+            nboot = 1000,
+            theta = t_test_ind_boot_t_to_eta2,
+            datz =  data_t_test
+          )
+      }
+    }
+    #res <- stats::quantile(esc::eta_squared(res_tmp$thetastar), quanz)
+    res <- stats::quantile(res_tmp$thetastar, quanz)
+    return(res)
   }
-  #res <- stats::quantile(esc::eta_squared(res_tmp$thetastar), quanz)
-  res <- stats::quantile(res_tmp$thetastar, quanz)
-  return(res)
-
-}
 
 #bootstrap(x = data_t_test, nboot = 1000, theta = t_test_paired_boot)
 

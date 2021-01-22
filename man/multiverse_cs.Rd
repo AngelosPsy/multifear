@@ -16,7 +16,8 @@ multiverse_cs(
   phase = "acquisition",
   cutoff = c(0, 1, 2, 3),
   print_output = TRUE,
-  correction = FALSE
+  correction = FALSE,
+  meta.effect = "d_to_eta2"
 )
 }
 \arguments{
@@ -43,6 +44,8 @@ multiverse_cs(
 \item{print_output}{Whether to print the output or not. Default set to \code{TRUE}}
 
 \item{correction}{whether the Greenhouse-Geisser correction should be applied or not. Default to \code{FALSE}}
+
+\item{meta.effect}{How the meta-analytic effect should be computed.}
 }
 \value{
 A tibble with the following column names:

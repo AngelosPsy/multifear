@@ -14,12 +14,16 @@
 #' @param dv name of the measured conditioned response. Default to \code{"SCR"}.
 #' @param group the name of the group, if included, default to \code{NULL}.
 #' @param na.rm Whether NAs should be removed, default to \code{FALSE}.
+#' @param meta.effect How the meta-analytic effect should be computed.
 #' @param exclusion If any exclusion criteria were applied, default to \code{full data}
 #' @param cut_off cut off
 #' @details Given the correct names for the \code{cs1}, \code{cs2}, \code{subj}, and \code{data}, the function will run one- and two-sided frequentist's t-tests. In case \code{cs1} or \code{cs2} refer to multiple columns, the mean -- per row -- for each one of these variables will be computed first before running the test. Please note that cs1 is implicitly referred to the cs that is reinforced, and cs2 to the cs that is not reinforced.
 #' Depending on whether the data refer to an acquisition or extinction phase (as defined in the \code{phase} argument), the function will return a positive one sided, or negative one-sided, t-test in addition to the two-sided t-test. The returned effect size is  Hedge's g in the column effect size. For the meta-analytic effect size (effect.size.ma), the returned effect size is Cohen's d.
 #'
 #' The function by default runs a Welch t-test, meaning it assumes unequal variances. This is due to calls that such a test should be preferred over Student t-test, at least for paired samples t-test. Please note that if we let R decide which test to run -- this is done by default in \code{stats::t.test}, then for some test there would be a Student t-test whereas in some others not.
+#' There are two different ways to compute the meta-analytic effect sizes but the results may differ. The option
+#' "t_to_eta2" computes the eta squared via the t values whereas the "d_to_eta2" the eta squared is computed via
+#' the Cohen's d value.
 #'
 #' @return A tibble with the following column names:
 #' x: the name of the independent variable (e.g., cs)
@@ -62,6 +66,7 @@ t_test_mf <-
            na.rm = FALSE,
            paired = TRUE,
            quanz = c(.05, .95),
+           meta.effect = "d_to_eta2",
            phase = "acquisition",
            dv = "scr",
            exclusion = "full data",
@@ -74,6 +79,8 @@ t_test_mf <-
       data = data,
       subj = subj
     )
+
+    match.arg(meta.effect, c("d_to_eta2", "t_to_eta2"))
 
     data <-
       data_preparation_ttest(
@@ -123,7 +130,7 @@ t_test_mf <-
           hedges.correction = TRUE
         )
 
-        ttest_prep <- ttest_prep_tmp %>%
+      ttest_prep <- ttest_prep_tmp %>%
         dplyr::group_by(group2) %>%
         dplyr::group_map(
           ~ stats::t.test(
@@ -136,20 +143,23 @@ t_test_mf <-
             broom::tidy()
         )
 
+      if (meta.effect == "d_to_eta2") {
+        ttest_es_ma <- effsize::cohen.d(
+          ttest_prep_tmp$cs ~ as.factor(ttest_prep_tmp$group),
+          pooled = TRUE,
+          paired = FALSE,
+          na.rm = na.rm,
+          hedges.correction = FALSE
+        )
+      } else if(meta.effect == "t_to_eta2") {
         ttest_es_ma <-  stats::t.test(
           ttest_prep_tmp$cs ~ as.factor(ttest_prep_tmp$group),
           pooled = TRUE,
           paired = FALSE,
           alternative = "two.sided",
-          hedges.correction = FALSE)
-
-          #effsize::cohen.d(
-          #ttest_prep_tmp$cs ~ as.factor(ttest_prep_tmp$group),
-          #pooled = TRUE,
-          #paired = FALSE,
-          #na.rm = na.rm,
-          #hedges.correction = FALSE
-        #)
+          hedges.correction = FALSE
+        )
+      }
 
     } else {
 
@@ -185,39 +195,51 @@ t_test_mf <-
           hedges.correction = TRUE
         )
 
-      ttest_es_ma <- ttest_es <-
-        stats::t.test(
+      if (meta.effect == "d_to_eta2") {
+        ttest_es_ma <-  effsize::cohen.d(
           unlist(data %>% dplyr::select(all_of("cs.1"))),
           unlist(data %>% dplyr::select(all_of("cs.2"))),
           pooled = TRUE,
           paired = TRUE,
-          hedges.correction = FALSE
+          na.rm = na.rm,
+          hedges.correction = FALSE,
+          conf.level = .90
         )
-       # effsize::cohen.d(
-      #    unlist(data %>% dplyr::select(all_of("cs.1"))),
-      #    unlist(data %>% dplyr::select(all_of("cs.2"))),
-      #    pooled = TRUE,
-      #    paired = TRUE,
-      #    na.rm = na.rm,
-      #    hedges.correction = FALSE,
-      #    conf.level = .90
-      #  )
+      } else if(meta.effect == "t_to_eta2") {
+        ttest_es_ma <- ttest_es <-
+          stats::t.test(
+            unlist(data %>% dplyr::select(all_of("cs.1"))),
+            unlist(data %>% dplyr::select(all_of("cs.2"))),
+            pooled = TRUE,
+            paired = TRUE,
+            hedges.correction = FALSE
+          )
+      }
     }
 
-    # Compute CIs and convert them
-    es_ma <- ttest_es_ma$estimate
-    #ci_ma <- ttest_es_ma$estimate - ttest_es_ma$conf.int[1]
-    ci_boot <- t_boot(data, paired = TRUE, quanz = c(.05, .95))
+    if (meta.effect == "d_to_eta2") {
+      # Compute CIs and convert them
+      es_ma <- ttest_es_ma$estimate
+      ci_ma <- ttest_es_ma$estimate - ttest_es_ma$conf.int[1]
+      #ci_boot <- t_boot(data, paired = TRUE, quanz = c(.05, .95))
+      ttest_res <-
+        purrr::invoke("rbind", ttest_prep) %>%
+        dplyr::mutate(effect.size = rep(ttest_es$estimate, 3),
+                      effect.size.ma = rep(esc::eta_squared(d = es_ma), 3),
+                     effect.size.ma.lci = rep(esc::eta_squared(d = es_ma - ci_ma), 3),
+                     effect.size.ma.hci = rep(esc::eta_squared(d = es_ma + ci_ma), 3))
 
-    ttest_res <-
+    } else if(meta.effect == "t_to_eta2") {
+      es_ma <- ttest_es_ma$estimate
+      #ci_ma <- ttest_es_ma$estimate - ttest_es_ma$conf.int[1]
+      ci_boot <- t_boot(data, paired = TRUE, quanz = c(.05, .95))
+      ttest_res <-
         purrr::invoke("rbind", ttest_prep) %>%
         dplyr::mutate(effect.size = rep(ttest_es$estimate, 3),
                       effect.size.ma = rep(t_to_eta2(ttest_es_ma), 3),
-                       # rep(esc::eta_squared(d = es_ma), 3),
                       effect.size.ma.lci = rep(ci_boot[1], 3),
                       effect.size.ma.hci = rep(ci_boot[2], 3))
-                      #effect.size.ma.lci = rep(esc::eta_squared(d = es_ma - ci_ma), 3),
-                      #effect.size.ma.hci = rep(esc::eta_squared(d = es_ma + ci_ma), 3))
+    }
 
    # ttest_res <-
     #  purrr::invoke("rbind", ttest_prep) %>%

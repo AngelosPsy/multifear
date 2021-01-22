@@ -8,6 +8,7 @@
 #' @param cs_paired A character vector with the trials that were paired. Default is set to \code{NULL}, suggesting that there was full reinforcement
 #' @param cutoff A numeric vector of the cutoff criteria applied. Default to \code{0, 0.05, .1}
 #' @param correction whether the Greenhouse-Geisser correction should be applied or not. Default to \code{FALSE}
+#' @param meta.effect How the meta-analytic effect should be computed.
 #' @details In case of higher order interaction, only the highest order
 #' effect is returned.
 #' @return A tibble with the following column names:
@@ -48,7 +49,8 @@ multiverse_cs <-
            phase = "acquisition",
            cutoff = c(0, 1, 2, 3),
            print_output = TRUE,
-           correction = FALSE) {
+           correction = FALSE,
+           meta.effect = "d_to_eta2") {
 
     # Check data
     if(is.null(cs_paired)){
@@ -88,7 +90,8 @@ multiverse_cs <-
           include_bayes = include_bayes,
           include_mixed = include_mixed,
           exclusion = y,
-          phase = phase
+          phase = phase,
+          meta.effect = meta.effect
         )
         }
       )

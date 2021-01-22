@@ -9,6 +9,7 @@
 #' @param print_output Whether to print the output or not. Default set to \code{TRUE}
 #' @param cut_off cut off score
 #' @param correction whether the Greenhouse-Geisser correction should be applied or not. Default to \code{FALSE}
+#' @param meta.effect How the meta-analytic effect should be computed.
 #' @details In case of higher order interaction, only the highest order
 #' effect is shown.
 #' @return A tibble with the following column names:
@@ -49,7 +50,8 @@ universe_cs <-
            print_output = TRUE,
            exclusion = "full data",
            cut_off = "full data",
-           correction = FALSE) {
+           correction = FALSE,
+           meta.effect = "d_to_eta2") {
 
     # Check data
     collection_warning(
@@ -257,7 +259,8 @@ universe_cs <-
         paired = paired,
         phase = phase,
         exclusion = exclusion,
-        cut_off = cut_off
+        cut_off = cut_off,
+        meta.effect = meta.effect
       )
 
     combRes <- list(`t-test full` = ttestFULL)
