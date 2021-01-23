@@ -9,7 +9,8 @@ inference_plot(
   alpha_level = 0.05,
   add_line = TRUE,
   na.rm = FALSE,
-  framework = "Both"
+  framework = "Both",
+  col = c("#999999", "#E69F00", "#56B4E9")
 )
 }
 \arguments{
@@ -19,9 +20,11 @@ inference_plot(
 
 \item{add_line}{Whether to add a line with the alpha level in the produced histogram (default to \code{TRUE})}
 
-\item{na.rm}{Should NA's be removed (default to \code{FALSE}). See details.}
+\item{na.rm}{Should NA's be removed (default to \code{FALSE}). See details forr more information}
 
 \item{framework}{Inference framework. Values could be "NHST", "Bayesian", or "Both" (no case sensitivity)}
+
+\item{col}{A length three vector with the colors to be used for ANOVAS, t-tests, and mixeed models (in this order)}
 }
 \value{
 A histogram summarizing the results.

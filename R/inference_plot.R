@@ -6,8 +6,9 @@
 #' @param data a data frame with the results of a multiverse analyses.
 #' @param alpha_level What should be the alpha level used (default to 0.05).
 #' @param add_line Whether to add a line with the alpha level in the produced histogram (default to \code{TRUE})
-#' @param na.rm Should NA's be removed (default to \code{FALSE}). See details.
+#' @param na.rm Should NA's be removed (default to \code{FALSE}). See details forr more information
 #' @param framework Inference framework. Values could be "NHST", "Bayesian", or "Both" (no case sensitivity)
+#' @param col A length three vector with the colors to be used for ANOVAS, t-tests, and mixeed models (in this order)
 #' @return A histogram summarizing the results.
 #' @details For the plot the NAs in the \code{p.value} column are removed automatically -- so what \code{ggplot2} does automatically but here no message is returned.
 #'
@@ -18,7 +19,8 @@ inference_plot <-
            alpha_level = 0.05,
            add_line = TRUE,
            na.rm = FALSE,
-           framework = "Both") {
+           framework = "Both",
+           col = c("#999999", "#E69F00", "#56B4E9")) {
 
     # Check data and arguments
     inference_warning(data = data)
@@ -105,6 +107,12 @@ inference_plot <-
                    prop_bf_value   = prop_bf_value)
     }
 
+    # Place colors for histogram
+    data <- data %>%
+      dplyr::mutate(col = dplyr::case_when(grepl("rep", model) ~ col[1],
+                             grepl("t-test", model) ~ col[2],
+                             grepl("mixex", model) ~ col[3]))
+
     # Histogram
     p1 <- data %>%
       tidyr::drop_na(p.value) %>%
@@ -124,9 +132,7 @@ inference_plot <-
         hjust = 1
       )
 
-
     if (framework %in% c("bayesian", "both")){
-
 
       p2 <- data %>%
         data.frame() %>%
