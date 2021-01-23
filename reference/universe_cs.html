@@ -130,7 +130,8 @@
   print_output <span class='op'>=</span> <span class='cn'>TRUE</span>,
   exclusion <span class='op'>=</span> <span class='st'>"full data"</span>,
   cut_off <span class='op'>=</span> <span class='st'>"full data"</span>,
-  correction <span class='op'>=</span> <span class='cn'>FALSE</span>
+  correction <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  meta.effect <span class='op'>=</span> <span class='st'>"d_to_eta2"</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -188,6 +189,10 @@
       <th>correction</th>
       <td><p>whether the Greenhouse-Geisser correction should be applied or not. Default to <code>FALSE</code></p></td>
     </tr>
+    <tr>
+      <th>meta.effect</th>
+      <td><p>How the meta-analytic effect should be computed.</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -224,8 +229,8 @@ effect is shown.</p>
 </div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 4 x 18</span><span>
 #&gt;   x     y     exclusion cut_off model controls method p.value effect.size
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> cs    scr   full data full d… t-te… </span><span style='color: #BB0000;'>NA</span><span>       great… 0.002</span><span style='text-decoration: underline;'>44</span><span>      1.17  
-#&gt; </span><span style='color: #555555;'>2</span><span> cs    scr   full data full d… t-te… </span><span style='color: #BB0000;'>NA</span><span>       two.s… 0.004</span><span style='text-decoration: underline;'>88</span><span>      1.17  
+#&gt; </span><span style='color: #555555;'>1</span><span> cs    scr   full data full d… t-te… </span><span style='color: #BB0000;'>NA</span><span>       great… 0.002</span><span style='text-decoration: underline;'>44</span><span>      0.577 
+#&gt; </span><span style='color: #555555;'>2</span><span> cs    scr   full data full d… t-te… </span><span style='color: #BB0000;'>NA</span><span>       two.s… 0.004</span><span style='text-decoration: underline;'>88</span><span>      0.577 
 #&gt; </span><span style='color: #555555;'>3</span><span> cs:t… scr   full data full d… rep … </span><span style='color: #BB0000;'>NA</span><span>       rep A… 0.015</span><span style='text-decoration: underline;'>2</span><span>       0.029</span><span style='text-decoration: underline;'>6</span><span>
 #&gt; </span><span style='color: #555555;'>4</span><span> cs    scr   full data full d… rep … </span><span style='color: #BB0000;'>NA</span><span>       rep A… 0.004</span><span style='text-decoration: underline;'>88</span><span>      0.147 
 #&gt; </span><span style='color: #555555;'># … with 9 more variables: effect.size.ma </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, effect.size.ma.lci </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,</span><span>

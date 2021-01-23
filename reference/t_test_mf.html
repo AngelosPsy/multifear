@@ -126,6 +126,7 @@
   na.rm <span class='op'>=</span> <span class='cn'>FALSE</span>,
   paired <span class='op'>=</span> <span class='cn'>TRUE</span>,
   quanz <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.05</span>, <span class='fl'>0.95</span><span class='op'>)</span>,
+  meta.effect <span class='op'>=</span> <span class='st'>"d_to_eta2"</span>,
   phase <span class='op'>=</span> <span class='st'>"acquisition"</span>,
   dv <span class='op'>=</span> <span class='st'>"scr"</span>,
   exclusion <span class='op'>=</span> <span class='st'>"full data"</span>,
@@ -166,6 +167,10 @@
     <tr>
       <th>quanz</th>
       <td><p>Quantiles for the meta-analytic effect sizes. Default to .05 (lower) and.95 (upper).</p></td>
+    </tr>
+    <tr>
+      <th>meta.effect</th>
+      <td><p>How the meta-analytic effect should be computed.</p></td>
     </tr>
     <tr>
       <th>phase</th>
@@ -210,7 +215,10 @@ data_used: a list with the data used for the specific test</p>
     <p><a href='https://www.tidyverse.org/lifecycle/#experimental'><img src='figures/lifecycle-experimental.svg' alt='Experimental lifecycle'></a></p>
 <p>Given the correct names for the <code>cs1</code>, <code>cs2</code>, <code>subj</code>, and <code>data</code>, the function will run one- and two-sided frequentist's t-tests. In case <code>cs1</code> or <code>cs2</code> refer to multiple columns, the mean -- per row -- for each one of these variables will be computed first before running the test. Please note that cs1 is implicitly referred to the cs that is reinforced, and cs2 to the cs that is not reinforced.
 Depending on whether the data refer to an acquisition or extinction phase (as defined in the <code>phase</code> argument), the function will return a positive one sided, or negative one-sided, t-test in addition to the two-sided t-test. The returned effect size is  Hedge's g in the column effect size. For the meta-analytic effect size (effect.size.ma), the returned effect size is Cohen's d.</p>
-<p>The function by default runs a Welch t-test, meaning it assumes unequal variances. This is due to calls that such a test should be preferred over Student t-test, at least for paired samples t-test. Please note that if we let R decide which test to run -- this is done by default in <code><a href='https://rdrr.io/r/stats/t.test.html'>stats::t.test</a></code>, then for some test there would be a Student t-test whereas in some others not.</p>
+<p>The function by default runs a Welch t-test, meaning it assumes unequal variances. This is due to calls that such a test should be preferred over Student t-test, at least for paired samples t-test. Please note that if we let R decide which test to run -- this is done by default in <code><a href='https://rdrr.io/r/stats/t.test.html'>stats::t.test</a></code>, then for some test there would be a Student t-test whereas in some others not.
+There are two different ways to compute the meta-analytic effect sizes but the results may differ. The option
+"t_to_eta2" computes the eta squared via the t values whereas the "d_to_eta2" the eta squared is computed via
+the Cohen's d value.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Load example data</span>
@@ -221,8 +229,8 @@ Depending on whether the data refer to an acquisition or extinction phase (as de
 </div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 2 x 18</span><span>
 #&gt;   x     y     exclusion cut_off model controls method p.value effect.size
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> cs    scr   full data full d… t-te… </span><span style='color: #BB0000;'>NA</span><span>       great…  0.990       -</span><span style='color: #BB0000;'>0.523</span><span>
-#&gt; </span><span style='color: #555555;'>2</span><span> cs    scr   full data full d… t-te… </span><span style='color: #BB0000;'>NA</span><span>       two.s…  0.020</span><span style='text-decoration: underline;'>8</span><span>      -</span><span style='color: #BB0000;'>0.523</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span> cs    scr   full data full d… t-te… </span><span style='color: #BB0000;'>NA</span><span>       great…  0.990       -</span><span style='color: #BB0000;'>0.200</span><span>
+#&gt; </span><span style='color: #555555;'>2</span><span> cs    scr   full data full d… t-te… </span><span style='color: #BB0000;'>NA</span><span>       two.s…  0.020</span><span style='text-decoration: underline;'>8</span><span>      -</span><span style='color: #BB0000;'>0.200</span><span>
 #&gt; </span><span style='color: #555555;'># … with 9 more variables: effect.size.ma </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, effect.size.ma.lci </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,</span><span>
 #&gt; </span><span style='color: #555555;'>#   effect.size.ma.hci </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, estimate </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, statistic </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, conf.low </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,</span><span>
 #&gt; </span><span style='color: #555555;'>#   conf.high </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, framework </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, data_used </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span></div><div class='input'>

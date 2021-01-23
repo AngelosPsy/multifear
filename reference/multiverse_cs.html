@@ -131,7 +131,8 @@ data</p>
   phase <span class='op'>=</span> <span class='st'>"acquisition"</span>,
   cutoff <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span><span class='op'>)</span>,
   print_output <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  correction <span class='op'>=</span> <span class='cn'>FALSE</span>
+  correction <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  meta.effect <span class='op'>=</span> <span class='st'>"d_to_eta2"</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -184,6 +185,10 @@ data</p>
     <tr>
       <th>correction</th>
       <td><p>whether the Greenhouse-Geisser correction should be applied or not. Default to <code>FALSE</code></p></td>
+    </tr>
+    <tr>
+      <th>meta.effect</th>
+      <td><p>How the meta-analytic effect should be computed.</p></td>
     </tr>
     </table>
 
