@@ -29,7 +29,7 @@ inference_plot <-
     match.arg(framework, c("nhst", "bayesian", "both"))
 
     # Rename factors
-    data$model[which(data$model == "rep ANOVA")] <- "ANOVA\n(rep measures)"
+    data$model[which(data$model == "rep ANOVA")] <- " ANOVA\n(rep measures)"
     data$model[which(data$model == "t-test")] <- " t-test"
     data$model[which(data$model == "mixed_model")] <- "mixed model"
     data$model[which(data$model == "rep BANOVA")] <- "Bayesian ANOVA\n(rep measures)"
