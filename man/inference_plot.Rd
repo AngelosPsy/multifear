@@ -10,7 +10,7 @@ inference_plot(
   add_line = TRUE,
   na.rm = FALSE,
   framework = "Both",
-  col = c("#999999", "#E69F00", "#56B4E9")
+  col = c("gray45", "maroon4", "coral")
 )
 }
 \arguments{
@@ -24,7 +24,7 @@ inference_plot(
 
 \item{framework}{Inference framework. Values could be "NHST", "Bayesian", or "Both" (no case sensitivity)}
 
-\item{col}{A length three vector with the colors to be used for ANOVAS, t-tests, and mixeed models (in this order)}
+\item{col}{A length three vector with the colors to be used for ANOVAS, t-tests, and mixed models (in this order)}
 }
 \value{
 A histogram summarizing the results.

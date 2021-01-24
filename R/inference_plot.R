@@ -8,7 +8,7 @@
 #' @param add_line Whether to add a line with the alpha level in the produced histogram (default to \code{TRUE})
 #' @param na.rm Should NA's be removed (default to \code{FALSE}). See details forr more information
 #' @param framework Inference framework. Values could be "NHST", "Bayesian", or "Both" (no case sensitivity)
-#' @param col A length three vector with the colors to be used for ANOVAS, t-tests, and mixeed models (in this order)
+#' @param col A length three vector with the colors to be used for ANOVAS, t-tests, and mixed models (in this order)
 #' @return A histogram summarizing the results.
 #' @details For the plot the NAs in the \code{p.value} column are removed automatically -- so what \code{ggplot2} does automatically but here no message is returned.
 #'
@@ -20,13 +20,20 @@ inference_plot <-
            add_line = TRUE,
            na.rm = FALSE,
            framework = "Both",
-           col = c("#999999", "#E69F00", "#56B4E9")) {
+           col = c("gray45", "maroon4", "coral")) {
 
     # Check data and arguments
     inference_warning(data = data)
 
     framework <- tolower(framework)
     match.arg(framework, c("nhst", "bayesian", "both"))
+
+    # Rename factors
+    data$model[which(data$model == "rep ANOVA")] <- "ANOVA\n(rep measures)"
+    data$model[which(data$model == "t-test")] <- " t-test"
+    data$model[which(data$model == "mixed_model")] <- "mixed model"
+    data$model[which(data$model == "rep BANOVA")] <- "Bayesian ANOVA\n(rep measures)"
+    data$model[which(data$model == "Bayesian t-test")] <- "Bayesian t-test"
 
     if (framework %in% c("nhst", "both")){
       dataNHST <-
@@ -85,8 +92,6 @@ inference_plot <-
         data.frame(mean_p_value = mean_p_value, median_p_value  = median_p_value,
                    sd_p_value = sd_p_value, prop_p_value = prop_p_value)
     } else if (framework %in% c("bayesian")) {
-      #dataBayes <-
-      #  data %>% dplyr::filter(framework == "Bayesian")
 
       res_tmp <-
         data.frame(mean_bf_value   = mean_bf_value,
@@ -107,19 +112,15 @@ inference_plot <-
                    prop_bf_value   = prop_bf_value)
     }
 
-    # Place colors for histogram
-    data <- data %>%
-      dplyr::mutate(col = dplyr::case_when(grepl("rep", model) ~ col[1],
-                             grepl("t-test", model) ~ col[2],
-                             grepl("mixex", model) ~ col[3]))
-
     # Histogram
     p1 <- data %>%
       tidyr::drop_na(p.value) %>%
       ggplot2::ggplot(ggplot2::aes(x = p.value, fill = model)) +
-      ggplot2::geom_histogram(bins = 50) +
+      ggplot2::geom_histogram(bins = 30) +
       ggplot2::xlab("p value") +
       ggplot2::theme_minimal() +
+      ggplot2::scale_color_manual(values = col) +
+      ggplot2::scale_fill_manual(values = col) +
       ggplot2::annotate(
         "text",
         x = Inf,
@@ -134,13 +135,15 @@ inference_plot <-
 
     if (framework %in% c("bayesian", "both")){
 
-      p2 <- data %>%
+     p2 <- data %>%
         data.frame() %>%
         dplyr::filter(framework == "Bayesian") %>%
         ggplot2::ggplot(ggplot2::aes(x = estimate, fill = model)) +
         ggplot2::geom_histogram(bins = 50) +
         ggplot2::xlab("Bayes factor") +
         ggplot2::theme_minimal() +
+        ggplot2::scale_color_manual(values = col) +
+        ggplot2::scale_fill_manual(values = col) +
         ggplot2::annotate(
           "text",
           x = Inf,
