@@ -10,7 +10,7 @@ inference_plot(
   add_line = TRUE,
   na.rm = FALSE,
   framework = "Both",
-  col = c("gray45", "maroon4", "coral")
+  col = c("gray45", "maroon4", "brown1")
 )
 }
 \arguments{
