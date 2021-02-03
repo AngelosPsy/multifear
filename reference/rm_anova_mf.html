@@ -209,7 +209,7 @@ data_used: a list with the data used for the specific test</p>
 <code>cs1</code> and <code>cs2</code> correspond to ascending time points (e.g., cs1
 trial 1, cs1 trial 2 ... cs1 trial <code>n</code>). If this is not the case, the
 results are not to be trusted.</p>
-<p>The function uses the <code><a href='https://rdrr.io/pkg/ez/man/ezANOVA.html'>ez::ezANOVA</a></code> function. The function gives by default a warning regarding the collapsing of factors. This function here suppresses this warning but the user should be aware of it. Please note that at the moment no sphericity correction is performed. The reported effect size is omega squared as this is computed by  <code><a href='https://strengejacke.github.io/sjstats/reference/r2.html'>sjstats::omega_sq</a></code>.</p>
+<p>The function uses the <code><a href='https://rdrr.io/pkg/ez/man/ezANOVA.html'>ez::ezANOVA</a></code> function. The function gives by default a warning regarding the collapsing of factors. This function here suppresses this warning but the user should be aware of it. Please note that at the moment no sphericity correction is performed. The reported effect size is omega squared as this is computed by  <code>sjstats::omega_sq</code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Load example data</span>
