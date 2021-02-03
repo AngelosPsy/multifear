@@ -323,7 +323,7 @@ format_results <- function(df, null = 0, desc = FALSE) {
 
   df <- df %>%
     dplyr::mutate(specifications = 1:dplyr::n(),
-                  color = case_when(conf.low > null ~ "red", #"#377eb8",
+                  color = dplyr::case_when(conf.low > null ~ "red", #"#377eb8",
                                     conf.high < null ~ "blue", #"#e41a1c",
                                     TRUE ~ "darkgrey"))
   return(df)
@@ -352,7 +352,6 @@ res <- esc::eta_squared(d = ttest_es_ma$estimate)
 return(res)
 }
 
-
 t_test_paired_boot_d_to_eta2 <- function(x, datz) {
   datz <- dplyr::sample_n(datz, nrow(datz), replace = TRUE)
   ttest_es_ma <-  effsize::cohen.d(
@@ -366,10 +365,6 @@ t_test_paired_boot_d_to_eta2 <- function(x, datz) {
   res <- esc::eta_squared(d = ttest_es_ma$estimate)
   return(res)
 }
-
-
-
-
 
 # Paired t-test for bootstrap
 t_test_paired_boot_t_to_eta2 <- function(x, datz) {
