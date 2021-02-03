@@ -117,20 +117,22 @@
     <p>Basic function for running a multiverse analysis for a single data set</p>
     </div>
 
-    <pre class="usage"><span class='fu'>universe_cs</span>(
-  <span class='kw'>cs1</span>,
-  <span class='kw'>cs2</span>,
-  <span class='kw'>data</span>,
-  <span class='kw'>subj</span>,
-  group = <span class='kw'>NULL</span>,
-  include_bayes = <span class='fl'>TRUE</span>,
-  phase = <span class='st'>"acquisition"</span>,
-  dv = <span class='st'>"scr"</span>,
-  print_output = <span class='fl'>TRUE</span>,
-  exclusion = <span class='st'>"full data"</span>,
-  cut_off = <span class='st'>"full data"</span>,
-  correction = <span class='fl'>FALSE</span>
-)</pre>
+    <pre class="usage"><span class='fu'>universe_cs</span><span class='op'>(</span>
+  <span class='va'>cs1</span>,
+  <span class='va'>cs2</span>,
+  <span class='va'>data</span>,
+  <span class='va'>subj</span>,
+  group <span class='op'>=</span> <span class='cn'>NULL</span>,
+  include_bayes <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  include_mixed <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  phase <span class='op'>=</span> <span class='st'>"acquisition"</span>,
+  dv <span class='op'>=</span> <span class='st'>"scr"</span>,
+  print_output <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  exclusion <span class='op'>=</span> <span class='st'>"full data"</span>,
+  cut_off <span class='op'>=</span> <span class='st'>"full data"</span>,
+  correction <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  meta.effect <span class='op'>=</span> <span class='st'>"d_to_eta2"</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -157,7 +159,11 @@
     </tr>
     <tr>
       <th>include_bayes</th>
-      <td><p>Whether the bayesian analyses should be run. Default to <code>TRUE</code></p></td>
+      <td><p>Whether the Bayesian analyses should be run. Default to <code>TRUE</code></p></td>
+    </tr>
+    <tr>
+      <th>include_mixed</th>
+      <td><p>Whether the mixed model results should be run. Default to <code>FALSE</code></p></td>
     </tr>
     <tr>
       <th>phase</th>
@@ -182,6 +188,10 @@
     <tr>
       <th>correction</th>
       <td><p>whether the Greenhouse-Geisser correction should be applied or not. Default to <code>FALSE</code></p></td>
+    </tr>
+    <tr>
+      <th>meta.effect</th>
+      <td><p>How the meta-analytic effect should be computed.</p></td>
     </tr>
     </table>
 
@@ -210,21 +220,22 @@ effect is shown.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Load data and define argument to be fed in universe_cs</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"example_data"</span>, package = <span class='st'>"multifear"</span>)
-<span class='kw'>example_data</span> <span class='op'>&lt;-</span> <span class='kw'>example_data</span>[<span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>, ]
-<span class='kw'>cs1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='st'>"CSP"</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>)
-<span class='kw'>cs2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='st'>"CSM"</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>)
-<span class='kw'>subj</span> <span class='op'>=</span> <span class='st'>"id"</span>
-<span class='kw'>multifear</span>::<span class='fu'>universe_cs</span>(<span class='kw'>cs1</span>, <span class='kw'>cs2</span>, subj = <span class='kw'>subj</span>, data = <span class='kw'>example_data</span>, include_bayes = <span class='fl'>FALSE</span>)
-</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 4 x 15</span><span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"example_data"</span>, package <span class='op'>=</span> <span class='st'>"multifear"</span><span class='op'>)</span>
+<span class='va'>example_data</span> <span class='op'>&lt;-</span> <span class='va'>example_data</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>, <span class='op'>]</span>
+<span class='va'>cs1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"CSP"</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span><span class='op'>)</span>
+<span class='va'>cs2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"CSM"</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span><span class='op'>)</span>
+<span class='va'>subj</span> <span class='op'>=</span> <span class='st'>"id"</span>
+<span class='fu'>multifear</span><span class='fu'>::</span><span class='fu'>universe_cs</span><span class='op'>(</span><span class='va'>cs1</span>, <span class='va'>cs2</span>, subj <span class='op'>=</span> <span class='va'>subj</span>, data <span class='op'>=</span> <span class='va'>example_data</span>, include_bayes <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 4 x 18</span><span>
 #&gt;   x     y     exclusion cut_off model controls method p.value effect.size
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> cs    scr   full data full d… t-te… </span><span style='color: #BB0000;'>NA</span><span>       t-tes… 0.002</span><span style='text-decoration: underline;'>44</span><span>      0.577 
-#&gt; </span><span style='color: #555555;'>2</span><span> cs    scr   full data full d… t-te… </span><span style='color: #BB0000;'>NA</span><span>       t-tes… 0.004</span><span style='text-decoration: underline;'>88</span><span>      0.577 
-#&gt; </span><span style='color: #555555;'>3</span><span> cs:t… scr   full data full d… rep … </span><span style='color: #BB0000;'>NA</span><span>       rep A… 0.015</span><span style='text-decoration: underline;'>2</span><span>       0.030</span><span style='text-decoration: underline;'>7</span><span>
-#&gt; </span><span style='color: #555555;'>4</span><span> cs    scr   full data full d… rep … </span><span style='color: #BB0000;'>NA</span><span>       rep A… 0.004</span><span style='text-decoration: underline;'>88</span><span>      0.157 
-#&gt; </span><span style='color: #555555;'># … with 6 more variables: estimate </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, statistic </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, conf.low </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,</span><span>
-#&gt; </span><span style='color: #555555;'>#   conf.high </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, framework </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, data_used </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span></div></span></pre>
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;lgl&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> cs    scr   full data full d… t-te… </span><span style='color: #BB0000;'>NA</span><span>       great… 0.002</span><span style='text-decoration: underline;'>44</span><span>      0.577 
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> cs    scr   full data full d… t-te… </span><span style='color: #BB0000;'>NA</span><span>       two.s… 0.004</span><span style='text-decoration: underline;'>88</span><span>      0.577 
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> cs:t… scr   full data full d… rep … </span><span style='color: #BB0000;'>NA</span><span>       rep A… 0.015</span><span style='text-decoration: underline;'>2</span><span>       0.029</span><span style='text-decoration: underline;'>6</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> cs    scr   full data full d… rep … </span><span style='color: #BB0000;'>NA</span><span>       rep A… 0.004</span><span style='text-decoration: underline;'>88</span><span>      0.147 
+#&gt; </span><span style='color: #949494;'># … with 9 more variables: effect.size.ma </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #949494;'>, effect.size.ma.lci </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #949494;'>,</span><span>
+#&gt; </span><span style='color: #949494;'>#   effect.size.ma.hci </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #949494;'>, estimate </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #949494;'>, statistic </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #949494;'>, conf.low </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #949494;'>,</span><span>
+#&gt; </span><span style='color: #949494;'>#   conf.high </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #949494;'>, framework </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span style='color: #949494;'>, data_used </span><span style='color: #949494;font-style: italic;'>&lt;list&gt;</span><span></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

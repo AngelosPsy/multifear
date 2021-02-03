@@ -119,19 +119,21 @@ data" />
 data</p>
     </div>
 
-    <pre class="usage"><span class='fu'>multiverse_cs</span>(
-  <span class='kw'>cs1</span>,
-  <span class='kw'>cs2</span>,
-  <span class='kw'>data</span>,
-  <span class='kw'>subj</span>,
-  group = <span class='kw'>NULL</span>,
-  cs_paired = <span class='kw'>NULL</span>,
-  include_bayes = <span class='fl'>TRUE</span>,
-  phase = <span class='st'>"acquisition"</span>,
-  cutoff = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span>),
-  print_output = <span class='fl'>TRUE</span>,
-  correction = <span class='fl'>FALSE</span>
-)</pre>
+    <pre class="usage"><span class='fu'>multiverse_cs</span><span class='op'>(</span>
+  <span class='va'>cs1</span>,
+  <span class='va'>cs2</span>,
+  <span class='va'>data</span>,
+  <span class='va'>subj</span>,
+  group <span class='op'>=</span> <span class='cn'>NULL</span>,
+  cs_paired <span class='op'>=</span> <span class='cn'>NULL</span>,
+  include_bayes <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  include_mixed <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  phase <span class='op'>=</span> <span class='st'>"acquisition"</span>,
+  cutoff <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span><span class='op'>)</span>,
+  print_output <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  correction <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  meta.effect <span class='op'>=</span> <span class='st'>"d_to_eta2"</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -162,7 +164,11 @@ data</p>
     </tr>
     <tr>
       <th>include_bayes</th>
-      <td><p>Whether the bayesian analyses should be run. Default to <code>TRUE</code></p></td>
+      <td><p>Whether the Bayesian analyses should be run. Default to <code>TRUE</code></p></td>
+    </tr>
+    <tr>
+      <th>include_mixed</th>
+      <td><p>Whether the mixed model results should be run. Default to <code>FALSE</code></p></td>
     </tr>
     <tr>
       <th>phase</th>
@@ -179,6 +185,10 @@ data</p>
     <tr>
       <th>correction</th>
       <td><p>whether the Greenhouse-Geisser correction should be applied or not. Default to <code>FALSE</code></p></td>
+    </tr>
+    <tr>
+      <th>meta.effect</th>
+      <td><p>How the meta-analytic effect should be computed.</p></td>
     </tr>
     </table>
 
@@ -199,13 +209,6 @@ conf.low: the lower confidence interval for the estimate
 conf.high: the higher confidence interval for the estimate
 framework: were the data analysed within a NHST or Bayesian framework?
 data_used: a list with the data used for the specific test</p>
-<p>#' # Load data and define argument to be fed in universe_cs
-data("example_data", package = "multifear")
-example_data &lt;- example_data[1:10, ]
-cs1 &lt;- paste0("CSP", 1:10)
-cs2 &lt;- paste0("CSM", 1:10)
-subj = "id"
-multiverse_cs(cs1, cs2, subj = subj, data = example_data)</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p><a href='https://www.tidyverse.org/lifecycle/#experimental'><img src='figures/lifecycle-experimental.svg' alt='Experimental lifecycle'></a></p>

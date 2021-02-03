@@ -117,13 +117,7 @@
     <p>Function for summarizing the multiverse results.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>inference_cs</span>(
-  <span class='kw'>data</span>,
-  alpha_level = <span class='fl'>0.05</span>,
-  add_line = <span class='fl'>TRUE</span>,
-  na.rm = <span class='fl'>FALSE</span>,
-  framework = <span class='st'>"Both"</span>
-)</pre>
+    <pre class="usage"><span class='fu'>inference_cs</span><span class='op'>(</span><span class='va'>data</span>, alpha_level <span class='op'>=</span> <span class='fl'>0.05</span>, na.rm <span class='op'>=</span> <span class='cn'>FALSE</span>, framework <span class='op'>=</span> <span class='st'>"Both"</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -137,26 +131,22 @@
       <td><p>What should be the alpha level used (default to 0.05).</p></td>
     </tr>
     <tr>
-      <th>add_line</th>
-      <td><p>Whether to add a line with the alpha level in the produced histogram (default to <code>TRUE</code>)</p></td>
-    </tr>
-    <tr>
       <th>na.rm</th>
       <td><p>Should NA's be removed (default to <code>FALSE</code>). See details.</p></td>
     </tr>
     <tr>
       <th>framework</th>
-      <td><p>Inference framework. Values could be "NHST", "Bayesian", or "Both" (no case sensitivity).</p></td>
+      <td><p>Inference framework. Values could be "NHST", "Bayesian", or "Both" (no case sensitivity)</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A data frame with results together with a histogram summarizing the results.</p>
+    <p>A data frame with summaries of the results.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p><a href='https://www.tidyverse.org/lifecycle/#experimental'><img src='figures/lifecycle-experimental.svg' alt='Experimental lifecycle'></a></p>
-<p>For now the function returns mean p values and proportion of p values below a criterion defined by the <code>alpha_level</code> parameter (default to 0.05) as well as mean Bayes factors (please see the `framework` arguument). The user may choose to drop the NAs for the summary statistic. However, for the plot the NAs in the <code>p.value</code> column are removed automatically -- so what <code>ggplot2</code> does automatically but here no message is returned.</p>
+<p>For now the function returns mean, median, standard deviations of p values and proportion of p values below a criterion defined by the <code>alpha_level</code> parameter (default to 0.05) as well as mean Bayes factors (please see the `framework` arguument). The user may choose to drop the NAs for the summary statistic.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
