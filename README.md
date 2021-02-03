@@ -14,15 +14,10 @@ status](https://www.r-pkg.org/badges/version/multifear)](https://CRAN.R-project.
 status](https://github.com/AngelosPsy/multifear/workflows/R-CMD-check/badge.svg)](https://github.com/AngelosPsy/multifear/actions)
 <!-- badges: end -->
 
-# multifear
+# Multifear
 
 Multifear is an R package designed to perform multiverse analyses for
-human conditioning data. 
-
-**The package is currently under heavy
-development and its features change often. You can give the package 
-a spin but please do not use it yet for any publication as there is much
-more work to be done.**
+human conditioning data.
 
 ## Installing and loading the package
 
@@ -32,7 +27,7 @@ install.packages("devtools")
 devtools::install_github("AngelosPsy/multifear")
 ```
 
-The package can be loaded with the following package
+The package can be loaded with the following code:
 
 ``` r
 library(multifear)
@@ -45,8 +40,16 @@ doing that, let’s load some additional packages that we need for our
 example.
 
 ``` r
-suppressPackageStartupMessages(library(dplyr))
-suppressPackageStartupMessages(library(ggplot2))
+library(dplyr)
+#> 
+#> Attaching package: 'dplyr'
+#> The following objects are masked from 'package:stats':
+#> 
+#>     filter, lag
+#> The following objects are masked from 'package:base':
+#> 
+#>     intersect, setdiff, setequal, union
+library(ggplot2)
 ```
 
 Now we will use some simulated data set that are included as example
@@ -173,14 +176,15 @@ And here are the results
 
 ``` r
 res
-#> # A tibble: 4 x 15
+#> # A tibble: 4 x 18
 #>   x     y     exclusion cut_off model controls method p.value effect.size
 #>   <chr> <chr> <chr>     <chr>   <chr> <lgl>    <chr>    <dbl>       <dbl>
-#> 1 cs    scr   full data full d… t-te… NA       t-tes… 0.00244      0.577 
-#> 2 cs    scr   full data full d… t-te… NA       t-tes… 0.00488      0.577 
-#> 3 cs:t… scr   full data full d… rep … NA       rep A… 0.0152       0.0307
-#> 4 cs    scr   full data full d… rep … NA       rep A… 0.00488      0.157 
-#> # … with 6 more variables: estimate <dbl>, statistic <dbl>, conf.low <dbl>,
+#> 1 cs    scr   full data full d… t-te… NA       great… 0.00244      0.577 
+#> 2 cs    scr   full data full d… t-te… NA       two.s… 0.00488      0.577 
+#> 3 cs:t… scr   full data full d… rep … NA       rep A… 0.0152       0.0296
+#> 4 cs    scr   full data full d… rep … NA       rep A… 0.00488      0.147 
+#> # … with 9 more variables: effect.size.ma <dbl>, effect.size.ma.lci <dbl>,
+#> #   effect.size.ma.hci <dbl>, estimate <dbl>, statistic <dbl>, conf.low <dbl>,
 #> #   conf.high <dbl>, framework <chr>, data_used <list>
 ```
 
@@ -237,25 +241,24 @@ some selection criteria for non-learns. So, here it is
 
 res_multi <- multifear::multiverse_cs(cs1 = cs1, cs2 = cs2, data = example_data, subj = "id", group = NULL, phase = "acquisition", include_bayes = TRUE)
 #> Skipping ANOVA due to the number of trials for the cs1 and/or cs2.
-#> Skipping ANOVA due to the number of trials for the cs1 and/or cs2.
-#> Skipping ANOVA due to the number of trials for the cs1 and/or cs2.
-#> Skipping ANOVA due to the number of trials for the cs1 and/or cs2.
 res_multi
-#> # A tibble: 336 x 15
+#> # A tibble: 68 x 18
 #>    x     y     exclusion cut_off model controls method  p.value effect.size
 #>    <chr> <chr> <chr>     <chr>   <chr> <lgl>    <chr>     <dbl>       <dbl>
-#>  1 cs    scr   full_data full_d… t-te… NA       t-tes…  0.00244      0.577 
-#>  2 cs    scr   full_data full_d… t-te… NA       t-tes…  0.00488      0.577 
-#>  3 cs    scr   full_data full_d… Baye… NA       Bayes… NA           NA     
-#>  4 cs    scr   full_data full_d… Baye… NA       Bayes… NA           NA     
-#>  5 cs:t… scr   full_data full d… rep … NA       rep A…  0.0152       0.0307
-#>  6 cs    scr   full_data full_d… rep … NA       rep A…  0.00488      0.157 
-#>  7 cs:t… scr   full_data full_d… rep … NA       rep B… NA           NA     
-#>  8 cs:t… scr   full_data full_d… rep … NA       rep B… NA           NA     
-#>  9 cs    scr   full_data full_d… rep … NA       rep B… NA           NA     
-#> 10 cs    scr   full_data full_d… rep … NA       rep B… NA           NA     
-#> # … with 326 more rows, and 6 more variables: estimate <dbl>, statistic <dbl>,
-#> #   conf.low <dbl>, conf.high <dbl>, framework <chr>, data_used <list>
+#>  1 cs    scr   full_data full d… t-te… NA       great…  0.00244      0.577 
+#>  2 cs    scr   full_data full d… t-te… NA       two.s…  0.00488      0.577 
+#>  3 cs    scr   full_data full d… Baye… NA       Bayes… NA           NA     
+#>  4 cs    scr   full_data full d… Baye… NA       Bayes… NA           NA     
+#>  5 cs:t… scr   full_data full d… rep … NA       rep A…  0.0152       0.0296
+#>  6 cs    scr   full_data full d… rep … NA       rep A…  0.00488      0.147 
+#>  7 cs:t… scr   full_data full d… rep … NA       rep B… NA           NA     
+#>  8 cs    scr   full_data full d… rep … NA       rep B… NA           NA     
+#>  9 cs    scr   ten_per   full d… t-te… NA       great…  0.266        0.100 
+#> 10 cs    scr   ten_per   full d… t-te… NA       two.s…  0.532        0.100 
+#> # … with 58 more rows, and 9 more variables: effect.size.ma <dbl>,
+#> #   effect.size.ma.lci <dbl>, effect.size.ma.hci <dbl>, estimate <dbl>,
+#> #   statistic <dbl>, conf.low <dbl>, conf.high <dbl>, framework <chr>,
+#> #   data_used <list>
 ```
 
 In terms of calling the function, we see that we need exactly the same
@@ -307,8 +310,7 @@ have been used. Here we have:
 
 ``` r
 res_multi$cut_off %>% unique()
-#> [1] "full_data"     "full data"     "last_2_trials" "last_4_trials"
-#> [5] "last_5_trials"
+#> [1] "full data"
 ```
 
 which means
@@ -329,34 +331,44 @@ function and you will get:
 1)  A histogram will all the p value and a red line showing the
     significance limit – by default alpha = 0.05
 
-2)  Mean p\_value
+2)  A histogram will all the Bayes factors and a red line showing the
+    limit of inconclusive evidence – by default this is 0
 
-3)  the number of p values below the significance level
+3)  Mean and median p values
 
-4)  Mean of Bayes factors
+4)  the number of p values below the significance level
+
+5)  Mean and median of Bayes factors
+
+6)  the proportion of Bayes factors above 1
 
 <!-- end list -->
 
 ``` r
 multifear::inference_cs(res_multi, na.rm = TRUE)
+#>   mean_p_value median_p_value sd_p_value prop_p_value mean_bf_value
+#> 1    0.1074323     0.00638261  0.2341194     82.35294      1924.097
+#>   median_bf_value sd_bf_value prop_bf_value
+#> 1        4.319848    10349.78      73.52941
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
+And here we have a barplot of the results.
+
+``` r
+multifear::inference_plot(res_multi)
+```
+
+![](README_files/figure-gfm/unnamed-chunk-14-1.png)<!-- -->
 
     #> TableGrob (1 x 2) "arrange": 2 grobs
     #>   z     cells    name           grob
     #> 1 1 (1-1,1-1) arrange gtable[layout]
     #> 2 2 (1-1,2-2) arrange gtable[layout]
-    #>   mean_p_value median_p_value prop_p_value mean_bf_value median_bf_value
-    #> 1    0.1074323     0.00638261     82.35294      2537.804        1.071591
-    #>   prop_bf_value
-    #> 1            50
 
-And here we have the specification curves for the performed frequentists
-t-tests.
+Lastly, to plot the effect sizes, you can use the following function
 
 ``` r
-multifear::curve_cs(res_multi)
+multifear::forestplot_mf(res_multi)
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-14-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-15-1.png)<!-- -->
