@@ -50,6 +50,7 @@ forestplot_mf <-
 
       forestplot::forestplot(
         labeltext = paste(data$method, rep("| data used:", nrow(data), sep = ""),  data$method2),
+        boxsize = .25,
         mean = data$effect.size.ma,
         lower = lci,
         upper = hci,
