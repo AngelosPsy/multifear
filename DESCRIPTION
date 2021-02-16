@@ -29,7 +29,6 @@ Imports:
     effectsize (>= 0.4.1),
     esc (>= 0.5.1),
     forestplot (>= 1.10),
-    specr (>= 0.2.1),
     bootstrap (>= 2019.6)
 RoxygenNote: 7.1.1
 Suggests:
