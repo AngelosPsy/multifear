@@ -25,14 +25,14 @@ forestplot_mf <-
         dplyr::case_when(
           exclusion == "full_data" ~ "full data",
           exclusion == "full data" ~ "full data",
-          exclusion == "ten_per" ~ "trials divited by 10%",
-          exclusion == "min_first" ~ "remove 1st trial",
-          exclusion == "th3_per" ~ "trials divided by 33%",
-          exclusion == "halves" ~ "half of the trials",
+          exclusion == "ten_per" ~ "averages of 10% blocks",
+          exclusion == "twenty_per" ~ "averages of 20% blocks",
+          exclusion == "th3_per" ~ "averages of 33% blocks",
+          exclusion == "halves" ~ "averages of 50% blocks",
           exclusion == "fltrials" ~ "first vs. last trial",
-          exclusion == "twenty_per" ~ "trials divided by 20%",
-          exclusion == "fl2trials" ~ "first 2 vs last 2 trials",
-          exclusion == "per2trials" ~ "per 2 trials",
+          exclusion == "min_first" ~ "average across trials after removing 1st trial",
+          exclusion == "fl2trials" ~ "averages of first 2 vs last 2 trials",
+          exclusion == "per2trials" ~ "averages per 2 trials",
         )
     ) %>%
       dplyr::arrange(model, method) %>%
