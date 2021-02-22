@@ -40,16 +40,8 @@ doing that, let’s load some additional packages that we need for our
 example.
 
 ``` r
-library(dplyr)
-#> 
-#> Attaching package: 'dplyr'
-#> The following objects are masked from 'package:stats':
-#> 
-#>     filter, lag
-#> The following objects are masked from 'package:base':
-#> 
-#>     intersect, setdiff, setequal, union
-library(ggplot2)
+suppressPackageStartupMessages(library(dplyr))
+suppressPackageStartupMessages(library(ggplot2))
 ```
 
 Now we will use some simulated data set that are included as example
@@ -63,7 +55,7 @@ data("example_data")
 
 From these data we are going to select only the 10 first lines – it
 saves a lot of time for computation for this example. Here are the first
-10 rows of the data set
+10 rows of the data set:
 
 ``` r
 head(example_data, 10)
@@ -129,8 +121,7 @@ datmelt <- example_data %>%
 ![](README_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
 
 We see the basic learning pattern where CS+ responses end up being
-higher than CS- responses. The deep in CS+ on trial 2 is in line with
-the original data set.
+higher than CS- responses.
 
 Now we need to analyse the data. For this we will use the
 *multifear::universe\_cs* function. In order for this function to work,
@@ -234,8 +225,8 @@ Let’s go through each column separately
     performed analyses. This is because someone maybe wants to recreate
     the results and also as a check that nothing went wrong.
 
-So now let’s see how you can run the same analyses but after we apply
-some selection criteria for non-learns. So, here it is
+Now, we want to perform the same analyses but for different datta
+reduction procedures (see below). We can do it simply by:
 
 ``` r
 
@@ -264,7 +255,7 @@ res_multi
 In terms of calling the function, we see that we need exactly the same
 arguments as before. Internally, the function actually applies the
 multifear::universe\_cs but now apart from the full data set, also for
-the data sets that we have set some exclusion criteria. Whether each
+the data sets with different data inclusion procedures. Whether each
 line refers to the full data set or any of the exclusion criteria, we
 can see on the column exclusion criteria or in the data\_used column,
 although there it is difficult to see what happened and it serves only
@@ -277,14 +268,7 @@ res_multi$exclusion %>% unique()
 #> [6] "fltrials"   "twenty_per" "fl2trials"  "per2trials"
 ```
 
-The exclusion criteria actually (largely) follow the criteria reported
-in the eLife article (“Navigating the garden of forking paths for data
-exclusions in fear conditioning research”; Lonsdorf et al., 2019). One
-problem with the criteria is that of course you have different number of
-trials, some studies exclude participants based on SCR but also on their
-ratings, etc. This of course makes it difficult to *exactly* apply all
-the criteria. To overcome this problem, we are going to form a summary
-of exclusion criteria. So here we are:
+The explanation of each level is the following:
 
 1)  fl2trials: first and last two trials.
 
@@ -304,24 +288,6 @@ of exclusion criteria. So here we are:
 8)  seperate trials per 33%
 
 9)  seperate trials per 20%
-
-Another important column is the cut\_off column that shows what data
-have been used. Here we have:
-
-``` r
-res_multi$cut_off %>% unique()
-#> [1] "full data"
-```
-
-which means
-
-1)  full\_data: full data set
-
-2)  last\_2\_trials: last two trials
-
-3)  last\_4\_trials: last four trials
-
-4)  last\_4\_trials: last five trials
 
 ## Inferences
 
@@ -347,18 +313,18 @@ function and you will get:
 ``` r
 multifear::inference_cs(res_multi, na.rm = TRUE)
 #>   mean_p_value median_p_value sd_p_value prop_p_value mean_bf_value
-#> 1    0.1074323     0.00638261  0.2341194     82.35294      1924.097
+#> 1    0.1074323     0.00638261  0.2341194     82.35294      1864.799
 #>   median_bf_value sd_bf_value prop_bf_value
-#> 1        4.319848    10349.78      73.52941
+#> 1         4.34744    10008.72      73.52941
 ```
 
-And here we have a barplot of the results.
+And here we have a barplot of the results:
 
 ``` r
-multifear::inference_plot(res_multi)
+multifear::inference_plot(res_multi, add_line = FALSE)
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-14-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
 
     #> TableGrob (1 x 2) "arrange": 2 grobs
     #>   z     cells    name           grob
@@ -371,4 +337,4 @@ Lastly, to plot the effect sizes, you can use the following function
 multifear::forestplot_mf(res_multi)
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-15-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-14-1.png)<!-- -->
