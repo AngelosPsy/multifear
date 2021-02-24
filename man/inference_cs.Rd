@@ -24,5 +24,5 @@ Function for summarizing the multiverse results.
 \details{
 \lifecycle{experimental}
 
-For now the function returns mean, median, standard deviations of p values and proportion of p values below a criterion defined by the \code{alpha_level} parameter (default to 0.05) as well as mean Bayes factors (please see the `framework` arguument). The user may choose to drop the NAs for the summary statistic.
+For now the function returns mean, median, standard deviations of p values and proportion of p values below a criterion defined by the \code{alpha_level} parameter (default to 0.05) as well as mean Bayes factors (please see the `framework` argument). The user may choose to drop the NAs for the summary statistic.
 }

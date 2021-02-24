@@ -23,54 +23,70 @@ rm_banova_mf(
 
 \item{cs2}{The column name(s) of the conditioned responses for the second conditioned stimulus}
 
-\item{data}{A data frame containing with all the relevant columns}
+\item{data}{A data frame containing all the relevant columns for the analyses}
 
-\item{subj}{The name of the column including the participant numbers. Unique numbers are expected.}
+\item{subj}{The name of the column including the participant numbers. Unique numbers are expected}
 
-\item{time}{should time be included? Default to \code{TRUE}.}
+\item{time}{should time be included? Default to \code{TRUE}}
 
-\item{group}{the name of the group, if included, default to \code{NULL}.}
+\item{group}{the name of the group, if included, default to \code{NULL}}
 
-\item{phase}{The conditioned phase that the analyses refer to. Accepted values are  \code{acquisition},  or \code{acq}, \code{extinction}, or \code{ext}.}
+\item{phase}{The conditioned phase that the analyses refer to. Accepted values are  \code{acquisition}, \code{acq}, \code{extinction}, or \code{ext}}
 
-\item{dv}{name of the measured conditioned response. Default to \code{"SCR"}.}
+\item{dv}{name of the measured conditioned response. Default to \code{"SCR"}}
 
-\item{exclusion}{If any exclusion criteria were applied, default to \code{full data}}
+\item{exclusion}{Name of the data reduction procedure used. Default to \code{full data}}
 
-\item{cut_off}{cut off}
+\item{cut_off}{cut off Name of the cut_off applied. Default to \code{full data}}
 
 \item{multicore}{The option to run the analysis in multiple cores, not available under Windows.
 Default to \code{TRUE}.}
 }
 \value{
 A tibble with the following column names:
+
 x: the name of the independent variable (e.g., cs)
+
 y: the name of the dependent variable as this defined in the \code{dv} argument
+
 exclusion: see \code{exclusion} argument
-model: the model that was run (e.g., t-test)
+
+model: the model that was run (e.g., rep ANOVA)
+
 controls: ignore this column for this test
+
 method: the model that was run
+
 p.value: irrelevant here
+
 effect.size: irrelevant here
+
 effect.size.ma: irrelevant here
+
 effect.size.lci: irrelevant here
+
 effect.size.hci: irrelevant here
+
 estimate: the estimate of the test run
-statistic: the t-value
+
+statistic: the Bayes factor
 conf.low: the lower confidence interval for the estimate
+
 conf.high: the higher confidence interval for the estimate
+
 framework: were the data analysed within a NHST or Bayesian framework?
+
 data_used: a list with the data used for the specific test
 }
 \description{
-Basic function for running the Bayesian repeated measures ANOVA
+Basic function for running the Bayesian repeated measures analysis of Variance
 
 \lifecycle{experimental}
 }
 \details{
 In case the \code{time} argument is set to true, the function will
 include this as a within subjects factor, assuming that the columns in
-\code{cs1} and \code{cs2} corrrespond to ascending time points (e.g., cs1
+\code{cs1} and \code{cs2} correspond to ascending time points (e.g., cs1
 trial 1, cs1 trial 2 ... cs1 trial \code{n}). If this is not the case, the
 results are not to be trusted.
 
@@ -86,7 +102,8 @@ cs1 <- paste0("CSP", 1:2)
 cs2 <- paste0("CSM", 1:2)
 subj <- "id"
 
-# Repeated measures ANOVA
-rm_banova_mf(cs1 = cs1, cs2 = cs2, subj = subj, data = example_data, time = TRUE, multicore = FALSE)
+# Bayesian Repeated measures ANOVA without groups
+rm_banova_mf(cs1 = cs1, cs2 = cs2, subj = subj,
+data = example_data, time = TRUE, multicore = FALSE)
 
 }

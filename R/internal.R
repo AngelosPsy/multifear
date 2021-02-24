@@ -52,7 +52,8 @@ select_term = function(obj, term, dv = "scr", exclusion = "full data"){
   if(exists("obj")){
     summ <- summary(obj)
 
-    # meta.analytic effect size
+    # meta.analytic effect size. I do not think this is correct so consider
+    # deleting
     st <- data.frame(summ$tTable)
     st_es <-
       effectsize::t_to_d(t = st$t.value, df = st$DF) %>%
@@ -74,9 +75,9 @@ select_term = function(obj, term, dv = "scr", exclusion = "full data"){
       method = paste("mixed_model", x),
       p.value = valz$p.value,
       effect.size = NA,
-      efffect.size.ma = st_es$d,
-      effect.size.ma.lci = st_es$CI_low,
-      effect.size.ma.hci = st_es$CI_high,
+      efffect.size.ma = NA,#st_es$d,
+      effect.size.ma.lci = NA,#st_es$CI_low,
+      effect.size.ma.hci = NA,#st_es$CI_high,
       estimate = valz$Value,
       statistic = valz$t.value,
       conf.low = NA,
@@ -92,9 +93,9 @@ select_term = function(obj, term, dv = "scr", exclusion = "full data"){
       method = paste("mixed_model", x),
       p.value = NA,
       effect.size = NA,
-      efffect.size.ma = st_es$d,
-      effect.size.ma.lci = st_es$CI_low,
-      effect.size.ma.hci = st_es$CI_high,
+      efffect.size.ma = NA,#st_es$d,
+      effect.size.ma.lci = NA,#st_es$CI_low,
+      effect.size.ma.hci = NA,#st_es$CI_high,
       estimate = NA,
       efffect.size.ma = NA,
       statistic = NA,

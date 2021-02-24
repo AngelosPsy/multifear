@@ -9,15 +9,15 @@ chop_cs(cs, data, subj, group = NULL, prefix = "cs", na.rm = FALSE)
 \arguments{
 \item{cs}{The column name(s) of the conditioned responses}
 
-\item{data}{A data frame containing with all the relevant columns}
+\item{data}{A data frame containing all the relevant columns for the analyses}
 
-\item{subj}{The name of the column including the participant numbers. Unique numbers are expected.}
+\item{subj}{The name of the column including the participant numbers. Unique numbers are expected}
 
 \item{group}{default to \code{NULL}}
 
 \item{prefix}{prefix to be included in the end data frame}
 
-\item{na.rm}{Whether NAs should be removed, default to \code{FALSE}.}
+\item{na.rm}{Whether NAs should be removed, default to \code{FALSE}}
 }
 \value{
 A tibble with the following colnames:

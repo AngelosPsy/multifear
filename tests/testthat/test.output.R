@@ -51,13 +51,13 @@ test_that("rm_banova_mf for groups works", {
   expect_known_output(rm_banova_mf(cs1, cs2, subj = subj, group = group, data = example_data, multicore = FALSE), tmp)
 })
 
-test_that("lm works", {
-  expect_known_output(lm_mf(cs1, cs2, subj = subj, data = bf_data), tmp)
-})
+#test_that("lm works", {
+#  expect_known_output(lm_mf(cs1, cs2, subj = subj, data = bf_data), tmp)
+#})
 
-test_that("lm for groups works", {
-  expect_known_output(lm_mf(cs1, cs2, subj = subj, group = group, data = bf_data), tmp)
-})
+#test_that("lm for groups works", {
+#  expect_known_output(lm_mf(cs1, cs2, subj = subj, group = group, data = bf_data), tmp)
+#})
 
 test_that("chop cs works", {
   expect_known_output(chop_cs(cs = cs1, data = bf_data, subj = subj), tmp)

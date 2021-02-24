@@ -25,58 +25,74 @@ t_test_mf(
 
 \item{cs2}{The column name(s) of the conditioned responses for the second conditioned stimulus}
 
-\item{data}{A data frame containing with all the relevant columns}
+\item{data}{A data frame containing all the relevant columns for the analyses}
 
-\item{subj}{The name of the column including the participant numbers. Unique numbers are expected.}
+\item{subj}{The name of the column including the participant numbers. Unique numbers are expected}
 
-\item{group}{the name of the group, if included, default to \code{NULL}.}
+\item{group}{the name of the group, if included, default to \code{NULL}}
 
-\item{na.rm}{Whether NAs should be removed, default to \code{FALSE}.}
+\item{na.rm}{Whether NAs should be removed, default to \code{FALSE}}
 
-\item{paired}{Whether the t-test refers to a paired or independent sample(s). Default to \code{TRUE}.}
+\item{paired}{Whether the t-test refers to dependent (i.e., paired) or to independent sample(s). Default to \code{TRUE}}
 
-\item{quanz}{Quantiles for the meta-analytic effect sizes. Default to .05 (lower) and.95 (upper).}
+\item{quanz}{Quantiles for the meta-analytic effect sizes. Default to .05 (lower) and.95 (upper)}
 
-\item{meta.effect}{How the meta-analytic effect should be computed.}
+\item{meta.effect}{How the meta-analytic effect should be computed, Default to \code{"d_to_eta2"} (see details for more information)}
 
-\item{phase}{The conditioned phase that the analyses refer to. Accepted values are  \code{acquisition},  or \code{acq}, \code{extinction}, or \code{ext}.}
+\item{phase}{The conditioned phase that the analyses refer to. Accepted values are  \code{acquisition}, \code{acq}, \code{extinction}, or \code{ext}}
 
-\item{dv}{name of the measured conditioned response. Default to \code{"SCR"}.}
+\item{dv}{name of the measured conditioned response. Default to \code{"SCR"}}
 
-\item{exclusion}{If any exclusion criteria were applied, default to \code{full data}}
+\item{exclusion}{Name of the data reduction procedure used. Default to \code{full data}}
 
-\item{cut_off}{cut off}
+\item{cut_off}{cut off Name of the cut_off applied. Default to \code{full data}}
 }
 \value{
 A tibble with the following column names:
+
 x: the name of the independent variable (e.g., cs)
+
 y: the name of the dependent variable as this defined in the \code{dv} argument
 exclusion: see \code{exclusion} argument
+
 model: the model that was run (e.g., t-test)
+
 controls: ignore this column for this test
+
 method: the model that was run
+
 p.value: the p-value of the test
+
 effect.size: the estimated effect size
+
 effect.size.ma: the estimated effect size for the meta-analytic plots. Here we used eta squared
+
 effect.size.ma.lci: low confidence intervals for the meta-analytic effect size
+
 effect.size.ma.hci: high confidence intervals for the meta-analytic effect size
+
 estimate: the estimate of the test run. For the t-test is the mean of the differences
+
 statistic: the t-value
+
 conf.low: the lower confidence interval for the estimate
+
 conf.high: the higher confidence interval for the estimate
+
 framework: were the data analysed within a NHST or Bayesian framework?
+
 data_used: a list with the data used for the specific test
 }
 \description{
-Basic function for running the frequentist's t-tests (student t-test) included in the main analyses
+Basic function for running the frequentist's t-tests included in the main analyses
 }
 \details{
 \lifecycle{experimental}
 
-Given the correct names for the \code{cs1}, \code{cs2}, \code{subj}, and \code{data}, the function will run one- and two-sided frequentist's t-tests. In case \code{cs1} or \code{cs2} refer to multiple columns, the mean -- per row -- for each one of these variables will be computed first before running the test. Please note that cs1 is implicitly referred to the cs that is reinforced, and cs2 to the cs that is not reinforced.
-Depending on whether the data refer to an acquisition or extinction phase (as defined in the \code{phase} argument), the function will return a positive one sided, or negative one-sided, t-test in addition to the two-sided t-test. The returned effect size is  Hedge's g in the column effect size. For the meta-analytic effect size (effect.size.ma), the returned effect size is Cohen's d.
+Given the correct names for the \code{cs1}, \code{cs2}, \code{subj}, and \code{data}, the function will run one- and two-sided frequentist's t-tests. In case \code{cs1} or \code{cs2} refer to multiple columns, the mean -- per row -- for each one of these variables will be computed first before running the t-test. Please note that cs1 is implicitly referred to the cs that is reinforced, and cs2 to the cs that is not reinforced.
+Depending on whether the data refer to an acquisition or extinction phase (as defined in the \code{phase} argument), the function will return a positive one sided, or negative one-sided, respectively t-test in addition to the two-sided t-test. The returned effect size is  Hedge's g in the column effect size. For the meta-analytic effect size (effect.size.ma), the returned effect size is eta-squared.
 
-The function by default runs a Welch t-test, meaning it assumes unequal variances. This is due to calls that such a test should be preferred over Student t-test, at least for paired samples t-test. Please note that if we let R decide which test to run -- this is done by default in \code{stats::t.test}, then for some test there would be a Student t-test whereas in some others not.
+The function by default runs a Welch t-test, meaning it assumes unequal variances. This is due to calls that such a test should be preferred over Student's t-test, at least for paired samples t-test. Please note that if we let R decide which test to run -- this is done by default in \code{stats::t.test}, then for some test there would be a Student t-test whereas in some others not.
 There are two different ways to compute the meta-analytic effect sizes but the results may differ. The option
 "t_to_eta2" computes the eta squared via the t values whereas the "d_to_eta2" the eta squared is computed via
 the Cohen's d value.

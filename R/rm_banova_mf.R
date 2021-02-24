@@ -1,34 +1,51 @@
 #' rm_banova_mf
 #'
-#' @description Basic function for running the Bayesian repeated measures ANOVA
+#' @description Basic function for running the Bayesian repeated measures analysis of Variance
 #'
 #' \lifecycle{experimental}
 #'
 #' @inheritParams rm_anova_mf
 #' @param multicore The option to run the analysis in multiple cores, not available under Windows.
 #' Default to \code{TRUE}.
+#'
 #' @return A tibble with the following column names:
+#'
 #' x: the name of the independent variable (e.g., cs)
+#'
 #' y: the name of the dependent variable as this defined in the \code{dv} argument
+#'
 #' exclusion: see \code{exclusion} argument
-#' model: the model that was run (e.g., t-test)
+#'
+#' model: the model that was run (e.g., rep ANOVA)
+#'
 #' controls: ignore this column for this test
+#'
 #' method: the model that was run
+#'
 #' p.value: irrelevant here
+#'
 #' effect.size: irrelevant here
+#'
 #' effect.size.ma: irrelevant here
+#'
 #' effect.size.lci: irrelevant here
+#'
 #' effect.size.hci: irrelevant here
+#'
 #' estimate: the estimate of the test run
-#' statistic: the t-value
+#'
+#' statistic: the Bayes factor
 #' conf.low: the lower confidence interval for the estimate
+#'
 #' conf.high: the higher confidence interval for the estimate
+#'
 #' framework: were the data analysed within a NHST or Bayesian framework?
+#'
 #' data_used: a list with the data used for the specific test
 #'
 #' @details In case the \code{time} argument is set to true, the function will
 #' include this as a within subjects factor, assuming that the columns in
-#' \code{cs1} and \code{cs2} corrrespond to ascending time points (e.g., cs1
+#' \code{cs1} and \code{cs2} correspond to ascending time points (e.g., cs1
 #' trial 1, cs1 trial 2 ... cs1 trial \code{n}). If this is not the case, the
 #' results are not to be trusted.
 #'
@@ -44,8 +61,9 @@
 #' cs2 <- paste0("CSM", 1:2)
 #' subj <- "id"
 #'
-#' # Repeated measures ANOVA
-#' rm_banova_mf(cs1 = cs1, cs2 = cs2, subj = subj, data = example_data, time = TRUE, multicore = FALSE)
+#' # Bayesian Repeated measures ANOVA without groups
+#' rm_banova_mf(cs1 = cs1, cs2 = cs2, subj = subj,
+#' data = example_data, time = TRUE, multicore = FALSE)
 #'
 #' @export
 rm_banova_mf <- function(cs1,

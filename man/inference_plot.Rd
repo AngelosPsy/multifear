@@ -20,7 +20,7 @@ inference_plot(
 
 \item{add_line}{Whether to add a line with the alpha level in the produced histogram (default to \code{TRUE})}
 
-\item{na.rm}{Should NA's be removed (default to \code{FALSE}). See details forr more information}
+\item{na.rm}{Should NA's be removed (default to \code{FALSE}). See details for more information}
 
 \item{framework}{Inference framework. Values could be "NHST", "Bayesian", or "Both" (no case sensitivity)}
 

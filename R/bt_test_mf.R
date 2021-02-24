@@ -2,28 +2,43 @@
 #'
 #' \lifecycle{experimental}
 #'
-#' Basic function for running the Bayesian t-tests included in the main analyses.
+#' Basic function for running the Bayesian t-tests included in the main analyses
 #' @inheritParams t_test_mf
 #' @param rscale r scale to be used in the prior of the alternative hypothesis, default to "medium".
 #' @return A tibble with the following column names:
+#'
 #' x: the name of the independent variable (e.g., cs)
+#'
 #' y: the name of the dependent variable as this defined in the \code{dv} argument
+#'
 #' exclusion: see \code{exclusion} argument
+#'
 #' model: the model that was run (e.g., t-test)
+#'
 #' controls: ignore this column for this test
+#'
 #' method: the model that was run
+#'
 #' p.value: irrelevant here
+#'
 #' effect.size: irrelevant here
+#'
 #' effect.size.ma: irrelevant here
+#'
 #' estimate: the estimate of the test run
+#'
 #' statistic: the t-value
+#'
 #' conf.low: the lower confidence interval for the estimate
+#'
 #' conf.high: the higher confidence interval for the estimate
+#'
 #' framework: were the data analysed within a NHST or Bayesian framework?
+#'
 #' data_used: a list with the data used for the specific test
 #'
-#' @details This is a wrapper function function around the BayesFactor::ttestBF(),
-#' running multiple Bayesian t-tests. Similar to the \code{t_test_mf} function, the function will run different t-tests based on the phase that the t-tests refer to.
+#' @details This is a wrapper function function around the \code{BayesFactor::ttestBF(),}
+#' running multiple Bayesian t-tests. Similar to the \code{t_test_mf} function, the function will run different t-tests based on the phase that the t-tests refer to. So, in case of the acquisition phase, there will be a t-test of differences and positive differences, whereas for the extinction phase a t-test for differences and negative differences.
 #'
 #' @examples
 #' # Load example data
@@ -34,7 +49,6 @@
 #'
 #' # Independent  sample t-tests
 #' bt_test_mf(cs1 = "CSP1", cs2 = "CSM1", subj = "id",  group = "group", data = example_data)
-#'
 #'
 #' @importFrom dplyr %>%
 #' @export

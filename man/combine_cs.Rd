@@ -11,9 +11,9 @@ combine_cs(cs1, cs2, data, na.rm = FALSE)
 
 \item{cs2}{The column name(s) of the conditioned responses for the second conditioned stimulus}
 
-\item{data}{A data frame containing with all the relevant columns}
+\item{data}{A data frame containing all the relevant columns for the analyses}
 
-\item{na.rm}{Whether NAs should be removed, default to \code{FALSE}.}
+\item{na.rm}{Whether NAs should be removed, default to \code{FALSE}}
 }
 \description{
 Function for computing mean responses across CSs

@@ -11,15 +11,15 @@ chop_css(cs1, cs2, data, subj, cs_paired = NULL, group = NULL, na.rm = FALSE)
 
 \item{cs2}{The column name(s) of the conditioned responses for the second conditioned stimulus}
 
-\item{data}{A data frame containing with all the relevant columns}
+\item{data}{A data frame containing all the relevant columns for the analyses}
 
-\item{subj}{The name of the column including the participant numbers. Unique numbers are expected.}
+\item{subj}{The name of the column including the participant numbers. Unique numbers are expected}
 
 \item{cs_paired}{A character vector with the trials that were paired. Default is set to \code{NULL}, suggesting that there was full reinforcement}
 
-\item{group}{the name of the group, if included, default to \code{NULL}.}
+\item{group}{the name of the group, if included, default to \code{NULL}}
 
-\item{na.rm}{Whether NAs should be removed, default to \code{FALSE}.}
+\item{na.rm}{Whether NAs should be removed, default to \code{FALSE}}
 }
 \description{
 Function for separating the conditioned responses into multiple pieces for two CSs.

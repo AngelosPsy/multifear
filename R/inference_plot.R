@@ -6,7 +6,7 @@
 #' @param data a data frame with the results of a multiverse analyses.
 #' @param alpha_level What should be the alpha level used (default to 0.05).
 #' @param add_line Whether to add a line with the alpha level in the produced histogram (default to \code{TRUE})
-#' @param na.rm Should NA's be removed (default to \code{FALSE}). See details forr more information
+#' @param na.rm Should NA's be removed (default to \code{FALSE}). See details for more information
 #' @param framework Inference framework. Values could be "NHST", "Bayesian", or "Both" (no case sensitivity)
 #' @param col A length three vector with the colors to be used for ANOVAS, t-tests, and mixed models (in this order)
 #' @return A histogram summarizing the results.

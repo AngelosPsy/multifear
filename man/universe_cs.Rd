@@ -26,23 +26,23 @@ universe_cs(
 
 \item{cs2}{The column name(s) of the conditioned responses for the second conditioned stimulus}
 
-\item{data}{A data frame containing with all the relevant columns}
+\item{data}{A data frame containing all the relevant columns for the analyses}
 
-\item{subj}{The name of the column including the participant numbers. Unique numbers are expected.}
+\item{subj}{The name of the column including the participant numbers. Unique numbers are expected}
 
-\item{group}{the name of the group, if included, default to \code{NULL}.}
+\item{group}{the name of the group, if included, default to \code{NULL}}
 
 \item{include_bayes}{Whether the Bayesian analyses should be run. Default to \code{TRUE}}
 
 \item{include_mixed}{Whether the mixed model results should be run. Default to \code{FALSE}}
 
-\item{phase}{The conditioned phase that the analyses refer to. Accepted values are  \code{acquisition},  or \code{acq}, \code{extinction}, or \code{ext}.}
+\item{phase}{The conditioned phase that the analyses refer to. Accepted values are  \code{acquisition}, \code{acq}, \code{extinction}, or \code{ext}}
 
-\item{dv}{name of the measured conditioned response. Default to \code{"SCR"}.}
+\item{dv}{name of the measured conditioned response. Default to \code{"SCR"}}
 
 \item{print_output}{Whether to print the output or not. Default set to \code{TRUE}}
 
-\item{exclusion}{If any exclusion criteria were applied, default to \code{full data}}
+\item{exclusion}{Name of the data reduction procedure used. Default to \code{full data}}
 
 \item{cut_off}{cut off score}
 

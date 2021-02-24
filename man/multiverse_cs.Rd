@@ -25,11 +25,11 @@ multiverse_cs(
 
 \item{cs2}{The column name(s) of the conditioned responses for the second conditioned stimulus}
 
-\item{data}{A data frame containing with all the relevant columns}
+\item{data}{A data frame containing all the relevant columns for the analyses}
 
-\item{subj}{The name of the column including the participant numbers. Unique numbers are expected.}
+\item{subj}{The name of the column including the participant numbers. Unique numbers are expected}
 
-\item{group}{the name of the group, if included, default to \code{NULL}.}
+\item{group}{the name of the group, if included, default to \code{NULL}}
 
 \item{cs_paired}{A character vector with the trials that were paired. Default is set to \code{NULL}, suggesting that there was full reinforcement}
 
@@ -37,7 +37,7 @@ multiverse_cs(
 
 \item{include_mixed}{Whether the mixed model results should be run. Default to \code{FALSE}}
 
-\item{phase}{The conditioned phase that the analyses refer to. Accepted values are  \code{acquisition},  or \code{acq}, \code{extinction}, or \code{ext}.}
+\item{phase}{The conditioned phase that the analyses refer to. Accepted values are  \code{acquisition}, \code{acq}, \code{extinction}, or \code{ext}}
 
 \item{cutoff}{A numeric vector of the cutoff criteria applied. Default to \code{0, 0.05, .1}}
 

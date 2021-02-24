@@ -8,7 +8,7 @@
 #' @param na.rm Should NA's be removed (default to \code{FALSE}). See details.
 #' @param framework Inference framework. Values could be "NHST", "Bayesian", or "Both" (no case sensitivity)
 #' @return A data frame with summaries of the results.
-  #' @details For now the function returns mean, median, standard deviations of p values and proportion of p values below a criterion defined by the \code{alpha_level} parameter (default to 0.05) as well as mean Bayes factors (please see the `framework` arguument). The user may choose to drop the NAs for the summary statistic.
+  #' @details For now the function returns mean, median, standard deviations of p values and proportion of p values below a criterion defined by the \code{alpha_level} parameter (default to 0.05) as well as mean Bayes factors (please see the `framework` argument). The user may choose to drop the NAs for the summary statistic.
 #'
 #' @export
 
