@@ -281,13 +281,13 @@ The explanation of each level is the following:
 
 5)  min\_first: take all trials apart from the first one
 
-6)  seperate trials per 2
+6)  separate trials per 2
 
-7)  seperate trials per 10%
+7)  separate trials per 10%
 
-8)  seperate trials per 33%
+8)  separate trials per 33%
 
-9)  seperate trials per 20%
+9)  separate trials per 20%
 
 ## Inferences
 
@@ -313,9 +313,9 @@ function and you will get:
 ``` r
 multifear::inference_cs(res_multi, na.rm = TRUE)
 #>   mean_p_value median_p_value sd_p_value prop_p_value mean_bf_value
-#> 1    0.1074323     0.00638261  0.2341194     82.35294      1864.799
+#> 1    0.1074323     0.00638261  0.2341194     82.35294      1882.884
 #>   median_bf_value sd_bf_value prop_bf_value
-#> 1         4.34744    10008.72      73.52941
+#> 1        4.319848    10128.54      76.47059
 ```
 
 And here we have a barplot of the results:

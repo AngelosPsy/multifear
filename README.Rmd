@@ -157,14 +157,13 @@ The explanation of each level is the following:
 
 5) min_first: take all trials apart from the first one
 
-6) seperate trials per 2
+6) separate trials per 2
 
-7) seperate trials per 10%
+7) separate trials per 10%
 
-8) seperate trials per 33%
+8) separate trials per 33%
 
-9) seperate trials per 20%
-
+9) separate trials per 20%
 
 ## Inferences
 This is the most challenging part. For now you can use the following function
