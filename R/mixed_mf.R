@@ -21,25 +21,54 @@
 #' The model comparison is done using `BIC`.
 #'
 #' @return The data frame returned is the standard one returned in all function in the package. Specifically we have:
+#'
 #' A tibble with the following column names:
+#'
 #' x: the name of the independent variable (e.g., cs). There, you can see the term of the model that is returned. So, not the full model is returned but only this particular term.
+#'
 #' y: the name of the dependent variable as this defined in the \code{dv} argument
+#'
 #' exclusion: see \code{exclusion} argument
-#' model: the model that was run (e.g., t-test)
+#'
+#' model: the model that was run (e.g., mixed_model)
+#'
 #' controls: ignore this column for this test
+#'
 #' method: the model that was run
-#' p.value: irrelevant here
+#'
+#' p.value: the p-value for each factor
+#'
 #' effect.size: irrelevant here
-#' effect.size.ma: the estimated effect size for the meta-analytic plots
-#' effect.size.ma.lci: low confidence intervals for the meta-analytic effect size
-#' effect.size.ma.hci: high confidence intervals for the meta-analytic effect size
-#' statistic: the t-value
+#'
+#' effect.size.ma: irrelevant here
+#'
+#' effect.size.ma.lci: irrelevant here
+#'
+#' effect.size.ma.hci: irrelevant here
+#'
+#' statistic: the t-value for each factor
+#'
 #' conf.low: the lower confidence interval for the estimate
+#'
 #' conf.high: the higher confidence interval for the estimate
+#'
 #' data_used: a list with the data used for the specific test
 #'
 #' @seealso
 #' \code{\link[nlme]{lme}}
+#'
+#' @examples
+#' cs1 <- paste0("CSP", 1:2)
+#' cs2 <- paste0("CSM", 1:2)
+#' subj <- "id"
+#'
+#' # mixed models without groups
+#' mixed_mf(cs1 = cs1, cs2 = cs2, subj = subj, data = example_data)
+#'
+#' # mixed models with groups
+#' mixed_mf(cs1 = cs1, cs2 = cs2, subj = subj, group = "group", data = example_data)
+#'
+#'
 #' @importFrom nlme lme
 #' @importFrom nlme lme.formula
 #' @export
