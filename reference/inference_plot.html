@@ -123,7 +123,8 @@
   add_line <span class='op'>=</span> <span class='cn'>TRUE</span>,
   na.rm <span class='op'>=</span> <span class='cn'>FALSE</span>,
   framework <span class='op'>=</span> <span class='st'>"Both"</span>,
-  col <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"gray45"</span>, <span class='st'>"maroon4"</span>, <span class='st'>"brown1"</span><span class='op'>)</span>
+  col <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"gray45"</span>, <span class='st'>"maroon4"</span>, <span class='st'>"brown1"</span><span class='op'>)</span>,
+  return_plot <span class='op'>=</span> <span class='cn'>TRUE</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -131,11 +132,11 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>a data frame with the results of a multiverse analyses.</p></td>
+      <td><p>a data frame with the results of a multiverse analysis</p></td>
     </tr>
     <tr>
       <th>alpha_level</th>
-      <td><p>What should be the alpha level used (default to 0.05).</p></td>
+      <td><p>What should be the alpha level used (default to 0.05)</p></td>
     </tr>
     <tr>
       <th>add_line</th>
@@ -153,6 +154,10 @@
       <th>col</th>
       <td><p>A length three vector with the colors to be used for ANOVAS, t-tests, and mixed models (in this order)</p></td>
     </tr>
+    <tr>
+      <th>return_plot</th>
+      <td><p>Whether to return a plot or not (default too TRUE)</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -162,6 +167,8 @@
 
     <p><a href='https://lifecycle.r-lib.org/articles/stages.html#experimental'><img src='figures/lifecycle-experimental.svg' alt='[Experimental]' /></a></p>
 <p>For the plot the NAs in the <code>p.value</code> column are removed automatically -- so what <code>ggplot2</code> does automatically but here no message is returned.</p>
+<p>The <code>return_plot</code> argument is there in case you want to combine multiple panels and you do
+not want to have a plot returned every time you run the code.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
