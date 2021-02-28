@@ -23,8 +23,10 @@ forestplot_mf <-
     data %>% dplyr::mutate(
       method2 =
         dplyr::case_when(
-          exclusion == "full_data" ~ "full data",
-          exclusion == "full data" ~ "full data",
+          exclusion == "full_data" & model == "rep ANOVA" ~ "single trial data",
+          exclusion == "full data" & model == "rep ANOVA" ~ "single trial data",
+          exclusion == "full_data" & model == "t-test" ~ "single trial data",
+          exclusion == "full data" & model == "t-test" ~ "single trial data",
           exclusion == "ten_per" ~ "averages of 10% blocks",
           exclusion == "twenty_per" ~ "averages of 20% blocks",
           exclusion == "th3_per" ~ "averages of 33% blocks",
