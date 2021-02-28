@@ -10,13 +10,14 @@ inference_plot(
   add_line = TRUE,
   na.rm = FALSE,
   framework = "Both",
-  col = c("gray45", "maroon4", "brown1")
+  col = c("gray45", "maroon4", "brown1"),
+  return_plot = TRUE
 )
 }
 \arguments{
-\item{data}{a data frame with the results of a multiverse analyses.}
+\item{data}{a data frame with the results of a multiverse analysis}
 
-\item{alpha_level}{What should be the alpha level used (default to 0.05).}
+\item{alpha_level}{What should be the alpha level used (default to 0.05)}
 
 \item{add_line}{Whether to add a line with the alpha level in the produced histogram (default to \code{TRUE})}
 
@@ -25,6 +26,8 @@ inference_plot(
 \item{framework}{Inference framework. Values could be "NHST", "Bayesian", or "Both" (no case sensitivity)}
 
 \item{col}{A length three vector with the colors to be used for ANOVAS, t-tests, and mixed models (in this order)}
+
+\item{return_plot}{Whether to return a plot or not (default too TRUE)}
 }
 \value{
 A histogram summarizing the results.
@@ -36,4 +39,7 @@ Function for plotting the multiverse results.
 \lifecycle{experimental}
 
 For the plot the NAs in the \code{p.value} column are removed automatically -- so what \code{ggplot2} does automatically but here no message is returned.
+
+The \code{return_plot} argument is there in case you want to combine multiple panels and you do
+not want to have a plot returned every time you run the code.
 }

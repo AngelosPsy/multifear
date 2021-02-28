@@ -3,14 +3,18 @@
 #' \lifecycle{experimental}
 #'
 #' @description Function for plotting the multiverse results.
-#' @param data a data frame with the results of a multiverse analyses.
-#' @param alpha_level What should be the alpha level used (default to 0.05).
+#' @param data a data frame with the results of a multiverse analysis
+#' @param alpha_level What should be the alpha level used (default to 0.05)
 #' @param add_line Whether to add a line with the alpha level in the produced histogram (default to \code{TRUE})
 #' @param na.rm Should NA's be removed (default to \code{FALSE}). See details for more information
 #' @param framework Inference framework. Values could be "NHST", "Bayesian", or "Both" (no case sensitivity)
 #' @param col A length three vector with the colors to be used for ANOVAS, t-tests, and mixed models (in this order)
+#' @param return_plot Whether to return a plot or not (default too TRUE)
 #' @return A histogram summarizing the results.
 #' @details For the plot the NAs in the \code{p.value} column are removed automatically -- so what \code{ggplot2} does automatically but here no message is returned.
+#'
+#' The \code{return_plot} argument is there in case you want to combine multiple panels and you do
+#' not want to have a plot returned every time you run the code.
 #'
 #' @export
 
@@ -20,7 +24,8 @@ inference_plot <-
            add_line = TRUE,
            na.rm = FALSE,
            framework = "Both",
-           col = c("gray45", "maroon4", "brown1")) {
+           col = c("gray45", "maroon4", "brown1"),
+           return_plot = TRUE) {
 
     # Check data and arguments
     inference_warning(data = data)
@@ -179,6 +184,10 @@ inference_plot <-
       res_tmp_plot <- invisible(gridExtra::grid.arrange(p1, p2, nrow = 1, ncol = 2))
     } else{
       res_tmp_plot <- p1
+    }
+
+    if(!return_plot){
+      res_tmp_plot <- invisible(res_tmp_plot)
     }
 
     res_tmp_plot
