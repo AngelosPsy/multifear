@@ -20,13 +20,14 @@ forestplot_mf <-
     data %>%
       dplyr::filter(framework == "NHST") -> data
 
-    data %>% dplyr::mutate(
+    data %>%
+      dplyr::mutate(
       method2 =
         dplyr::case_when(
           exclusion == "full_data" & model == "rep ANOVA" ~ "single trial data",
           exclusion == "full data" & model == "rep ANOVA" ~ "single trial data",
-          exclusion == "full_data" & model == "t-test" ~ "single trial data",
-          exclusion == "full data" & model == "t-test" ~ "single trial data",
+          exclusion == "full_data" & model == "t-test" ~ "average across block",
+          exclusion == "full data" & model == "t-test" ~ "average across block",
           exclusion == "ten_per" ~ "averages of 10% blocks",
           exclusion == "twenty_per" ~ "averages of 20% blocks",
           exclusion == "th3_per" ~ "averages of 33% blocks",
@@ -35,9 +36,21 @@ forestplot_mf <-
           exclusion == "min_first" ~ "average across trials after removing 1st trial",
           exclusion == "fl2trials" ~ "averages of first 2 vs last 2 trials",
           exclusion == "per2trials" ~ "averages per 2 trials",
-        )
-    ) %>%
-      dplyr::arrange(model, method) %>%
+        )) %>%
+        dplyr::mutate(
+          method_order =
+            dplyr::case_when(
+              method2 == "single trial data" ~ 1,
+              method2 == "average across block" ~ 1,
+              method2 == "first vs. last trial" ~ 2,
+              method2 == "averages of first 2 vs last 2 trials" ~ 3,
+              method2 == "averages per 2 trials" ~ 4,
+              method2 == "averages of 10% blocks" ~ 5,
+              method2 == "averages of 20% blocks" ~ 6,
+              method2 == "averages of 33% blocks" ~ 7,
+              method2 == "averages of 50% blocks" ~ 8,
+              method2 == "average across trials after removing 1st trial" ~ 9)) %>%
+      dplyr::arrange(method, method_order) %>%
       dplyr::filter(!method %in% c("greater", "less")) -> data
 
       lci <- data$effect.size.ma.lci

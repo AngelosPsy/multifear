@@ -72,6 +72,7 @@
   utils::globalVariables ("l1trial")
   utils::globalVariables ("l2trial")
   utils::globalVariables ("method")
+  utils::globalVariables ("method_order")
   utils::globalVariables ("model")
   utils::globalVariables ("models")
   utils::globalVariables ("Omega2")
