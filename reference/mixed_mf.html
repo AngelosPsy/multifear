@@ -142,57 +142,57 @@
     </tr>
     <tr>
       <th>data</th>
-      <td><p>A data frame containing with all the relevant columns</p></td>
+      <td><p>A data frame containing all the relevant columns for the analyses</p></td>
     </tr>
     <tr>
       <th>subj</th>
-      <td><p>The name of the column including the participant numbers. Unique numbers are expected.</p></td>
+      <td><p>The name of the column including the participant numbers. Unique numbers are expected</p></td>
     </tr>
     <tr>
       <th>group</th>
-      <td><p>the name of the group, if included, default to <code>NULL</code>.</p></td>
+      <td><p>the name of the group, if included, default to <code>NULL</code></p></td>
     </tr>
     <tr>
       <th>phase</th>
-      <td><p>The conditioned phase that the analyses refer to. Accepted values are  <code>acquisition</code>,  or <code>acq</code>, <code>extinction</code>, or <code>ext</code>.</p></td>
+      <td><p>The conditioned phase that the analyses refer to. Accepted values are  <code>acquisition</code>, <code>acq</code>, <code>extinction</code>, or <code>ext</code></p></td>
     </tr>
     <tr>
       <th>dv</th>
-      <td><p>name of the measured conditioned response. Default to <code>"SCR"</code>.</p></td>
+      <td><p>name of the measured conditioned response. Default to <code>"SCR"</code></p></td>
     </tr>
     <tr>
       <th>exclusion</th>
-      <td><p>If any exclusion criteria were applied, default to <code>full data</code></p></td>
+      <td><p>Name of the data reduction procedure used. Default to <code>full data</code></p></td>
     </tr>
     <tr>
       <th>cut_off</th>
-      <td><p>cut off</p></td>
+      <td><p>cut off Name of the cut_off applied. Default to <code>full data</code></p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A data frame with the results.</p>
-<p>The data frame returned is the standard one returned in all function in the package. Specifically we have:
-A tibble with the following column names:
-x: the name of the independent variable (e.g., cs). There, you can see the term of the model that is returned. So, not the full model is returned but only this particular term.
-y: the name of the dependent variable as this defined in the <code>dv</code> argument
-exclusion: see <code>exclusion</code> argument
-model: the model that was run (e.g., t-test)
-controls: ignore this column for this test
-method: the model that was run
-p.value: irrelevant here
-effect.size: irrelevant here
-effect.size.ma: the estimated effect size for the meta-analytic plots
-effect.size.ma.lci: low confidence intervals for the meta-analytic effect size
-effect.size.ma.hci: high confidence intervals for the meta-analytic effect size
-statistic: the t-value
-conf.low: the lower confidence interval for the estimate
-conf.high: the higher confidence interval for the estimate
-data_used: a list with the data used for the specific test</p>
+<p>The data frame returned is the standard one returned in all function in the package. Specifically we have:</p>
+<p>A tibble with the following column names:</p>
+<p>x: the name of the independent variable (e.g., cs). There, you can see the term of the model that is returned. So, not the full model is returned but only this particular term.</p>
+<p>y: the name of the dependent variable as this defined in the <code>dv</code> argument</p>
+<p>exclusion: see <code>exclusion</code> argument</p>
+<p>model: the model that was run (e.g., mixed_model)</p>
+<p>controls: ignore this column for this test</p>
+<p>method: the model that was run</p>
+<p>p.value: the p-value for each factor</p>
+<p>effect.size: irrelevant here</p>
+<p>effect.size.ma: irrelevant here</p>
+<p>effect.size.ma.lci: irrelevant here</p>
+<p>effect.size.ma.hci: irrelevant here</p>
+<p>statistic: the t-value for each factor</p>
+<p>conf.low: the lower confidence interval for the estimate</p>
+<p>conf.high: the higher confidence interval for the estimate</p>
+<p>data_used: a list with the data used for the specific test</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p><a href='https://www.tidyverse.org/lifecycle/#experimental'><img src='figures/lifecycle-experimental.svg' alt='Experimental lifecycle'></a></p>
+    <p><a href='https://lifecycle.r-lib.org/articles/stages.html#experimental'><img src='figures/lifecycle-experimental.svg' alt='[Experimental]' /></a></p>
 <p>The function assumes that you include more than 1 trial per CS. The function returns an error if that is not the function.</p>
 <p>The function performs by default two dependent variable standardizations, the one per subject
 and the other one without taking subject into account.</p>
@@ -205,6 +205,41 @@ and the other one without taking subject into account.</p>
 
     <div class='dont-index'><p><code><a href='https://rdrr.io/pkg/nlme/man/lme.html'>lme</a></code></p></div>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='va'>cs1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"CSP"</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span><span class='op'>)</span>
+<span class='va'>cs2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"CSM"</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span><span class='op'>)</span>
+<span class='va'>subj</span> <span class='op'>&lt;-</span> <span class='st'>"id"</span>
+
+<span class='co'># mixed models without groups</span>
+<span class='fu'>mixed_mf</span><span class='op'>(</span>cs1 <span class='op'>=</span> <span class='va'>cs1</span>, cs2 <span class='op'>=</span> <span class='va'>cs2</span>, subj <span class='op'>=</span> <span class='va'>subj</span>, data <span class='op'>=</span> <span class='va'>example_data</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 6 x 16</span><span>
+#&gt;   x         y     exclusion model    controls method         p.value effect.size
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;lgl&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>            </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;lgl&gt;</span><span>      
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> cscs2     scr   full data mixed_m… </span><span style='color: #BB0000;'>NA</span><span>       mixed_model c…  0.047</span><span style='text-decoration: underline;'>7</span><span> </span><span style='color: #BB0000;'>NA</span><span>         
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> cscs2:ti… scr   full data mixed_m… </span><span style='color: #BB0000;'>NA</span><span>       mixed_model c…  0.240  </span><span style='color: #BB0000;'>NA</span><span>         
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> cscs2     scr   full data mixed_m… </span><span style='color: #BB0000;'>NA</span><span>       mixed_model c…  0.157  </span><span style='color: #BB0000;'>NA</span><span>         
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> cscs2:ti… scr   full data mixed_m… </span><span style='color: #BB0000;'>NA</span><span>       mixed_model c…  0.030</span><span style='text-decoration: underline;'>6</span><span> </span><span style='color: #BB0000;'>NA</span><span>         
+#&gt; </span><span style='color: #BCBCBC;'>5</span><span> cscs2     scr   full data mixed_m… </span><span style='color: #BB0000;'>NA</span><span>       mixed_model c…  0.047</span><span style='text-decoration: underline;'>7</span><span> </span><span style='color: #BB0000;'>NA</span><span>         
+#&gt; </span><span style='color: #BCBCBC;'>6</span><span> cscs2:ti… scr   full data mixed_m… </span><span style='color: #BB0000;'>NA</span><span>       mixed_model c…  0.240  </span><span style='color: #BB0000;'>NA</span><span>         
+#&gt; </span><span style='color: #949494;'># … with 8 more variables: efffect.size.ma &lt;lgl&gt;, effect.size.ma.lci &lt;lgl&gt;,</span><span>
+#&gt; </span><span style='color: #949494;'>#   effect.size.ma.hci &lt;lgl&gt;, estimate &lt;dbl&gt;, statistic &lt;dbl&gt;, conf.low &lt;lgl&gt;,</span><span>
+#&gt; </span><span style='color: #949494;'>#   conf.high &lt;lgl&gt;, data_used &lt;list&gt;</span><span></div><div class='input'>
+<span class='co'># mixed models with groups</span>
+<span class='fu'>mixed_mf</span><span class='op'>(</span>cs1 <span class='op'>=</span> <span class='va'>cs1</span>, cs2 <span class='op'>=</span> <span class='va'>cs2</span>, subj <span class='op'>=</span> <span class='va'>subj</span>, group <span class='op'>=</span> <span class='st'>"group"</span>, data <span class='op'>=</span> <span class='va'>example_data</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 6 x 16</span><span>
+#&gt;   x         y     exclusion model    controls method         p.value effect.size
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;lgl&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>            </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;lgl&gt;</span><span>      
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> cscs2     scr   full data mixed_m… </span><span style='color: #BB0000;'>NA</span><span>       mixed_model c…  0.047</span><span style='text-decoration: underline;'>7</span><span> </span><span style='color: #BB0000;'>NA</span><span>         
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> cscs2:ti… scr   full data mixed_m… </span><span style='color: #BB0000;'>NA</span><span>       mixed_model c…  0.240  </span><span style='color: #BB0000;'>NA</span><span>         
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> cscs2     scr   full data mixed_m… </span><span style='color: #BB0000;'>NA</span><span>       mixed_model c…  0.157  </span><span style='color: #BB0000;'>NA</span><span>         
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> cscs2:ti… scr   full data mixed_m… </span><span style='color: #BB0000;'>NA</span><span>       mixed_model c…  0.030</span><span style='text-decoration: underline;'>6</span><span> </span><span style='color: #BB0000;'>NA</span><span>         
+#&gt; </span><span style='color: #BCBCBC;'>5</span><span> cscs2     scr   full data mixed_m… </span><span style='color: #BB0000;'>NA</span><span>       mixed_model c…  0.047</span><span style='text-decoration: underline;'>7</span><span> </span><span style='color: #BB0000;'>NA</span><span>         
+#&gt; </span><span style='color: #BCBCBC;'>6</span><span> cscs2:ti… scr   full data mixed_m… </span><span style='color: #BB0000;'>NA</span><span>       mixed_model c…  0.240  </span><span style='color: #BB0000;'>NA</span><span>         
+#&gt; </span><span style='color: #949494;'># … with 8 more variables: efffect.size.ma &lt;lgl&gt;, effect.size.ma.lci &lt;lgl&gt;,</span><span>
+#&gt; </span><span style='color: #949494;'>#   effect.size.ma.hci &lt;lgl&gt;, estimate &lt;dbl&gt;, statistic &lt;dbl&gt;, conf.low &lt;lgl&gt;,</span><span>
+#&gt; </span><span style='color: #949494;'>#   conf.high &lt;lgl&gt;, data_used &lt;list&gt;</span><span></div><div class='input'>
+
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

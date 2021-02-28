@@ -40,7 +40,7 @@
 
 
 <meta property="og:title" content="t_test_mf — t_test_mf" />
-<meta property="og:description" content="Basic function for running the frequentist's t-tests (student t-test) included in the main analyses" />
+<meta property="og:description" content="Basic function for running the frequentist's t-tests included in the main analyses" />
 
 
 
@@ -114,7 +114,7 @@
     </div>
 
     <div class="ref-description">
-    <p>Basic function for running the frequentist's t-tests (student t-test) included in the main analyses</p>
+    <p>Basic function for running the frequentist's t-tests included in the main analyses</p>
     </div>
 
     <pre class="usage"><span class='fu'>t_test_mf</span><span class='op'>(</span>
@@ -146,76 +146,76 @@
     </tr>
     <tr>
       <th>data</th>
-      <td><p>A data frame containing with all the relevant columns</p></td>
+      <td><p>A data frame containing all the relevant columns for the analyses</p></td>
     </tr>
     <tr>
       <th>subj</th>
-      <td><p>The name of the column including the participant numbers. Unique numbers are expected.</p></td>
+      <td><p>The name of the column including the participant numbers. Unique numbers are expected</p></td>
     </tr>
     <tr>
       <th>group</th>
-      <td><p>the name of the group, if included, default to <code>NULL</code>.</p></td>
+      <td><p>the name of the group, if included, default to <code>NULL</code></p></td>
     </tr>
     <tr>
       <th>na.rm</th>
-      <td><p>Whether NAs should be removed, default to <code>FALSE</code>.</p></td>
+      <td><p>Whether NAs should be removed, default to <code>FALSE</code></p></td>
     </tr>
     <tr>
       <th>paired</th>
-      <td><p>Whether the t-test refers to a paired or independent sample(s). Default to <code>TRUE</code>.</p></td>
+      <td><p>Whether the t-test refers to dependent (i.e., paired) or to independent sample(s). Default to <code>TRUE</code></p></td>
     </tr>
     <tr>
       <th>quanz</th>
-      <td><p>Quantiles for the meta-analytic effect sizes. Default to .05 (lower) and.95 (upper).</p></td>
+      <td><p>Quantiles for the meta-analytic effect sizes. Default to .05 (lower) and.95 (upper)</p></td>
     </tr>
     <tr>
       <th>meta.effect</th>
-      <td><p>How the meta-analytic effect should be computed.</p></td>
+      <td><p>How the meta-analytic effect should be computed, Default to <code>"d_to_eta2"</code> (see details for more information)</p></td>
     </tr>
     <tr>
       <th>phase</th>
-      <td><p>The conditioned phase that the analyses refer to. Accepted values are  <code>acquisition</code>,  or <code>acq</code>, <code>extinction</code>, or <code>ext</code>.</p></td>
+      <td><p>The conditioned phase that the analyses refer to. Accepted values are  <code>acquisition</code>, <code>acq</code>, <code>extinction</code>, or <code>ext</code></p></td>
     </tr>
     <tr>
       <th>dv</th>
-      <td><p>name of the measured conditioned response. Default to <code>"SCR"</code>.</p></td>
+      <td><p>name of the measured conditioned response. Default to <code>"SCR"</code></p></td>
     </tr>
     <tr>
       <th>exclusion</th>
-      <td><p>If any exclusion criteria were applied, default to <code>full data</code></p></td>
+      <td><p>Name of the data reduction procedure used. Default to <code>full data</code></p></td>
     </tr>
     <tr>
       <th>cut_off</th>
-      <td><p>cut off</p></td>
+      <td><p>cut off Name of the cut_off applied. Default to <code>full data</code></p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A tibble with the following column names:
-x: the name of the independent variable (e.g., cs)
-y: the name of the dependent variable as this defined in the <code>dv</code> argument
-exclusion: see <code>exclusion</code> argument
-model: the model that was run (e.g., t-test)
-controls: ignore this column for this test
-method: the model that was run
-p.value: the p-value of the test
-effect.size: the estimated effect size
-effect.size.ma: the estimated effect size for the meta-analytic plots. Here we used eta squared
-effect.size.ma.lci: low confidence intervals for the meta-analytic effect size
-effect.size.ma.hci: high confidence intervals for the meta-analytic effect size
-estimate: the estimate of the test run. For the t-test is the mean of the differences
-statistic: the t-value
-conf.low: the lower confidence interval for the estimate
-conf.high: the higher confidence interval for the estimate
-framework: were the data analysed within a NHST or Bayesian framework?
-data_used: a list with the data used for the specific test</p>
+    <p>A tibble with the following column names:</p>
+<p>x: the name of the independent variable (e.g., cs)</p>
+<p>y: the name of the dependent variable as this defined in the <code>dv</code> argument
+exclusion: see <code>exclusion</code> argument</p>
+<p>model: the model that was run (e.g., t-test)</p>
+<p>controls: ignore this column for this test</p>
+<p>method: the model that was run</p>
+<p>p.value: the p-value of the test</p>
+<p>effect.size: the estimated effect size</p>
+<p>effect.size.ma: the estimated effect size for the meta-analytic plots. Here we used eta squared</p>
+<p>effect.size.ma.lci: low confidence intervals for the meta-analytic effect size</p>
+<p>effect.size.ma.hci: high confidence intervals for the meta-analytic effect size</p>
+<p>estimate: the estimate of the test run. For the t-test is the mean of the differences</p>
+<p>statistic: the t-value</p>
+<p>conf.low: the lower confidence interval for the estimate</p>
+<p>conf.high: the higher confidence interval for the estimate</p>
+<p>framework: were the data analysed within a NHST or Bayesian framework?</p>
+<p>data_used: a list with the data used for the specific test</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p><a href='https://www.tidyverse.org/lifecycle/#experimental'><img src='figures/lifecycle-experimental.svg' alt='Experimental lifecycle'></a></p>
-<p>Given the correct names for the <code>cs1</code>, <code>cs2</code>, <code>subj</code>, and <code>data</code>, the function will run one- and two-sided frequentist's t-tests. In case <code>cs1</code> or <code>cs2</code> refer to multiple columns, the mean -- per row -- for each one of these variables will be computed first before running the test. Please note that cs1 is implicitly referred to the cs that is reinforced, and cs2 to the cs that is not reinforced.
-Depending on whether the data refer to an acquisition or extinction phase (as defined in the <code>phase</code> argument), the function will return a positive one sided, or negative one-sided, t-test in addition to the two-sided t-test. The returned effect size is  Hedge's g in the column effect size. For the meta-analytic effect size (effect.size.ma), the returned effect size is Cohen's d.</p>
-<p>The function by default runs a Welch t-test, meaning it assumes unequal variances. This is due to calls that such a test should be preferred over Student t-test, at least for paired samples t-test. Please note that if we let R decide which test to run -- this is done by default in <code><a href='https://rdrr.io/r/stats/t.test.html'>stats::t.test</a></code>, then for some test there would be a Student t-test whereas in some others not.
+    <p><a href='https://lifecycle.r-lib.org/articles/stages.html#experimental'><img src='figures/lifecycle-experimental.svg' alt='[Experimental]' /></a></p>
+<p>Given the correct names for the <code>cs1</code>, <code>cs2</code>, <code>subj</code>, and <code>data</code>, the function will run one- and two-sided frequentist's t-tests. In case <code>cs1</code> or <code>cs2</code> refer to multiple columns, the mean -- per row -- for each one of these variables will be computed first before running the t-test. Please note that cs1 is implicitly referred to the cs that is reinforced, and cs2 to the cs that is not reinforced.
+Depending on whether the data refer to an acquisition or extinction phase (as defined in the <code>phase</code> argument), the function will return a positive one sided, or negative one-sided, respectively t-test in addition to the two-sided t-test. The returned effect size is  Hedge's g in the column effect size. For the meta-analytic effect size (effect.size.ma), the returned effect size is eta-squared.</p>
+<p>The function by default runs a Welch t-test, meaning it assumes unequal variances. This is due to calls that such a test should be preferred over Student's t-test, at least for paired samples t-test. Please note that if we let R decide which test to run -- this is done by default in <code><a href='https://rdrr.io/r/stats/t.test.html'>stats::t.test</a></code>, then for some test there would be a Student t-test whereas in some others not.
 There are two different ways to compute the meta-analytic effect sizes but the results may differ. The option
 "t_to_eta2" computes the eta squared via the t values whereas the "d_to_eta2" the eta squared is computed via
 the Cohen's d value.</p>
@@ -226,24 +226,24 @@ the Cohen's d value.</p>
 
 <span class='co'># Paired sample t-tests</span>
 <span class='fu'>t_test_mf</span><span class='op'>(</span>cs1 <span class='op'>=</span> <span class='st'>"CSP1"</span>, cs2 <span class='op'>=</span> <span class='st'>"CSM1"</span>, subj <span class='op'>=</span> <span class='st'>"id"</span>, data <span class='op'>=</span> <span class='va'>example_data</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 2 x 18</span><span>
-#&gt;   x     y     exclusion cut_off model controls method p.value effect.size
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> cs    scr   full data full d… t-te… </span><span style='color: #BB0000;'>NA</span><span>       great…  0.990       -</span><span style='color: #BB0000;'>0.200</span><span>
-#&gt; </span><span style='color: #555555;'>2</span><span> cs    scr   full data full d… t-te… </span><span style='color: #BB0000;'>NA</span><span>       two.s…  0.020</span><span style='text-decoration: underline;'>8</span><span>      -</span><span style='color: #BB0000;'>0.200</span><span>
-#&gt; </span><span style='color: #555555;'># … with 9 more variables: effect.size.ma </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, effect.size.ma.lci </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,</span><span>
-#&gt; </span><span style='color: #555555;'>#   effect.size.ma.hci </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, estimate </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, statistic </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, conf.low </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,</span><span>
-#&gt; </span><span style='color: #555555;'>#   conf.high </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, framework </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, data_used </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span></div><div class='input'>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 2 x 18</span><span>
+#&gt;   x     y     exclusion cut_off   model  controls method    p.value effect.size
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;lgl&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> cs    scr   full data full data t-test </span><span style='color: #BB0000;'>NA</span><span>       greater    0.990       -</span><span style='color: #BB0000;'>0.200</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> cs    scr   full data full data t-test </span><span style='color: #BB0000;'>NA</span><span>       two.sided  0.020</span><span style='text-decoration: underline;'>8</span><span>      -</span><span style='color: #BB0000;'>0.200</span><span>
+#&gt; </span><span style='color: #949494;'># … with 9 more variables: effect.size.ma &lt;dbl&gt;, effect.size.ma.lci &lt;dbl&gt;,</span><span>
+#&gt; </span><span style='color: #949494;'>#   effect.size.ma.hci &lt;dbl&gt;, estimate &lt;dbl&gt;, statistic &lt;dbl&gt;, conf.low &lt;dbl&gt;,</span><span>
+#&gt; </span><span style='color: #949494;'>#   conf.high &lt;dbl&gt;, framework &lt;chr&gt;, data_used &lt;list&gt;</span><span></div><div class='input'>
 <span class='co'># Independent  sample t-tests</span>
 <span class='fu'>t_test_mf</span><span class='op'>(</span>cs1 <span class='op'>=</span> <span class='st'>"CSP1"</span>, cs2 <span class='op'>=</span> <span class='st'>"CSM1"</span>, subj <span class='op'>=</span> <span class='st'>"id"</span>,  group <span class='op'>=</span> <span class='st'>"group"</span>, data <span class='op'>=</span> <span class='va'>example_data</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 2 x 18</span><span>
-#&gt;   x     y     exclusion cut_off model controls method p.value effect.size
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> cs    scr   full data full d… t-te… </span><span style='color: #BB0000;'>NA</span><span>       great…   0.508    -</span><span style='color: #BB0000;'>0.006</span><span style='color: #BB0000;text-decoration: underline;'>86</span><span>
-#&gt; </span><span style='color: #555555;'>2</span><span> cs    scr   full data full d… t-te… </span><span style='color: #BB0000;'>NA</span><span>       two.s…   0.983    -</span><span style='color: #BB0000;'>0.006</span><span style='color: #BB0000;text-decoration: underline;'>86</span><span>
-#&gt; </span><span style='color: #555555;'># … with 9 more variables: effect.size.ma </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, effect.size.ma.lci </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,</span><span>
-#&gt; </span><span style='color: #555555;'>#   effect.size.ma.hci </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, estimate </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, statistic </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, conf.low </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,</span><span>
-#&gt; </span><span style='color: #555555;'>#   conf.high </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, framework </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, data_used </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span></div><div class='input'>
+</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 2 x 18</span><span>
+#&gt;   x     y     exclusion cut_off   model  controls method    p.value effect.size
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;lgl&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> cs    scr   full data full data t-test </span><span style='color: #BB0000;'>NA</span><span>       greater     0.508    -</span><span style='color: #BB0000;'>0.006</span><span style='color: #BB0000;text-decoration: underline;'>86</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> cs    scr   full data full data t-test </span><span style='color: #BB0000;'>NA</span><span>       two.sided   0.983    -</span><span style='color: #BB0000;'>0.006</span><span style='color: #BB0000;text-decoration: underline;'>86</span><span>
+#&gt; </span><span style='color: #949494;'># … with 9 more variables: effect.size.ma &lt;dbl&gt;, effect.size.ma.lci &lt;dbl&gt;,</span><span>
+#&gt; </span><span style='color: #949494;'>#   effect.size.ma.hci &lt;dbl&gt;, estimate &lt;dbl&gt;, statistic &lt;dbl&gt;, conf.low &lt;dbl&gt;,</span><span>
+#&gt; </span><span style='color: #949494;'>#   conf.high &lt;dbl&gt;, framework &lt;chr&gt;, data_used &lt;list&gt;</span><span></div><div class='input'>
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

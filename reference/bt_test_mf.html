@@ -114,7 +114,7 @@
     </div>
 
     <div class="ref-description">
-    <p><a href='https://www.tidyverse.org/lifecycle/#experimental'><img src='figures/lifecycle-experimental.svg' alt='Experimental lifecycle'></a></p>
+    <p><a href='https://lifecycle.r-lib.org/articles/stages.html#experimental'><img src='figures/lifecycle-experimental.svg' alt='[Experimental]' /></a></p>
     </div>
 
     <pre class="usage"><span class='fu'>bt_test_mf</span><span class='op'>(</span>
@@ -145,23 +145,23 @@
     </tr>
     <tr>
       <th>data</th>
-      <td><p>A data frame containing with all the relevant columns</p></td>
+      <td><p>A data frame containing all the relevant columns for the analyses</p></td>
     </tr>
     <tr>
       <th>subj</th>
-      <td><p>The name of the column including the participant numbers. Unique numbers are expected.</p></td>
+      <td><p>The name of the column including the participant numbers. Unique numbers are expected</p></td>
     </tr>
     <tr>
       <th>group</th>
-      <td><p>the name of the group, if included, default to <code>NULL</code>.</p></td>
+      <td><p>the name of the group, if included, default to <code>NULL</code></p></td>
     </tr>
     <tr>
       <th>na.rm</th>
-      <td><p>Whether NAs should be removed, default to <code>FALSE</code>.</p></td>
+      <td><p>Whether NAs should be removed, default to <code>FALSE</code></p></td>
     </tr>
     <tr>
       <th>paired</th>
-      <td><p>Whether the t-test refers to a paired or independent sample(s). Default to <code>TRUE</code>.</p></td>
+      <td><p>Whether the t-test refers to dependent (i.e., paired) or to independent sample(s). Default to <code>TRUE</code></p></td>
     </tr>
     <tr>
       <th>rscale</th>
@@ -169,45 +169,45 @@
     </tr>
     <tr>
       <th>phase</th>
-      <td><p>The conditioned phase that the analyses refer to. Accepted values are  <code>acquisition</code>,  or <code>acq</code>, <code>extinction</code>, or <code>ext</code>.</p></td>
+      <td><p>The conditioned phase that the analyses refer to. Accepted values are  <code>acquisition</code>, <code>acq</code>, <code>extinction</code>, or <code>ext</code></p></td>
     </tr>
     <tr>
       <th>dv</th>
-      <td><p>name of the measured conditioned response. Default to <code>"SCR"</code>.</p></td>
+      <td><p>name of the measured conditioned response. Default to <code>"SCR"</code></p></td>
     </tr>
     <tr>
       <th>exclusion</th>
-      <td><p>If any exclusion criteria were applied, default to <code>full data</code></p></td>
+      <td><p>Name of the data reduction procedure used. Default to <code>full data</code></p></td>
     </tr>
     <tr>
       <th>cut_off</th>
-      <td><p>cut off</p></td>
+      <td><p>cut off Name of the cut_off applied. Default to <code>full data</code></p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A tibble with the following column names:
-x: the name of the independent variable (e.g., cs)
-y: the name of the dependent variable as this defined in the <code>dv</code> argument
-exclusion: see <code>exclusion</code> argument
-model: the model that was run (e.g., t-test)
-controls: ignore this column for this test
-method: the model that was run
-p.value: irrelevant here
-effect.size: irrelevant here
-effect.size.ma: irrelevant here
-estimate: the estimate of the test run
-statistic: the t-value
-conf.low: the lower confidence interval for the estimate
-conf.high: the higher confidence interval for the estimate
-framework: were the data analysed within a NHST or Bayesian framework?
-data_used: a list with the data used for the specific test</p>
+    <p>A tibble with the following column names:</p>
+<p>x: the name of the independent variable (e.g., cs)</p>
+<p>y: the name of the dependent variable as this defined in the <code>dv</code> argument</p>
+<p>exclusion: see <code>exclusion</code> argument</p>
+<p>model: the model that was run (e.g., t-test)</p>
+<p>controls: ignore this column for this test</p>
+<p>method: the model that was run</p>
+<p>p.value: irrelevant here</p>
+<p>effect.size: irrelevant here</p>
+<p>effect.size.ma: irrelevant here</p>
+<p>estimate: the estimate of the test run</p>
+<p>statistic: the t-value</p>
+<p>conf.low: the lower confidence interval for the estimate</p>
+<p>conf.high: the higher confidence interval for the estimate</p>
+<p>framework: were the data analysed within a NHST or Bayesian framework?</p>
+<p>data_used: a list with the data used for the specific test</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Basic function for running the Bayesian t-tests included in the main analyses.</p>
-<p>This is a wrapper function function around the BayesFactor::ttestBF(),
-running multiple Bayesian t-tests. Similar to the <code>t_test_mf</code> function, the function will run different t-tests based on the phase that the t-tests refer to.</p>
+    <p>Basic function for running the Bayesian t-tests included in the main analyses</p>
+<p>This is a wrapper function function around the <code>BayesFactor::ttestBF(),</code>
+running multiple Bayesian t-tests. Similar to the <code>t_test_mf</code> function, the function will run different t-tests based on the phase that the t-tests refer to. So, in case of the acquisition phase, there will be a t-test of differences and positive differences, whereas for the extinction phase a t-test for differences and negative differences.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Load example data</span>
@@ -215,25 +215,24 @@ running multiple Bayesian t-tests. Similar to the <code>t_test_mf</code> functio
 
 <span class='co'># Paired sample t-tests</span>
 <span class='fu'>bt_test_mf</span><span class='op'>(</span>cs1 <span class='op'>=</span> <span class='st'>"CSP1"</span>, cs2 <span class='op'>=</span> <span class='st'>"CSM1"</span>, subj <span class='op'>=</span> <span class='st'>"id"</span>, data <span class='op'>=</span> <span class='va'>example_data</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 2 x 16</span><span>
-#&gt;   x     y     exclusion cut_off model controls method p.value effect.size
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>      
-#&gt; </span><span style='color: #555555;'>1</span><span> cs    scr   full data full d… Baye… </span><span style='color: #BB0000;'>NA</span><span>       Bayes… </span><span style='color: #BB0000;'>NA</span><span>      </span><span style='color: #BB0000;'>NA</span><span>         
-#&gt; </span><span style='color: #555555;'>2</span><span> cs    scr   full data full d… Baye… </span><span style='color: #BB0000;'>NA</span><span>       Bayes… </span><span style='color: #BB0000;'>NA</span><span>      </span><span style='color: #BB0000;'>NA</span><span>         
-#&gt; </span><span style='color: #555555;'># … with 7 more variables: effect.size.ma </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span style='color: #555555;'>, estimate </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,</span><span>
-#&gt; </span><span style='color: #555555;'>#   statistic </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span style='color: #555555;'>, conf.low </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span style='color: #555555;'>, conf.high </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span style='color: #555555;'>, framework </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,</span><span>
-#&gt; </span><span style='color: #555555;'>#   data_used </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span></div><div class='input'>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 2 x 16</span><span>
+#&gt;   x     y     exclusion cut_off  model   controls method     p.value effect.size
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;lgl&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #949494;font-style: italic;'>&lt;lgl&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;lgl&gt;</span><span>      
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> cs    scr   full data full da… Bayesi… </span><span style='color: #BB0000;'>NA</span><span>       Bayesian … </span><span style='color: #BB0000;'>NA</span><span>      </span><span style='color: #BB0000;'>NA</span><span>         
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> cs    scr   full data full da… Bayesi… </span><span style='color: #BB0000;'>NA</span><span>       Bayesian … </span><span style='color: #BB0000;'>NA</span><span>      </span><span style='color: #BB0000;'>NA</span><span>         
+#&gt; </span><span style='color: #949494;'># … with 7 more variables: effect.size.ma &lt;lgl&gt;, estimate &lt;dbl&gt;,</span><span>
+#&gt; </span><span style='color: #949494;'>#   statistic &lt;lgl&gt;, conf.low &lt;lgl&gt;, conf.high &lt;lgl&gt;, framework &lt;chr&gt;,</span><span>
+#&gt; </span><span style='color: #949494;'>#   data_used &lt;list&gt;</span><span></div><div class='input'>
 <span class='co'># Independent  sample t-tests</span>
 <span class='fu'>bt_test_mf</span><span class='op'>(</span>cs1 <span class='op'>=</span> <span class='st'>"CSP1"</span>, cs2 <span class='op'>=</span> <span class='st'>"CSM1"</span>, subj <span class='op'>=</span> <span class='st'>"id"</span>,  group <span class='op'>=</span> <span class='st'>"group"</span>, data <span class='op'>=</span> <span class='va'>example_data</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 2 x 16</span><span>
-#&gt;   x     y     exclusion cut_off model controls method p.value effect.size
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span>      
-#&gt; </span><span style='color: #555555;'>1</span><span> cs    scr   full data full d… Baye… </span><span style='color: #BB0000;'>NA</span><span>       Bayes… </span><span style='color: #BB0000;'>NA</span><span>      </span><span style='color: #BB0000;'>NA</span><span>         
-#&gt; </span><span style='color: #555555;'>2</span><span> cs    scr   full data full d… Baye… </span><span style='color: #BB0000;'>NA</span><span>       Bayes… </span><span style='color: #BB0000;'>NA</span><span>      </span><span style='color: #BB0000;'>NA</span><span>         
-#&gt; </span><span style='color: #555555;'># … with 7 more variables: effect.size.ma </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span style='color: #555555;'>, estimate </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,</span><span>
-#&gt; </span><span style='color: #555555;'>#   statistic </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span style='color: #555555;'>, conf.low </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span style='color: #555555;'>, conf.high </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span style='color: #555555;'>, framework </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,</span><span>
-#&gt; </span><span style='color: #555555;'>#   data_used </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span></div><div class='input'>
-
+</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 2 x 16</span><span>
+#&gt;   x     y     exclusion cut_off  model   controls method     p.value effect.size
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;lgl&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #949494;font-style: italic;'>&lt;lgl&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;lgl&gt;</span><span>      
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> cs    scr   full data full da… Bayesi… </span><span style='color: #BB0000;'>NA</span><span>       Bayesian … </span><span style='color: #BB0000;'>NA</span><span>      </span><span style='color: #BB0000;'>NA</span><span>         
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> cs    scr   full data full da… Bayesi… </span><span style='color: #BB0000;'>NA</span><span>       Bayesian … </span><span style='color: #BB0000;'>NA</span><span>      </span><span style='color: #BB0000;'>NA</span><span>         
+#&gt; </span><span style='color: #949494;'># … with 7 more variables: effect.size.ma &lt;lgl&gt;, estimate &lt;dbl&gt;,</span><span>
+#&gt; </span><span style='color: #949494;'>#   statistic &lt;lgl&gt;, conf.low &lt;lgl&gt;, conf.high &lt;lgl&gt;, framework &lt;chr&gt;,</span><span>
+#&gt; </span><span style='color: #949494;'>#   data_used &lt;list&gt;</span><span></div><div class='input'>
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
