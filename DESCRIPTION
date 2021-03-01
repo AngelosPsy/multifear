@@ -5,7 +5,7 @@ Version: 0.1.0.999
 Author: Angelos-Miltiadis Krypotos
 Maintainer: Angelos-Miltiadis Krypotos <amkrypotos@gmail.com>
 Description: A suite of functions for perfomiing multiverse analyses for conditioning data. Specifically, given the appropriate data, the functions are able to perform t-tests, analyses of variance, and mixed models for the provided data and return summary statistics and plots. The function is also able to return for all those tests p-values, confidence intervals, and Bayes factors.
-Depends: R (>= 2.10.0)    
+Depends: R (>= 3.6.0)    
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
