@@ -5,18 +5,22 @@
 #' @description Basic function for forest plot
 #' @param data a universe_mf or multiverse_mf object
 #' @param ci should confidence intervals be included -- default to TRUE
+#' @param include_label_text Whether the labels for each effect should be include. Default to \code{TRUE}
 #' @param ... any additional argument
 #' @details This is a wrapper around the \code{forestplot::forestplot} function.
 #' The function only uses the ANOVAs and the t-tests. For the t-tests though
 #' it includes only the two-sided, as they are the same with the one-sided ones
 #' and having both would probably give a false picture of the effect.
+#'
+#' The include_label_text can be used when multiple plots need to be combined
+#' side by side, so one of them does not include the labels.
 #' @return A plot
 #'#'
 #' @importFrom dplyr %>%
 #' @export
 
 forestplot_mf <-
-  function(data, ci = TRUE, ...) {
+  function(data, ci = TRUE, include_label_text = TRUE, ...) {
     data %>%
       dplyr::filter(framework == "NHST") -> data
 
@@ -63,8 +67,15 @@ forestplot_mf <-
 
       data$method[which(data$method == "two.sided")] <- "t-test"
 
+      if (include_label_text) {
+        labeltext <-
+          paste(data$method, rep("| data used:", nrow(data), sep = ""),  data$method2)
+      } else{
+        labeltext <- rep(" ", length(data$effect.size.ma))
+      }
+
       forestplot::forestplot(
-        labeltext = paste(data$method, rep("| data used:", nrow(data), sep = ""),  data$method2),
+        labeltext =  labeltext,
         boxsize = .25,
         mean = data$effect.size.ma,
         lower = lci,

@@ -4,12 +4,14 @@
 \alias{forestplot_mf}
 \title{forestplot_mf}
 \usage{
-forestplot_mf(data, ci = TRUE, ...)
+forestplot_mf(data, ci = TRUE, include_label_text = TRUE, ...)
 }
 \arguments{
 \item{data}{a universe_mf or multiverse_mf object}
 
 \item{ci}{should confidence intervals be included -- default to TRUE}
+
+\item{include_label_text}{Whether the labels for each effect should be include. Default to \code{TRUE}}
 
 \item{...}{any additional argument}
 }
