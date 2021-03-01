@@ -152,9 +152,7 @@ universe_cs <-
             exclusion = exclusion,
             cut_off = cut_off,
             phase = phase,
-            dv = dv,
-            multicore = TRUE
-          )
+            dv = dv)
 
         banovaTIME <-
           multifear::rm_banova_mf(
@@ -167,9 +165,7 @@ universe_cs <-
             phase = phase,
             exclusion = exclusion,
             cut_off = cut_off,
-            dv = dv,
-            multicore = TRUE
-          )
+            dv = dv)
       }
     } else if (!is.null(group) & do_anova) {
       anovaNOTIME <-
@@ -226,9 +222,7 @@ universe_cs <-
             phase = phase,
             exclusion = exclusion,
             cut_off = cut_off,
-            dv = dv,
-            multicore = TRUE
-          )
+            dv = dv)
 
         banovaTIME <-
           multifear::rm_banova_mf(
@@ -241,9 +235,7 @@ universe_cs <-
             phase = phase,
             exclusion = exclusion,
             cut_off = cut_off,
-            dv = dv,
-            multicore = TRUE
-          )
+            dv = dv)
       }
     }
 

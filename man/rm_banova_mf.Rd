@@ -14,8 +14,7 @@ rm_banova_mf(
   phase = "acquisition",
   dv = "scr",
   exclusion = "full data",
-  cut_off = "full data",
-  multicore = TRUE
+  cut_off = "full data"
 )
 }
 \arguments{
@@ -38,9 +37,6 @@ rm_banova_mf(
 \item{exclusion}{Name of the data reduction procedure used. Default to \code{full data}}
 
 \item{cut_off}{cut off Name of the cut_off applied. Default to \code{full data}}
-
-\item{multicore}{The option to run the analysis in multiple cores, not available under Windows.
-Default to \code{TRUE}.}
 }
 \value{
 A tibble with the following column names:
@@ -104,6 +100,6 @@ subj <- "id"
 
 # Bayesian Repeated measures ANOVA without groups
 rm_banova_mf(cs1 = cs1, cs2 = cs2, subj = subj,
-data = example_data, time = TRUE, multicore = FALSE)
+data = example_data, time = TRUE)
 
 }
