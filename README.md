@@ -230,26 +230,26 @@ reduction procedures (see below). We can do it simply by:
 
 ``` r
 
-res_multi <- multifear::multiverse_cs(cs1 = cs1, cs2 = cs2, data = example_data, subj = "id", group = NULL, phase = "acquisition", include_bayes = TRUE)
+res_multi <- multifear::multiverse_cs(cs1 = cs1, cs2 = cs2, data = example_data, subj = "id", group = NULL, phase = "acquisition", include_bayes = TRUE, include_mixed = TRUE)
 #> Skipping ANOVA due to the number of trials for the cs1 and/or cs2.
 res_multi
-#> # A tibble: 68 x 18
-#>    x     y     exclusion cut_off model controls method  p.value effect.size
-#>    <chr> <chr> <chr>     <chr>   <chr> <lgl>    <chr>     <dbl>       <dbl>
-#>  1 cs    scr   full_data full d… t-te… NA       great…  0.00244      0.577 
-#>  2 cs    scr   full_data full d… t-te… NA       two.s…  0.00488      0.577 
-#>  3 cs    scr   full_data full d… Baye… NA       Bayes… NA           NA     
-#>  4 cs    scr   full_data full d… Baye… NA       Bayes… NA           NA     
-#>  5 cs:t… scr   full_data full d… rep … NA       rep A…  0.0152       0.0296
-#>  6 cs    scr   full_data full d… rep … NA       rep A…  0.00488      0.147 
-#>  7 cs:t… scr   full_data full d… rep … NA       rep B… NA           NA     
-#>  8 cs    scr   full_data full d… rep … NA       rep B… NA           NA     
-#>  9 cs    scr   ten_per   full d… t-te… NA       great…  0.266        0.100 
-#> 10 cs    scr   ten_per   full d… t-te… NA       two.s…  0.532        0.100 
-#> # … with 58 more rows, and 9 more variables: effect.size.ma <dbl>,
+#> # A tibble: 116 x 19
+#>    x     y     exclusion cut_off model controls method   p.value effect.size
+#>    <chr> <chr> <chr>     <chr>   <chr> <lgl>    <chr>      <dbl>       <dbl>
+#>  1 cs    scr   full_data full d… t-te… NA       great…  2.44e- 3      0.577 
+#>  2 cs    scr   full_data full d… t-te… NA       two.s…  4.88e- 3      0.577 
+#>  3 cs    scr   full_data full d… Baye… NA       Bayes… NA            NA     
+#>  4 cs    scr   full_data full d… Baye… NA       Bayes… NA            NA     
+#>  5 cs:t… scr   full_data full d… rep … NA       rep A…  1.52e- 2      0.0296
+#>  6 cs    scr   full_data full d… rep … NA       rep A…  4.88e- 3      0.147 
+#>  7 cscs2 scr   full_data <NA>    mixe… NA       mixed…  1.80e-13     NA     
+#>  8 cscs… scr   full_data <NA>    mixe… NA       mixed…  5.92e- 7     NA     
+#>  9 cscs2 scr   full_data <NA>    mixe… NA       mixed…  1.82e- 5     NA     
+#> 10 cscs… scr   full_data <NA>    mixe… NA       mixed…  2.16e- 2     NA     
+#> # … with 106 more rows, and 10 more variables: effect.size.ma <dbl>,
 #> #   effect.size.ma.lci <dbl>, effect.size.ma.hci <dbl>, estimate <dbl>,
 #> #   statistic <dbl>, conf.low <dbl>, conf.high <dbl>, framework <chr>,
-#> #   data_used <list>
+#> #   data_used <list>, efffect.size.ma <lgl>
 ```
 
 In terms of calling the function, we see that we need exactly the same
@@ -313,9 +313,9 @@ function and you will get:
 ``` r
 multifear::inference_cs(res_multi, na.rm = TRUE)
 #>   mean_p_value median_p_value sd_p_value prop_p_value mean_bf_value
-#> 1    0.1074323     0.00638261  0.2341194     82.35294      1882.884
+#> 1    0.1074323     0.00638261  0.2341194     82.35294      1838.199
 #>   median_bf_value sd_bf_value prop_bf_value
-#> 1        4.319848    10128.54      76.47059
+#> 1        4.319848    9865.698      73.52941
 ```
 
 And here we have a barplot of the results:

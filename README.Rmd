@@ -135,7 +135,7 @@ Now, we want to perform the same analyses but for different datta reduction proc
 
 ```{r, warning = FALSE}
 
-res_multi <- multifear::multiverse_cs(cs1 = cs1, cs2 = cs2, data = example_data, subj = "id", group = NULL, phase = "acquisition", include_bayes = TRUE)
+res_multi <- multifear::multiverse_cs(cs1 = cs1, cs2 = cs2, data = example_data, subj = "id", group = NULL, phase = "acquisition", include_bayes = TRUE, include_mixed = TRUE)
 res_multi
 ```
 
