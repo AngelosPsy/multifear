@@ -450,6 +450,8 @@ t_boot <-
 
 r_number <- function(num, threeshold_min = 0.001, threeshold_max = 1000) {
 
+  stopifnot("some p-values or Bayes factors are not numbers. Check you data. Stopping operation."=  is.numeric(num))
+
   if(num < threeshold_min){
    res <- paste("<", threeshold_min)
   } else if(num > threeshold_max){
