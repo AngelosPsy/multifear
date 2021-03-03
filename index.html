@@ -196,26 +196,26 @@
 <p>Now, we want to perform the same analyses but for different datta reduction procedures (see below). We can do it simply by:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
-<span class="va">res_multi</span> <span class="op">&lt;-</span> <span class="fu">multifear</span><span class="fu">::</span><span class="fu"><a href="reference/multiverse_cs.html">multiverse_cs</a></span><span class="op">(</span>cs1 <span class="op">=</span> <span class="va">cs1</span>, cs2 <span class="op">=</span> <span class="va">cs2</span>, data <span class="op">=</span> <span class="va">example_data</span>, subj <span class="op">=</span> <span class="st">"id"</span>, group <span class="op">=</span> <span class="cn">NULL</span>, phase <span class="op">=</span> <span class="st">"acquisition"</span>, include_bayes <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="va">res_multi</span> <span class="op">&lt;-</span> <span class="fu">multifear</span><span class="fu">::</span><span class="fu"><a href="reference/multiverse_cs.html">multiverse_cs</a></span><span class="op">(</span>cs1 <span class="op">=</span> <span class="va">cs1</span>, cs2 <span class="op">=</span> <span class="va">cs2</span>, data <span class="op">=</span> <span class="va">example_data</span>, subj <span class="op">=</span> <span class="st">"id"</span>, group <span class="op">=</span> <span class="cn">NULL</span>, phase <span class="op">=</span> <span class="st">"acquisition"</span>, include_bayes <span class="op">=</span> <span class="cn">TRUE</span>, include_mixed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="co">#&gt; Skipping ANOVA due to the number of trials for the cs1 and/or cs2.</span>
 <span class="va">res_multi</span>
-<span class="co">#&gt; # A tibble: 68 x 18</span>
-<span class="co">#&gt;    x     y     exclusion cut_off model controls method  p.value effect.size</span>
-<span class="co">#&gt;    &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt; &lt;lgl&gt;    &lt;chr&gt;     &lt;dbl&gt;       &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 cs    scr   full_data full d… t-te… NA       great…  0.00244      0.577 </span>
-<span class="co">#&gt;  2 cs    scr   full_data full d… t-te… NA       two.s…  0.00488      0.577 </span>
-<span class="co">#&gt;  3 cs    scr   full_data full d… Baye… NA       Bayes… NA           NA     </span>
-<span class="co">#&gt;  4 cs    scr   full_data full d… Baye… NA       Bayes… NA           NA     </span>
-<span class="co">#&gt;  5 cs:t… scr   full_data full d… rep … NA       rep A…  0.0152       0.0296</span>
-<span class="co">#&gt;  6 cs    scr   full_data full d… rep … NA       rep A…  0.00488      0.147 </span>
-<span class="co">#&gt;  7 cs:t… scr   full_data full d… rep … NA       rep B… NA           NA     </span>
-<span class="co">#&gt;  8 cs    scr   full_data full d… rep … NA       rep B… NA           NA     </span>
-<span class="co">#&gt;  9 cs    scr   ten_per   full d… t-te… NA       great…  0.266        0.100 </span>
-<span class="co">#&gt; 10 cs    scr   ten_per   full d… t-te… NA       two.s…  0.532        0.100 </span>
-<span class="co">#&gt; # … with 58 more rows, and 9 more variables: effect.size.ma &lt;dbl&gt;,</span>
+<span class="co">#&gt; # A tibble: 116 x 19</span>
+<span class="co">#&gt;    x     y     exclusion cut_off model controls method   p.value effect.size</span>
+<span class="co">#&gt;    &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt; &lt;lgl&gt;    &lt;chr&gt;      &lt;dbl&gt;       &lt;dbl&gt;</span>
+<span class="co">#&gt;  1 cs    scr   full_data full d… t-te… NA       great…  2.44e- 3      0.577 </span>
+<span class="co">#&gt;  2 cs    scr   full_data full d… t-te… NA       two.s…  4.88e- 3      0.577 </span>
+<span class="co">#&gt;  3 cs    scr   full_data full d… Baye… NA       Bayes… NA            NA     </span>
+<span class="co">#&gt;  4 cs    scr   full_data full d… Baye… NA       Bayes… NA            NA     </span>
+<span class="co">#&gt;  5 cs:t… scr   full_data full d… rep … NA       rep A…  1.52e- 2      0.0296</span>
+<span class="co">#&gt;  6 cs    scr   full_data full d… rep … NA       rep A…  4.88e- 3      0.147 </span>
+<span class="co">#&gt;  7 cscs2 scr   full_data &lt;NA&gt;    mixe… NA       mixed…  1.80e-13     NA     </span>
+<span class="co">#&gt;  8 cscs… scr   full_data &lt;NA&gt;    mixe… NA       mixed…  5.92e- 7     NA     </span>
+<span class="co">#&gt;  9 cscs2 scr   full_data &lt;NA&gt;    mixe… NA       mixed…  1.82e- 5     NA     </span>
+<span class="co">#&gt; 10 cscs… scr   full_data &lt;NA&gt;    mixe… NA       mixed…  2.16e- 2     NA     </span>
+<span class="co">#&gt; # … with 106 more rows, and 10 more variables: effect.size.ma &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   effect.size.ma.lci &lt;dbl&gt;, effect.size.ma.hci &lt;dbl&gt;, estimate &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   statistic &lt;dbl&gt;, conf.low &lt;dbl&gt;, conf.high &lt;dbl&gt;, framework &lt;chr&gt;,</span>
-<span class="co">#&gt; #   data_used &lt;list&gt;</span></code></pre></div>
+<span class="co">#&gt; #   data_used &lt;list&gt;, efffect.size.ma &lt;lgl&gt;</span></code></pre></div>
 <p>In terms of calling the function, we see that we need exactly the same arguments as before. Internally, the function actually applies the multifear::universe_cs but now apart from the full data set, also for the data sets with different data inclusion procedures. Whether each line refers to the full data set or any of the exclusion criteria, we can see on the column exclusion criteria or in the data_used column, although there it is difficult to see what happened and it serves only reproduction criteria. So, the easiest thing to do is to see the exclusion column. Now, it has the following levels:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">res_multi</span><span class="op">$</span><span class="va">exclusion</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="op">)</span>
@@ -246,9 +246,9 @@
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">multifear</span><span class="fu">::</span><span class="fu"><a href="reference/inference_cs.html">inference_cs</a></span><span class="op">(</span><span class="va">res_multi</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="co">#&gt;   mean_p_value median_p_value sd_p_value prop_p_value mean_bf_value</span>
-<span class="co">#&gt; 1    0.1074323     0.00638261  0.2341194     82.35294      1882.884</span>
+<span class="co">#&gt; 1    0.1074323     0.00638261  0.2341194     82.35294      1838.199</span>
 <span class="co">#&gt;   median_bf_value sd_bf_value prop_bf_value</span>
-<span class="co">#&gt; 1        4.319848    10128.54      76.47059</span></code></pre></div>
+<span class="co">#&gt; 1        4.319848    9865.698      73.52941</span></code></pre></div>
 <p>And here we have a barplot of the results:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">multifear</span><span class="fu">::</span><span class="fu"><a href="reference/inference_plot.html">inference_plot</a></span><span class="op">(</span><span class="va">res_multi</span>, add_line <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
