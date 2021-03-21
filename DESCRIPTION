@@ -2,7 +2,11 @@ Package: multifear
 Type: Package
 Title: A Suite of Functions for Performing Multiverse Analyses for Conditioning Data
 Version: 0.1.0.999
-Author: Angelos-Miltiadis Krypotos
+Authors@R: 
+    c(person(given = "Angelos-Miltiadis",
+             family = "Krypotos",
+             role = c("aut", "cre", "cph"),
+             email = "amkrypotos@gmail.com"))
 Maintainer: Angelos-Miltiadis Krypotos <amkrypotos@gmail.com>
 Description: A suite of functions for perfomiing multiverse analyses for conditioning data. Specifically, given the appropriate data, the functions are able to perform t-tests, analyses of variance, and mixed models for the provided data and return summary statistics and plots. The function is also able to return for all those tests p-values, confidence intervals, and Bayes factors.
 Depends: R (>= 3.6.0)    
@@ -28,7 +32,8 @@ Imports:
     effectsize (>= 0.4.1),
     esc (>= 0.5.1),
     forestplot (>= 1.10),
-    bootstrap (>= 2019.6)
+    bootstrap (>= 2019.6),
+    lifecycle (>= 1.0.0)
 RoxygenNote: 7.1.1
 Suggests:
     vdiffr (>= 0.3.2.2),
@@ -42,6 +47,6 @@ Suggests:
     igraph (>= 1.2.4.2),
     testthat (>= 2.1.0),
     cowplot (>= 1.0.0),
-    lifecycle (>= 1.0.0),
     covr
-RdMacros: lifecycle
+RdMacros: 
+    lifecycle
