@@ -29,4 +29,7 @@ This is a wrapper around the \code{forestplot::forestplot} function.
 The function only uses the ANOVAs and the t-tests. For the t-tests though
 it includes only the two-sided, as they are the same with the one-sided ones
 and having both would probably give a false picture of the effect.
+
+The include_label_text can be used when multiple plots need to be combined
+side by side, so one of them does not include the labels.
 }
