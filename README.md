@@ -5,13 +5,10 @@
 
 [![Travis build
 status](https://travis-ci.org/AngelosPsy/multifear.svg?branch=master)](https://travis-ci.org/AngelosPsy/multifear)
-[![Lifecycle:
-experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![codecov](https://codecov.io/gh/AngelosPsy/multifear/branch/master/graph/badge.svg)](https://codecov.io/gh/AngelosPsy/multifear)
-[![CRAN
-status](https://www.r-pkg.org/badges/version/multifear)](https://CRAN.R-project.org/package=multifear)
 [![R build
 status](https://github.com/AngelosPsy/multifear/workflows/R-CMD-check/badge.svg)](https://github.com/AngelosPsy/multifear/actions)
+[![R-CMD-check](https://github.com/AngelosPsy/multifear/workflows/R-CMD-check/badge.svg)](https://github.com/AngelosPsy/multifear/actions)
 <!-- badges: end -->
 
 # Multifear
@@ -313,9 +310,9 @@ function and you will get:
 ``` r
 multifear::inference_cs(res_multi, na.rm = TRUE)
 #>   mean_p_value median_p_value sd_p_value prop_p_value mean_bf_value
-#> 1    0.1074323     0.00638261  0.2341194     82.35294      1838.199
+#> 1    0.1074323     0.00638261  0.2341194     82.35294      1878.818
 #>   median_bf_value sd_bf_value prop_bf_value
-#> 1        4.319848    9865.698      73.52941
+#> 1        4.319848    10104.98      73.52941
 ```
 
 And here we have a barplot of the results:
