@@ -71,8 +71,6 @@ data_used: a list with the data used for the specific test
 Basic function for running a multiverse analysis for a single data set
 }
 \details{
-\lifecycle{experimental}
-
 In case of higher order interaction, only the highest order
 effect is shown.
 

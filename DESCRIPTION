@@ -32,8 +32,7 @@ Imports:
     effectsize (>= 0.4.1),
     esc (>= 0.5.1),
     forestplot (>= 1.10),
-    bootstrap (>= 2019.6),
-    lifecycle (>= 1.0.0)
+    bootstrap (>= 2019.6)
 RoxygenNote: 7.1.1
 Suggests:
     vdiffr (>= 0.3.2.2),
@@ -48,5 +47,3 @@ Suggests:
     testthat (>= 2.1.0),
     cowplot (>= 1.0.0),
     covr
-RdMacros: 
-    lifecycle
