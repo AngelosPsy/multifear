@@ -1,7 +1,7 @@
 Package: multifear
 Type: Package
 Title: A Suite of Functions for Performing Multiverse Analyses for Conditioning Data
-Version: 0.1.0.999
+Version: 0.1.0
 Authors@R: 
     c(person(given = "Angelos-Miltiadis",
              family = "Krypotos",
