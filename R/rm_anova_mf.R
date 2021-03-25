@@ -2,8 +2,6 @@
 #'
 #' @description Basic function for running the frequentist's repeated measures analysis of variance (ANOVA)
 #'
-#' \lifecycle{experimental}
-#'
 #' @inheritParams t_test_mf
 #' @param time should time be included? Default to \code{TRUE}
 #' @param correction whether the Greenhouse-Geisser correction should be applied or not. Default to \code{FALSE}

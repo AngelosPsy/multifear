@@ -1,6 +1,5 @@
 #' inference_cs
 #'
-#' \lifecycle{experimental}
 #'
 #' @description Function for summarizing the multiverse results.
 #' @param data a data frame with the results of a multiverse analyses.

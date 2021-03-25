@@ -82,8 +82,6 @@ data_used: a list with the data used for the specific test
 }
 \description{
 Basic function for running the frequentist's repeated measures analysis of variance (ANOVA)
-
-\lifecycle{experimental}
 }
 \details{
 In case the \code{time} argument is set to \cite{TRUE} (default value), the function will include this as a within subjects factor, assuming that the columns in

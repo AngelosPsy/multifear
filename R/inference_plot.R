@@ -1,6 +1,5 @@
 #' inference_plot
 #'
-#' \lifecycle{experimental}
 #'
 #' @description Function for plotting the multiverse results.
 #' @param data a data frame with the results of a multiverse analysis

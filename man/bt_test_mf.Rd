@@ -78,11 +78,9 @@ framework: were the data analysed within a NHST or Bayesian framework?
 data_used: a list with the data used for the specific test
 }
 \description{
-\lifecycle{experimental}
+Basic function for running the Bayesian t-tests included in the main analyses
 }
 \details{
-Basic function for running the Bayesian t-tests included in the main analyses
-
 This is a wrapper function function around the \code{BayesFactor::ttestBF(),}
 running multiple Bayesian t-tests. Similar to the \code{t_test_mf} function, the function will run different t-tests based on the phase that the t-tests refer to. So, in case of the acquisition phase, there will be a t-test of differences and positive differences, whereas for the extinction phase a t-test for differences and negative differences.
 }

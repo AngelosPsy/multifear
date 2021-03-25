@@ -1,7 +1,5 @@
 #' universe_cs
 #'
-#' \lifecycle{experimental}
-#'
 #' @description Basic function for running a multiverse analysis for a single data set
 #' @inheritParams rm_anova_mf
 #' @param include_bayes Whether the Bayesian analyses should be run. Default to \code{TRUE}

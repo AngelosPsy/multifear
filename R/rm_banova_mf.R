@@ -2,8 +2,6 @@
 #'
 #' @description Basic function for running the Bayesian repeated measures analysis of Variance
 #'
-#' \lifecycle{experimental}
-#'
 #' @inheritParams rm_anova_mf
 #'
 #' @return A tibble with the following column names:

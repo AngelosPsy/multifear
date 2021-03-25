@@ -87,8 +87,6 @@ data_used: a list with the data used for the specific test
 Basic function for running the frequentist's t-tests included in the main analyses
 }
 \details{
-\lifecycle{experimental}
-
 Given the correct names for the \code{cs1}, \code{cs2}, \code{subj}, and \code{data}, the function will run one- and two-sided frequentist's t-tests. In case \code{cs1} or \code{cs2} refer to multiple columns, the mean -- per row -- for each one of these variables will be computed first before running the t-test. Please note that cs1 is implicitly referred to the cs that is reinforced, and cs2 to the cs that is not reinforced.
 Depending on whether the data refer to an acquisition or extinction phase (as defined in the \code{phase} argument), the function will return a positive one sided, or negative one-sided, respectively t-test in addition to the two-sided t-test. The returned effect size is  Hedge's g in the column effect size. For the meta-analytic effect size (effect.size.ma), the returned effect size is eta-squared.
 

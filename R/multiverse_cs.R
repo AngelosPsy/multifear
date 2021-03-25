@@ -1,6 +1,5 @@
 #' multiverse_cs
 #'
-#' \lifecycle{experimental}
 #'
 #' @description Basic function for conducting multiverse analyses of conditioning
 #' data

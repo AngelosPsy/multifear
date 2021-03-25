@@ -76,8 +76,6 @@ data_used: a list with the data used for the specific test
 Basic function for running mixed models for the multiverse analysis
 }
 \details{
-\lifecycle{experimental}
-
 The function assumes that you include more than 1 trial per CS. The function returns an error if that is not the function.
 
 The function performs by default two dependent variable standardizations, the one per subject

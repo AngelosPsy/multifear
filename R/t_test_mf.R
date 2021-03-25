@@ -1,6 +1,5 @@
 #' t_test_mf
 #'
-#' \lifecycle{experimental}
 #'
 #' @description Basic function for running the frequentist's t-tests included in the main analyses
 #' @param cs1 The column name(s) of the conditioned responses for the first conditioned stimulus

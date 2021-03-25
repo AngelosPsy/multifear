@@ -36,8 +36,6 @@ A histogram summarizing the results.
 Function for plotting the multiverse results.
 }
 \details{
-\lifecycle{experimental}
-
 For the plot the NAs in the \code{p.value} column are removed automatically -- so what \code{ggplot2} does automatically but here no message is returned.
 
 The \code{return_plot} argument is there in case you want to combine multiple panels and you do

@@ -69,8 +69,6 @@ Basic function for conducting multiverse analyses of conditioning
 data
 }
 \details{
-\lifecycle{experimental}
-
 In case of higher order interaction, only the highest order
 effect is returned.
 

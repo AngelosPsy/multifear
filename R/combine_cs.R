@@ -1,6 +1,5 @@
 #' combine_cs
 #'
-#' \lifecycle{experimental}
 #'
 #' @description Function for computing mean responses across CSs
 #' @inheritParams t_test_mf

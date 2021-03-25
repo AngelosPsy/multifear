@@ -43,9 +43,6 @@ of block.
 \description{
 Function for separating the conditioned responses into multiple pieces
 }
-\details{
-\lifecycle{experimental}
-}
 \examples{
 data(example_data)
 chop_cs(cs = paste0("CSP", 1:10), data = example_data, subj = "id")

@@ -1,6 +1,5 @@
 #' bt_test_mf
 #'
-#' \lifecycle{experimental}
 #'
 #' Basic function for running the Bayesian t-tests included in the main analyses
 #' @inheritParams t_test_mf

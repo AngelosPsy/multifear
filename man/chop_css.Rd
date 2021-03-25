@@ -24,6 +24,3 @@ chop_css(cs1, cs2, data, subj, cs_paired = NULL, group = NULL, na.rm = FALSE)
 \description{
 Function for separating the conditioned responses into multiple pieces for two CSs.
 }
-\details{
-\lifecycle{experimental}
-}

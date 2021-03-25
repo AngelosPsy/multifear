@@ -18,6 +18,3 @@ combine_cs(cs1, cs2, data, na.rm = FALSE)
 \description{
 Function for computing mean responses across CSs
 }
-\details{
-\lifecycle{experimental}
-}

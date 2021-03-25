@@ -76,8 +76,6 @@ data_used: a list with the data used for the specific test
 }
 \description{
 Basic function for running the Bayesian repeated measures analysis of Variance
-
-\lifecycle{experimental}
 }
 \details{
 In case the \code{time} argument is set to true, the function will
