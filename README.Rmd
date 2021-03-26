@@ -130,7 +130,7 @@ Let's go through each column separately
 
 + data_used Here you have a data frame with the data used for the performed analyses. This is because someone maybe wants to recreate the results and also as a check that nothing went wrong.
 
-Now, we want to perform the same analyses but for different datta reduction procedures (see below). We can do it simply by:
+Now, we want to perform the same analyses but for different data reduction procedures (see below). We can do it simply by:
 
 ```{r, warning = FALSE}
 

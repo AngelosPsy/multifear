@@ -222,7 +222,7 @@ Let’s go through each column separately
     performed analyses. This is because someone maybe wants to recreate
     the results and also as a check that nothing went wrong.
 
-Now, we want to perform the same analyses but for different datta
+Now, we want to perform the same analyses but for different data
 reduction procedures (see below). We can do it simply by:
 
 ``` r
@@ -310,9 +310,9 @@ function and you will get:
 ``` r
 multifear::inference_cs(res_multi, na.rm = TRUE)
 #>   mean_p_value median_p_value sd_p_value prop_p_value mean_bf_value
-#> 1    0.1074323     0.00638261  0.2341194     82.35294      1878.818
+#> 1    0.1074323     0.00638261  0.2341194     82.35294      1890.995
 #>   median_bf_value sd_bf_value prop_bf_value
-#> 1        4.319848    10104.98      73.52941
+#> 1        4.330015    10166.95      73.52941
 ```
 
 And here we have a barplot of the results:

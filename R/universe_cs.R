@@ -11,7 +11,7 @@
 #' @details In case of higher order interaction, only the highest order
 #' effect is shown.
 #'
-#' In case the CSs include only 1 observation per participant, or of enequal numbers of CS trials, the
+#' In case the CSs include only 1 observation per participant, or of unequal numbers of CS trials, the
 #' function will return the warning ""Skipping ANOVA due to the number of trials for the cs1 and/or
 #' cs2."".
 #' @return A tibble with the following column names:
