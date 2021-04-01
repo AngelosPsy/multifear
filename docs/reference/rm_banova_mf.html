@@ -40,8 +40,7 @@
 
 
 <meta property="og:title" content="rm_banova_mf — rm_banova_mf" />
-<meta property="og:description" content="Basic function for running the Bayesian repeated measures ANOVA
-" />
+<meta property="og:description" content="Basic function for running the Bayesian repeated measures analysis of Variance" />
 
 
 
@@ -73,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">multifear</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0.999</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
       </span>
     </div>
 
@@ -87,6 +86,9 @@
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -115,8 +117,7 @@
     </div>
 
     <div class="ref-description">
-    <p>Basic function for running the Bayesian repeated measures ANOVA</p>
-<p><a href='https://www.tidyverse.org/lifecycle/#experimental'><img src='figures/lifecycle-experimental.svg' alt='Experimental lifecycle'></a></p>
+    <p>Basic function for running the Bayesian repeated measures analysis of Variance</p>
     </div>
 
     <pre class="usage"><span class='fu'>rm_banova_mf</span><span class='op'>(</span>
@@ -129,8 +130,7 @@
   phase <span class='op'>=</span> <span class='st'>"acquisition"</span>,
   dv <span class='op'>=</span> <span class='st'>"scr"</span>,
   exclusion <span class='op'>=</span> <span class='st'>"full data"</span>,
-  cut_off <span class='op'>=</span> <span class='st'>"full data"</span>,
-  multicore <span class='op'>=</span> <span class='cn'>TRUE</span>
+  cut_off <span class='op'>=</span> <span class='st'>"full data"</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -146,68 +146,63 @@
     </tr>
     <tr>
       <th>data</th>
-      <td><p>A data frame containing with all the relevant columns</p></td>
+      <td><p>A data frame containing all the relevant columns for the analyses</p></td>
     </tr>
     <tr>
       <th>subj</th>
-      <td><p>The name of the column including the participant numbers. Unique numbers are expected.</p></td>
+      <td><p>The name of the column including the participant numbers. Unique numbers are expected</p></td>
     </tr>
     <tr>
       <th>time</th>
-      <td><p>should time be included? Default to <code>TRUE</code>.</p></td>
+      <td><p>should time be included? Default to <code>TRUE</code></p></td>
     </tr>
     <tr>
       <th>group</th>
-      <td><p>the name of the group, if included, default to <code>NULL</code>.</p></td>
+      <td><p>the name of the group, if included, default to <code>NULL</code></p></td>
     </tr>
     <tr>
       <th>phase</th>
-      <td><p>The conditioned phase that the analyses refer to. Accepted values are  <code>acquisition</code>,  or <code>acq</code>, <code>extinction</code>, or <code>ext</code>.</p></td>
+      <td><p>The conditioned phase that the analyses refer to. Accepted values are  <code>acquisition</code>, <code>acq</code>, <code>extinction</code>, or <code>ext</code></p></td>
     </tr>
     <tr>
       <th>dv</th>
-      <td><p>name of the measured conditioned response. Default to <code>"SCR"</code>.</p></td>
+      <td><p>name of the measured conditioned response. Default to <code>"SCR"</code></p></td>
     </tr>
     <tr>
       <th>exclusion</th>
-      <td><p>If any exclusion criteria were applied, default to <code>full data</code></p></td>
+      <td><p>Name of the data reduction procedure used. Default to <code>full data</code></p></td>
     </tr>
     <tr>
       <th>cut_off</th>
-      <td><p>cut off</p></td>
-    </tr>
-    <tr>
-      <th>multicore</th>
-      <td><p>The option to run the analysis in multiple cores, not available under Windows.
-Default to <code>TRUE</code>.</p></td>
+      <td><p>cut off Name of the cut_off applied. Default to <code>full data</code></p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A tibble with the following column names:
-x: the name of the independent variable (e.g., cs)
-y: the name of the dependent variable as this defined in the <code>dv</code> argument
-exclusion: see <code>exclusion</code> argument
-model: the model that was run (e.g., t-test)
-controls: ignore this column for this test
-method: the model that was run
-p.value: irrelevant here
-effect.size: irrelevant here
-effect.size.ma: irrelevant here
-effect.size.lci: irrelevant here
-effect.size.hci: irrelevant here
-estimate: the estimate of the test run
-statistic: the t-value
-conf.low: the lower confidence interval for the estimate
-conf.high: the higher confidence interval for the estimate
-framework: were the data analysed within a NHST or Bayesian framework?
-data_used: a list with the data used for the specific test</p>
+    <p>A tibble with the following column names:</p>
+<p>x: the name of the independent variable (e.g., cs)</p>
+<p>y: the name of the dependent variable as this defined in the <code>dv</code> argument</p>
+<p>exclusion: see <code>exclusion</code> argument</p>
+<p>model: the model that was run (e.g., rep ANOVA)</p>
+<p>controls: ignore this column for this test</p>
+<p>method: the model that was run</p>
+<p>p.value: irrelevant here</p>
+<p>effect.size: irrelevant here</p>
+<p>effect.size.ma: irrelevant here</p>
+<p>effect.size.lci: irrelevant here</p>
+<p>effect.size.hci: irrelevant here</p>
+<p>estimate: the estimate of the test run</p>
+<p>statistic: the Bayes factor
+conf.low: the lower confidence interval for the estimate</p>
+<p>conf.high: the higher confidence interval for the estimate</p>
+<p>framework: were the data analysed within a NHST or Bayesian framework?</p>
+<p>data_used: a list with the data used for the specific test</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>In case the <code>time</code> argument is set to true, the function will
 include this as a within subjects factor, assuming that the columns in
-<code>cs1</code> and <code>cs2</code> corrrespond to ascending time points (e.g., cs1
+<code>cs1</code> and <code>cs2</code> correspond to ascending time points (e.g., cs1
 trial 1, cs1 trial 2 ... cs1 trial <code>n</code>). If this is not the case, the
 results are not to be trusted.</p>
 <p>The ANOVA will run *all* possible models and combinations. Please note that
@@ -222,8 +217,9 @@ time to be completed.</p>
 <span class='va'>cs2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"CSM"</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span><span class='op'>)</span>
 <span class='va'>subj</span> <span class='op'>&lt;-</span> <span class='st'>"id"</span>
 
-<span class='co'># Repeated measures ANOVA</span>
-<span class='fu'>rm_banova_mf</span><span class='op'>(</span>cs1 <span class='op'>=</span> <span class='va'>cs1</span>, cs2 <span class='op'>=</span> <span class='va'>cs2</span>, subj <span class='op'>=</span> <span class='va'>subj</span>, data <span class='op'>=</span> <span class='va'>example_data</span>, time <span class='op'>=</span> <span class='cn'>TRUE</span>, multicore <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='co'># Bayesian Repeated measures ANOVA without groups</span>
+<span class='fu'>rm_banova_mf</span><span class='op'>(</span>cs1 <span class='op'>=</span> <span class='va'>cs1</span>, cs2 <span class='op'>=</span> <span class='va'>cs2</span>, subj <span class='op'>=</span> <span class='va'>subj</span>,
+data <span class='op'>=</span> <span class='va'>example_data</span>, time <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 1 x 18</span><span>
 #&gt;   x     y     exclusion cut_off model controls method p.value effect.size
 #&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;lgl&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;lgl&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;lgl&gt;</span><span>      

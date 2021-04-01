@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">multifear</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0.999</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
       </span>
     </div>
 
@@ -86,6 +86,9 @@
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -132,29 +135,45 @@
     </tr>
     <tr>
       <th>data</th>
-      <td><p>A data frame containing with all the relevant columns</p></td>
+      <td><p>A data frame containing all the relevant columns for the analyses</p></td>
     </tr>
     <tr>
       <th>subj</th>
-      <td><p>The name of the column including the participant numbers. Unique numbers are expected.</p></td>
+      <td><p>The name of the column including the participant numbers. Unique numbers are expected</p></td>
     </tr>
     <tr>
       <th>cs_paired</th>
-      <td><p>A character vector with the trials that were paired. Default is set to <code>NULL</code>, suggesting that there was full reinforcement</p></td>
+      <td><p>A character vector with the trials that were paired. Default is set to <code>NULL</code>, suggesting that there was full reinforcement
+ @return A tibble with the following column names -- separately forr cs1 and cs2:
+"id" = id column;
+"top10per" = mean of top 10<!-- % of trials; -->
+"bottom10per" = mean of bottom 10<!-- % of the trials; -->
+"minfirst = all trials minus the first one;
+"all" = mean of all trials;
+"t33per = mean of top 33<!-- % of the trials; -->
+"m33per" = mean of medium 33<!-- % of the trials; -->
+"b33per" = mean of bottom 33<!-- % of the trials; -->
+"fhalf" = mean of first half of the trials;
+"lhalf" = mean of last half of the trials;
+"ftrial" = first trial;
+"ltrial" = last trial;
+"t20per" = mean of top 20<!-- % of the trials; -->
+"b20per" = mean of bottom 20<!-- % of the trials; -->
+"f2trial" = mean of first two trials;
+"l2trial" = mean of last two trials;
+"per2_X" = mean per two trials (i.e., block), with X referring to the number
+of block.</p></td>
     </tr>
     <tr>
       <th>group</th>
-      <td><p>the name of the group, if included, default to <code>NULL</code>.</p></td>
+      <td><p>the name of the group, if included, default to <code>NULL</code></p></td>
     </tr>
     <tr>
       <th>na.rm</th>
-      <td><p>Whether NAs should be removed, default to <code>FALSE</code>.</p></td>
+      <td><p>Whether NAs should be removed, default to <code>FALSE</code></p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p><a href='https://www.tidyverse.org/lifecycle/#experimental'><img src='figures/lifecycle-experimental.svg' alt='Experimental lifecycle'></a></p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

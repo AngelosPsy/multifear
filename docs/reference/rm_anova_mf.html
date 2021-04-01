@@ -40,8 +40,7 @@
 
 
 <meta property="og:title" content="rm_anova_mf — rm_anova_mf" />
-<meta property="og:description" content="Basic function for running the frequentist's repeated measures ANOVA
-" />
+<meta property="og:description" content="Basic function for running the frequentist's repeated measures analysis of variance (ANOVA)" />
 
 
 
@@ -73,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">multifear</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0.999</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
       </span>
     </div>
 
@@ -87,6 +86,9 @@
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -115,8 +117,7 @@
     </div>
 
     <div class="ref-description">
-    <p>Basic function for running the frequentist's repeated measures ANOVA</p>
-<p><a href='https://www.tidyverse.org/lifecycle/#experimental'><img src='figures/lifecycle-experimental.svg' alt='Experimental lifecycle'></a></p>
+    <p>Basic function for running the frequentist's repeated measures analysis of variance (ANOVA)</p>
     </div>
 
     <pre class="usage"><span class='fu'>rm_anova_mf</span><span class='op'>(</span>
@@ -146,35 +147,35 @@
     </tr>
     <tr>
       <th>data</th>
-      <td><p>A data frame containing with all the relevant columns</p></td>
+      <td><p>A data frame containing all the relevant columns for the analyses</p></td>
     </tr>
     <tr>
       <th>subj</th>
-      <td><p>The name of the column including the participant numbers. Unique numbers are expected.</p></td>
+      <td><p>The name of the column including the participant numbers. Unique numbers are expected</p></td>
     </tr>
     <tr>
       <th>time</th>
-      <td><p>should time be included? Default to <code>TRUE</code>.</p></td>
+      <td><p>should time be included? Default to <code>TRUE</code></p></td>
     </tr>
     <tr>
       <th>group</th>
-      <td><p>the name of the group, if included, default to <code>NULL</code>.</p></td>
+      <td><p>the name of the group, if included, default to <code>NULL</code></p></td>
     </tr>
     <tr>
       <th>phase</th>
-      <td><p>The conditioned phase that the analyses refer to. Accepted values are  <code>acquisition</code>,  or <code>acq</code>, <code>extinction</code>, or <code>ext</code>.</p></td>
+      <td><p>The conditioned phase that the analyses refer to. Accepted values are  <code>acquisition</code>, <code>acq</code>, <code>extinction</code>, or <code>ext</code></p></td>
     </tr>
     <tr>
       <th>dv</th>
-      <td><p>name of the measured conditioned response. Default to <code>"SCR"</code>.</p></td>
+      <td><p>name of the measured conditioned response. Default to <code>"SCR"</code></p></td>
     </tr>
     <tr>
       <th>exclusion</th>
-      <td><p>If any exclusion criteria were applied, default to <code>full data</code></p></td>
+      <td><p>Name of the data reduction procedure used. Default to <code>full data</code></p></td>
     </tr>
     <tr>
       <th>cut_off</th>
-      <td><p>cut off</p></td>
+      <td><p>cut off Name of the cut_off applied. Default to <code>full data</code></p></td>
     </tr>
     <tr>
       <th>correction</th>
@@ -185,31 +186,31 @@
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A basic function for running repeated measures ANOVAs.</p>
-<p>A tibble with the following column names:
-x: the name of the independent variable (e.g., cs)
-y: the name of the dependent variable as this defined in the <code>dv</code> argument
-exclusion: see <code>exclusion</code> argument
-model: the model that was run (e.g., t-test)
-controls: ignore this column for this test
-method: the model that was run
-p.value: the p-value of the test
-effect.size: the estimated effect size
-effect.size.ma: the estimated effect size for the meta-analytic plots
-effect.size.ma.lci: low confidence intervals for the meta-analytic effect size
-effect.size.ma.hci: high confidence intervals for the meta-analytic effect size
-estimate: the estimate of the test run
-statistic: the t-value
-conf.low: the lower confidence interval for the estimate
-conf.high: the higher confidence interval for the estimate
-framework: were the data analysed within a NHST or Bayesian framework?
-data_used: a list with the data used for the specific test</p>
+<p>A tibble with the following column names:</p>
+<p>x: the name of the independent variable (e.g., cs)</p>
+<p>y: the name of the dependent variable as this defined in the <code>dv</code> argument</p>
+<p>exclusion: see <code>exclusion</code> argument</p>
+<p>model: the model that was run (e.g., t-test)</p>
+<p>controls: ignore this column for this test</p>
+<p>method: the model that was run</p>
+<p>p.value: the p-value of the test</p>
+<p>effect.size: the estimated effect size</p>
+<p>effect.size.ma: the estimated effect size for the meta-analytic plots</p>
+<p>effect.size.ma.lci: low confidence intervals for the meta-analytic effect size</p>
+<p>effect.size.ma.hci: high confidence intervals for the meta-analytic effect size</p>
+<p>estimate: the estimate of the test run</p>
+<p>statistic: the F-value</p>
+<p>conf.low: the lower confidence interval for the estimate</p>
+<p>conf.high: the higher confidence interval for the estimate</p>
+<p>framework: were the data analysed within a NHST or Bayesian framework?</p>
+<p>data_used: a list with the data used for the specific test</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>In case the <code>time</code> argument is set to <cite>TRUE</cite> (default value), the function will include this as a within subjects factor, assuming that the columns in
 <code>cs1</code> and <code>cs2</code> correspond to ascending time points (e.g., cs1
 trial 1, cs1 trial 2 ... cs1 trial <code>n</code>). If this is not the case, the
 results are not to be trusted.</p>
-<p>The function uses the <code><a href='https://rdrr.io/pkg/ez/man/ezANOVA.html'>ez::ezANOVA</a></code> function. The function gives by default a warning regarding the collapsing of factors. This function here suppresses this warning but the user should be aware of it. Please note that at the moment no sphericity correction is performed. The reported effect size is omega squared as this is computed by  <code><a href='https://strengejacke.github.io/sjstats/reference/r2.html'>sjstats::omega_sq</a></code>.</p>
+<p>The function uses the <code><a href='https://rdrr.io/pkg/ez/man/ezANOVA.html'>ez::ezANOVA</a></code> function. The function gives by default a warning regarding the collapsing of factors. This function here suppresses this warning but the user should be aware of it. Please note that at the moment no sphericity correction is performed. The reported effect size is omega squared as this is computed by <code><a href='https://strengejacke.github.io/sjstats/reference/r2.html'>sjstats::omega_sq</a></code>. The meta-analytic effect size is eta squared.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Load example data</span>
@@ -221,7 +222,7 @@ results are not to be trusted.</p>
 <span class='va'>subj</span> <span class='op'>&lt;-</span> <span class='st'>"id"</span>
 <span class='va'>group</span> <span class='op'>&lt;-</span> <span class='st'>"group"</span>
 
-<span class='co'># Repeated measures ANOVA</span>
+<span class='co'># Repeated measures ANOVA without groups</span>
 <span class='fu'>rm_anova_mf</span><span class='op'>(</span>cs1 <span class='op'>=</span> <span class='va'>cs1</span>, cs2 <span class='op'>=</span> <span class='va'>cs2</span>, subj <span class='op'>=</span> <span class='va'>subj</span>, data <span class='op'>=</span> <span class='va'>example_data</span>, time <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>Registered S3 methods overwritten by 'lme4':</span>
 #&gt; <span class='message'>  method                          from</span>
@@ -235,7 +236,16 @@ results are not to be trusted.</p>
 #&gt; </span><span style='color: #949494;'># … with 9 more variables: effect.size.ma </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #949494;'>, effect.size.ma.lci </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #949494;'>,</span><span>
 #&gt; </span><span style='color: #949494;'>#   effect.size.ma.hci </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #949494;'>, estimate </span><span style='color: #949494;font-style: italic;'>&lt;lgl&gt;</span><span style='color: #949494;'>, statistic </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #949494;'>, conf.low </span><span style='color: #949494;font-style: italic;'>&lt;lgl&gt;</span><span style='color: #949494;'>,</span><span>
 #&gt; </span><span style='color: #949494;'>#   conf.high </span><span style='color: #949494;font-style: italic;'>&lt;lgl&gt;</span><span style='color: #949494;'>, framework </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span style='color: #949494;'>, data_used </span><span style='color: #949494;font-style: italic;'>&lt;list&gt;</span><span></div><div class='input'>
-</div></span></pre>
+<span class='co'># Repeated measures ANOVA with groups</span>
+<span class='fu'>rm_anova_mf</span><span class='op'>(</span>cs1 <span class='op'>=</span> <span class='va'>cs1</span>, cs2 <span class='op'>=</span> <span class='va'>cs2</span>, subj <span class='op'>=</span> <span class='va'>subj</span>, group <span class='op'>=</span> <span class='st'>"group"</span>,
+data <span class='op'>=</span> <span class='va'>example_data</span>, time <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 1 x 18</span><span>
+#&gt;   x     y     exclusion cut_off model controls method p.value effect.size
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;lgl&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> grou… scr   full data full d… rep … </span><span style='color: #BB0000;'>NA</span><span>       rep A…   0.205     0.001</span><span style='text-decoration: underline;'>48</span><span>
+#&gt; </span><span style='color: #949494;'># … with 9 more variables: effect.size.ma </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #949494;'>, effect.size.ma.lci </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #949494;'>,</span><span>
+#&gt; </span><span style='color: #949494;'>#   effect.size.ma.hci </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #949494;'>, estimate </span><span style='color: #949494;font-style: italic;'>&lt;lgl&gt;</span><span style='color: #949494;'>, statistic </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #949494;'>, conf.low </span><span style='color: #949494;font-style: italic;'>&lt;lgl&gt;</span><span style='color: #949494;'>,</span><span>
+#&gt; </span><span style='color: #949494;'>#   conf.high </span><span style='color: #949494;font-style: italic;'>&lt;lgl&gt;</span><span style='color: #949494;'>, framework </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span style='color: #949494;'>, data_used </span><span style='color: #949494;font-style: italic;'>&lt;list&gt;</span><span></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

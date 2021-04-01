@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">multifear</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0.999</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
       </span>
     </div>
 
@@ -86,6 +86,9 @@
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -147,15 +150,15 @@
     </tr>
     <tr>
       <th>data</th>
-      <td><p>A data frame containing with all the relevant columns</p></td>
+      <td><p>A data frame containing all the relevant columns for the analyses</p></td>
     </tr>
     <tr>
       <th>subj</th>
-      <td><p>The name of the column including the participant numbers. Unique numbers are expected.</p></td>
+      <td><p>The name of the column including the participant numbers. Unique numbers are expected</p></td>
     </tr>
     <tr>
       <th>group</th>
-      <td><p>the name of the group, if included, default to <code>NULL</code>.</p></td>
+      <td><p>the name of the group, if included, default to <code>NULL</code></p></td>
     </tr>
     <tr>
       <th>include_bayes</th>
@@ -167,11 +170,11 @@
     </tr>
     <tr>
       <th>phase</th>
-      <td><p>The conditioned phase that the analyses refer to. Accepted values are  <code>acquisition</code>,  or <code>acq</code>, <code>extinction</code>, or <code>ext</code>.</p></td>
+      <td><p>The conditioned phase that the analyses refer to. Accepted values are  <code>acquisition</code>, <code>acq</code>, <code>extinction</code>, or <code>ext</code></p></td>
     </tr>
     <tr>
       <th>dv</th>
-      <td><p>name of the measured conditioned response. Default to <code>"SCR"</code>.</p></td>
+      <td><p>name of the measured conditioned response. Default to <code>"SCR"</code></p></td>
     </tr>
     <tr>
       <th>print_output</th>
@@ -179,7 +182,7 @@
     </tr>
     <tr>
       <th>exclusion</th>
-      <td><p>If any exclusion criteria were applied, default to <code>full data</code></p></td>
+      <td><p>Name of the data reduction procedure used. Default to <code>full data</code></p></td>
     </tr>
     <tr>
       <th>cut_off</th>
@@ -214,9 +217,11 @@ framework: were the data analysed within a NHST or Bayesian framework?
 data_used: a list with the data used for the specific test</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p><a href='https://www.tidyverse.org/lifecycle/#experimental'><img src='figures/lifecycle-experimental.svg' alt='Experimental lifecycle'></a></p>
-<p>In case of higher order interaction, only the highest order
+    <p>In case of higher order interaction, only the highest order
 effect is shown.</p>
+<p>In case the CSs include only 1 observation per participant, or of unequal numbers of CS trials, the
+function will return the warning ""Skipping ANOVA due to the number of trials for the cs1 and/or
+cs2."".</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Load data and define argument to be fed in universe_cs</span>
