@@ -35,8 +35,7 @@ Imports:
     bootstrap (>= 2019.6)
 RoxygenNote: 7.1.1
 Suggests:
-    vdiffr (>= 0.3.2.2),
-    gridExtra (>= 2.3),
+    gridExtra (>= 2.3)
     fastDummies (>= 1.6.1),
     vctrs (>= 0.3.1),
     tidyselect (>= 1.0.0),
