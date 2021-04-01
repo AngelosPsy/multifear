@@ -15,6 +15,11 @@ combine_cs(cs1, cs2, data, na.rm = FALSE)
 
 \item{na.rm}{Whether NAs should be removed, default to \code{FALSE}}
 }
+\value{
+A tibble with the initial data frame (given by the \code{data} argument)
+together with an additional column with the means for the columns defined
+in the cs1 and cs2 arguments.
+}
 \description{
 Function for computing mean responses across CSs
 }

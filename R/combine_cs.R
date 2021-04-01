@@ -1,9 +1,11 @@
 #' combine_cs
 #'
-#'
 #' @description Function for computing mean responses across CSs
 #' @inheritParams t_test_mf
 #' @importFrom dplyr %>%
+#' @return A tibble with the initial data frame (given by the \code{data} argument)
+#' together with an additional column with the means for the columns defined
+#' in the cs1 and cs2 arguments.
 #' @export
 combine_cs <- function(cs1, cs2, data, na.rm = FALSE) {
   # Check data

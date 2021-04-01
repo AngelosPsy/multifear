@@ -20,7 +20,7 @@ chop_cs(cs, data, subj, group = NULL, prefix = "cs", na.rm = FALSE)
 \item{na.rm}{Whether NAs should be removed, default to \code{FALSE}}
 }
 \value{
-A tibble with the following colnames:
+A tibble with the following column names:
 "id" = id column;
 "top10per" = mean of top 10% of trials;
 "bottom10per" = mean of bottom 10% of the trials;

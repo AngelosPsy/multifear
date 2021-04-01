@@ -6,7 +6,7 @@
 #' @param cs The column name(s) of the conditioned responses
 #' @param prefix prefix to be included in the end data frame
 #' @param group default to \code{NULL}
-#' @return A tibble with the following colnames:
+#' @return A tibble with the following column names:
 #' "id" = id column;
 #' "top10per" = mean of top 10% of trials;
 #' "bottom10per" = mean of bottom 10% of the trials;

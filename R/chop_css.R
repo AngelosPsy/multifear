@@ -4,6 +4,25 @@
 #' @description Function for separating the conditioned responses into multiple pieces for two CSs.
 #' @inheritParams t_test_mf
 #' @param cs_paired A character vector with the trials that were paired. Default is set to \code{NULL}, suggesting that there was full reinforcement
+#'  @return A tibble with the following column names -- separately forr cs1 and cs2:
+#' "id" = id column;
+#' "top10per" = mean of top 10% of trials;
+#' "bottom10per" = mean of bottom 10% of the trials;
+#' "minfirst = all trials minus the first one;
+#' "all" = mean of all trials;
+#' "t33per = mean of top 33% of the trials;
+#' "m33per" = mean of medium 33% of the trials;
+#' "b33per" = mean of bottom 33% of the trials;
+#' "fhalf" = mean of first half of the trials;
+#' "lhalf" = mean of last half of the trials;
+#' "ftrial" = first trial;
+#' "ltrial" = last trial;
+#' "t20per" = mean of top 20% of the trials;
+#' "b20per" = mean of bottom 20% of the trials;
+#' "f2trial" = mean of first two trials;
+#' "l2trial" = mean of last two trials;
+#' "per2_X" = mean per two trials (i.e., block), with X referring to the number
+#' of block.
 #' @export
 
 chop_css <-

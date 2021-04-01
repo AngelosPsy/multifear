@@ -310,9 +310,9 @@ function and you will get:
 ``` r
 multifear::inference_cs(res_multi, na.rm = TRUE)
 #>   mean_p_value median_p_value sd_p_value prop_p_value mean_bf_value
-#> 1    0.1074323     0.00638261  0.2341194     82.35294      1890.995
+#> 1    0.1074323     0.00638261  0.2341194     82.35294      1890.344
 #>   median_bf_value sd_bf_value prop_bf_value
-#> 1        4.330015    10166.95      73.52941
+#> 1        4.319848    10164.87      73.52941
 ```
 
 And here we have a barplot of the results:

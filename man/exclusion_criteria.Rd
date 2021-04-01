@@ -11,9 +11,12 @@ exclusion_criteria(data, cutoff = 0)
 
 \item{cutoff}{cut off score}
 }
+\value{
+A tibble with a brace of smaller tibbles, with each sub-tibble including a data frame after each one of the exclusion criteria -- mentioned in the \code{multifear::chop_css} function -- is applied.
+}
 \description{
 Exclusion criteria
 }
 \details{
-Here the different exclusion criteria are applied to the provided data
+Here the different exclusion criteria are applied to the provided data.
 }
