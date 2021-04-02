@@ -1,13 +1,8 @@
-Big thanks to Julia Haider for checking the package. Following the comments, I did the following:
+Thanks to Uwe Ligges for checking the package. 
+* I removed the URL from the NEWS.md file -- it was not necessary.
+       
+* This was a minor change so I did not changee the release number (it stayed at 0.1.1). I hope this does not cause any problems.
 
-* Reduced the length of the title to 41 characters
-* I did not include in the description the words such as "This package", package name, title or similar. No such mention was done in the first release but I was repeating the title so I changed that as well.
-* I included a reference in the used methods in the DESCRIPTION file as follows: The methods are described in Lonsdorf, Gerlicher, Klingelhofer-Jens, & Krypotos <doi:10.31234/osf.io/2z6pd>.
-* I added values to the .Rd files of the following functions: 
-      chop_css.Rd
-      combine_cs.Rd
-      exclusion_criteria.Rd
-* For clariy, and to avoid confusion, I increased the package version to 0.1.1.
 ## Test environments
 * local R installation, R 4.0.3
 * ubuntu 20.04 (release and devel, on github actions)
