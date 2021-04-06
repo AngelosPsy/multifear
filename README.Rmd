@@ -24,6 +24,14 @@ Multifear is an R package designed to perform multiverse analyses for human cond
 
 ## Installing and loading the package
 
+You can install via CRAN with the following command:
+
+```{r, eval = FALSE}
+install.packages("multifear")
+```
+
+For the development version, you can use the following commant:
+
 ```{r, eval = FALSE}
 # Install devtools package in case it is not yet installed
 install.packages("devtools") 

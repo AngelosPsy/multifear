@@ -18,6 +18,14 @@ human conditioning data.
 
 ## Installing and loading the package
 
+You can install via CRAN with the following command:
+
+``` r
+install.packages("multifear")
+```
+
+For the development version, you can use the following commant:
+
 ``` r
 # Install devtools package in case it is not yet installed
 install.packages("devtools") 
@@ -115,7 +123,7 @@ datmelt <- example_data %>%
   geom_point(aes(shape = cs))
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
 
 We see the basic learning pattern where CS+ responses end up being
 higher than CS- responses.
@@ -310,9 +318,9 @@ function and you will get:
 ``` r
 multifear::inference_cs(res_multi, na.rm = TRUE)
 #>   mean_p_value median_p_value sd_p_value prop_p_value mean_bf_value
-#> 1    0.1074323     0.00638261  0.2341194     82.35294       1843.26
+#> 1    0.1074323     0.00638261  0.2341194     82.35294      1875.806
 #>   median_bf_value sd_bf_value prop_bf_value
-#> 1        4.319848    9900.431      76.47059
+#> 1        4.346935    10093.91      73.52941
 ```
 
 And here we have a barplot of the results:
@@ -321,7 +329,7 @@ And here we have a barplot of the results:
 multifear::inference_plot(res_multi, add_line = FALSE)
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-14-1.png)<!-- -->
 
     #> TableGrob (1 x 2) "arrange": 2 grobs
     #>   z     cells    name           grob
@@ -334,4 +342,4 @@ Lastly, to plot the effect sizes, you can use the following function
 multifear::forestplot_mf(res_multi)
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-14-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-15-1.png)<!-- -->
