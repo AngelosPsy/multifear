@@ -25,6 +25,7 @@ data_warning = function(data) {
 
 collection_warning = function(cs1,
                               cs2 = NULL,
+                              cs3 = NULL,
                               data,
                               subj = NULL,
                               cs_paired = NULL) {
@@ -32,6 +33,7 @@ collection_warning = function(cs1,
   data_warning(data)
 
   if (!is.null(cs2)) { cs_warning(cs2) }
+  if (!is.null(cs3)) { cs_warning(cs3) }
   if (!is.null(subj)) { subj_warning(subj)}
   if (!is.null(cs_paired)) { cs_warning(cs_paired)}
 }
@@ -110,6 +112,7 @@ select_term = function(obj, term, dv = "scr", exclusion = "full data"){
 
 data_preparation_anova = function(cs1,
                             cs2,
+                            cs3 = NULL,
                             data,
                             subj,
                             time = TRUE,
@@ -129,7 +132,7 @@ data_preparation_anova = function(cs1,
   cs2  <- cs2 %>% dplyr::select(cs2_ = dplyr::everything())
   subj <- subj %>% dplyr::select(subj = dplyr::everything())
 
-  if (is.null(group)) {
+    if (is.null(group)) {
     group_new <-
       data %>%
       dplyr::mutate(group = rep("NULL", nrow(data))) %>%
@@ -144,6 +147,14 @@ data_preparation_anova = function(cs1,
 
   data <- dplyr::bind_cols(subj, cs1, cs2, group_new)
 
+  # Add this in case of a cs3 stimulus
+  if(!is.null(cs3)){
+    cs3  <-
+      data %>% dplyr::select(all_of(!!dplyr::enquo(cs3))) %>% tibble::as_tibble()
+    cs3  <- cs3 %>% dplyr::select(cs3_ = dplyr::everything())
+    data <- dplyr::bind_cols(subj, cs1, cs2, cs3, group_new)
+  }
+
   # In case time is selected, create a time object
   if (time) {
     # Check if length of cs1 and cs2 is the same. Otherwise stop
@@ -154,7 +165,18 @@ data_preparation_anova = function(cs1,
         now."
       )
     }
+
+    if(!is.null(cs3)) {
+      if (ncol(cs1) != ncol(cs3)) {
+        stop(
+          "You have selected that you want to analyse time effects but the
+        cs3 has different number of time points from either/or both cs1 and cs2.
+        Stopping function now."
+        )
+      }
     }
+  }
+
   data %>%
     reshape2::melt(
       id.var = c("subj", "group"),

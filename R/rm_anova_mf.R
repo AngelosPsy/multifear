@@ -5,6 +5,7 @@
 #' \lifecycle{experimental}
 #'
 #' @inheritParams t_test_mf
+#' @param cs3 The column name(s) of the conditioned responses for a third conditioned stimulus. Default to \code{NULL}
 #' @param time should time be included? Default to \code{TRUE}.
 #' @param correction whether the Greenhouse-Geisser correction should be applied or not. Default to \code{FALSE}
 #' @return A basic function for running repeated measures ANOVAs.
@@ -52,6 +53,7 @@
 #' @export
 rm_anova_mf <- function(cs1,
                         cs2,
+                        cs3 = NULL,
                         data,
                         subj,
                         time = TRUE,
@@ -61,13 +63,24 @@ rm_anova_mf <- function(cs1,
                         exclusion = "full data",
                         cut_off = "full data",
                         correction = FALSE) {
-  collection_warning(cs1 = cs1, cs2 = cs2, data = data, subj = subj)
-
-
+  collection_warning(
+    cs1 = cs1,
+    cs2 = cs2,
+    cs3 = cs3,
+    data = data,
+    subj = subj
+  )
 
   data <-
-    data_preparation_anova(cs1 = cs1, cs2 = cs2, data = data, subj = subj,
-                     time = time, group = group)
+    data_preparation_anova(
+      cs1 = cs1,
+      cs2 = cs2,
+      cs3 = cs3,
+      data = data,
+      subj = subj,
+      time = time,
+      group = group
+    )
 
   # Decide which terms you will have in order to feed in the ANOVA later on
   if (time && (!is.null(group))) {
@@ -153,6 +166,14 @@ rm_anova_mf <- function(cs1,
     r = .5,
     es.type = "d"
   )
+
+  if(!is.null(cs3)) {
+    warning(
+      "You have selected 3 CSs. At the moment the package does not support
+            the meta-analytic effect size for more than 2 stimuli. The reported meta-analytic effect
+            size for the ANOVA corresponds to only 'cs1' and 'cs2', and the 'cs3' is not taken into account."
+    )
+  }
 
   # Shape the object for the results. The suppressWarnings is there due to
   # the warning returned by broom::tidy.

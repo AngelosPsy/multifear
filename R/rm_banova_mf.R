@@ -50,6 +50,7 @@
 #' @export
 rm_banova_mf <- function(cs1,
                          cs2,
+                         cs3 = NULL,
                          data,
                          subj,
                          time = TRUE,
@@ -62,6 +63,7 @@ rm_banova_mf <- function(cs1,
   collection_warning(
     cs1 = cs1,
     cs2 = cs2,
+    cs3 = cs3,
     data = data,
     subj = subj
   )
@@ -70,6 +72,7 @@ rm_banova_mf <- function(cs1,
     data_preparation_anova(
       cs1 = cs1,
       cs2 = cs2,
+      cs3 = cs3,
       data = data,
       subj = subj,
       time = TRUE,

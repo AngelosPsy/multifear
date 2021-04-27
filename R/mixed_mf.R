@@ -45,6 +45,7 @@
 #' @export
 mixed_mf <- function(cs1,
                      cs2,
+                     cs3 = NULL,
                      data,
                      subj,
                      group = NULL,
@@ -57,18 +58,26 @@ mixed_mf <- function(cs1,
   collection_warning(
     cs1 = cs1,
     cs2 = cs2,
+    cs3 = cs3,
     data = data,
     subj = subj
   )
 
   if (length(cs1) < 2 ||
       length(cs2) < 2) {
-    stop("The CS1 and/or CS2 have smaller than 2 levels.
+    stop("The 'cs1' and/or 'cs2' have smaller than 2 levels.
          The mixed_mf function was not run.")
   }
 
+  if(!is.null(cs3)){
+    if (length(cs3) < 2) {
+      stop("The 'cs3' has smaller than 2 levels.
+         The mixed_mf function was not run.")
+    }
+  }
+
   data <-
-    data_preparation_anova(cs1 = cs1, cs2 = cs2, data = data, subj = subj,
+    data_preparation_anova(cs1 = cs1, cs2 = cs2, cs3 = cs3, data = data, subj = subj,
                      time = TRUE, group = NULL)
 
   # Time effects contrasts
@@ -182,7 +191,6 @@ mixed_mf <- function(cs1,
   } else{
     b_mc_dv <- NA
   }
-
 
   if (all(sapply(
     c(
