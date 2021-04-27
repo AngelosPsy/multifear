@@ -63,6 +63,8 @@ rm_anova_mf <- function(cs1,
                         correction = FALSE) {
   collection_warning(cs1 = cs1, cs2 = cs2, data = data, subj = subj)
 
+
+
   data <-
     data_preparation_anova(cs1 = cs1, cs2 = cs2, data = data, subj = subj,
                      time = time, group = group)
