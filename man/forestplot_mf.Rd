@@ -19,7 +19,5 @@ A plot
 Basic function for forest plot
 }
 \details{
-\lifecycle{experimental}
-
 This is a wrapper around the \code{forestplot::forestplot} function.
 }

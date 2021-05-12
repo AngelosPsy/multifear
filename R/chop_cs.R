@@ -1,7 +1,5 @@
 #' chop_cs
 #'
-#' \lifecycle{experimental}
-#'
 #' @description Function for separating the conditioned responses into multiple pieces
 #' @inheritParams t_test_mf
 #' @param cs The column name(s) of the conditioned responses

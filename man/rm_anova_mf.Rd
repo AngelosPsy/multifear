@@ -7,10 +7,12 @@
 rm_anova_mf(
   cs1,
   cs2,
+  cs3 = NULL,
   data,
   subj,
   time = TRUE,
   group = NULL,
+  between = NULL,
   phase = "acquisition",
   dv = "scr",
   exclusion = "full data",
@@ -19,17 +21,21 @@ rm_anova_mf(
 )
 }
 \arguments{
-\item{cs1}{The column name(s) of the conditioned responses for the first conditioned stimulus}
+\item{cs1}{The column name(s) of the conditioned responses for the first conditioned stimulus.}
 
-\item{cs2}{The column name(s) of the conditioned responses for the second conditioned stimulus}
+\item{cs2}{The column name(s) of the conditioned responses for the second conditioned stimulus.}
+
+\item{cs3}{The column name(s) of the conditioned responses for a third conditioned stimulus. Default to \code{NULL}.}
 
 \item{data}{A data frame containing with all the relevant columns}
 
 \item{subj}{The name of the column including the participant numbers. Unique numbers are expected.}
 
-\item{time}{should time be included? Default to \code{TRUE}.}
+\item{time}{should time be included? Default to TRUE.}
 
 \item{group}{the name of the group, if included, default to \code{NULL}.}
+
+\item{between}{The column name of a second between group variable.}
 
 \item{phase}{The conditioned phase that the analyses refer to. Accepted values are  \code{acquisition},  or \code{acq}, \code{extinction}, or \code{ext}.}
 
@@ -39,7 +45,7 @@ rm_anova_mf(
 
 \item{cut_off}{cut off}
 
-\item{correction}{whether the Greenhouse-Geisser correction should be applied or not. Default to \code{FALSE}}
+\item{correction}{whether the Greenhouse-Geisser correction should be applied or not. Default to \code{FALSE}.}
 }
 \value{
 A basic function for running repeated measures ANOVAs.
@@ -65,8 +71,6 @@ data_used: a list with the data used for the specific test
 }
 \description{
 Basic function for running the frequentist's repeated measures ANOVA
-
-\lifecycle{experimental}
 }
 \details{
 In case the \code{time} argument is set to \cite{TRUE} (default value), the function will include this as a within subjects factor, assuming that the columns in
@@ -74,7 +78,7 @@ In case the \code{time} argument is set to \cite{TRUE} (default value), the func
 trial 1, cs1 trial 2 ... cs1 trial \code{n}). If this is not the case, the
 results are not to be trusted.
 
-The function uses the \code{ez::ezANOVA} function. The function gives by default a warning regarding the collapsing of factors. This function here suppresses this warning but the user should be aware of it. Please note that at the moment no sphericity correction is performed. The reported effect size is omega squared as this is computed by  \code{sjstats::omega_sq}.
+The function uses the \code{ez::ezANOVA} function. The function gives by default a warning regarding the collapsing of factors. This function here suppresses this warning but the user should be aware of it. Please note that at the moment no sphericity correction is performed. The reported effect size is omega squared as this is computed by  \code{effectsize::omega_squared}.
 }
 \examples{
 # Load example data

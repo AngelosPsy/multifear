@@ -2,11 +2,7 @@
 #'
 #' @description Basic function for running the Bayesian repeated measures ANOVA
 #'
-#' \lifecycle{experimental}
-#'
 #' @inheritParams rm_anova_mf
-#' @param multicore The option to run the analysis in multiple cores, not available under Windows.
-#' Default to \code{TRUE}.
 #' @return A tibble with the following column names:
 #' x: the name of the independent variable (e.g., cs)
 #' y: the name of the dependent variable as this defined in the \code{dv} argument
@@ -45,7 +41,7 @@
 #' subj <- "id"
 #'
 #' # Repeated measures ANOVA
-#' rm_banova_mf(cs1 = cs1, cs2 = cs2, subj = subj, data = example_data, time = TRUE, multicore = FALSE)
+#' rm_banova_mf(cs1 = cs1, cs2 = cs2, subj = subj, data = example_data, time = TRUE)
 #'
 #' @export
 rm_banova_mf <- function(cs1,
@@ -58,8 +54,7 @@ rm_banova_mf <- function(cs1,
                          phase = "acquisition",
                          dv = "scr",
                          exclusion = "full data",
-                         cut_off = "full data",
-                         multicore = TRUE) {
+                         cut_off = "full data") {
   collection_warning(
     cs1 = cs1,
     cs2 = cs2,
@@ -107,8 +102,7 @@ rm_banova_mf <- function(cs1,
       formula = eval(parse(text = anova_terms)),
       data = data,
       whichRandom = "subj",
-      progress = FALSE,
-      multicore = multicore
+      progress = FALSE
     ))
 
   # Bayes factors for matched models

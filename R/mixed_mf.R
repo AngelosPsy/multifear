@@ -1,7 +1,5 @@
 #' mixed_mf
 #'
-#' \lifecycle{experimental}
-#'
 #' @description Basic function for running mixed models for the multiverse analysis
 #' @inheritParams rm_anova_mf
 #' @return A data frame with the results.

@@ -20,9 +20,9 @@ bt_test_mf(
 )
 }
 \arguments{
-\item{cs1}{The column name(s) of the conditioned responses for the first conditioned stimulus}
+\item{cs1}{The column name(s) of the conditioned responses for the first conditioned stimulus.}
 
-\item{cs2}{The column name(s) of the conditioned responses for the second conditioned stimulus}
+\item{cs2}{The column name(s) of the conditioned responses for the second conditioned stimulus.}
 
 \item{data}{A data frame containing with all the relevant columns}
 
@@ -63,11 +63,9 @@ framework: were the data analysed within a NHST or Bayesian framework?
 data_used: a list with the data used for the specific test
 }
 \description{
-\lifecycle{experimental}
+Basic function for running the Bayesian t-tests included in the main analyses.
 }
 \details{
-Basic function for running the Bayesian t-tests included in the main analyses.
-
 This is a wrapper function function around the BayesFactor::ttestBF(),
 running multiple Bayesian t-tests. Similar to the \code{t_test_mf} function, the function will run different t-tests based on the phase that the t-tests refer to.
 }

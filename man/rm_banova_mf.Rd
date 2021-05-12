@@ -7,6 +7,7 @@
 rm_banova_mf(
   cs1,
   cs2,
+  cs3 = NULL,
   data,
   subj,
   time = TRUE,
@@ -14,20 +15,21 @@ rm_banova_mf(
   phase = "acquisition",
   dv = "scr",
   exclusion = "full data",
-  cut_off = "full data",
-  multicore = TRUE
+  cut_off = "full data"
 )
 }
 \arguments{
-\item{cs1}{The column name(s) of the conditioned responses for the first conditioned stimulus}
+\item{cs1}{The column name(s) of the conditioned responses for the first conditioned stimulus.}
 
-\item{cs2}{The column name(s) of the conditioned responses for the second conditioned stimulus}
+\item{cs2}{The column name(s) of the conditioned responses for the second conditioned stimulus.}
+
+\item{cs3}{The column name(s) of the conditioned responses for a third conditioned stimulus. Default to \code{NULL}.}
 
 \item{data}{A data frame containing with all the relevant columns}
 
 \item{subj}{The name of the column including the participant numbers. Unique numbers are expected.}
 
-\item{time}{should time be included? Default to \code{TRUE}.}
+\item{time}{should time be included? Default to TRUE.}
 
 \item{group}{the name of the group, if included, default to \code{NULL}.}
 
@@ -38,9 +40,6 @@ rm_banova_mf(
 \item{exclusion}{If any exclusion criteria were applied, default to \code{full data}}
 
 \item{cut_off}{cut off}
-
-\item{multicore}{The option to run the analysis in multiple cores, not available under Windows.
-Default to \code{TRUE}.}
 }
 \value{
 A tibble with the following column names:
@@ -64,8 +63,6 @@ data_used: a list with the data used for the specific test
 }
 \description{
 Basic function for running the Bayesian repeated measures ANOVA
-
-\lifecycle{experimental}
 }
 \details{
 In case the \code{time} argument is set to true, the function will
@@ -87,6 +84,6 @@ cs2 <- paste0("CSM", 1:2)
 subj <- "id"
 
 # Repeated measures ANOVA
-rm_banova_mf(cs1 = cs1, cs2 = cs2, subj = subj, data = example_data, time = TRUE, multicore = FALSE)
+rm_banova_mf(cs1 = cs1, cs2 = cs2, subj = subj, data = example_data, time = TRUE)
 
 }

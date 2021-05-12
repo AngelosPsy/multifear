@@ -118,7 +118,7 @@ data_preparation_anova = function(cs1,
                             time = TRUE,
                             group = NULL){
   # Check data
-  collection_warning(cs1 = cs1, cs2 = cs2, data = data, subj = subj)
+  collection_warning(cs1 = cs1, cs2 = cs2, cs3 = cs3, data = data, subj = subj)
 
   cs1 <-
     data %>% dplyr::select(all_of(!!dplyr::enquo(cs1))) %>% tibble::as_tibble()
@@ -131,6 +131,12 @@ data_preparation_anova = function(cs1,
   cs1  <- cs1 %>% dplyr::select(cs1_ = dplyr::everything())
   cs2  <- cs2 %>% dplyr::select(cs2_ = dplyr::everything())
   subj <- subj %>% dplyr::select(subj = dplyr::everything())
+
+  if(!is.null(cs3)){
+    cs3  <-
+      data %>% dplyr::select(all_of(!!dplyr::enquo(cs3))) %>% tibble::as_tibble()
+    cs3  <- cs3 %>% dplyr::select(cs3_ = dplyr::everything())
+    }
 
     if (is.null(group)) {
     group_new <-
@@ -149,9 +155,6 @@ data_preparation_anova = function(cs1,
 
   # Add this in case of a cs3 stimulus
   if(!is.null(cs3)){
-    cs3  <-
-      data %>% dplyr::select(all_of(!!dplyr::enquo(cs3))) %>% tibble::as_tibble()
-    cs3  <- cs3 %>% dplyr::select(cs3_ = dplyr::everything())
     data <- dplyr::bind_cols(subj, cs1, cs2, cs3, group_new)
   }
 
@@ -164,18 +167,7 @@ data_preparation_anova = function(cs1,
         cs1 and cs2 have different number of time points. Stopping function
         now."
       )
-    }
-
-    if(!is.null(cs3)) {
-      if (ncol(cs1) != ncol(cs3)) {
-        stop(
-          "You have selected that you want to analyse time effects but the
-        cs3 has different number of time points from either/or both cs1 and cs2.
-        Stopping function now."
-        )
-      }
-    }
-  }
+    }}
 
   data %>%
     reshape2::melt(
@@ -245,6 +237,7 @@ data_preparation_ttest = function(cs1,
 
 data_preparation_verse = function(cs1,
                                   cs2,
+                                  cs3 = NULL,
                                   data,
                                   subj,
                                   group = NULL){
@@ -275,12 +268,18 @@ data_preparation_verse = function(cs1,
         group_new <- data %>%
           dplyr::select(tidyselect::all_of(!!dplyr::enquo(group))) %>%
           dplyr::rename(group = eval(group))
-          #dplyr::mutate(group2 = as.factor(group)) %>%
-          #dplyr::select(group2) #%>%
-          #dplyr::rename(group = group2)
       }
 
-      res <- dplyr::bind_cols(subj, cs1, cs2, group_new)
+      res_tmp <- dplyr::bind_cols(subj, cs1, cs2, group_new)
+
+      if(!is.null(cs3)){
+        cs3  <-
+          data %>% dplyr::select(all_of(!!dplyr::enquo(cs3))) %>% tibble::as_tibble()
+        cs3  <- cs3 %>% dplyr::select(cs3_ = dplyr::everything())
+        res_tmp <- dplyr::bind_cols(subj, cs1, cs2, cs3, group_new)
+      }
+
+    res <- res_tmp
 
       return(res)
 }
@@ -345,7 +344,7 @@ format_results <- function(df, null = 0, desc = FALSE) {
 
   df <- df %>%
     dplyr::mutate(specifications = 1:dplyr::n(),
-                  color = case_when(conf.low > null ~ "red", #"#377eb8",
+                  color = dplyr::case_when(conf.low > null ~ "red", #"#377eb8",
                                     conf.high < null ~ "blue", #"#e41a1c",
                                     TRUE ~ "darkgrey"))
   return(df)

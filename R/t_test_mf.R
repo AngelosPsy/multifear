@@ -1,7 +1,5 @@
 #' t_test_mf
 #'
-#' \lifecycle{experimental}
-#'
 #' @description Basic function for running the frequentist's t-tests (student t-test) included in the main analyses
 #' @param cs1 The column name(s) of the conditioned responses for the first conditioned stimulus.
 #' @param cs2 The column name(s) of the conditioned responses for the second conditioned stimulus.
@@ -114,7 +112,7 @@ t_test_mf <-
       # Compute effect size
       ttest_es <-
         effsize::cohen.d(
-          ttest_prep_tmp$cs ~ ttest_prep_tmp$group,
+          ttest_prep_tmp$cs ~ as.factor(ttest_prep_tmp$group),
           pooled = TRUE,
           paired = FALSE,
           na.rm = na.rm,
@@ -123,7 +121,7 @@ t_test_mf <-
 
       ttest_es_ma <-
         effsize::cohen.d(
-          ttest_prep_tmp$cs ~ ttest_prep_tmp$group,
+          ttest_prep_tmp$cs ~ as.factor(ttest_prep_tmp$group),
           pooled = TRUE,
           paired = FALSE,
           na.rm = na.rm,

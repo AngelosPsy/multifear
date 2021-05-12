@@ -1,7 +1,5 @@
 #' forestplot_mf
 #'
-#' \lifecycle{experimental}
-#'
 #' @description Basic function for forest plot
 #' @param data a universe_mf or multiverse_mf object
 #' @param ... any additional argument

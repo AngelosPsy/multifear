@@ -1,24 +1,26 @@
 #' chop_css
 #'
-#' \lifecycle{experimental}
-#'
 #' @description Function for separating the conditioned responses into multiple pieces for two CSs.
 #' @inheritParams t_test_mf
-#' @param cs_paired A character vector with the trials that were paired. Default is set to \code{NULL}, suggesting that there was full reinforcement
+#' @param cs3 The column name(s) of the conditioned responses for a third conditioned stimulus. Default to \code{NULL}.
+#' @param cs_paired A character vector with the trials that were paired. Default is set to \code{NULL}, suggesting that there was full reinforcement.
 #' @export
 
 chop_css <-
   function(cs1,
            cs2,
+           cs3 = NULL,
            data,
            subj,
            cs_paired = NULL,
            group = NULL,
            na.rm = FALSE) {
+
     # Check data
     collection_warning(
       cs1 = cs1,
       cs2 = cs2,
+      cs3 = cs3,
       data = data,
       subj = subj,
       cs_paired = cs_paired
@@ -26,7 +28,13 @@ chop_css <-
 
     # Stop in case of no equal lengths of cs1 and cs2
     if (length(cs1) != length(cs2)) {
-      stop("No equal length of the two CSs.")
+      stop("No equal length of the CSs.")
+    }
+
+    if(!is.null(cs3)) {
+      if (length(cs2) != length(cs3)) {
+        stop("No equal length of the CSs.")
+      }
     }
 
     if (is.null(group)) {
@@ -58,6 +66,16 @@ chop_css <-
         prefix = "cs2"
       )
 
+    if (!is.null(cs3)){
+      cs3_tmp <-
+        multifear::chop_cs(
+          cs = cs3,
+          data = data,
+          subj = subj,
+          prefix = "cs3"
+        )
+    }
+
     if (!is.null(cs_paired)) {
       cs2_paired <-
         multifear::chop_cs(
@@ -73,6 +91,16 @@ chop_css <-
           subj = subj,
           prefix = "cs1_p"
         )
+
+      if (!is.null(cs3)) {
+        cs_paired <-
+          multifear::chop_cs(
+            cs = cs_paired,
+            data = data,
+            subj = subj,
+            prefix = "cs3_p"
+          )
+      }
     }
 
     # Compute differential scores. Maybe delete?
@@ -108,7 +136,14 @@ chop_css <-
       csbind <- csbind_2
     }
 
-    res <- cbind(cs1_tmp, cs2_tmp[, -1], group_new)
+
+    res_tmp <- cbind(cs1_tmp, cs2_tmp[, -1], group_new)
+
+    if (!is.null(cs3)) {
+      res_tmp <- cbind(res_tmp, cst3_p[, -1])
+    }
+
+    res <- res_tmp
 
     class(res) <- c("chop_css", class(res))
 

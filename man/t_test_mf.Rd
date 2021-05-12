@@ -19,9 +19,9 @@ t_test_mf(
 )
 }
 \arguments{
-\item{cs1}{The column name(s) of the conditioned responses for the first conditioned stimulus}
+\item{cs1}{The column name(s) of the conditioned responses for the first conditioned stimulus.}
 
-\item{cs2}{The column name(s) of the conditioned responses for the second conditioned stimulus}
+\item{cs2}{The column name(s) of the conditioned responses for the second conditioned stimulus.}
 
 \item{data}{A data frame containing with all the relevant columns}
 
@@ -65,8 +65,6 @@ data_used: a list with the data used for the specific test
 Basic function for running the frequentist's t-tests (student t-test) included in the main analyses
 }
 \details{
-\lifecycle{experimental}
-
 Given the correct names for the \code{cs1}, \code{cs2}, \code{subj}, and \code{data}, the function will run one- and two-sided frequentist's t-tests. In case \code{cs1} or \code{cs2} refer to multiple columns, the mean -- per row -- for each one of these variables will be computed first before running the test. Please note that cs1 is implicitly referred to the cs that is reinforced, and cs2 to the cs that is not reinforced.
 Depending on whether the data refer to an acquisition or extinction phase (as defined in the \code{phase} argument), the function will return a positive one sided, or negative one-sided, t-test in addition to the two-sided t-test. The returned effect size is  Hedge's g in the column effect size. For the meta-analytic effect size (effect.size.ma), the returned effect size is Cohen's d.
 

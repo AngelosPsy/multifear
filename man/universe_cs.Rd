@@ -7,6 +7,7 @@
 universe_cs(
   cs1,
   cs2,
+  cs3 = NULL,
   data,
   subj,
   group = NULL,
@@ -21,9 +22,11 @@ universe_cs(
 )
 }
 \arguments{
-\item{cs1}{The column name(s) of the conditioned responses for the first conditioned stimulus}
+\item{cs1}{The column name(s) of the conditioned responses for the first conditioned stimulus.}
 
-\item{cs2}{The column name(s) of the conditioned responses for the second conditioned stimulus}
+\item{cs2}{The column name(s) of the conditioned responses for the second conditioned stimulus.}
+
+\item{cs3}{The column name(s) of the conditioned responses for a third conditioned stimulus. Default to \code{NULL}.}
 
 \item{data}{A data frame containing with all the relevant columns}
 
@@ -68,8 +71,6 @@ data_used: a list with the data used for the specific test
 Basic function for running a multiverse analysis for a single data set
 }
 \details{
-\lifecycle{experimental}
-
 In case of higher order interaction, only the highest order
 effect is shown.
 }

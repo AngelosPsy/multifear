@@ -1,7 +1,5 @@
 #' universe_cs
 #'
-#' \lifecycle{experimental}
-#'
 #' @description Basic function for running a multiverse analysis for a single data set
 #' @inheritParams rm_anova_mf
 #' @param include_bayes Whether the Bayesian analyses should be run. Default to \code{TRUE}
@@ -39,6 +37,7 @@
 universe_cs <-
   function(cs1,
            cs2,
+           cs3 = NULL,
            data,
            subj,
            group = NULL,
@@ -55,6 +54,7 @@ universe_cs <-
     collection_warning(
       cs1 = cs1,
       cs2 = cs2,
+      cs3 = cs3,
       data = data,
       subj = subj
     )
@@ -64,6 +64,7 @@ universe_cs <-
       data_preparation_verse(
         cs1 = cs1,
         cs2 = cs2,
+        cs3 = cs3,
         data = data,
         subj = subj,
         group = group
@@ -75,6 +76,11 @@ universe_cs <-
       data %>% dplyr::select(dplyr::contains("cs2")) %>% colnames()
     subj   <- data %>% dplyr::select("subj") %>% colnames()
     paired <- ifelse(is.null(group), TRUE, FALSE)
+
+    if(!is.null(cs3)) {
+      cs3   <-
+        data %>% dplyr::select(dplyr::contains("cs3")) %>% colnames()
+    }
 
     if(!is.null(group)){
       group   <- data %>% dplyr::select("group") %>% colnames()
@@ -95,6 +101,7 @@ universe_cs <-
         multifear::rm_anova_mf(
           cs1 = cs1,
           cs2 = cs2,
+          cs3 = cs3,
           time = FALSE,
           subj = subj,
           data = data,
@@ -108,6 +115,7 @@ universe_cs <-
         multifear::rm_anova_mf(
           cs1 = cs1,
           cs2 = cs2,
+          cs3 = cs3,
           time = TRUE,
           subj = subj,
           data = data,
@@ -124,6 +132,7 @@ universe_cs <-
           multifear::mixed_mf(
             cs1 = cs1,
             cs2 = cs2,
+            cs3 = cs3,
             data = data,
             subj = subj,
             group = NULL,
@@ -139,6 +148,7 @@ universe_cs <-
           multifear::rm_banova_mf(
             cs1 = cs1,
             cs2 = cs2,
+            cs3 = cs3,
             time = FALSE,
             subj = subj,
             data = data,
@@ -154,6 +164,7 @@ universe_cs <-
           multifear::rm_banova_mf(
             cs1 = cs1,
             cs2 = cs2,
+            cs3 = cs3,
             time = TRUE,
             subj = subj,
             data = data,
@@ -170,6 +181,7 @@ universe_cs <-
         multifear::rm_anova_mf(
           cs1 = cs1,
           cs2 = cs2,
+          cs3 = cs3,
           time = FALSE,
           subj = subj,
           data = data,
@@ -183,6 +195,7 @@ universe_cs <-
         multifear::rm_anova_mf(
           cs1 = cs1,
           cs2 = cs2,
+          cs3 = cs3,
           time = TRUE,
           subj = subj,
           data = data,
@@ -198,6 +211,7 @@ universe_cs <-
           multifear::mixed_mf(
             cs1 = cs1,
             cs2 = cs2,
+            cs3 = cs3,
             data = data,
             subj = subj,
             group = group,
@@ -213,6 +227,7 @@ universe_cs <-
           multifear::rm_banova_mf(
             cs1 = cs1,
             cs2 = cs2,
+            cs3 = cs3,
             time = FALSE,
             subj = subj,
             data = data,
@@ -228,6 +243,7 @@ universe_cs <-
           multifear::rm_banova_mf(
             cs1 = cs1,
             cs2 = cs2,
+            cs3 = cs3,
             time = TRUE,
             subj = subj,
             data = data,
