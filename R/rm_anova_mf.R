@@ -150,37 +150,12 @@ rm_anova_mf <- function(cs1,
     as.numeric()
 
   # meta-analytic effect size. We use explained variance so we have eta squared
-  #es.ma <- effectsize::cohens_f(tmpANOVA$aov, partial = FALSE, ci = .95) %>%
-  #  data.frame() %>%
-  #  dplyr::filter(Parameter %in% c(paste0("subj:", selected_term), selected_term))
   es.ma <- effectsize::eta_squared(tmpANOVA$aov, partial = FALSE, ci = .90) %>%
     data.frame() %>%
     dplyr::filter(Parameter %in% c(paste0("subj:", selected_term), selected_term))
 
-  #data.ma <-
-  #  data %>%
-  #  dplyr::group_by(cs, subj) %>%
-  #  dplyr::summarize(mean = mean(resp)) %>%
-  #  dplyr::ungroup()
-  #cs1.ma <-
-  #  data.ma %>% dplyr::filter(cs == "cs1") %>% dplyr::select(mean) %>% unlist()
-  #cs2.ma <-
-  #  data.ma %>% dplyr::filter(cs == "cs2") %>% dplyr::select(mean) %>% unlist()
-
-  #es.ma <-   esc::esc_mean_se(
-  #  grp1m = mean(cs1.ma, na.rm = TRUE),
-  #  grp1se = plotrix::std.error(cs1.ma, na.rm = TRUE),
-  #  grp1n = length(cs1.ma),
-  #  grp2m = mean(cs2.ma, na.rm = TRUE),
-  #  grp2se = plotrix::std.error(cs2.ma, na.rm = TRUE),
-  #  grp2n = length(cs2.ma),
-  #  r = .5,
-  #  es.type = "d"
-  #)
-
   # Shape the object for the results. The suppressWarnings is there due to
   # the warning returned by broom::tidy.
-  #
   res_preparation <-
     suppressWarnings(purrr::map_df(tmpANOVA$aov, .f = broom::tidy)) %>%
     dplyr::filter(term %in% c(paste0("subj:", selected_term), selected_term)) %>%

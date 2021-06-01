@@ -166,6 +166,9 @@ res <- multifear::universe_cs(cs1 = cs1, cs2 = cs2, data = example_data,
 #>   influence.merMod                car 
 #>   dfbeta.influence.merMod         car 
 #>   dfbetas.influence.merMod        car
+#> Registered S3 method overwritten by 'parameters':
+#>   method     from      
+#>   ci.blavaan bayestestR
 ```
 
 And here are the results
@@ -318,9 +321,9 @@ function and you will get:
 ``` r
 multifear::inference_cs(res_multi, na.rm = TRUE)
 #>   mean_p_value median_p_value sd_p_value prop_p_value mean_bf_value
-#> 1    0.1074323     0.00638261  0.2341194     82.35294      1875.806
+#> 1    0.1074323     0.00638261  0.2341194     82.35294      1958.082
 #>   median_bf_value sd_bf_value prop_bf_value
-#> 1        4.346935    10093.91      73.52941
+#> 1        4.319848    10487.83      73.52941
 ```
 
 And here we have a barplot of the results:

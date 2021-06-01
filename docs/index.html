@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">multifear</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
       </span>
     </div>
 
@@ -78,26 +78,30 @@
 <div id="installing-and-loading-the-package" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installing-and-loading-the-package" class="anchor"></a>Installing and loading the package</h2>
+<p>You can install via CRAN with the following command:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"multifear"</span><span class="op">)</span></code></pre></div>
+<p>For the development version, you can use the following commant:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Install devtools package in case it is not yet installed</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span> 
 <span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span><span class="op">(</span><span class="st">"AngelosPsy/multifear"</span><span class="op">)</span></code></pre></div>
 <p>The package can be loaded with the following code:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/AngelosPsy/multifear">multifear</a></span><span class="op">)</span></code></pre></div>
 </div>
 <div id="basic-example" class="section level2">
 <h2 class="hasAnchor">
 <a href="#basic-example" class="anchor"></a>Basic Example</h2>
 <p>We will start with a basic example of how the package works. Before doing that, let’s load some additional packages that we need for our example.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/message.html">suppressPackageStartupMessages</a></span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/message.html">suppressPackageStartupMessages</a></span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>Now we will use some simulated data set that are included as example data in the package. In principle, you can use any data including conditioned responses (e.g., skin conductance). You can load the simulated data in your workspace as follows:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"example_data"</span><span class="op">)</span></code></pre></div>
 <p>From these data we are going to select only the 10 first lines – it saves a lot of time for computation for this example. Here are the first 10 rows of the data set:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">example_data</span>, <span class="fl">10</span><span class="op">)</span>
 <span class="co">#&gt;    id       CSP1       CSP2       CSP3      CSP4      CSP5      CSP6      CSP7</span>
 <span class="co">#&gt; 1   2 0.62905570 0.92988220  1.0415000 0.9330014 0.9743682 0.8855119 0.8418664</span>
@@ -133,7 +137,7 @@
 <span class="co">#&gt; 9  0.02774107 0.39216860 0.1940482 1.33170800 0.41266960 0.00000000     1</span>
 <span class="co">#&gt; 10 0.72851310 0.96242680 0.0000000 1.27084300 0.03120063 0.00000000     2</span></code></pre></div>
 <p>A bit of explanation of the column names. With the column name ‘id’ is the participant number. Columns that contain the conditioned responses for conditioned stimulus plus (CS+) are denoted with column names starting with ‘CSP’. The number next to this name (1, 2, …, 10) is the trial number. The same goes for columns starting with ‘CSM’ but this denotes conditioned responses in CS- trials. At this point the package only supports a single CS+ and a single CS-. Also, the package assumes that trials are following each – so trial 2 comes after trial 1 etc. Let’s see the data:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">datmelt</span> <span class="op">&lt;-</span> <span class="va">example_data</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">id</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">colMeans</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
@@ -145,7 +149,7 @@
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">datmelt</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">time</span>, y <span class="op">=</span> <span class="va">value</span>, group <span class="op">=</span> <span class="va">cs</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>linetype <span class="op">=</span> <span class="va">cs</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>shape <span class="op">=</span> <span class="va">cs</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p><img src="README_files/figure-gfm/unnamed-chunk-7-1.png"><!-- --></p>
+<p><img src="README_files/figure-gfm/unnamed-chunk-8-1.png"><!-- --></p>
 <p>We see the basic learning pattern where CS+ responses end up being higher than CS- responses.</p>
 <p>Now we need to analyse the data. For this we will use the <em>multifear::universe_cs</em> function. In order for this function to work, we need to provide the following arguments.</p>
 <ul>
@@ -156,7 +160,7 @@
 <li><p>phase. Here we define the conditioning phase that the data were collected in (e.g., acquisition phase, extinction phase, etc). Please note that in case the user has multiple phases, she/he needs to run the function separately for each phases.</p></li>
 </ul>
 <p>There are some other options in the function, such as defining the type of conditioning response. However, these are not necessary for now. So, let’s now run the function:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">cs1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"CSP"</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span>
 <span class="va">cs2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"CSM"</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span>
 <span class="va">example_data</span> <span class="op">&lt;-</span> <span class="va">example_data</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="op">]</span>
@@ -167,9 +171,12 @@
 <span class="co">#&gt;   cooks.distance.influence.merMod car </span>
 <span class="co">#&gt;   influence.merMod                car </span>
 <span class="co">#&gt;   dfbeta.influence.merMod         car </span>
-<span class="co">#&gt;   dfbetas.influence.merMod        car</span></code></pre></div>
+<span class="co">#&gt;   dfbetas.influence.merMod        car</span>
+<span class="co">#&gt; Registered S3 method overwritten by 'parameters':</span>
+<span class="co">#&gt;   method     from      </span>
+<span class="co">#&gt;   ci.blavaan bayestestR</span></code></pre></div>
 <p>And here are the results</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">res</span>
 <span class="co">#&gt; # A tibble: 4 x 18</span>
 <span class="co">#&gt;   x     y     exclusion cut_off model controls method p.value effect.size</span>
@@ -197,7 +204,7 @@
 <li><p>data_used Here you have a data frame with the data used for the performed analyses. This is because someone maybe wants to recreate the results and also as a check that nothing went wrong.</p></li>
 </ul>
 <p>Now, we want to perform the same analyses but for different data reduction procedures (see below). We can do it simply by:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="va">res_multi</span> <span class="op">&lt;-</span> <span class="fu">multifear</span><span class="fu">::</span><span class="fu"><a href="reference/multiverse_cs.html">multiverse_cs</a></span><span class="op">(</span>cs1 <span class="op">=</span> <span class="va">cs1</span>, cs2 <span class="op">=</span> <span class="va">cs2</span>, data <span class="op">=</span> <span class="va">example_data</span>, subj <span class="op">=</span> <span class="st">"id"</span>, group <span class="op">=</span> <span class="cn">NULL</span>, phase <span class="op">=</span> <span class="st">"acquisition"</span>, include_bayes <span class="op">=</span> <span class="cn">TRUE</span>, include_mixed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="co">#&gt; Skipping ANOVA due to the number of trials for the cs1 and/or cs2.</span>
@@ -220,7 +227,7 @@
 <span class="co">#&gt; #   statistic &lt;dbl&gt;, conf.low &lt;dbl&gt;, conf.high &lt;dbl&gt;, framework &lt;chr&gt;,</span>
 <span class="co">#&gt; #   data_used &lt;list&gt;, efffect.size.ma &lt;lgl&gt;</span></code></pre></div>
 <p>In terms of calling the function, we see that we need exactly the same arguments as before. Internally, the function actually applies the multifear::universe_cs but now apart from the full data set, also for the data sets with different data inclusion procedures. Whether each line refers to the full data set or any of the exclusion criteria, we can see on the column exclusion criteria or in the data_used column, although there it is difficult to see what happened and it serves only reproduction criteria. So, the easiest thing to do is to see the exclusion column. Now, it has the following levels:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">res_multi</span><span class="op">$</span><span class="va">exclusion</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; [1] "full_data"  "ten_per"    "min_first"  "th3_per"    "halves"    </span>
 <span class="co">#&gt; [6] "fltrials"   "twenty_per" "fl2trials"  "per2trials"</span></code></pre></div>
@@ -246,24 +253,24 @@
 <p>5) Mean and median of Bayes factors</p>
 <p>6) the proportion of Bayes factors above 1</p>
 <!-- end list -->
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">multifear</span><span class="fu">::</span><span class="fu"><a href="reference/inference_cs.html">inference_cs</a></span><span class="op">(</span><span class="va">res_multi</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="co">#&gt;   mean_p_value median_p_value sd_p_value prop_p_value mean_bf_value</span>
-<span class="co">#&gt; 1    0.1074323     0.00638261  0.2341194     82.35294       1843.26</span>
+<span class="co">#&gt; 1    0.1074323     0.00638261  0.2341194     82.35294      1958.082</span>
 <span class="co">#&gt;   median_bf_value sd_bf_value prop_bf_value</span>
-<span class="co">#&gt; 1        4.319848    9900.431      76.47059</span></code></pre></div>
+<span class="co">#&gt; 1        4.319848    10487.83      73.52941</span></code></pre></div>
 <p>And here we have a barplot of the results:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">multifear</span><span class="fu">::</span><span class="fu"><a href="reference/inference_plot.html">inference_plot</a></span><span class="op">(</span><span class="va">res_multi</span>, add_line <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
-<p><img src="README_files/figure-gfm/unnamed-chunk-13-1.png"><!-- --></p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="co">#&gt; TableGrob (1 x 2) "arrange": 2 grobs</span></span>
-<span id="cb13-2"><a href="#cb13-2"></a><span class="co">#&gt;   z     cells    name           grob</span></span>
-<span id="cb13-3"><a href="#cb13-3"></a><span class="co">#&gt; 1 1 (1-1,1-1) arrange gtable[layout]</span></span>
-<span id="cb13-4"><a href="#cb13-4"></a><span class="co">#&gt; 2 2 (1-1,2-2) arrange gtable[layout]</span></span></code></pre></div>
-<p>Lastly, to plot the effect sizes, you can use the following function</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">multifear</span><span class="fu">::</span><span class="fu"><a href="reference/forestplot_mf.html">forestplot_mf</a></span><span class="op">(</span><span class="va">res_multi</span><span class="op">)</span></code></pre></div>
 <p><img src="README_files/figure-gfm/unnamed-chunk-14-1.png"><!-- --></p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="co">#&gt; TableGrob (1 x 2) "arrange": 2 grobs</span></span>
+<span id="cb14-2"><a href="#cb14-2"></a><span class="co">#&gt;   z     cells    name           grob</span></span>
+<span id="cb14-3"><a href="#cb14-3"></a><span class="co">#&gt; 1 1 (1-1,1-1) arrange gtable[layout]</span></span>
+<span id="cb14-4"><a href="#cb14-4"></a><span class="co">#&gt; 2 2 (1-1,2-2) arrange gtable[layout]</span></span></code></pre></div>
+<p>Lastly, to plot the effect sizes, you can use the following function</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">multifear</span><span class="fu">::</span><span class="fu"><a href="reference/forestplot_mf.html">forestplot_mf</a></span><span class="op">(</span><span class="va">res_multi</span><span class="op">)</span></code></pre></div>
+<p><img src="README_files/figure-gfm/unnamed-chunk-15-1.png"><!-- --></p>
 </div>
 </div>
 
@@ -273,6 +280,8 @@
     <div class="links">
 <h2>Links</h2>
 <ul class="list-unstyled">
+<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=multifear">https://​cloud.r-project.org/​package=multifear</a>
+</li>
 <li>Browse source code at <br><a href="https://github.com/AngelosPsy/multifear/">https://​github.com/​AngelosPsy/​multifear/​</a>
 </li>
 <li>Report a bug at <br><a href="https://github.com/AngelosPsy/multifear/issues">https://​github.com/​AngelosPsy/​multifear/​issues</a>
