@@ -124,16 +124,20 @@ rm_banova_mf <- function(cs1,
     bayestestR::bayesfactor_inclusion(tmpBANOVA, match_models = TRUE) %>%
     dplyr::mutate(model = rownames(.)) %>%
     dplyr::filter(model == selected_term) %>%
-    dplyr::select(BF) %>%
-    as.numeric()
+    data.frame() %>%
+    dplyr::select(log_BF) %>%
+    as.numeric() %>%
+    exp()
 
   # Bayes factors for non-matched models
   bfum <-
     bayestestR::bayesfactor_inclusion(tmpBANOVA, match_models = FALSE) %>%
     dplyr::mutate(model = rownames(.)) %>%
     dplyr::filter(model == selected_term) %>%
-    dplyr::select(BF) %>%
-    as.numeric()
+    data.frame() %>%
+    dplyr::select(log_BF) %>%
+    as.numeric() %>%
+    exp()
 
   bfmm_res <- data.frame(
     x = selected_term,
