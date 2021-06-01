@@ -27,7 +27,7 @@ Imports:
     effsize (>= 0.7.8),
     nlme (>= 3.1.144),
     BayesFactor (>= 0.9.12.4.2),
-    bayestestR (>= 0.5.2),
+    bayestestR (>= 0.10.0),
     broom (>= 0.5.5),
     effectsize (>= 0.4.1),
     esc (>= 0.5.1),
