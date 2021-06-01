@@ -1,12 +1,16 @@
+
 Package: multifear
 Type: Package
-Title: Multiverse analyses and specification curves for conditioning data
-Version: 0.1.0.999
-Author: Angelos-Miltiadis Krypotos
+Title: Multiverse Analyses for Conditioning Data
+Version: 0.1.2.9000
+Authors@R: 
+    c(person(given = "Angelos-Miltiadis",
+             family = "Krypotos",
+             role = c("aut", "cre", "cph"),
+             email = "amkrypotos@gmail.com"))
 Maintainer: Angelos-Miltiadis Krypotos <amkrypotos@gmail.com>
-Description: Functions to perform multiverse analyses, and run a specification
-    curve for conditioning data.
-Depends: R (>= 2.10.0)    
+Description: A suite of functions for performing analyses, based on a multiverse approach, for conditioning data. Specifically, given the appropriate data, the functions are able to perform t-tests, analyses of variance, and mixed models for the provided data and return summary statistics and plots. The function is also able to return for all those tests p-values, confidence intervals, and Bayes factors. The methods are described in Lonsdorf, Gerlicher, Klingelhofer-Jens, & Krypotos <doi:10.31234/osf.io/2z6pd>.
+Depends: R (>= 3.6.0)    
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
