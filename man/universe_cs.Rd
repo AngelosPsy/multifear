@@ -73,6 +73,7 @@ Basic function for running a multiverse analysis for a single data set
 \details{
 In case of higher order interaction, only the highest order
 effect is shown.
+In case all CSs are defined (cs1, cs2, and cs3) the t-tests are not returned as there would be a problem with multiple testing.
 }
 \examples{
 # Load data and define argument to be fed in universe_cs

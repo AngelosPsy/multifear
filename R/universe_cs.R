@@ -9,6 +9,8 @@
 #' @param correction whether the Greenhouse-Geisser correction should be applied or not. Default to \code{FALSE}
 #' @details In case of higher order interaction, only the highest order
 #' effect is shown.
+#' In case all CSs are defined (cs1, cs2, and cs3) the t-tests are not returned as there would be a problem with multiple testing.
+#'
 #' @return A tibble with the following column names:
 #' x: the name of the independent variable (e.g., cs)
 #' y: the name of the dependent variable as this defined in the \code{dv} argument
@@ -94,6 +96,9 @@ universe_cs <-
       do_anova = FALSE
       message("Skipping ANOVA due to the number of trials for the cs1 and/or cs2.")
     }
+
+    # Create emply list to be filled in with results
+    combRes <- list()
 
     # Perform ANOVA
     if (is.null(group) & do_anova) {
@@ -257,7 +262,10 @@ universe_cs <-
       }
     }
 
-    # Perform t-test
+    # Perform t-test in case cs3 is not defined
+
+    if(!is.null(cs3)) {
+
     # First combine css
     csc <-
       multifear::combine_cs(cs1 = cs1,
@@ -293,6 +301,8 @@ universe_cs <-
       combRes$`bayes t-test full` <- bttestFULL
     }
 
+    }
+
     if (do_anova) {
       combRes$`repeated measures ANOVA with time` <- anovaTIME
       combRes$`repeated measures ANOVA without time` <- anovaNOTIME
@@ -310,7 +320,10 @@ universe_cs <-
     res <- purrr::map_df(combRes, rbind)
 
     class(res) <- c("multi_fear", class(res))
-    attr(res, "collapsed data") <- csc
+
+    if(!is.null(cs3)) {
+      attr(res, "collapsed data") <- csc
+    }
 
     if (print_output) {
       return(res)

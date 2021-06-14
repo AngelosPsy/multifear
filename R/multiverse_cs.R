@@ -7,7 +7,7 @@
 #' @param cutoff A numeric vector of the cutoff criteria applied. Default to \code{0, 0.05, .1}
 #' @param correction whether the Greenhouse-Geisser correction should be applied or not. Default to \code{FALSE}
 #' @details In case of higher order interaction, only the highest order
-#' effect is returned.
+#' effect is returned. In case all CSs are defined (cs1, cs2, and cs3) the t-tests are not returned as there would be a problem with multiple testing.
 #' @return A tibble with the following column names:
 #' x: the name of the independent variable (e.g., cs)
 #' y: the name of the dependent variable as this defined in the \code{dv} argument
