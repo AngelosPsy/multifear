@@ -73,6 +73,7 @@
   utils::globalVariables ("include_bayes")
   utils::globalVariables ("l1trial")
   utils::globalVariables ("l2trial")
+  utils::globalVariables ("log_BF")
   utils::globalVariables ("method")
   utils::globalVariables ("model")
   utils::globalVariables ("models")
