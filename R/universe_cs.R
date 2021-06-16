@@ -9,8 +9,8 @@
 #' @param correction whether the Greenhouse-Geisser correction should be applied or not. Default to \code{FALSE}
 #' @details In case of higher order interaction, only the highest order
 #' effect is shown.
-#' In case all CSs are defined (cs1, cs2, and cs3) the t-tests are not returned as there would be a problem with multiple testing.
-#'
+#' In case all CSs are defined (\code{cs1}, \code{cs2}, and \code{cs3}) the t-tests are not returned as there would be a problem with multiple testing.
+#' Similarly, in case the \code{between} argument is defined no t-tests are run.
 #' @return A tibble with the following column names:
 #' x: the name of the independent variable (e.g., cs)
 #' y: the name of the dependent variable as this defined in the \code{dv} argument
@@ -43,6 +43,7 @@ universe_cs <-
            data,
            subj,
            group = NULL,
+           between = NULL,
            include_bayes = TRUE,
            include_mixed = FALSE,
            phase = "acquisition",
@@ -58,7 +59,9 @@ universe_cs <-
       cs2 = cs2,
       cs3 = cs3,
       data = data,
-      subj = subj
+      subj = subj,
+      group = group,
+      between = between
     )
 
     # Prepare data for multiple analyses
@@ -69,7 +72,8 @@ universe_cs <-
         cs3 = cs3,
         data = data,
         subj = subj,
-        group = group
+        group = group,
+        between = between
       )
 
     cs1    <-
@@ -101,7 +105,7 @@ universe_cs <-
     combRes <- list()
 
     # Perform ANOVA
-    if (is.null(group) & do_anova) {
+    if (do_anova && is.null(group) && is.null(between)) {
       anovaNOTIME <-
         multifear::rm_anova_mf(
           cs1 = cs1,
@@ -181,7 +185,7 @@ universe_cs <-
             multicore = TRUE
           )
       }
-    } else if (!is.null(group) & do_anova) {
+    } else if (do_anova && !is.null(group) && is.null(between)) {
       anovaNOTIME <-
         multifear::rm_anova_mf(
           cs1 = cs1,
@@ -260,11 +264,95 @@ universe_cs <-
             multicore = TRUE
           )
       }
+    } else if (do_anova && !is.null(group) && !is.null(between)) {
+      anovaNOTIME <-
+        multifear::rm_anova_mf(
+          cs1 = cs1,
+          cs2 = cs2,
+          cs3 = cs3,
+          time = FALSE,
+          subj = subj,
+          data = data,
+          group = group,
+          between = between,
+          phase = phase,
+          exclusion = exclusion,
+          cut_off = cut_off
+        )
+
+      anovaTIME <-
+        multifear::rm_anova_mf(
+          cs1 = cs1,
+          cs2 = cs2,
+          cs3 = cs3,
+          time = TRUE,
+          subj = subj,
+          data = data,
+          group = group,
+          between = between,
+          phase = phase,
+          exclusion = exclusion,
+          cut_off = cut_off
+        )
+
+      # mixed results
+      if (include_mixed) {
+        mixedMod <-
+          multifear::mixed_mf(
+            cs1 = cs1,
+            cs2 = cs2,
+            cs3 = cs3,
+            data = data,
+            subj = subj,
+            group = group,
+            between = between,
+            phase = phase,
+            dv = dv,
+            exclusion = exclusion,
+            cut_off = cut_off
+          )
+      }
+
+      if (include_bayes) {
+        banovaNOTIME <-
+          multifear::rm_banova_mf(
+            cs1 = cs1,
+            cs2 = cs2,
+            cs3 = cs3,
+            time = FALSE,
+            subj = subj,
+            data = data,
+            group = group,
+            between = between,
+            phase = phase,
+            exclusion = exclusion,
+            cut_off = cut_off,
+            dv = dv,
+            multicore = TRUE
+          )
+
+        banovaTIME <-
+          multifear::rm_banova_mf(
+            cs1 = cs1,
+            cs2 = cs2,
+            cs3 = cs3,
+            time = TRUE,
+            subj = subj,
+            data = data,
+            group = group,
+            between = between,
+            phase = phase,
+            exclusion = exclusion,
+            cut_off = cut_off,
+            dv = dv,
+            multicore = TRUE
+          )
+      }
     }
 
     # Perform t-test in case cs3 is not defined
 
-    if(!is.null(cs3)) {
+    if(is.null(cs3) || is.null(between)) {
 
     # First combine css
     csc <-

@@ -17,6 +17,18 @@ cs_warning = function(cs) {
   }
 }
 
+group_warning = function(group) {
+  if (!is.character(group)) {
+    stop("The group variable is not a character object. Function terminated.")
+  }
+}
+
+between_warning = function(between) {
+  if (!is.character(between)) {
+    stop("The between variable is not a character object. Function terminated.")
+  }
+}
+
 data_warning = function(data) {
   if (!is.data.frame(data)) {
     stop("The data object is not a data frame. Function terminated.")
@@ -28,14 +40,18 @@ collection_warning = function(cs1,
                               cs3 = NULL,
                               data,
                               subj = NULL,
+                              group = NULL,
+                              between = NULL,
                               cs_paired = NULL) {
   cs_warning(cs1)
   data_warning(data)
 
   if (!is.null(cs2)) { cs_warning(cs2) }
   if (!is.null(cs3)) { cs_warning(cs3) }
-  if (!is.null(subj)) { subj_warning(subj)}
-  if (!is.null(cs_paired)) { cs_warning(cs_paired)}
+  if (!is.null(subj)) { subj_warning(subj) }
+  if (!is.null(group)) { group_warning(group) }
+  if (!is.null(between)) { between_warning(between) }
+  if (!is.null(cs_paired)) { cs_warning(cs_paired) }
 }
 
 chop_css_warning = function(data) {
@@ -116,9 +132,18 @@ data_preparation_anova = function(cs1,
                             data,
                             subj,
                             time = TRUE,
-                            group = NULL){
+                            group = NULL,
+                            between = NULL){
   # Check data
-  collection_warning(cs1 = cs1, cs2 = cs2, cs3 = cs3, data = data, subj = subj)
+  collection_warning(
+    cs1 = cs1,
+    cs2 = cs2,
+    cs3 = cs3,
+    data = data,
+    subj = subj,
+    group = group,
+    between = between
+  )
 
   cs1 <-
     data %>% dplyr::select(all_of(!!dplyr::enquo(cs1))) %>% tibble::as_tibble()
@@ -138,6 +163,12 @@ data_preparation_anova = function(cs1,
     cs3  <- cs3 %>% dplyr::select(cs3_ = dplyr::everything())
     }
 
+  if(!is.null(between)){
+    between  <-
+      data %>% dplyr::select(all_of(!!dplyr::enquo(between))) %>% tibble::as_tibble()
+    between  <- between %>% dplyr::select(between = dplyr::everything())
+  }
+
     if (is.null(group)) {
     group_new <-
       data %>%
@@ -155,10 +186,25 @@ data_preparation_anova = function(cs1,
 
   # Add this in case of a cs3 stimulus
   if(!is.null(cs3)){
-    data <- dplyr::bind_cols(subj, cs1, cs2, cs3, group_new)
+    data <- dplyr::bind_cols(data, cs3)
   }
 
-  # In case time is selected, create a time object
+  # Add this in case of a between stimulus
+  if(!is.null(between)){
+    between_new <-
+      data %>%
+      dplyr::mutate(between = rep("NULL", nrow(data))) %>%
+      dplyr::select(between)
+    between <- NULL
+  } else{
+    between_new <- data %>%
+      dplyr::select(all_of(!!dplyr::enquo(between))) %>%
+      tibble::as_tibble() %>%
+      dplyr::rename(between = eval(between))
+  }
+
+  data <- dplyr::bind_cols(data, between_new)
+
   if (time) {
     # Check if length of cs1 and cs2 is the same. Otherwise stop
     if (ncol(cs1) != ncol(cs2)) {
@@ -169,6 +215,8 @@ data_preparation_anova = function(cs1,
       )
     }}
 
+
+  if (is.null(between)){
   data %>%
     reshape2::melt(
       id.var = c("subj", "group"),
@@ -182,6 +230,28 @@ data_preparation_anova = function(cs1,
       subj = as.factor(subj),
       group = as.factor(group)
     ) -> data
+  } else {
+
+    data %>%
+      reshape2::melt(
+        id.var = c("subj", "group", "between"),
+        variable.name = "var_old",
+        value.name = "resp",
+        factorsAsStrings = TRUE
+      ) %>% # Until pivot_longer gets better
+      dplyr::mutate(
+        cs = as.factor(stringr::str_sub(var_old, 1, 3)),
+        time = as.factor(sub(".*_", "", .$var_old)), # Better than stringr
+        subj = as.factor(subj),
+        group = as.factor(group),
+        between = as.factor(between)
+      ) -> data
+
+
+  }
+
+
+
 
   colnames(data) <- make.names(colnames(data))
 
@@ -240,7 +310,8 @@ data_preparation_verse = function(cs1,
                                   cs3 = NULL,
                                   data,
                                   subj,
-                                  group = NULL){
+                                  group = NULL,
+                                  between = NULL){
 
       collection_warning(cs1 = cs1, cs2 = cs2, data = data, subj = subj)
 
@@ -276,7 +347,14 @@ data_preparation_verse = function(cs1,
         cs3  <-
           data %>% dplyr::select(all_of(!!dplyr::enquo(cs3))) %>% tibble::as_tibble()
         cs3  <- cs3 %>% dplyr::select(cs3_ = dplyr::everything())
-        res_tmp <- dplyr::bind_cols(subj, cs1, cs2, cs3, group_new)
+        res_tmp <- dplyr::bind_cols(res_tmp, cs3)
+      }
+
+      if(!is.null(between)){
+        between_new <- data %>%
+          dplyr::select(tidyselect::all_of(!!dplyr::enquo(between))) %>%
+          dplyr::rename(between = eval(between))
+        res_tmp <- dplyr::bind_cols(res_tmp, between_new)
       }
 
     res <- res_tmp

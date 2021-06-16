@@ -47,6 +47,7 @@ mixed_mf <- function(cs1,
                      data,
                      subj,
                      group = NULL,
+                     between = NULL,
                      phase = "acquisition",
                      dv = "scr",
                      exclusion = "full data",
@@ -76,7 +77,7 @@ mixed_mf <- function(cs1,
 
   data <-
     data_preparation_anova(cs1 = cs1, cs2 = cs2, cs3 = cs3, data = data, subj = subj,
-                     time = TRUE, group = NULL)
+                     time = TRUE, group = group, between = between)
 
   # Time effects contrasts
   cut_point <- mean(1:length(unique(data$time)))
@@ -114,6 +115,17 @@ mixed_mf <- function(cs1,
   cs_time_model_stand_dv <-
     stats::update(base_model_stand_dv, . ~ . + cs + time2 + cs:time2)
 
+  if (!is.null(group)){
+    cs_time_group_model_rtime_stand_dv <-
+      stats::update(base_model_stand_dv, . ~ . + cs + time2 + group + cs:time2:group)
+  }
+
+  if (!is.null(between) && !is.null(group)){
+    cs_time_group_between_model_rtime_stand_dv <-
+      stats::update(base_model_stand_dv, . ~ . + cs + time2 + group + between + cs:time2:group:between)
+  }
+
+
   # Run the models 2st standardization
   base_model_stand_pp <-
     nlme::lme(resp_stand_pp ~ 1,
@@ -127,6 +139,16 @@ mixed_mf <- function(cs1,
   cs_model_stand_pp <- stats::update(base_model_stand_pp, . ~ . + cs)
   cs_time_model_stand_pp <-
     stats::update(base_model_stand_pp, . ~ . + cs + time2 + cs:time2)
+
+  if (!is.null(group)){
+    cs_time_group_model_rtime_stand_pp <-
+      stats::update(base_model_stand_pp, . ~ . + cs + time2 + group + cs:time2:group)
+  }
+
+  if (!is.null(between) && !is.null(group)){
+    cs_time_group_between_model_rtime_stand_pp <-
+      stats::update(base_model_stand_pp, . ~ . + cs + time2 + group + between + cs:time2:group:between)
+  }
 
   ##########################################
   ##########################################
@@ -148,6 +170,16 @@ mixed_mf <- function(cs1,
   cs_time_model_rtime_stand_dv <-
     stats::update(base_model_rtime_stand_dv, . ~ . + cs + time2 + cs:time2)
 
+  if (!is.null(group)){
+    cs_time_group_model_rtime_stand_dv <-
+      stats::update(base_model_rtime_stand_dv, . ~ . + cs + time2 + group + cs:time2:group)
+  }
+
+  if (!is.null(between) && !is.null(group)){
+    cs_time_group_between_model_rtime_stand_dv <-
+      stats::update(base_model_rtime_stand_dv, . ~ . + cs + time2 + group + between + cs:time2:group:between)
+  }
+
   # Run the models 2st standardization
   base_model_rtime_stand_pp <-
     nlme::lme(resp_stand_pp ~ 1,
@@ -162,6 +194,16 @@ mixed_mf <- function(cs1,
   cs_time_model_rtime_stand_pp <-
     stats::update(base_model_rtime_stand_pp, . ~ . + cs + time2 + cs:time2)
 
+  if (!is.null(group)){
+    cs_time_group_model_rtime_stand_pp <-
+      stats::update(base_model_rtime_stand_pp, . ~ . + cs + time2 + group + cs:time2:group)
+  }
+
+  if (!is.null(between) && !is.null(group)){
+    cs_time_group_between_model_rtime_stand_pp <-
+      stats::update(base_model_rtime_stand_pp, . ~ . + cs + time2 + group + between + cs:time2:group:between)
+  }
+
   ##########################################
   ##########################################
   # Model selection
@@ -172,14 +214,18 @@ mixed_mf <- function(cs1,
     c(
       "base_model_stand_dv",
       "cs_model_stand_dv",
-      "cs_time_model_stand_dv"
+      "cs_time_model_stand_dv",
+      "cs_time_group_model_rtime_stand_dv",
+      "cs_time_group_between_model_rtime_stand_dv"
     ),
     exists
   ))) {
     b_mc_dv <-
       stats::anova(base_model_stand_dv,
             cs_model_stand_dv,
-            cs_time_model_stand_dv) %>%
+            cs_time_model_stand_dv,
+            cs_time_group_model_rtime_stand_dv,
+            cs_time_group_between_model_rtime_stand_dv) %>%
       dplyr::mutate(models = rownames(.)) %>%
       dplyr::slice(which.min(BIC)) %>%
       dplyr::select(models) %>%
@@ -194,14 +240,18 @@ mixed_mf <- function(cs1,
     c(
       "base_model_stand_pp",
       "cs_model_stand_pp",
-      "cs_time_model_stand_pp"
+      "cs_time_model_stand_pp",
+      "cs_time_group_model_rtime_stand_pp",
+      "cs_time_group_between_model_rtime_stand_pp"
     ),
     exists
   ))) {
     b_mc_pp <-
       stats::anova(base_model_stand_pp,
             cs_model_stand_pp,
-            cs_time_model_stand_pp) %>%
+            cs_time_model_stand_pp,
+            cs_time_group_model_rtime_stand_pp,
+            cs_time_group_between_model_rtime_stand_pp) %>%
       dplyr::mutate(models = rownames(.)) %>%
       dplyr::slice(which.min(BIC)) %>%
       dplyr::select(models) %>%
@@ -216,7 +266,9 @@ mixed_mf <- function(cs1,
     c(
       "base_model_rtime_stand_dv",
       "cs_model_rtime_stand_dv",
-      "cs_time_model_rtime_stand_dv"
+      "cs_time_model_rtime_stand_dv",
+      "cs_time_group_model_rtime_stand_dv",
+      "cs_time_group_between_model_rtime_stand_dv"
     ),
     exists
   ))) {
@@ -224,7 +276,9 @@ mixed_mf <- function(cs1,
       stats::anova(
         base_model_rtime_stand_dv,
         cs_model_rtime_stand_dv,
-        cs_time_model_rtime_stand_dv
+        cs_time_model_rtime_stand_dv,
+        cs_time_group_model_rtime_stand_dv,
+        cs_time_group_between_model_rtime_stand_dv
       ) %>%
       dplyr::mutate(models = rownames(.)) %>%
       dplyr::slice(which.min(BIC)) %>%
@@ -240,7 +294,9 @@ mixed_mf <- function(cs1,
     c(
       "base_model_rtime_stand_pp",
       "cs_model_rtime_stand_pp",
-      "cs_time_model_rtime_stand_pp"
+      "cs_time_model_rtime_stand_pp",
+      "cs_time_group_model_rtime_stand_pp",
+      "cs_time_group_between_model_rtime_stand_pp"
     ),
     exists
   ))) {
@@ -248,7 +304,9 @@ mixed_mf <- function(cs1,
       stats::anova(
         base_model_rtime_stand_pp,
         cs_model_rtime_stand_pp,
-        cs_time_model_rtime_stand_pp
+        cs_time_model_rtime_stand_pp,
+        cs_time_group_model_rtime_stand_pp,
+        cs_time_group_between_model_rtime_stand_pp
       ) %>%
       dplyr::mutate(models = rownames(.)) %>%
       dplyr::slice(which.min(BIC)) %>%

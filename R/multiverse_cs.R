@@ -8,6 +8,7 @@
 #' @param correction whether the Greenhouse-Geisser correction should be applied or not. Default to \code{FALSE}
 #' @details In case of higher order interaction, only the highest order
 #' effect is returned. In case all CSs are defined (cs1, cs2, and cs3) the t-tests are not returned as there would be a problem with multiple testing.
+#' Similarly, in case the \code{between} argument is defined no t-tests are run.
 #' @return A tibble with the following column names:
 #' x: the name of the independent variable (e.g., cs)
 #' y: the name of the dependent variable as this defined in the \code{dv} argument
@@ -40,6 +41,7 @@ multiverse_cs <-
            data,
            subj,
            group = NULL,
+           between = NULL,
            cs_paired = NULL,
            include_bayes = TRUE,
            include_mixed = FALSE,
@@ -55,7 +57,9 @@ multiverse_cs <-
         cs2 = cs2,
         cs3 = cs3,
         data = data,
-        subj = subj
+        subj = subj,
+        group = group,
+        between = between
       )
     } else{
       collection_warning(
@@ -64,6 +68,8 @@ multiverse_cs <-
         cs3 = cs3,
         data = data,
         subj = subj,
+        group = group,
+        between = between,
         cs_paired = cs_paired
       )
     }
@@ -95,7 +101,7 @@ multiverse_cs <-
       excl_data_sets <- excl_data_sets %>% dplyr::filter(cutoff == "full_data")
     }
 
-    if(is.null(group)){
+    if(is.null(group) && is.null(between)){
       res <- purrr::map2_dfr(
         .x = excl_data_sets$used_data,
         .y = excl_data_sets$names,
@@ -114,7 +120,7 @@ multiverse_cs <-
         }
       )
 
-    } else {
+    } else if(!is.null(group) && is.null(between)){
 
       res <- purrr::map2_dfr(
         .x = excl_data_sets$used_data,
@@ -127,6 +133,26 @@ multiverse_cs <-
           subj = dplyr::select(data.frame(x), dplyr::contains("id")) %>% colnames() %>%
             data.frame() %>% dplyr::slice(1) %>% unlist() %>% as.character(),
           group = dplyr::select(data.frame(x), dplyr::contains("group")) %>% colnames(),
+          include_bayes = include_bayes,
+          include_mixed = include_mixed,
+          exclusion = y
+        )
+        }
+      )
+    } else if(!is.null(group) && !is.null(between)){
+
+      res <- purrr::map2_dfr(
+        .x = excl_data_sets$used_data,
+        .y = excl_data_sets$names,
+        .f = function(x, y){ multifear::universe_cs(
+          cs1 = dplyr::select(data.frame(x), dplyr::contains("cs1")) %>% colnames(),
+          cs2 = dplyr::select(data.frame(x), dplyr::contains("cs2")) %>% colnames(),
+          cs3 = dplyr::select(data.frame(x), dplyr::contains("cs3")) %>% colnames(),
+          data = data.frame(x),
+          subj = dplyr::select(data.frame(x), dplyr::contains("id")) %>% colnames() %>%
+            data.frame() %>% dplyr::slice(1) %>% unlist() %>% as.character(),
+          group = dplyr::select(data.frame(x), dplyr::contains("group")) %>% colnames(),
+          between = dplyr::select(data.frame(x), dplyr::contains("between")) %>% colnames(),
           include_bayes = include_bayes,
           include_mixed = include_mixed,
           exclusion = y

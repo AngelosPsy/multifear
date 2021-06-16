@@ -11,6 +11,7 @@ mixed_mf(
   data,
   subj,
   group = NULL,
+  between = NULL,
   phase = "acquisition",
   dv = "scr",
   exclusion = "full data",
@@ -29,6 +30,8 @@ mixed_mf(
 \item{subj}{The name of the column including the participant numbers. Unique numbers are expected.}
 
 \item{group}{the name of the group, if included, default to \code{NULL}.}
+
+\item{between}{The column name of a second between group variable.}
 
 \item{phase}{The conditioned phase that the analyses refer to. Accepted values are  \code{acquisition},  or \code{acq}, \code{extinction}, or \code{ext}.}
 

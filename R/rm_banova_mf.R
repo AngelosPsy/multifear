@@ -51,6 +51,7 @@ rm_banova_mf <- function(cs1,
                          subj,
                          time = TRUE,
                          group = NULL,
+                         between = NULL,
                          phase = "acquisition",
                          dv = "scr",
                          exclusion = "full data",
@@ -60,7 +61,9 @@ rm_banova_mf <- function(cs1,
     cs2 = cs2,
     cs3 = cs3,
     data = data,
-    subj = subj
+    subj = subj,
+    group = group,
+    between = between
   )
 
   data <-

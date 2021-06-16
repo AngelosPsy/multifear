@@ -12,6 +12,7 @@ rm_banova_mf(
   subj,
   time = TRUE,
   group = NULL,
+  between = NULL,
   phase = "acquisition",
   dv = "scr",
   exclusion = "full data",
@@ -32,6 +33,8 @@ rm_banova_mf(
 \item{time}{should time be included? Default to TRUE.}
 
 \item{group}{the name of the group, if included, default to \code{NULL}.}
+
+\item{between}{The column name of a second between group variable.}
 
 \item{phase}{The conditioned phase that the analyses refer to. Accepted values are  \code{acquisition},  or \code{acq}, \code{extinction}, or \code{ext}.}
 

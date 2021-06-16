@@ -11,6 +11,7 @@ multiverse_cs(
   data,
   subj,
   group = NULL,
+  between = NULL,
   cs_paired = NULL,
   include_bayes = TRUE,
   include_mixed = FALSE,
@@ -32,6 +33,8 @@ multiverse_cs(
 \item{subj}{The name of the column including the participant numbers. Unique numbers are expected.}
 
 \item{group}{the name of the group, if included, default to \code{NULL}.}
+
+\item{between}{The column name of a second between group variable.}
 
 \item{cs_paired}{A character vector with the trials that were paired. Default is set to \code{NULL}, suggesting that there was full reinforcement}
 
@@ -79,4 +82,5 @@ data
 \details{
 In case of higher order interaction, only the highest order
 effect is returned. In case all CSs are defined (cs1, cs2, and cs3) the t-tests are not returned as there would be a problem with multiple testing.
+Similarly, in case the \code{between} argument is defined no t-tests are run.
 }

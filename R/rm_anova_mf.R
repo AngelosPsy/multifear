@@ -68,7 +68,9 @@ rm_anova_mf <- function(cs1,
     cs2 = cs2,
     cs3 = cs3,
     data = data,
-    subj = subj
+    subj = subj,
+    group = group,
+    between = between
   )
 
   data <-
@@ -79,28 +81,35 @@ rm_anova_mf <- function(cs1,
       data = data,
       subj = subj,
       time = time,
-      group = group
+      group = group,
+      between = between
     )
 
   # Decide which terms you will have in order to feed in the ANOVA later on
-  if (time && (!is.null(group))) {
+  if (time && (!is.null(group))  && (is.null(between))) {
     anova_terms <- c("cs", "time")
     selected_term <- "group:cs:time"
-  } else if (!time && (is.null(group)))  {
+  } else if (!time && (is.null(group)) && (is.null(between)))  {
     anova_terms <- c("cs")
     group = NULL
     selected_term <- "cs"
-  } else if (time && is.null(group)) {
+  } else if (time && is.null(group)  && (is.null(between))) {
     anova_terms <- c("cs", "time")
     group = NULL
     selected_term <- "cs:time"
-  } else if (!time && !is.null(group)) {
+  } else if (!time && !is.null(group)  && (is.null(between))) {
     anova_terms <- c("cs")
     selected_term <- "group:cs"
+  } else if (time && !is.null(group)  && (is.null(between))) {
+    anova_terms <- c("cs")
+    selected_term <- "between:cs:time"
+  } else if (time && !is.null(group)  && (!is.null(between))) {
+    anova_terms <- c("cs")
+    selected_term <- "group:between:cs:time"
   }
 
   # Run the main ANOVA
-  if(is.null(group)){
+  if(is.null(group) && is.null(between)){
   tmpANOVA <-
     suppressWarnings(eval(parse(
       text =
@@ -118,7 +127,7 @@ rm_anova_mf <- function(cs1,
           return_aov = TRUE
         )'
         ))))
-  } else{
+  } else if (!is.null(group)  && (is.null(between))) {
     tmpANOVA <-
       suppressWarnings(eval(parse(
         text =
@@ -136,6 +145,24 @@ rm_anova_mf <- function(cs1,
             return_aov = TRUE
             )'
         ))))
+  } else if (!is.null(group)  && (!is.null(between))) {
+    tmpANOVA <-
+      suppressWarnings(eval(parse(
+        text =
+          paste0(
+            'ez::ezANOVA(
+            data = data,
+            dv = resp,
+            wid = subj,
+            within = c(',
+            paste(anova_terms, collapse = ","),
+            '),
+            between = c(group, between),
+            type = 3,
+            detailed = TRUE,
+            return_aov = TRUE
+            )'
+          ))))
   }
 
   # This is what is returned from the data_preparation_anova function
@@ -172,6 +199,14 @@ rm_anova_mf <- function(cs1,
       "You have selected 3 CSs. At the moment the package does not support
             the meta-analytic effect size for more than 2 stimuli. The reported meta-analytic effect
             size for the ANOVA corresponds to only 'cs1' and 'cs2', and the 'cs3' is not taken into account."
+    )
+  }
+
+  if(!is.null(between)) {
+    warning(
+      "You have selected the between variable. At the moment the package does not support
+            the meta-analytic effect size including multiple between group variables. The reported meta-analytic effect
+            size for the ANOVA corresponds to only 'cs1' and 'cs2', and group, if this selected."
     )
   }
 
