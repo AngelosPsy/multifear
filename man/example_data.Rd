@@ -5,7 +5,7 @@
 \alias{example_data}
 \title{Simulated data sets of skin conductance responses}
 \format{
-A data frame with 40 rows and 32 variables:
+A data frame with 40 rows and 33 variables:
 \describe{
   \item{id}{Participant number}
   \item{CSP1}{Conditioned stimulus plus, trial 1}

@@ -5,7 +5,7 @@
 #' stimulus minus trials, 10 conditioned trials with unknown contingencies,
 #' a counterbalancing column, and a group column. The variables are as follows:
 #'
-#' @format A data frame with 40 rows and 32 variables:
+#' @format A data frame with 40 rows and 33 variables:
 #' \describe{
 #'   \item{id}{Participant number}
 #'   \item{CSP1}{Conditioned stimulus plus, trial 1}
