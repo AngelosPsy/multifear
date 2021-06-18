@@ -59,7 +59,9 @@ mixed_mf <- function(cs1,
     cs2 = cs2,
     cs3 = cs3,
     data = data,
-    subj = subj
+    subj = subj,
+    group = group,
+    between = between
   )
 
   if (length(cs1) < 2 ||
@@ -117,12 +119,16 @@ mixed_mf <- function(cs1,
 
   if (!is.null(group)){
     cs_time_group_model_rtime_stand_dv <-
-      stats::update(base_model_stand_dv, . ~ . + cs + time2 + group + cs:time2:group)
+      stats::update(base_model_stand_dv, . ~ . + cs + time2 + cs*time2*group)
   }
 
-  if (!is.null(between) && !is.null(group)){
+  if (!is.null(between) &&
+      !is.null(group)) {
     cs_time_group_between_model_rtime_stand_dv <-
-      stats::update(base_model_stand_dv, . ~ . + cs + time2 + group + between + cs:time2:group:between)
+      stats::update(
+        base_model_stand_dv,
+        . ~ . + cs + time2 + group + between + cs*time2*group*between
+      )
   }
 
 
@@ -142,12 +148,12 @@ mixed_mf <- function(cs1,
 
   if (!is.null(group)){
     cs_time_group_model_rtime_stand_pp <-
-      stats::update(base_model_stand_pp, . ~ . + cs + time2 + group + cs:time2:group)
+      stats::update(base_model_stand_pp, . ~ . + cs + time2 + group + cs*time2*group)
   }
 
   if (!is.null(between) && !is.null(group)){
     cs_time_group_between_model_rtime_stand_pp <-
-      stats::update(base_model_stand_pp, . ~ . + cs + time2 + group + between + cs:time2:group:between)
+      stats::update(base_model_stand_pp, . ~ . + cs + time2 + group + between + cs*time2*group*between)
   }
 
   ##########################################
@@ -172,12 +178,12 @@ mixed_mf <- function(cs1,
 
   if (!is.null(group)){
     cs_time_group_model_rtime_stand_dv <-
-      stats::update(base_model_rtime_stand_dv, . ~ . + cs + time2 + group + cs:time2:group)
+      stats::update(base_model_rtime_stand_dv, . ~ . + cs + time2 + group + cs*time2*group)
   }
 
   if (!is.null(between) && !is.null(group)){
     cs_time_group_between_model_rtime_stand_dv <-
-      stats::update(base_model_rtime_stand_dv, . ~ . + cs + time2 + group + between + cs:time2:group:between)
+      stats::update(base_model_rtime_stand_dv, . ~ . + cs + time2 + group + between + cs*time2*group*between)
   }
 
   # Run the models 2st standardization
@@ -196,12 +202,12 @@ mixed_mf <- function(cs1,
 
   if (!is.null(group)){
     cs_time_group_model_rtime_stand_pp <-
-      stats::update(base_model_rtime_stand_pp, . ~ . + cs + time2 + group + cs:time2:group)
+      stats::update(base_model_rtime_stand_pp, . ~ . + cs + time2 + group + cs*time2*group)
   }
 
   if (!is.null(between) && !is.null(group)){
     cs_time_group_between_model_rtime_stand_pp <-
-      stats::update(base_model_rtime_stand_pp, . ~ . + cs + time2 + group + between + cs:time2:group:between)
+      stats::update(base_model_rtime_stand_pp, . ~ . + cs + time2 + group + between + cs*time2*group*between)
   }
 
   ##########################################
@@ -215,8 +221,8 @@ mixed_mf <- function(cs1,
       "base_model_stand_dv",
       "cs_model_stand_dv",
       "cs_time_model_stand_dv",
-      "cs_time_group_model_rtime_stand_dv",
-      "cs_time_group_between_model_rtime_stand_dv"
+      "cs_time_group_model_stand_dv",
+      "cs_time_group_between_model_stand_dv"
     ),
     exists
   ))) {
@@ -241,8 +247,8 @@ mixed_mf <- function(cs1,
       "base_model_stand_pp",
       "cs_model_stand_pp",
       "cs_time_model_stand_pp",
-      "cs_time_group_model_rtime_stand_pp",
-      "cs_time_group_between_model_rtime_stand_pp"
+      "cs_time_group_model_stand_pp",
+      "cs_time_group_between_model_stand_pp"
     ),
     exists
   ))) {
@@ -371,12 +377,39 @@ mixed_mf <- function(cs1,
     summary()
 
   # Gather the terms now. Inside the function we compute the meta_analyric effect size as well
+  base_model_stand_dv_tab <-
+    select_term(base_model_stand_dv, "(Intercept)", dv = dv, exclusion = exclusion)
+  cs_model_stand_dv_tab <-
+    select_term(cs_model_stand_dv, "cscs2", dv = dv,exclusion = exclusion)
+  cs_time_model_stand_dv_tab <-
+    select_term(cs_time_model_stand_dv, "cscs2:time2", dv = dv, exclusion = exclusion)
+
+  if (!is.null(group)){
+    cs_time_group_model_stand_dv_tab <-
+      select_term(cs_time_group_model_stand_dv, "cscs2:time2:group2", dv = dv,exclusion = exclusion)
+  }
+  if (!is.null(between) &&
+      !is.null(group)) {
+    cs_time_group_between_model_stand_dv_tab <-
+      select_term(cs_time_group_between_model_stand_dv, "cscs2:time2:group2:betweenB", dv = dv,exclusion = exclusion)
+  }
+
   base_model_stand_pp_tab <-
     select_term(base_model_stand_pp, "(Intercept)", dv = dv, exclusion = exclusion)
   cs_model_stand_pp_tab <-
     select_term(cs_model_stand_pp, "cscs2", dv = dv,exclusion = exclusion)
   cs_time_model_stand_pp_tab <-
     select_term(cs_time_model_stand_pp, "cscs2:time2", dv = dv, exclusion = exclusion)
+
+  if (!is.null(group)){
+    cs_time_group_model_stand_pp_tab <-
+      select_term(cs_time_group_model_stand_pp, "cscs2:time2:group2", dv = dv,exclusion = exclusion)
+  }
+  if (!is.null(between) &&
+      !is.null(group)) {
+    cs_time_group_between_model_stand_pp_tab <-
+      select_term(cs_time_group_between_model_stand_pp, "cscs2:time2:group2:betweenB", dv = dv,exclusion = exclusion)
+  }
 
   base_model_rtime_stand_dv_tab <-
     select_term(base_model_rtime_stand_dv, "(Intercept)", dv = dv, exclusion = exclusion)
@@ -385,6 +418,16 @@ mixed_mf <- function(cs1,
   cs_time_model_rtime_stand_dv_tab <-
     select_term(cs_time_model_rtime_stand_dv, "cscs2:time2", dv = dv,exclusion = exclusion)
 
+  if (!is.null(group)){
+    cs_time_group_model_rtime_stand_dv_tab <-
+      select_term(cs_time_group_model_rtime_stand_dv, "cscs2:time2:group2", dv = dv,exclusion = exclusion)
+  }
+  if (!is.null(between) &&
+      !is.null(group)) {
+    cs_time_group_between_model_rtime_stand_dv_tab <-
+      select_term(cs_time_group_between_model_rtime_stand_dv, "cscs2:time2:group2:betweenB", dv = dv,exclusion = exclusion)
+  }
+
   base_model_rtime_stand_pp_tab <-
     select_term(base_model_rtime_stand_pp, "(Intercept)", dv = dv,exclusion = exclusion)
   cs_model_rtime_stand_pp_tab <-
@@ -392,9 +435,24 @@ mixed_mf <- function(cs1,
   cs_time_model_rtime_stand_pp_tab <-
     select_term(cs_time_model_rtime_stand_pp, "cscs2:time2", dv = dv,exclusion = exclusion)
 
+
+  if (!is.null(group)){
+    cs_time_group_model_rtime_stand_pp_tab <-
+      select_term(cs_time_group_model_rtime_stand_pp, "cscs2:time2:group2", dv = dv,exclusion = exclusion)
+  }
+  if (!is.null(between) &&
+      !is.null(group)) {
+    cs_time_group_between_model_rtime_stand_pp_tab <-
+      select_term(cs_time_group_between_model_rtime_stand_pp, "cscs2:time2:group2:betweenB", dv = dv,exclusion = exclusion)
+  }
+
+
   # Work on the results
   res_tmp <- tibble::tibble(
     dplyr::bind_rows(
+      base_model_stand_dv_tab,
+      cs_model_stand_dv_tab,
+      cs_time_model_stand_dv_tab,
       base_model_stand_pp_tab,
       cs_model_stand_pp_tab,
       cs_time_model_stand_pp_tab,
@@ -406,6 +464,31 @@ mixed_mf <- function(cs1,
       cs_time_model_rtime_stand_pp_tab
     )
   )
+
+
+  if (!is.null(group)) {
+    res_tmp <- tibble::tibble(
+      dplyr::bind_rows(
+        res_tmp,
+        cs_time_group_model_stand_dv_tab,
+        cs_time_group_model_stand_pp_tab,
+        cs_time_group_model_rtime_stand_dv_tab,
+        cs_time_group_model_rtime_stand_pp_tab
+      )
+    )
+  }
+
+  if (!is.null(between)) {
+    res_tmp <- tibble::tibble(
+      dplyr::bind_rows(
+        res_tmp,
+        cs_time_group_between_model_stand_dv_tab,
+        cs_time_group_between_model_stand_pp_tab,
+        cs_time_group_between_model_rtime_stand_dv_tab,
+        cs_time_group_between_model_rtime_stand_pp_tab
+      )
+    )
+  }
 
   #res <- res_tmp$`dplyr::bind_rows(...)`
   res <- res_tmp %>% dplyr::filter(x != "(Intercept)")

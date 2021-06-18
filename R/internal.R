@@ -163,13 +163,7 @@ data_preparation_anova = function(cs1,
     cs3  <- cs3 %>% dplyr::select(cs3_ = dplyr::everything())
     }
 
-  if(!is.null(between)){
-    between  <-
-      data %>% dplyr::select(all_of(!!dplyr::enquo(between))) %>% tibble::as_tibble()
-    between  <- between %>% dplyr::select(between = dplyr::everything())
-  }
-
-    if (is.null(group)) {
+  if (is.null(group)) {
     group_new <-
       data %>%
       dplyr::mutate(group = rep("NULL", nrow(data))) %>%
@@ -182,28 +176,27 @@ data_preparation_anova = function(cs1,
       dplyr::rename(group = eval(group))
   }
 
-  data <- dplyr::bind_cols(subj, cs1, cs2, group_new)
-
   # Add this in case of a cs3 stimulus
   if(!is.null(cs3)){
     data <- dplyr::bind_cols(data, cs3)
   }
 
   # Add this in case of a between stimulus
-  if(!is.null(between)){
+  if(is.null(between)){
     between_new <-
       data %>%
       dplyr::mutate(between = rep("NULL", nrow(data))) %>%
       dplyr::select(between)
     between <- NULL
   } else{
-    between_new <- data %>%
-      dplyr::select(all_of(!!dplyr::enquo(between))) %>%
-      tibble::as_tibble() %>%
-      dplyr::rename(between = eval(between))
+    between_new <- data %>% dplyr::select(all_of(!!dplyr::enquo(between))) %>% tibble::as_tibble()
+    colnames(between_new) <- "between"
+    #between  <- between %>% dplyr::select(between = dplyr::everything())
   }
 
-  data <- dplyr::bind_cols(data, between_new)
+  data <- dplyr::bind_cols(subj, cs1, cs2, group_new, between_new)
+
+  #data <- dplyr::bind_cols(data, between_new)
 
   if (time) {
     # Check if length of cs1 and cs2 is the same. Otherwise stop
@@ -215,23 +208,21 @@ data_preparation_anova = function(cs1,
       )
     }}
 
-
-  if (is.null(between)){
-  data %>%
-    reshape2::melt(
-      id.var = c("subj", "group"),
-      variable.name = "var_old",
-      value.name = "resp",
-      factorsAsStrings = TRUE
-    ) %>% # Until pivot_longer gets better
-    dplyr::mutate(
-      cs = as.factor(stringr::str_sub(var_old, 1, 3)),
-      time = as.factor(sub(".*_", "", .$var_old)), # Better than stringr
-      subj = as.factor(subj),
-      group = as.factor(group)
-    ) -> data
-  } else {
-
+ # if (is.null(between)){
+  # data %>%
+  #  reshape2::melt(
+  #    id.var = c("subj", "group"),
+  #    variable.name = "var_old",
+  #    value.name = "resp",
+  #    factorsAsStrings = TRUE
+  #  ) %>% # Until pivot_longer gets better
+  #  dplyr::mutate(
+  #    cs = as.factor(stringr::str_sub(var_old, 1, 3)),
+  #    time = as.factor(sub(".*_", "", .$var_old)), # Better than stringr
+  #    subj = as.factor(subj),
+  #    group = as.factor(group)
+  #  ) -> data
+  #} else {
     data %>%
       reshape2::melt(
         id.var = c("subj", "group", "between"),
@@ -246,19 +237,13 @@ data_preparation_anova = function(cs1,
         group = as.factor(group),
         between = as.factor(between)
       ) -> data
-
-
-  }
-
-
-
+    # }
 
   colnames(data) <- make.names(colnames(data))
 
   res <- data
 
   return(res)
-
 }
 
 data_preparation_ttest = function(cs1,

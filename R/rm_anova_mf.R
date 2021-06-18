@@ -104,7 +104,7 @@ rm_anova_mf <- function(cs1,
     anova_terms <- c("cs")
     selected_term <- "between:cs:time"
   } else if (time && !is.null(group)  && (!is.null(between))) {
-    anova_terms <- c("cs")
+    anova_terms <- c("cs", "time")
     selected_term <- "group:between:cs:time"
   }
 
