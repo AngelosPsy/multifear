@@ -4,11 +4,12 @@ library(dplyr)
 data("example_data", package = "multifear")
 cs1 <- paste0("CSP", 1:10)
 cs2 <- paste0("CSM", 1:10)
-cs3 <- paste0("CSM", 1:10)
+cs3 <- paste0("CSU", 1:10)
+between <- "counterbalancing"
 subj = "id"
 time = TRUE
 group = "group"
-between = NULL
+between = "counterbalancing"
 data = example_data
 bf_data <- example_data %>% dplyr::filter(id %in% c(1, 2, 3, 4, 5, 7, 8, 9, 10))
 
@@ -38,7 +39,7 @@ test_that("t_test_mf for groups works", {
 })
 
 test_that("rm_anova_mf works", {
-  expect_known_output(rm_anova_mf(cs1, cs2, subj = subj, data = example_data), tmp)
+  expect_known_output(rm_anova_mf(cs1, cs2, subj = subj, data = example_data, time = FALSE, group = NULL, between = NULL), tmp)
 })
 
 test_that("rm_anova_mf for groups works", {
