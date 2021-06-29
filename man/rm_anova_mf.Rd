@@ -17,7 +17,8 @@ rm_anova_mf(
   dv = "scr",
   exclusion = "full data",
   cut_off = "full data",
-  correction = FALSE
+  correction = FALSE,
+  return_warnings = TRUE
 )
 }
 \arguments{
@@ -46,6 +47,8 @@ rm_anova_mf(
 \item{cut_off}{cut off}
 
 \item{correction}{whether the Greenhouse-Geisser correction should be applied or not. Default to \code{FALSE}.}
+
+\item{return_warnings}{Logical. Should warnings be returned (default to \code{TRUE}).}
 }
 \value{
 A basic function for running repeated measures ANOVAs.
@@ -73,7 +76,7 @@ data_used: a list with the data used for the specific test
 Basic function for running the frequentist's repeated measures ANOVA
 }
 \details{
-In case the \code{time} argument is set to \cite{TRUE} (default value), the function will include this as a within subjects factor, assuming that the columns in
+In case the \code{time} argument is set to \code{TRUE} (default value), the function will include this as a within subjects factor, assuming that the columns in
 \code{cs1} and \code{cs2} correspond to ascending time points (e.g., cs1
 trial 1, cs1 trial 2 ... cs1 trial \code{n}). If this is not the case, the
 results are not to be trusted.

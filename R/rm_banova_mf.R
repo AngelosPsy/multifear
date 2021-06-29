@@ -55,7 +55,8 @@ rm_banova_mf <- function(cs1,
                          phase = "acquisition",
                          dv = "scr",
                          exclusion = "full data",
-                         cut_off = "full data") {
+                         cut_off = "full data",
+                         return_warnings = TRUE) {
   collection_warning(
     cs1 = cs1,
     cs2 = cs2,
@@ -74,29 +75,35 @@ rm_banova_mf <- function(cs1,
       data = data,
       subj = subj,
       time = TRUE,
-      group = group
+      group = group,
+      between = between
     )
 
   # Decide which terms you will have in order to feed in the ANOVA later on
-  if (time && (!is.null(group))) {
+  if (time && (!is.null(group))  && (is.null(between))) {
     anova_terms <- "resp ~ group*cs*time + subj"
     #selected_term <- "cs:group:subj:time"
     selected_term <- "cs:group:time"
-  } else if (!time && (is.null(group)))  {
+  } else if (!time && (is.null(group)) && (is.null(between)))  {
     anova_terms <- "resp ~ cs + subj"
     group = NULL
     #selected_term <- "cs:subj"
     selected_term <- "cs"
-  } else if (time && is.null(group)) {
+  } else if (time && is.null(group)  && (is.null(between))) {
     anova_terms <- "resp ~ cs*time + subj"
     group = NULL
     #selected_term <- "cs:subj:time"
     selected_term <- "cs:time"
-  } else if (!time && !is.null(group)) {
+  } else if (!time && !is.null(group)  && (is.null(between))) {
     anova_terms <- "resp ~ group*cs + subj"
     group = NULL
-    #selected_term <- "cs:group:subj"
     selected_term <- "cs:group"
+  } else if (time && !is.null(group)  && (!is.null(between))) {
+    anova_terms <- "resp ~ cs*time*group*between +  subj"
+    selected_term <- "group:between:cs:time"
+  } else if (!time && !is.null(group)  && (!is.null(between))) {
+    anova_terms <- "resp ~ cs*group*between + subj"
+    selected_term <- "group:between:cs"
   }
 
   # Run the main ANOVA

@@ -7,8 +7,9 @@
 #' @param time should time be included? Default to TRUE.
 #' @param between The column name of a second between group variable.
 #' @param correction whether the Greenhouse-Geisser correction should be applied or not. Default to \code{FALSE}.
+#' @param return_warnings Logical. Should warnings be returned (default to \code{TRUE}).
 #' @return A basic function for running repeated measures ANOVAs.
-#' @details In case the \code{time} argument is set to \cite{TRUE} (default value), the function will include this as a within subjects factor, assuming that the columns in
+#' @details In case the \code{time} argument is set to \code{TRUE} (default value), the function will include this as a within subjects factor, assuming that the columns in
 #' \code{cs1} and \code{cs2} correspond to ascending time points (e.g., cs1
 #' trial 1, cs1 trial 2 ... cs1 trial \code{n}). If this is not the case, the
 #' results are not to be trusted.
@@ -62,7 +63,8 @@ rm_anova_mf <- function(cs1,
                         dv = "scr",
                         exclusion = "full data",
                         cut_off = "full data",
-                        correction = FALSE) {
+                        correction = FALSE,
+                        return_warnings = TRUE) {
   collection_warning(
     cs1 = cs1,
     cs2 = cs2,
@@ -106,6 +108,9 @@ rm_anova_mf <- function(cs1,
   } else if (time && !is.null(group)  && (!is.null(between))) {
     anova_terms <- c("cs", "time")
     selected_term <- "group:between:cs:time"
+  } else if (!time && !is.null(group)  && (!is.null(between))) {
+    anova_terms <- c("cs", "time")
+    selected_term <- "between:cs"
   }
 
   # Run the main ANOVA
@@ -145,7 +150,7 @@ rm_anova_mf <- function(cs1,
             return_aov = TRUE
             )'
         ))))
-  } else if (!is.null(group)  && (!is.null(between))) {
+  } else if (!is.null(group) && (!is.null(between))) {
     tmpANOVA <-
       suppressWarnings(eval(parse(
         text =
@@ -194,7 +199,7 @@ rm_anova_mf <- function(cs1,
     es.type = "d"
   )
 
-  if(!is.null(cs3)) {
+  if(!is.null(cs3) & return_warnings) {
     warning(
       "You have selected 3 CSs. At the moment the package does not support
             the meta-analytic effect size for more than 2 stimuli. The reported meta-analytic effect
@@ -202,7 +207,7 @@ rm_anova_mf <- function(cs1,
     )
   }
 
-  if(!is.null(between)) {
+  if(!is.null(between) & return_warnings) {
     warning(
       "You have selected the between variable. At the moment the package does not support
             the meta-analytic effect size including multiple between group variables. The reported meta-analytic effect
@@ -212,7 +217,6 @@ rm_anova_mf <- function(cs1,
 
   # Shape the object for the results. The suppressWarnings is there due to
   # the warning returned by broom::tidy.
-  #
   res_preparation <-
     suppressWarnings(purrr::map_df(tmpANOVA$aov, .f = broom::tidy)) %>%
     dplyr::filter(term %in% selected_term) %>%

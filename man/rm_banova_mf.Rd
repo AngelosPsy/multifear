@@ -16,7 +16,8 @@ rm_banova_mf(
   phase = "acquisition",
   dv = "scr",
   exclusion = "full data",
-  cut_off = "full data"
+  cut_off = "full data",
+  return_warnings = TRUE
 )
 }
 \arguments{
@@ -43,6 +44,8 @@ rm_banova_mf(
 \item{exclusion}{If any exclusion criteria were applied, default to \code{full data}}
 
 \item{cut_off}{cut off}
+
+\item{return_warnings}{Logical. Should warnings be returned (default to \code{TRUE}).}
 }
 \value{
 A tibble with the following column names:
