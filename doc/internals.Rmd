@@ -88,7 +88,7 @@ Importantly, for the ANOVAs it will run all interactions possible and will repor
 The main function of the repeated measures ANOVA. The function runs full ANOVAs using all possible factor. This means that if the `group` argument is defined the group factor will be taken into account. If the 
 `time` argument is defined then the time is included in the ANOVA. If no one of these argument is defined, then the only factor that is run is the cs factor with two levels (cs1 vs. cs2). 
 
-The interesting thing is the meta-analytic effect size. This is the omega squared effect size and its confidence intervals. This is what thee package does at the moment but for future versions, where there will be much more flexibility in the factors, this effect size may change.
+The interesting thing is the meta-analytic effect size. This is the omega squared effect size and its confidence intervals. This is what thee package does at the moment but for future versions, where there will be much more flexibility in the factors, this effect size may change. 
 
 # rm_banova_mf()
 This function starts as the `rm_anova_mf()` function by determining thee different factors of the ANOVA. 
