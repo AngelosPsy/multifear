@@ -1,0 +1,101 @@
+---
+title: "Explaining how the package works"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Explaining how the package works}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(multifear)
+```
+
+One key idea behind the development of the `multifear` package is that the user
+does as little as possible before getting a result. This, however, means that
+the user has to inspect the code in order to see what exactly is going on, 
+a common problem when trying to create user friendly software. As we realize that
+not all users are familiar with R so simply do not have time to go through thousands
+lines of code, here we present some of the key points about what is going on when
+the code is run, separately for each function. Similar information is provided
+in the corresponding help files but here everything is at one place.
+
+## chop_cs()
+This function is used internally to separate the conditioned responses -- into
+blocks of trials. This means that although the user will provided the conditioned
+responses for each trial separately (e.g., trial 1, trial 2, ... trial X), the
+function will separate the trials according to how the conditioned responses are seperated
+in the literature. Specifically, we have the following columns:
+id" = id column; "top10per" = mean of top 10 "bottom10per" = mean of bottom 10 "minfirst = all trials minus the first one; "all" = mean of all trials; "t33per = mean of top 33 "m33per" = mean of medium 33 "b33per" = mean of bottom 33 "fhalf" = mean of first half of the trials; "lhalf" = mean of last half of the trials; "ftrial" = first trial; "ltrial" = last trial; "t20per" = mean of top 20 "b20per" = mean of bottom 20 "f2trial" = mean of first two trials; "l2trial" = mean of last two trials; "per2_X" = mean per two trials (i.e., block), with X referring to the number of block.
+
+One question is what happens when seperating the trials in 'non-perfect' blocks (e.g., when we seperate trials in 2 blocks and there are 9 trials). In these cases, the last block has the extra trial.
+
+## chop_css()
+This is just a wrapper function for running the `chop_cs` two times -- once for cs1 and once for cs2.
+
+## combine_cs()
+This is just a small function computing the row means of a data frame, where in our case the data frame includes the conditioned responses.
+
+# example_data
+This is just an example data set that you can use for playing with the package. 
+
+# exclusion_criteria()
+At this point this function is not used extensively, or has any effect when it is used, in the package but was created for future use where exclusioon criteria are implicated in the package.
+
+# t_test_mf()
+The logic followed is largely the same as in the `bt_test_mf()` function, but this time we do not consider any priors or scale factors. 
+
+# bt_test_mf()
+This function is used for running Bayesian t-tests.The workhorse of this function is the \code{BayesFactor::ttestBF}, in the `BayesFactor` package. The reader is adviced to also look at that function apart from \code{multifear::bt_test_mf}.
+
+Specifically, the function begins by 'deciding' whether to run an independent samples or paired t-test. This is done based on whether the `group` parameter is set to `NULL`, where the function will run a paired-samples t-test, or has a value, in which case the function will run a paired samples t-tests.
+
+Then, the function will run seperate 3 t-tests, one for each prior for the null interval: a) from -Inf to +Inf, b) from -Inf to 0, and c) from 0 to -Inf. For more information on that check the `nullIInterval` argument in the \code{BayesFactor::ttestBF} function. The `rscale`, this is the scale factor for the Cauchy distribution, is set to 0.707 -- see the help function for alternatives.
+
+After running the tests, the function just selects the 2 t-tests that are most relevant for the particular phase; the options `a` and `c` for the acquisition phase and `a` and `b` for the extinction phase.
+
+# forestplot_mf()
+Just a forest plot where we have all effect sizes and their confidence intervals. The effect sizes are calculated with the `universe_mf` or `multiverse_mf` function.
+
+# inference_cs()
+This is a simple function that tries to summarize the findings in terms of proportions and averages of p-values/Bayes factor that are above/beyond a specific level. This is done based on simple maths -- proportions and averages.
+
+# inference_plot()
+This function just plots the results of the `inference_cs()` function.
+
+# multiverse_cs()
+This function just runs multiple instances of the `universe_cs`, but this time using
+different data sets, where you have different exclusion criteria, resulting in different
+data sets. Think of it as a loop across the different data sets created by the chop_cs()
+function.
+
+universe_cs()
+This is the main function for running the multiverse. It is actually just a wrapper
+of all the different functions described above. How it works: the function starts
+by determining if there are any groups that need to be accounted for (this is based on the `group` argument in thee function). According to it, then, decides what type of ANOVAs, t-tests, and 
+mixed models should be run. As such, it is just a wrapper of all the functions for running all tests.
+
+Importantly, for the ANOVAs it will run all interactions possible and will report the effects of the highest order interaction -- if there are interactions in the data in the first place.
+
+# rm_anova_mf()
+The main function of the repeated measures ANOVA. The function runs full ANOVAs using all possible factor. This means that if the `group` argument is defined the group factor will be taken into account. If the 
+`time` argument is defined then the time is included in the ANOVA. If no one of these argument is defined, then the only factor that is run is the cs factor with two levels (cs1 vs. cs2). 
+
+The interesting thing is the meta-analytic effect size. This is the omega squared effect size and its confidence intervals. This is what thee package does at the moment but for future versions, where there will be much more flexibility in the factors, this effect size may change. 
+
+# rm_banova_mf()
+This function starts as the `rm_anova_mf()` function by determining thee different factors of the ANOVA. 
+Then, it just runs a simple Bayesian ANOVA with the \code{BayesFactor::anovaBF} package. 
+
+
+mixed_mf()
+
+
+
