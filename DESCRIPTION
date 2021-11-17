@@ -32,7 +32,8 @@ Imports:
     effectsize (>= 0.4.1),
     esc (>= 0.5.1),
     forestplot (>= 1.10),
-    bootstrap (>= 2019.6)
+    bootstrap (>= 2019.6),
+    nloptr (>= 1.2.2.3)
 RoxygenNote: 7.1.1
 Suggests:
     gridExtra (>= 2.3),
