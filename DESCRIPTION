@@ -9,7 +9,7 @@ Authors@R:
              email = "amkrypotos@gmail.com"))
 Maintainer: Angelos-Miltiadis Krypotos <amkrypotos@gmail.com>
 Description: A suite of functions for performing analyses, based on a multiverse approach, for conditioning data. Specifically, given the appropriate data, the functions are able to perform t-tests, analyses of variance, and mixed models for the provided data and return summary statistics and plots. The function is also able to return for all those tests p-values, confidence intervals, and Bayes factors. The methods are described in Lonsdorf, Gerlicher, Klingelhofer-Jens, & Krypotos <doi:10.31234/osf.io/2z6pd>.
-Depends: R (>= 3.6.0)    
+Depends: R (>= 3.4.0)    
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
@@ -33,7 +33,7 @@ Imports:
     esc (>= 0.5.1),
     forestplot (>= 1.10),
     bootstrap (>= 2019.6),
-    nloptr (>= 1.2.2.3)
+    igraph (>= 1.2.8)
 RoxygenNote: 7.1.1
 Suggests:
     gridExtra (>= 2.3),
