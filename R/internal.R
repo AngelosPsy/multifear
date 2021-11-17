@@ -282,11 +282,8 @@ exclude_cases <- function(excl_data_sets){
   # Exclude cases
   # Remove empty data -- this can happen
   # if you have removed too many participants
-  excl_data_sets <-
-    excl_data_sets %>%
-    dplyr::mutate(excl = excl_data_sets$used_data %>%
-                    lapply(plyr::empty) %>%
-                    data.frame() %>% t())
+  excl_data_sets <- excl_data_sets %>%
+    dplyr::mutate(excl = purrr::map_lgl(excl_data_sets$used_data, plyr::empty))
 
   # Return warning if you have excluded any of the data sets
   if (any(excl_data_sets$excl == TRUE)) {
