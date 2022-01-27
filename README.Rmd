@@ -146,6 +146,13 @@ res_multi <- multifear::multiverse_cs(cs1 = cs1, cs2 = cs2, data = example_data,
 res_multi
 ```
 
+Importantly, `multifear` is able to run the same analyses even when groups are included. This can be simply done by definying the name of the column that includes the group levels (in the example data set that name is "group"). Then, you can just run the same line of code, after defying the group parameter, as follows:
+
+```{r, warning = FALSE}
+res_multi_group <- multifear::multiverse_cs(cs1 = cs1, cs2 = cs2, data = example_data, subj = "id", group = "group", phase = "acquisition", include_bayes = TRUE, include_mixed = TRUE)
+res_multi_group
+```
+
 In terms of calling the function, we see that we need exactly the same arguments as before. Internally, the function actually applies the multifear::universe_cs but now apart from the full data set, also for the data sets with different data inclusion procedures. Whether each line refers to the full data set or any of the exclusion criteria, we can see on the column exclusion criteria or in the data_used column, although there it is difficult to see what happened and it serves only reproduction criteria. So, the easiest thing to do is to see the exclusion column. Now, it has the following levels:
 
 ```{r}
@@ -194,16 +201,35 @@ inconclusive evidence -- by default this is 0
 multifear::inference_cs(res_multi, na.rm = TRUE)
 ```
 
+The inference when we have groups follow:
+
+```{r}
+multifear::inference_cs(res_multi_group, na.rm = TRUE)
+```
+
+
 And here we have a barplot of the results:
 
 ```{r}
 multifear::inference_plot(res_multi, add_line = FALSE)
 ```
 
-Lastly, to plot the effect sizes, you can use the following function
+And the same for when we have groups:
+
+```{r}
+multifear::inference_plot(res_multi_group, add_line = FALSE)
+```
+
+Lastly, to plot the effect sizes, you can use the following function for the within-subjects effects:
 
 ```{r}
 multifear::forestplot_mf(res_multi)
+```
+
+and for the groups:
+
+```{r}
+multifear::forestplot_mf(res_multi_group)
 ```
 
 

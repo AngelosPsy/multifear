@@ -249,6 +249,35 @@ res_multi
 #> #   data_used <list>, efffect.size.ma <lgl>
 ```
 
+Importantly, `multifear` is able to run the same analyses even when
+groups are included. This can be simply done by definying the name of
+the column that includes the group levels (in the example data set that
+name is “group”). Then, you can just run the same line of code, after
+defying the group parameter, as follows:
+
+``` r
+res_multi_group <- multifear::multiverse_cs(cs1 = cs1, cs2 = cs2, data = example_data, subj = "id", group = "group", phase = "acquisition", include_bayes = TRUE, include_mixed = TRUE)
+#> Skipping ANOVA due to the number of trials for the cs1 and/or cs2.
+res_multi_group
+#> # A tibble: 116 × 19
+#>    x         y     exclusion cut_off model controls method   p.value effect.size
+#>    <chr>     <chr> <chr>     <chr>   <chr> <lgl>    <chr>      <dbl>       <dbl>
+#>  1 cs        scr   full_data full d… t-te… NA       great…  3.70e- 2     0.577  
+#>  2 cs        scr   full_data full d… t-te… NA       two.s…  7.41e- 2     0.577  
+#>  3 cs        scr   full_data full d… Baye… NA       Bayes… NA           NA      
+#>  4 cs        scr   full_data full d… Baye… NA       Bayes… NA           NA      
+#>  5 group:cs… scr   full_data full d… rep … NA       rep A…  3.43e- 1     0.00288
+#>  6 group:cs  scr   full_data full d… rep … NA       rep A…  4.60e- 1    -0.00475
+#>  7 cscs2     scr   full_data <NA>    mixe… NA       mixed…  1.80e-13    NA      
+#>  8 cscs2:ti… scr   full_data <NA>    mixe… NA       mixed…  5.92e- 7    NA      
+#>  9 cscs2     scr   full_data <NA>    mixe… NA       mixed…  1.82e- 5    NA      
+#> 10 cscs2:ti… scr   full_data <NA>    mixe… NA       mixed…  2.16e- 2    NA      
+#> # … with 106 more rows, and 10 more variables: effect.size.ma <dbl>,
+#> #   effect.size.ma.lci <dbl>, effect.size.ma.hci <dbl>, estimate <dbl>,
+#> #   statistic <dbl>, conf.low <dbl>, conf.high <dbl>, framework <chr>,
+#> #   data_used <list>, efffect.size.ma <lgl>
+```
+
 In terms of calling the function, we see that we need exactly the same
 arguments as before. Internally, the function actually applies the
 multifear::universe_cs but now apart from the full data set, also for
@@ -308,9 +337,19 @@ function and you will get:
 ``` r
 multifear::inference_cs(res_multi, na.rm = TRUE)
 #>   mean_p_value median_p_value sd_p_value prop_p_value mean_bf_value
-#> 1    0.1074323     0.00638261  0.2341194     82.35294      1896.974
+#> 1    0.1074323     0.00638261  0.2341194     82.35294       1982.91
 #>   median_bf_value sd_bf_value prop_bf_value
-#> 1        4.319848    10224.61      73.52941
+#> 1        4.384012    10712.11      73.52941
+```
+
+The inference when we have groups follow:
+
+``` r
+multifear::inference_cs(res_multi_group, na.rm = TRUE)
+#>   mean_p_value median_p_value sd_p_value prop_p_value mean_bf_value
+#> 1    0.3538675      0.3331223   0.295618     17.64706      5.791675
+#>   median_bf_value sd_bf_value prop_bf_value
+#> 1       0.5895996    7.595155      41.17647
 ```
 
 And here we have a barplot of the results:
@@ -319,17 +358,39 @@ And here we have a barplot of the results:
 multifear::inference_plot(res_multi, add_line = FALSE)
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-14-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-16-1.png)<!-- -->
 
     #> TableGrob (1 x 2) "arrange": 2 grobs
     #>   z     cells    name           grob
     #> 1 1 (1-1,1-1) arrange gtable[layout]
     #> 2 2 (1-1,2-2) arrange gtable[layout]
 
-Lastly, to plot the effect sizes, you can use the following function
+And the same for when we have groups:
+
+``` r
+multifear::inference_plot(res_multi_group, add_line = FALSE)
+```
+
+![](README_files/figure-gfm/unnamed-chunk-17-1.png)<!-- -->
+
+    #> TableGrob (1 x 2) "arrange": 2 grobs
+    #>   z     cells    name           grob
+    #> 1 1 (1-1,1-1) arrange gtable[layout]
+    #> 2 2 (1-1,2-2) arrange gtable[layout]
+
+Lastly, to plot the effect sizes, you can use the following function for
+the within-subjects effects:
 
 ``` r
 multifear::forestplot_mf(res_multi)
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-15-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-18-1.png)<!-- -->
+
+and for the groups:
+
+``` r
+multifear::forestplot_mf(res_multi_group)
+```
+
+![](README_files/figure-gfm/unnamed-chunk-19-1.png)<!-- -->
