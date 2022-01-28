@@ -159,6 +159,8 @@ bt_test_mf <-
       method = paste("Bayesian t-test", type_test),
       p.value = NA,
       effect.size = NA,
+      effect.size.lci = NA,
+      effect.size.hci = NA,
       effect.size.ma = NA,
       estimate = ttl,
       statistic = NA,

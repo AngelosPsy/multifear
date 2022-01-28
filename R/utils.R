@@ -42,6 +42,8 @@
   utils::globalVariables ("cs2_minfirst")
   utils::globalVariables ("cs2_t10per")
   utils::globalVariables ("cs2_mean")
+  utils::globalVariables ("effect.size.hci")
+  utils::globalVariables ("effect.size.lci")
   utils::globalVariables ("conf.high")
   utils::globalVariables ("conf.low")
   utils::globalVariables ("controls")

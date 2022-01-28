@@ -5,6 +5,7 @@
 #' @param data a universe_mf or multiverse_mf object
 #' @param ci should confidence intervals be included -- default to TRUE
 #' @param include_label_text Whether the labels for each effect should be include. Default to \code{TRUE}
+#' @param common_effect If a common effect size should be computed across effects. Default to \code{FALSE}
 #' @param ... any additional argument
 #' @details This is a wrapper around the \code{forestplot::forestplot} function.
 #' The function only uses the ANOVAs and the t-tests. For the t-tests though
@@ -19,7 +20,7 @@
 #' @export
 
 forestplot_mf <-
-  function(data, ci = TRUE, include_label_text = TRUE, ...) {
+  function(data, ci = TRUE, include_label_text = TRUE, common_effect = FALSE, ...) {
     data %>%
       dplyr::filter(framework == "NHST") -> data
 
@@ -56,12 +57,24 @@ forestplot_mf <-
       dplyr::arrange(method, method_order) %>%
       dplyr::filter(!method %in% c("greater", "less")) -> data
 
-      lci <- data$effect.size.ma.lci
-      hci <- data$effect.size.ma.hci
+      if (common_effect){
+        lci <- data$effect.size.ma.lci
+        hci <- data$effect.size.ma.hci
+        mean_ma <- data$effect.size.ma
+      } else{
+        mean_ma <- data$effect.size
+        lci <- mean_ma - data$effect.size
+        hci <- mean_ma + data$effect.size
+      }
 
-      if(ci == FALSE){
-        lci <- data$effect.size.ma - 0.0001 # Zero did not work
-        hci <- data$effect.size.ma + 0.0001
+      if(ci == FALSE) {
+        if (common_effect) {
+          lci <- data$effect.size.ma - 0.0001 # Zero did not work
+          hci <- data$effect.size.ma + 0.0001
+        } else {
+          lci <- data$effect.size - 0.0001 # Zero did not work
+          hci <- data$effect.size + 0.0001
+        }
       }
 
       data$method[which(data$method == "two.sided")] <- "t-test"
@@ -70,13 +83,13 @@ forestplot_mf <-
         labeltext <-
           paste(data$method, rep("| data used:", nrow(data), sep = ""),  data$method2)
       } else{
-        labeltext <- rep(" ", length(data$effect.size.ma))
+        labeltext <- rep(" ", length(mean_ma))
       }
 
       forestplot::forestplot(
         labeltext =  labeltext,
         boxsize = .25,
-        mean = data$effect.size.ma,
+        mean = mean_ma,
         lower = lci,
         upper = hci,
         ...

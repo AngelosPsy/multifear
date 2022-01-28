@@ -145,9 +145,7 @@ rm_anova_mf <- function(cs1,
   # Effect size. Here we have the omega squared
   eff_size <- effectsize::omega_squared(tmpANOVA$aov, partial = FALSE) %>%
     data.frame() %>%
-    dplyr::filter(Parameter %in% c(paste0("subj:", selected_term), selected_term)) %>%
-    dplyr::select(Omega2) %>%
-    as.numeric()
+    dplyr::filter(Parameter %in% c(paste0("subj:", selected_term), selected_term))
 
   # meta-analytic effect size. We use explained variance so we have eta squared
   es.ma <- effectsize::eta_squared(tmpANOVA$aov, partial = FALSE, ci = .90) %>%
@@ -171,7 +169,9 @@ rm_anova_mf <- function(cs1,
       estimate = NA,
       conf.low = NA,
       conf.high = NA,
-      effect.size = eff_size,
+      effect.size = eff_size$Omega2,
+      effect.size.lci = eff_size$CI_low,
+      effect.size.hci = eff_size$CI_high,
       effect.size.ma = es.ma$Eta2,#Cohens_f, #Eta2, #es.ma$es,
       effect.size.ma.lci = es.ma$CI_low, #es.ma$ci.lo,
       effect.size.ma.hci = es.ma$CI_high, #es.ma$ci.hi,
@@ -196,6 +196,8 @@ rm_anova_mf <- function(cs1,
                   method,
                   p.value,
                   effect.size,
+                  effect.size.lci,
+                  effect.size.hci,
                   effect.size.ma,
                   effect.size.ma.lci,
                   effect.size.ma.hci,

@@ -34,7 +34,7 @@ Imports:
     forestplot (>= 1.10),
     bootstrap (>= 2019.6),
     igraph (>= 1.2.8)
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 Suggests:
     gridExtra (>= 2.3),
     fastDummies (>= 1.6.1),

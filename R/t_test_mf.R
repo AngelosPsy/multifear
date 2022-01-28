@@ -240,6 +240,8 @@ t_test_mf <-
       ttest_res <-
         purrr::invoke("rbind", ttest_prep) %>%
         dplyr::mutate(effect.size = rep(ttest_es$estimate, 3),
+                      effect.size.lci = rep(ttest_es$conf.int[[1]], 3),
+                      effect.size.hci = rep(ttest_es$conf.int[[2]], 3),
                       effect.size.ma = rep(esc::eta_squared(d = es_ma), 3),
                      effect.size.ma.lci = rep(esc::eta_squared(d = es_ma - ci_ma), 3),
                      effect.size.ma.hci = rep(esc::eta_squared(d = es_ma + ci_ma), 3))
@@ -304,6 +306,8 @@ t_test_mf <-
         method,
         p.value,
         effect.size,
+        effect.size.lci,
+        effect.size.hci,
         effect.size.ma,
         effect.size.ma.lci,
         effect.size.ma.hci,
