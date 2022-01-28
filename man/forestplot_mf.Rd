@@ -4,7 +4,13 @@
 \alias{forestplot_mf}
 \title{forestplot_mf}
 \usage{
-forestplot_mf(data, ci = TRUE, include_label_text = TRUE, ...)
+forestplot_mf(
+  data,
+  ci = TRUE,
+  include_label_text = TRUE,
+  reported_effect = "common",
+  ...
+)
 }
 \arguments{
 \item{data}{a universe_mf or multiverse_mf object}
@@ -12,6 +18,8 @@ forestplot_mf(data, ci = TRUE, include_label_text = TRUE, ...)
 \item{ci}{should confidence intervals be included -- default to TRUE}
 
 \item{include_label_text}{Whether the labels for each effect should be include. Default to \code{TRUE}}
+
+\item{reported_effect}{Option as to what effect size to report. The options are: "common" (default option), "anova", or "ttest".}
 
 \item{...}{any additional argument}
 }
