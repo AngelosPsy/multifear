@@ -5,8 +5,6 @@
 [![Travis build
 status](https://travis-ci.org/AngelosPsy/multifear.svg?branch=master)](https://travis-ci.org/AngelosPsy/multifear)
 [![codecov](https://codecov.io/gh/AngelosPsy/multifear/branch/master/graph/badge.svg)](https://codecov.io/gh/AngelosPsy/multifear)
-[![R build
-status](https://github.com/AngelosPsy/multifear/workflows/R-CMD-check/badge.svg)](https://github.com/AngelosPsy/multifear/actions)
 [![R-CMD-check](https://github.com/AngelosPsy/multifear/workflows/R-CMD-check/badge.svg)](https://github.com/AngelosPsy/multifear/actions)
 <!-- badges: end -->
 
@@ -337,9 +335,9 @@ function and you will get:
 ``` r
 multifear::inference_cs(res_multi, na.rm = TRUE)
 #>   mean_p_value median_p_value sd_p_value prop_p_value mean_bf_value
-#> 1    0.1074323     0.00638261  0.2341194     82.35294       1982.91
+#> 1    0.1074323     0.00638261  0.2341194     82.35294      1850.999
 #>   median_bf_value sd_bf_value prop_bf_value
-#> 1        4.384012    10712.11      73.52941
+#> 1        4.319848    9944.411      73.52941
 ```
 
 The inference when we have groups follow:
@@ -347,9 +345,9 @@ The inference when we have groups follow:
 ``` r
 multifear::inference_cs(res_multi_group, na.rm = TRUE)
 #>   mean_p_value median_p_value sd_p_value prop_p_value mean_bf_value
-#> 1    0.3538675      0.3331223   0.295618     17.64706      5.791675
+#> 1    0.3538675      0.3331223   0.295618     17.64706      5.784902
 #>   median_bf_value sd_bf_value prop_bf_value
-#> 1       0.5895996    7.595155      41.17647
+#> 1       0.5583615    7.599891      41.17647
 ```
 
 And here we have a barplot of the results:
