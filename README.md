@@ -233,7 +233,10 @@ Now, we want to perform the same analyses but for different data
 reduction procedures (see below). We can do it simply by:
 
 ``` r
-res_multi <- multifear::multiverse_cs(cs1 = cs1, cs2 = cs2, data = example_data, subj = "id", group = NULL, phase = "acquisition", include_bayes = TRUE, include_mixed = TRUE)
+res_multi <- multifear::multiverse_cs(cs1 = cs1, cs2 = cs2, data = example_data,
+                                      subj = "id", group = NULL, 
+                                      phase = "acquisition", 
+                                      include_bayes = TRUE, include_mixed = TRUE)
 #> Skipping ANOVA due to the number of trials for the cs1 and/or cs2.
 res_multi
 #> # A tibble: 116 × 21
@@ -314,9 +317,9 @@ function and you will get:
 ``` r
 multifear::inference_cs(res_multi, na.rm = TRUE)
 #>   mean_p_value median_p_value sd_p_value prop_p_value mean_bf_value
-#> 1    0.1074323     0.00638261  0.2341194     82.35294      1974.252
+#> 1    0.1074323     0.00638261  0.2341194     82.35294      1868.888
 #>   median_bf_value sd_bf_value prop_bf_value
-#> 1        4.319848    10648.52      73.52941
+#> 1        4.341644    10044.94      73.52941
 ```
 
 And here we have a barplot of the results:
@@ -351,7 +354,10 @@ just run the same line of code as in example 1, after defying the group
 parameter, as follows:
 
 ``` r
-res_multi_group <- multifear::multiverse_cs(cs1 = cs1, cs2 = cs2, data = example_data, subj = "id", group = "group", phase = "acquisition", include_bayes = TRUE, include_mixed = TRUE)
+res_multi_group <- multifear::multiverse_cs(cs1 = cs1, cs2 = cs2,
+                                            data = example_data, subj = "id", 
+                                            group = "group", phase = "acquisition",
+                                            include_bayes = TRUE, include_mixed = TRUE)
 #> Skipping ANOVA due to the number of trials for the cs1 and/or cs2.
 res_multi_group
 #> # A tibble: 116 × 21

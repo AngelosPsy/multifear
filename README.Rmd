@@ -145,7 +145,10 @@ Let's go through each column separately
 Now, we want to perform the same analyses but for different data reduction procedures (see below). We can do it simply by:
 
 ```{r, warning = FALSE}
-res_multi <- multifear::multiverse_cs(cs1 = cs1, cs2 = cs2, data = example_data, subj = "id", group = NULL, phase = "acquisition", include_bayes = TRUE, include_mixed = TRUE)
+res_multi <- multifear::multiverse_cs(cs1 = cs1, cs2 = cs2, data = example_data,
+                                      subj = "id", group = NULL, 
+                                      phase = "acquisition", 
+                                      include_bayes = TRUE, include_mixed = TRUE)
 res_multi
 ```
 
@@ -221,7 +224,10 @@ multifear::forestplot_mf(res_multi)
 Importantly, `multifear` is able to run the same analyses as in example 1 even when groups are included. This can be simply done by defining the name of the column that includes the group levels (in the example data set that name is "group" but you can use any other name). Then, you can just run the same line of code as in example 1, after defying the group parameter, as follows:
   
 ```{r, warning = FALSE}
-res_multi_group <- multifear::multiverse_cs(cs1 = cs1, cs2 = cs2, data = example_data, subj = "id", group = "group", phase = "acquisition", include_bayes = TRUE, include_mixed = TRUE)
+res_multi_group <- multifear::multiverse_cs(cs1 = cs1, cs2 = cs2,
+                                            data = example_data, subj = "id", 
+                                            group = "group", phase = "acquisition",
+                                            include_bayes = TRUE, include_mixed = TRUE)
 res_multi_group
 ```
 
