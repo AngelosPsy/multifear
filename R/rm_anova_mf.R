@@ -67,6 +67,7 @@
 #' data = example_data, time = TRUE)
 #' @importFrom stats time
 #' @importFrom stats na.omit
+#' @importFrom ez ezANOVA
 #' @export
 rm_anova_mf <- function(cs1,
                         cs2,
