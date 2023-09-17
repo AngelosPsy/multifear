@@ -57,6 +57,9 @@
 #' \code{\link[nlme]{lme}}
 #'
 #' @examples
+#' # Load example data
+#' data(example_data)
+#'
 #' cs1 <- paste0("CSP", 1:2)
 #' cs2 <- paste0("CSM", 1:2)
 #' subj <- "id"

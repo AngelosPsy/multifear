@@ -92,6 +92,9 @@ The model is fit by maximizing the log-likelihood (i.e., "ML" term in nlme::lme)
 The model comparison is done using `BIC`.
 }
 \examples{
+# Load example data
+data(example_data)
+
 cs1 <- paste0("CSP", 1:2)
 cs2 <- paste0("CSM", 1:2)
 subj <- "id"

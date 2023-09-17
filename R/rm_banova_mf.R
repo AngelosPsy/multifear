@@ -53,6 +53,7 @@
 #' # Briefly define argument values that will be plugged in later on in the functions.
 #' # We only use two trials as the function takes a long time to run.
 #'
+#' data(example_data)
 #' cs1 <- paste0("CSP", 1:2)
 #' cs2 <- paste0("CSM", 1:2)
 #' subj <- "id"
