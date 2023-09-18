@@ -2,10 +2,9 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 <!-- badges: start -->
 
-[![Travis build
-status](https://travis-ci.org/AngelosPsy/multifear.svg?branch=master)](https://travis-ci.org/AngelosPsy/multifear)
 [![codecov](https://codecov.io/gh/AngelosPsy/multifear/branch/master/graph/badge.svg)](https://codecov.io/gh/AngelosPsy/multifear)
 [![R-CMD-check](https://github.com/AngelosPsy/multifear/workflows/R-CMD-check/badge.svg)](https://github.com/AngelosPsy/multifear/actions)
+[![R-CMD-check](https://github.com/AngelosPsy/multifear/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/AngelosPsy/multifear/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 # Multifear
@@ -135,24 +134,24 @@ Now we need to analyse the data. For this we will use the
 *multifear::universe_cs* function. In order for this function to work,
 we need to provide the following arguments.
 
--   CS1: This will be the column names that contain the conditioned
-    responses for the CS+ (i.e., CSP1 until CSP10).
+- CS1: This will be the column names that contain the conditioned
+  responses for the CS+ (i.e., CSP1 until CSP10).
 
--   CS2: This will be the column names that contain the conditioned
-    response for the CS- (i.e., CSM1 until CSM10).
+- CS2: This will be the column names that contain the conditioned
+  response for the CS- (i.e., CSM1 until CSM10).
 
--   data: This is our data frame that contain that data for the CS+,
-    CS-, as well as the column with the participant number.
+- data: This is our data frame that contain that data for the CS+, CS-,
+  as well as the column with the participant number.
 
--   group. In case of a group, then we need to specify the column with
-    the group name. The default option is that there are no groups. In
-    this first example we do not use any groups but we will do that in
-    our second example – see below.
+- group. In case of a group, then we need to specify the column with the
+  group name. The default option is that there are no groups. In this
+  first example we do not use any groups but we will do that in our
+  second example – see below.
 
--   phase. Here we define the conditioning phase that the data were
-    collected in (e.g., acquisition phase, extinction phase, etc).
-    Please note that in case the user has multiple phases, she/he needs
-    to run the function separately for each phases.
+- phase. Here we define the conditioning phase that the data were
+  collected in (e.g., acquisition phase, extinction phase, etc). Please
+  note that in case the user has multiple phases, she/he needs to run
+  the function separately for each phases.
 
 There are some other options in the function, such as defining the type
 of conditioning response. However, these are not necessary for now. So,
@@ -173,11 +172,11 @@ res
 #> # A tibble: 4 × 20
 #>   x       y     exclusion cut_off   model    controls method p.value effect.size
 #>   <chr>   <chr> <chr>     <chr>     <chr>    <lgl>    <chr>    <dbl>       <dbl>
-#> 1 cs      scr   full data full data t-test   NA       great… 0.00244      0.577 
-#> 2 cs      scr   full data full data t-test   NA       two.s… 0.00488      0.577 
-#> 3 cs:time scr   full data full data rep ANO… NA       rep A… 0.0152       0.0296
-#> 4 cs      scr   full data full data rep ANO… NA       rep A… 0.00488      0.147 
-#> # … with 11 more variables: effect.size.lci <dbl>, effect.size.hci <dbl>,
+#> 1 cs      scr   full data full data t-test   NA       great… 3.33e-5      0.577 
+#> 2 cs      scr   full data full data t-test   NA       two.s… 6.67e-5      0.577 
+#> 3 cs:time scr   full data full data rep ANO… NA       rep A… 1.52e-2      0.0296
+#> 4 cs      scr   full data full data rep ANO… NA       rep A… 4.88e-3      0.147 
+#> # ℹ 11 more variables: effect.size.lci <dbl>, effect.size.hci <dbl>,
 #> #   effect.size.ma <dbl>, effect.size.ma.lci <dbl>, effect.size.ma.hci <dbl>,
 #> #   estimate <dbl>, statistic <dbl>, conf.low <dbl>, conf.high <dbl>,
 #> #   framework <chr>, data_used <list>
@@ -185,49 +184,46 @@ res
 
 Let’s go through each column separately
 
--   x : is the effect that you are testing. For example, the cs means
-    that you are testing cs differences. cs:time the cs X time
-    interaction is tested. Be careful: when testing interactions, we
-    only report the highest order interaction. That means that if you
-    have a cs x time interaction, you do not get the results of the cs
-    or the time main effect.
+- x : is the effect that you are testing. For example, the cs means that
+  you are testing cs differences. cs:time the cs X time interaction is
+  tested. Be careful: when testing interactions, we only report the
+  highest order interaction. That means that if you have a cs x time
+  interaction, you do not get the results of the cs or the time main
+  effect.
 
--   y: the dependent variable. In the example this is the *scr*
-    responses.
+- y: the dependent variable. In the example this is the *scr* responses.
 
--   exclusion: This columns reports as to what data were included in the
-    data set. For example, here you see that we have only full data sets
-    – no exclusion. This is because the multifear::universe_cs() only
-    analyses full data sets. If we want to apply some exclusion
-    criteria, we need to run the multifear::multiverse_cs() function –
-    see later on.
+- exclusion: This columns reports as to what data were included in the
+  data set. For example, here you see that we have only full data sets –
+  no exclusion. This is because the multifear::universe_cs() only
+  analyses full data sets. If we want to apply some exclusion criteria,
+  we need to run the multifear::multiverse_cs() function – see later on.
 
--   model: What model was used. For example, here we see t-tests, and
-    rep ANOVA (which means repeated measures ANOVA).
+- model: What model was used. For example, here we see t-tests, and rep
+  ANOVA (which means repeated measures ANOVA).
 
--   controls: This column is left empty. I included it because the specs
-    R package had it so we may need to use it later on.
+- controls: This column is left empty. I included it because the specs R
+  package had it so we may need to use it later on.
 
--   method: The method is a combination of the *model* and *x* column.
-    Not really necessary if the other two columns exist.
+- method: The method is a combination of the *model* and *x* column. Not
+  really necessary if the other two columns exist.
 
--   p.value: The p-value of the test
+- p.value: The p-value of the test
 
--   estimate: The estimate that is returned from the test. Keep in mind
-    though that this applies only for the t-test at the moment. We need
-    to see what we can do for the ANOVA,
+- estimate: The estimate that is returned from the test. Keep in mind
+  though that this applies only for the t-test at the moment. We need to
+  see what we can do for the ANOVA,
 
--   statistic. The statistic of the test
+- statistic. The statistic of the test
 
--   conf.low and conf.high In case you have an estimate, this returns
-    the low and high levels of it
+- conf.low and conf.high In case you have an estimate, this returns the
+  low and high levels of it
 
--   framework were the data analysed within a NHST or Bayesian
-    framework?
+- framework were the data analysed within a NHST or Bayesian framework?
 
--   data_used Here you have a data frame with the data used for the
-    performed analyses. This is because someone maybe wants to recreate
-    the results and also as a check that nothing went wrong.
+- data_used Here you have a data frame with the data used for the
+  performed analyses. This is because someone maybe wants to recreate
+  the results and also as a check that nothing went wrong.
 
 Now, we want to perform the same analyses but for different data
 reduction procedures (see below). We can do it simply by:
@@ -242,8 +238,8 @@ res_multi
 #> # A tibble: 116 × 21
 #>    x         y     exclusion cut_off model controls method   p.value effect.size
 #>    <chr>     <chr> <chr>     <chr>   <chr> <lgl>    <chr>      <dbl>       <dbl>
-#>  1 cs        scr   full_data full d… t-te… NA       great…  2.44e- 3      0.577 
-#>  2 cs        scr   full_data full d… t-te… NA       two.s…  4.88e- 3      0.577 
+#>  1 cs        scr   full_data full d… t-te… NA       great…  3.33e- 5      0.577 
+#>  2 cs        scr   full_data full d… t-te… NA       two.s…  6.67e- 5      0.577 
 #>  3 cs        scr   full_data full d… Baye… NA       Bayes… NA            NA     
 #>  4 cs        scr   full_data full d… Baye… NA       Bayes… NA            NA     
 #>  5 cs:time   scr   full_data full d… rep … NA       rep A…  1.52e- 2      0.0296
@@ -252,10 +248,11 @@ res_multi
 #>  8 cscs2:ti… scr   full_data <NA>    mixe… NA       mixed…  5.92e- 7     NA     
 #>  9 cscs2     scr   full_data <NA>    mixe… NA       mixed…  1.82e- 5     NA     
 #> 10 cscs2:ti… scr   full_data <NA>    mixe… NA       mixed…  2.16e- 2     NA     
-#> # … with 106 more rows, and 12 more variables: effect.size.lci <dbl>,
-#> #   effect.size.hci <dbl>, effect.size.ma <dbl>, effect.size.ma.lci <dbl>,
-#> #   effect.size.ma.hci <dbl>, estimate <dbl>, statistic <dbl>, conf.low <dbl>,
-#> #   conf.high <dbl>, framework <chr>, data_used <list>, efffect.size.ma <lgl>
+#> # ℹ 106 more rows
+#> # ℹ 12 more variables: effect.size.lci <dbl>, effect.size.hci <dbl>,
+#> #   effect.size.ma <dbl>, effect.size.ma.lci <dbl>, effect.size.ma.hci <dbl>,
+#> #   estimate <dbl>, statistic <dbl>, conf.low <dbl>, conf.high <dbl>,
+#> #   framework <chr>, data_used <list>, efffect.size.ma <lgl>
 ```
 
 In terms of calling the function, we see that we need exactly the same
@@ -276,50 +273,50 @@ res_multi$exclusion %>% unique()
 
 The explanation of each level is the following:
 
-1.  fl2trials: first and last two trials.
+1)  fl2trials: first and last two trials.
 
-2.  fltrials: first and last trial
+2)  fltrials: first and last trial
 
-3.  full_data: full data set
+3)  full_data: full data set
 
-4.  halves: use the first and last half of the trial. So, if you have 10
+4)  halves: use the first and last half of the trial. So, if you have 10
     trials, you will have the first 5 and last 5 trials
 
-5.  min_first: take all trials apart from the first one
+5)  min_first: take all trials apart from the first one
 
-6.  separate trials per 2
+6)  separate trials per 2
 
-7.  separate trials per 10%
+7)  separate trials per 10%
 
-8.  separate trials per 33%
+8)  separate trials per 33%
 
-9.  separate trials per 20%
+9)  separate trials per 20%
 
 ## Inferences
 
 This is the most challenging part. For now you can use the following
 function and you will get:
 
-1.  A histogram will all the p value and a red line showing the
+1)  A histogram will all the p value and a red line showing the
     significance limit – by default alpha = 0.05
 
-2.  A histogram will all the Bayes factors and a red line showing the
+2)  A histogram will all the Bayes factors and a red line showing the
     limit of inconclusive evidence – by default this is 0
 
-3.  Mean and median p values
+3)  Mean and median p values
 
-4.  the number of p values below the significance level
+4)  the number of p values below the significance level
 
-5.  Mean and median of Bayes factors
+5)  Mean and median of Bayes factors
 
-6.  the proportion of Bayes factors above 1
+6)  the proportion of Bayes factors above 1
 
 ``` r
 multifear::inference_cs(res_multi, na.rm = TRUE)
 #>   mean_p_value median_p_value sd_p_value prop_p_value mean_bf_value
-#> 1    0.1074323     0.00638261  0.2341194     82.35294      1868.888
+#> 1   0.04462268   0.0002425968  0.1662026     94.11765      1888.148
 #>   median_bf_value sd_bf_value prop_bf_value
-#> 1        4.341644    10044.94      73.52941
+#> 1        4.319848    10161.98      73.52941
 ```
 
 And here we have a barplot of the results:
@@ -363,20 +360,21 @@ res_multi_group
 #> # A tibble: 116 × 21
 #>    x         y     exclusion cut_off model controls method   p.value effect.size
 #>    <chr>     <chr> <chr>     <chr>   <chr> <lgl>    <chr>      <dbl>       <dbl>
-#>  1 cs        scr   full_data full d… t-te… NA       great…  3.70e- 2     0.577  
-#>  2 cs        scr   full_data full d… t-te… NA       two.s…  7.41e- 2     0.577  
+#>  1 cs        scr   full_data full d… t-te… NA       great…  3.33e- 5     0.577  
+#>  2 cs        scr   full_data full d… t-te… NA       two.s…  6.67e- 5     0.577  
 #>  3 cs        scr   full_data full d… Baye… NA       Bayes… NA           NA      
 #>  4 cs        scr   full_data full d… Baye… NA       Bayes… NA           NA      
 #>  5 group:cs… scr   full_data full d… rep … NA       rep A…  3.43e- 1     0.00288
-#>  6 group:cs  scr   full_data full d… rep … NA       rep A…  4.60e- 1    -0.00475
+#>  6 group:cs  scr   full_data full d… rep … NA       rep A…  4.60e- 1     0      
 #>  7 cscs2     scr   full_data <NA>    mixe… NA       mixed…  1.80e-13    NA      
 #>  8 cscs2:ti… scr   full_data <NA>    mixe… NA       mixed…  5.92e- 7    NA      
 #>  9 cscs2     scr   full_data <NA>    mixe… NA       mixed…  1.82e- 5    NA      
 #> 10 cscs2:ti… scr   full_data <NA>    mixe… NA       mixed…  2.16e- 2    NA      
-#> # … with 106 more rows, and 12 more variables: effect.size.lci <dbl>,
-#> #   effect.size.hci <dbl>, effect.size.ma <dbl>, effect.size.ma.lci <dbl>,
-#> #   effect.size.ma.hci <dbl>, estimate <dbl>, statistic <dbl>, conf.low <dbl>,
-#> #   conf.high <dbl>, framework <chr>, data_used <list>, efffect.size.ma <lgl>
+#> # ℹ 106 more rows
+#> # ℹ 12 more variables: effect.size.lci <dbl>, effect.size.hci <dbl>,
+#> #   effect.size.ma <dbl>, effect.size.ma.lci <dbl>, effect.size.ma.hci <dbl>,
+#> #   estimate <dbl>, statistic <dbl>, conf.low <dbl>, conf.high <dbl>,
+#> #   framework <chr>, data_used <list>, efffect.size.ma <lgl>
 ```
 
 Accordingly, the inference plots look as follows:
