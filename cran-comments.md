@@ -1,14 +1,16 @@
-* Wrote a small patch as the latest update (version 0.10.0) of the bayestestR 
-package broke some functions of this package (i.e., rm_banova_mf() and all other functions using it). 
+* Wrote a small patch to fix the changes in the stats:t.test() package for handling NAs.
 
 ## Test environments
-* local R installation, R 4.0.3
-* ubuntu 20.04 (release and devel, on github actions)
-* macOS-latest (release)
-* win-builder (devel on github actions)
+* local OS X install, R 4.3.1.
+* ubuntu (devel and release on github actions)
+* win-builder (devel, previous major release, and release)
 
 ## R CMD check results
+0 errors | 0 warnings | 1 note
 
-0 errors | 0 warnings | 0 note
-
+Found the following (possibly) invalid URLs:
+  URL: https://codecov.io/gh/AngelosPsy/multifear (moved to https://app.codecov.io/gh/AngelosPsy/multifear)
+    From: README.md
+    Status: 301
+    Message: Moved Permanently
 
