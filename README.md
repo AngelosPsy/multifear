@@ -2,7 +2,6 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 <!-- badges: start -->
 
-[![codecov](https://codecov.io/gh/AngelosPsy/multifear/branch/master/graph/badge.svg)](https://codecov.io/gh/AngelosPsy/multifear)
 [![R-CMD-check](https://github.com/AngelosPsy/multifear/workflows/R-CMD-check/badge.svg)](https://github.com/AngelosPsy/multifear/actions)
 [![R-CMD-check](https://github.com/AngelosPsy/multifear/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/AngelosPsy/multifear/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
@@ -314,9 +313,9 @@ function and you will get:
 ``` r
 multifear::inference_cs(res_multi, na.rm = TRUE)
 #>   mean_p_value median_p_value sd_p_value prop_p_value mean_bf_value
-#> 1   0.04462268   0.0002425968  0.1662026     94.11765      1888.148
+#> 1   0.04462268   0.0002425968  0.1662026     94.11765      1885.262
 #>   median_bf_value sd_bf_value prop_bf_value
-#> 1        4.319848    10161.98      73.52941
+#> 1        4.319848    10119.94      73.52941
 ```
 
 And here we have a barplot of the results:

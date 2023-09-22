@@ -12,7 +12,6 @@ knitr::opts_chunk$set(
 ```
 
 <!-- badges: start -->
-[![codecov](https://codecov.io/gh/AngelosPsy/multifear/branch/master/graph/badge.svg)](https://codecov.io/gh/AngelosPsy/multifear)
 [![R-CMD-check](https://github.com/AngelosPsy/multifear/workflows/R-CMD-check/badge.svg)](https://github.com/AngelosPsy/multifear/actions)
 [![R-CMD-check](https://github.com/AngelosPsy/multifear/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/AngelosPsy/multifear/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
