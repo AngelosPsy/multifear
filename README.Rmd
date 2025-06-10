@@ -17,7 +17,7 @@ knitr::opts_chunk$set(
 [![CRAN status](https://www.r-pkg.org/badges/version/multifear)](https://CRAN.R-project.org/package=multifear)
 <!-- badges: end -->
 
-# Multifear <img src="man/figures/logo.png" align="right" height="138"/>
+# Multifear <img src="man/figures/README/logo.png" align="right" height="138"/>
 
 Multifear is an R package designed to perform multiverse analyses for human conditioning data.
 

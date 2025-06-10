@@ -7,7 +7,7 @@
 status](https://www.r-pkg.org/badges/version/multifear)](https://CRAN.R-project.org/package=multifear)
 <!-- badges: end -->
 
-# Multifear <img src="man/figures/logo.png" align="right" height="138"/>
+# Multifear <img src="man/figures/README/logo.png" align="right" height="138"/>
 
 Multifear is an R package designed to perform multiverse analyses for
 human conditioning data.
@@ -314,9 +314,9 @@ function and you will get:
 ``` r
 multifear::inference_cs(res_multi, na.rm = TRUE)
 #>   mean_p_value median_p_value sd_p_value prop_p_value mean_bf_value
-#> 1    0.1074323     0.00638261  0.2341194     82.35294      1867.827
+#> 1    0.1074323     0.00638261  0.2341194     82.35294      1862.755
 #>   median_bf_value sd_bf_value prop_bf_value
-#> 1        4.319848    10043.09      73.52941
+#> 1        4.319848     10014.9      73.52941
 ```
 
 And here we have a barplot of the results:
