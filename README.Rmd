@@ -4,10 +4,12 @@ output: github_document
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-```{r, echo = FALSE}
+```{r}
+#| echo: false
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  fig.path = "man/figures/README-"
 )
 ```
 
@@ -15,7 +17,7 @@ knitr::opts_chunk$set(
 [![CRAN status](https://www.r-pkg.org/badges/version/multifear)](https://CRAN.R-project.org/package=multifear)
 <!-- badges: end -->
 
-# Multifear
+# Multifear <img src="man/figures/logo.png" align="right" height="138"/>
 
 Multifear is an R package designed to perform multiverse analyses for human conditioning data.
 

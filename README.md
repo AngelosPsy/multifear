@@ -1,12 +1,13 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+
 <!-- badges: start -->
 
-[![R-CMD-check](https://github.com/AngelosPsy/multifear/workflows/R-CMD-check/badge.svg)](https://github.com/AngelosPsy/multifear/actions)
-[![R-CMD-check](https://github.com/AngelosPsy/multifear/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/AngelosPsy/multifear/actions/workflows/R-CMD-check.yaml)
+[![CRAN
+status](https://www.r-pkg.org/badges/version/multifear)](https://CRAN.R-project.org/package=multifear)
 <!-- badges: end -->
 
-# Multifear
+# Multifear <img src="man/figures/logo.png" align="right" height="138"/>
 
 Multifear is an R package designed to perform multiverse analyses for
 human conditioning data.
@@ -124,7 +125,7 @@ datmelt <- example_data %>%
   geom_point(aes(shape = cs))
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
+![](man/figures/README-unnamed-chunk-8-1.png)<!-- -->
 
 We see the basic learning pattern where CS+ responses end up being
 higher than CS- responses.
@@ -171,10 +172,10 @@ res
 #> # A tibble: 4 × 20
 #>   x       y     exclusion cut_off   model    controls method p.value effect.size
 #>   <chr>   <chr> <chr>     <chr>     <chr>    <lgl>    <chr>    <dbl>       <dbl>
-#> 1 cs      scr   full data full data t-test   NA       great… 3.33e-5      0.577 
-#> 2 cs      scr   full data full data t-test   NA       two.s… 6.67e-5      0.577 
-#> 3 cs:time scr   full data full data rep ANO… NA       rep A… 1.52e-2      0.0296
-#> 4 cs      scr   full data full data rep ANO… NA       rep A… 4.88e-3      0.147 
+#> 1 cs      scr   full data full data t-test   NA       great… 0.00244      0.577 
+#> 2 cs      scr   full data full data t-test   NA       two.s… 0.00488      0.577 
+#> 3 cs:time scr   full data full data rep ANO… NA       rep A… 0.0152       0.0296
+#> 4 cs      scr   full data full data rep ANO… NA       rep A… 0.00488      0.147 
 #> # ℹ 11 more variables: effect.size.lci <dbl>, effect.size.hci <dbl>,
 #> #   effect.size.ma <dbl>, effect.size.ma.lci <dbl>, effect.size.ma.hci <dbl>,
 #> #   estimate <dbl>, statistic <dbl>, conf.low <dbl>, conf.high <dbl>,
@@ -237,8 +238,8 @@ res_multi
 #> # A tibble: 116 × 21
 #>    x         y     exclusion cut_off model controls method   p.value effect.size
 #>    <chr>     <chr> <chr>     <chr>   <chr> <lgl>    <chr>      <dbl>       <dbl>
-#>  1 cs        scr   full_data full d… t-te… NA       great…  3.33e- 5      0.577 
-#>  2 cs        scr   full_data full d… t-te… NA       two.s…  6.67e- 5      0.577 
+#>  1 cs        scr   full_data full d… t-te… NA       great…  2.44e- 3      0.577 
+#>  2 cs        scr   full_data full d… t-te… NA       two.s…  4.88e- 3      0.577 
 #>  3 cs        scr   full_data full d… Baye… NA       Bayes… NA            NA     
 #>  4 cs        scr   full_data full d… Baye… NA       Bayes… NA            NA     
 #>  5 cs:time   scr   full_data full d… rep … NA       rep A…  1.52e- 2      0.0296
@@ -313,9 +314,9 @@ function and you will get:
 ``` r
 multifear::inference_cs(res_multi, na.rm = TRUE)
 #>   mean_p_value median_p_value sd_p_value prop_p_value mean_bf_value
-#> 1   0.04462268   0.0002425968  0.1662026     94.11765      1885.262
+#> 1    0.1074323     0.00638261  0.2341194     82.35294      1867.827
 #>   median_bf_value sd_bf_value prop_bf_value
-#> 1        4.319848    10119.94      73.52941
+#> 1        4.319848    10043.09      73.52941
 ```
 
 And here we have a barplot of the results:
@@ -324,7 +325,7 @@ And here we have a barplot of the results:
 multifear::inference_plot(res_multi, add_line = FALSE)
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-14-1.png)<!-- -->
+![](man/figures/README-unnamed-chunk-14-1.png)<!-- -->
 
     #> TableGrob (1 x 2) "arrange": 2 grobs
     #>   z     cells    name           grob
@@ -338,7 +339,7 @@ the within-subjects effects:
 multifear::forestplot_mf(res_multi)
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-15-1.png)<!-- -->
+![](man/figures/README-unnamed-chunk-15-1.png)<!-- -->
 
 ## Example 2 (within\*between -subject design)
 
@@ -359,8 +360,8 @@ res_multi_group
 #> # A tibble: 116 × 21
 #>    x         y     exclusion cut_off model controls method   p.value effect.size
 #>    <chr>     <chr> <chr>     <chr>   <chr> <lgl>    <chr>      <dbl>       <dbl>
-#>  1 cs        scr   full_data full d… t-te… NA       great…  3.33e- 5     0.577  
-#>  2 cs        scr   full_data full d… t-te… NA       two.s…  6.67e- 5     0.577  
+#>  1 cs        scr   full_data full d… t-te… NA       great…  2.44e- 3     0.577  
+#>  2 cs        scr   full_data full d… t-te… NA       two.s…  4.88e- 3     0.577  
 #>  3 cs        scr   full_data full d… Baye… NA       Bayes… NA           NA      
 #>  4 cs        scr   full_data full d… Baye… NA       Bayes… NA           NA      
 #>  5 group:cs… scr   full_data full d… rep … NA       rep A…  3.43e- 1     0.00288
@@ -382,7 +383,7 @@ Accordingly, the inference plots look as follows:
 multifear::inference_plot(res_multi_group, add_line = FALSE)
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-17-1.png)<!-- -->
+![](man/figures/README-unnamed-chunk-17-1.png)<!-- -->
 
     #> TableGrob (1 x 2) "arrange": 2 grobs
     #>   z     cells    name           grob
@@ -395,4 +396,4 @@ Lastly, here are the forestoplot for the second example:
 multifear::forestplot_mf(res_multi_group)
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-18-1.png)<!-- -->
+![](man/figures/README-unnamed-chunk-18-1.png)<!-- -->
