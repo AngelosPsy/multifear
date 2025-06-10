@@ -190,13 +190,10 @@ t_test_mf <-
         dplyr::group_by(group2) %>%
         dplyr::group_map(
           ~ stats::t.test(
-            #formula = .$value ~ .$N,
             stats::Pair(unlist(data %>% dplyr::select(all_of("cs.1"))),
-            unlist(data %>% dplyr::select(all_of("cs.2")))),
+            unlist(data %>% dplyr::select(all_of("cs.2"))))~1,
             data = .,
-            #paired = paired,
-            alternative = .$alternative[1],
-            var.equal = FALSE
+            alternative = .$alternative[1]
           ) %>%
             broom::tidy()
         )
