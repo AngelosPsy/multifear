@@ -1,3 +1,9 @@
+# multifear 0.1.4
+
+* Corrected a small bugg that caused paired samples t-test to fail on some
+linux servers and the devel version of windows-x86_64
+* Created a hex log
+
 # multifear 0.1.3
 
 * All t-tests are now using the formula interface. This is in line with the dev version of R
