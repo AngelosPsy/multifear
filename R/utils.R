@@ -65,6 +65,7 @@
   utils::globalVariables ("excl")
   utils::globalVariables ("excl_data_sets_final")
   utils::globalVariables ("framework")
+  utils::globalVariables ("Freq")
   utils::globalVariables ("graph_from_data_frame")
   utils::globalVariables ("group")
   utils::globalVariables ("group2")

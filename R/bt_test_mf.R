@@ -105,7 +105,7 @@ bt_test_mf <-
           ) %>%
             BayesFactor::extractBF(onlybf = TRUE)
         ) %>%
-        purrr::invoke(.f = "rbind") %>%
+        rlang::exec(.f = "rbind") %>%
         data.frame() %>%
         dplyr::select(X1) %>%
         unlist()
@@ -130,7 +130,7 @@ bt_test_mf <-
           ) %>%
             BayesFactor::extractBF(onlybf = TRUE)
         ) %>%
-        purrr::invoke(.f = "rbind") %>%
+        rlang::exec(.f = "rbind") %>%
         data.frame() %>%
         dplyr::select(X1) %>%
         unlist()
@@ -139,13 +139,13 @@ bt_test_mf <-
     # List to be pasted to broom functions
     if (!!phase %in% c("acquisition", "acq")) {
       ttl <-
-        ttest_run[c(3, 2)]
+        ttest_run#[c(3, 2)]
       type_test = c("greater", "equal")
     }
 
     if (!!phase %in% c("extinction", "ext")) {
       ttl <-
-        ttest_run[c(1, 2)]
+        ttest_run#[c(1, 2)]
       type_test = c("less", "equal")
     }
 

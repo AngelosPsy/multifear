@@ -175,7 +175,10 @@ t_test_mf <-
           hedges.correction = FALSE
         )
       }
-
+      # Group sizes
+      group_size <- data$group %>% table() %>% data.frame() %>% dplyr::select(Freq) %>% unlist()
+      n1 <- group_size[1]
+      n2 <- group_size[2]
     } else {
 
       #####################################
@@ -237,7 +240,7 @@ t_test_mf <-
       ci_ma <- ttest_es_ma$estimate - ttest_es_ma$conf.int[1]
       #ci_boot <- t_boot(data, paired = TRUE, quanz = c(.05, .95))
       ttest_res <-
-        purrr::invoke("rbind", ttest_prep) %>%
+        dplyr::bind_rows(ttest_prep) %>% #rlang::exec("rbind", ttest_prep) %>%
         dplyr::mutate(effect.size = rep(ttest_es$estimate, 3),
                       effect.size.lci = rep(ttest_es$conf.int[[1]], 3),
                       effect.size.hci = rep(ttest_es$conf.int[[2]], 3),
@@ -247,12 +250,13 @@ t_test_mf <-
 
     } else if(meta.effect == "t_to_eta2") {
       es_ma <- ttest_es_ma$estimate
+      df_found <- n1 + n2 - 2
       #ci_ma <- ttest_es_ma$estimate - ttest_es_ma$conf.int[1]
       ci_boot <- t_boot(data, paired = TRUE, quanz = c(.05, .95))
       ttest_res <-
-        purrr::invoke("rbind", ttest_prep) %>%
+        dplyr::bind_rows(ttest_prep) %>% #rlang::exec("rbind", ttest_prep) %>%
         dplyr::mutate(effect.size = rep(ttest_es$estimate, 3),
-                      effect.size.ma = rep(t_to_eta2(ttest_es_ma), 3),
+                      effect.size.ma = rep(t_to_eta2(ttest_es_ma, df_found), 3),
                       effect.size.ma.lci = rep(ci_boot[1], 3),
                       effect.size.ma.hci = rep(ci_boot[2], 3))
     }

@@ -6,15 +6,27 @@ cs1 <- paste0("CSP", 1:10)
 cs2 <- paste0("CSM", 1:10)
 subj = "id"
 time = TRUE
-group = "group"
+group = NULL
 data = example_data
 bf_data <- example_data %>% dplyr::filter(id %in% c(1, 2, 3, 4, 5, 7, 8, 9, 10))
+rscale = "medium"
+phase = "acquisition"
+dv = "scr"
+exclusion = "full data"
+cut_off = "full data"
 
 tmp <- tempfile()
 
 test_that("bt_test_mf works", {
-  expect_known_output(bt_test_mf(cs1, cs2, subj = subj, data = example_data), tmp)
+  expect_known_output(bt_test_mf(cs1, cs2, subj = subj, group = NULL, data = example_data,
+                                 rscale = rscale,
+                                 phase = phase,
+                                 dv = dv,
+                                 exclusion = exclusion,
+                                 cut_off = cut_off), tmp)
 })
+
+group = "group"
 
 test_that("bt_test_mf for groups works", {
   expect_known_output(bt_test_mf(cs1, cs2, subj = subj, group = group, data = example_data), tmp)

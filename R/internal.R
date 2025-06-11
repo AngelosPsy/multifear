@@ -270,7 +270,7 @@ sumz_trial <- function(data,
            prefix = "pre",
            postfix = "post",
            na.rm = TRUE) {
-    res <- data %>% dplyr::select(index) %>%
+    res <- data %>% dplyr::select(all_of(index)) %>%
       rowMeans(na.rm = na.rm) %>%
       tibble::enframe(name = NULL, value = paste(prefix, postfix, sep = "_"))
     return(res)
@@ -329,10 +329,10 @@ format_results <- function(df, null = 0, desc = FALSE) {
 
 # Convert t value to eta^2
 # See here: https://sites.google.com/site/fundamentalstatistics/chapter-13
-t_to_eta2 <- function(ttestRes){
+t_to_eta2 <- function(ttestRes, df_found){
   t <- ttestRes$statistic
-  df <- ttestRes$parameter
-  res <- as.numeric((t^2)/(t^2 + df))
+  df <- #ttestRes$parameter
+  res <- as.numeric((t^2)/(t^2 + (df_found)))
   return(res)
 }
 
