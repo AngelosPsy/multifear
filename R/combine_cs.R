@@ -11,8 +11,8 @@ combine_cs <- function(cs1, cs2, data, na.rm = FALSE) {
   # Check data
   collection_warning(cs1 = cs1, cs2 = cs2, data = data, subj = NULL)
 
-  cs1 <- data %>% dplyr::select(all_of(!!dplyr::enquo(cs1)))
-  cs2 <- data %>% dplyr::select(all_of(!!dplyr::enquo(cs2)))
+  cs1 <- data %>% dplyr::select(all_of({{ cs1 }}))
+  cs2 <- data %>% dplyr::select(all_of({{ cs2 }}))
   data <- data %>% tibble::as_tibble()
 
   data %>%

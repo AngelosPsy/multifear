@@ -55,7 +55,7 @@ chop_css <-
       group <- NULL
     } else{
       group_new <- data %>%
-        dplyr::select(all_of(!!dplyr::enquo(group))) %>%
+        dplyr::select(all_of({{ group }})) %>%
         tibble::as_tibble() %>%
         dplyr::rename(group = eval(group))
     }
