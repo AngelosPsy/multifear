@@ -11,3 +11,5 @@ inst/doc
 Meta
 doc
 .DS_Store
+/doc/
+/Meta/
