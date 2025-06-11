@@ -32,11 +32,12 @@ Imports:
     effectsize (>= 0.4.1),
     esc (>= 0.5.1),
     forestplot (>= 1.10),
-    bootstrap (>= 2019.6)
-RoxygenNote: 7.2.3
+    bootstrap (>= 2019.6),
+    fastDummies,
+    rlang
+RoxygenNote: 7.3.2
 Suggests:
     gridExtra (>= 2.3),
-    fastDummies (>= 1.6.1),
     vctrs (>= 0.3.1),
     tidyselect (>= 1.0.0),
     tidyr (>= 1.0.2),
