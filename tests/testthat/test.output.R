@@ -63,14 +63,6 @@ test_that("rm_banova_mf for groups works", {
   expect_known_output(rm_banova_mf(cs1, cs2, subj = subj, group = group, data = example_data), tmp)
 })
 
-#test_that("lm works", {
-#  expect_known_output(lm_mf(cs1, cs2, subj = subj, data = bf_data), tmp)
-#})
-
-#test_that("lm for groups works", {
-#  expect_known_output(lm_mf(cs1, cs2, subj = subj, group = group, data = bf_data), tmp)
-#})
-
 test_that("chop cs works", {
   expect_known_output(chop_cs(cs = cs1, data = bf_data, subj = subj), tmp)
 })
@@ -110,10 +102,3 @@ test_that("multiverse works", {
 test_that("multiverse works with groups", {
   expect_known_output(multiverse_cs(cs1, cs2, subj = subj, data = example_data, group = group, include_bayes = FALSE), tmp)
 })
-
-#context("Functions plots")
-
-#test_that("plots", {
-#  tmp <- universe_cs(cs1, cs2, subj = subj, data = example_data, include_bayes = FALSE)
-#  vdiffr::expect_doppelganger("forestplot", forestplot_mf(tmp, new_page = FALSE))
-#})
