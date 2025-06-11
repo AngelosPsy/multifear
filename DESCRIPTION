@@ -34,7 +34,8 @@ Imports:
     forestplot (>= 1.10),
     bootstrap (>= 2019.6),
     fastDummies,
-    rlang
+    rlang,
+    markdown
 RoxygenNote: 7.3.2
 Suggests:
     gridExtra (>= 2.3),
