@@ -1,16 +1,13 @@
 ## Resubmission
 This is a resubmission. In this version I have:
-* Removed the web address that produced the following error:
+Fixed the paired sample t-test in the t_test_mf function that caused
+the test to fail. 
 
-Found the following (possibly) invalid URLs:
-  URL: https://codecov.io/gh/AngelosPsy/multifear (moved to https://app.codecov.io/gh/AngelosPsy/multifear)
-    From: README.md
-    Status: 301
-    Message: Moved Permanently
+Updated the code so that it reflects changes in the tidyverse package
 
 
 ## Test environments
-* local OS X install, R 4.3.1.
+* local OS X install, R 4.5.0
 * ubuntu (devel and release on github actions)
 * win-builder (devel, previous major release, and release)
 
