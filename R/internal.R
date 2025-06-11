@@ -63,7 +63,7 @@ select_term = function(obj, term, dv = "scr", exclusion = "full data"){
     valz <- summary(obj)$tTable %>%
       data.frame() %>%
       dplyr::mutate(model = rownames(.)) %>%
-      dplyr::filter(model %in% {{ term }}) %>%
+      dplyr::filter(model %in%  !!dplyr::enquo(term)) %>%
       dplyr::select(Value, t.value, p.value)
 
     res <- tibble::tibble(
@@ -119,11 +119,11 @@ data_preparation_anova = function(cs1,
   collection_warning(cs1 = cs1, cs2 = cs2, data = data, subj = subj)
 
   cs1 <-
-    data %>% dplyr::select(all_of({{ cs1 }})) %>% tibble::as_tibble()
+    data %>% dplyr::select(all_of(cs1)) %>% tibble::as_tibble()
   cs2  <-
-    data %>% dplyr::select(all_of({{ cs2 }})) %>% tibble::as_tibble()
+    data %>% dplyr::select(all_of(cs2)) %>% tibble::as_tibble()
   subj <-
-    data %>% dplyr::select(all_of({{ subj }})) %>% tibble::as_tibble()
+    data %>% dplyr::select(all_of(subj)) %>% tibble::as_tibble()
 
   # Renaming objects to make life a bit easier
   cs1  <- cs1 %>% dplyr::select(cs1_ = dplyr::everything())
@@ -138,7 +138,7 @@ data_preparation_anova = function(cs1,
     group <- NULL
   } else{
     group_new <- data %>%
-      dplyr::select(all_of({{ group }})) %>%
+      dplyr::select(all_of(group)) %>%
       tibble::as_tibble() %>%
       dplyr::rename(group = eval(group))
   }
@@ -188,16 +188,16 @@ data_preparation_ttest = function(cs1,
 
   # Restructure data. rowMeans is used in case multiple trails have been fed
   cs1 <-
-    data %>% dplyr::select(all_of({{ cs1 }})) %>%
+    data %>% dplyr::select(all_of(cs1)) %>%
     rowMeans(na.rm = na.rm) %>% tibble::enframe(name = NULL)  %>%
     dplyr::rename(cs.1 = value)
   cs2 <-
-    data %>% dplyr::select(all_of({{ cs2 }})) %>%
+    data %>% dplyr::select(all_of(cs2)) %>%
     rowMeans(na.rm = na.rm) %>%
     tibble::enframe(name = NULL) %>%
     dplyr::rename(cs.2 = value)
   subj <-
-    data %>% dplyr::select(all_of({{ subj }})) %>%
+    data %>% dplyr::select(all_of(subj)) %>%
     tibble::as_tibble() %>%
     dplyr::select(subj = dplyr::everything())
 
@@ -206,7 +206,7 @@ data_preparation_ttest = function(cs1,
   if(is.null(group)){
     tmp_data <- tmp_data %>% dplyr::mutate(group = "NULL")
   } else{
-    groupz <- data %>% dplyr::select(all_of({{ group }})) %>% unlist()
+    groupz <- data %>% dplyr::select(all_of(group)) %>% unlist()
     if(length(unique(groupz)) != 2){
       stop("Number of levels for group is different than 2. t-test did not run.")
     }
@@ -232,11 +232,11 @@ data_preparation_verse = function(cs1,
 
       # Prepare data for multiple analyses
       cs1  <-
-        data %>% dplyr::select(all_of({{ cs1 }})) %>% tibble::as_tibble()
+        data %>% dplyr::select(all_of(cs1)) %>% tibble::as_tibble()
       cs2  <-
-        data %>% dplyr::select(all_of({{ cs2 }})) %>% tibble::as_tibble()
+        data %>% dplyr::select(all_of(cs2)) %>% tibble::as_tibble()
       subj <-
-        data %>% dplyr::select(all_of({{ subj }})) %>% tibble::as_tibble()
+        data %>% dplyr::select(all_of(subj)) %>% tibble::as_tibble()
 
       # Renaming objects to make life a bit easier
       cs1  <- cs1 %>% dplyr::select(cs1_ = dplyr::everything())
@@ -252,7 +252,7 @@ data_preparation_verse = function(cs1,
         group = NULL
       } else {
         group_new <- data %>%
-          dplyr::select(tidyselect::all_of({{ group }})) %>%
+          dplyr::select(tidyselect::all_of(group )) %>%
           dplyr::rename(group = eval(group))
           #dplyr::mutate(group2 = as.factor(group)) %>%
           #dplyr::select(group2) #%>%
@@ -353,8 +353,8 @@ return(res)
 t_test_paired_boot_d_to_eta2 <- function(x, datz) {
   datz <- dplyr::sample_n(datz, nrow(datz), replace = TRUE)
   ttest_es_ma <-  effsize::cohen.d(
-    unlist(datz %>% dplyr::select(all_of("cs.1"))),
-    unlist(datz %>% dplyr::select(all_of("cs.2"))),
+    unlist(datz %>% dplyr::select(all_of(cs.1))),
+    unlist(datz %>% dplyr::select(all_of(cs.2))),
     pooled = TRUE,
     paired = TRUE,
     hedges.correction = FALSE,

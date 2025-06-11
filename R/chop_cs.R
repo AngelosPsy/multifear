@@ -36,8 +36,8 @@ chop_cs <- function(cs, data, subj, group = NULL, prefix = "cs", na.rm = FALSE) 
   # Check data
   collection_warning(cs1 = cs, data = data, subj = subj)
 
-  cs   <- data %>% dplyr::select({{ cs }})
-  subj <- data %>% dplyr::select({{ subj }}) %>%
+  cs   <- data %>% dplyr::select(all_of(cs) )
+  subj <- data %>% dplyr::select(all_of( subj )) %>%
     dplyr::rename(id = 1)
 
   cs_initial <- cs
