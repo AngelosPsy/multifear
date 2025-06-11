@@ -34,9 +34,7 @@ Imports:
     forestplot (>= 1.10),
     bootstrap (>= 2019.6),
     fastDummies,
-    rlang,
-    knitr,
-    rmarkdown
+    rlang
 RoxygenNote: 7.3.2
 Suggests:
     gridExtra (>= 2.3),
@@ -48,6 +46,8 @@ Suggests:
     testthat (>= 2.1.0),
     cowplot (>= 1.0.0),
     covr,
-    spelling
+    spelling,
+    knitr,
+    rmarkdown
 VignetteBuilder: knitr
 Language: en-US
