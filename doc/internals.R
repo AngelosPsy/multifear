@@ -4,6 +4,6 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 
-## ----setup--------------------------------------------------------------------
-library(multifear)
+## ----setup, eval = FALSE------------------------------------------------------
+# library(multifear)
 
