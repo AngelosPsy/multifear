@@ -1,3 +1,5 @@
+# multifear 0.1.5
+
 # multifear 0.1.4
 
 * Corrected a small bugg that caused paired samples t-test to fail on some
