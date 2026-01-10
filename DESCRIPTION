@@ -8,7 +8,7 @@ Authors@R:
              role = c("aut", "cre", "cph"),
              email = "amkrypotos@gmail.com"))
 Maintainer: Angelos-Miltiadis Krypotos <amkrypotos@gmail.com>
-Description: A suite of functions for performing analyses, based on a multiverse approach, for conditioning data. Specifically, given the appropriate data, the functions are able to perform t-tests, analyses of variance, and mixed models for the provided data and return summary statistics and plots. The function is also able to return for all those tests p-values, confidence intervals, and Bayes factors. The methods are described in Lonsdorf, Gerlicher, Klingelhofer-Jens, & Krypotos (2022) <doi:10.1016/j.brat.2022.104072>.
+Description: A suite of functions for performing analyses, based on a multiverse approach, for conditioning data. Specifically, given the appropriate data, the functions are able to perform t-tests, analyses of variance, and mixed models for the provided data and return summary statistics and plots. The function is also able to return for all those tests p-values, confidence intervals, and Bayes factors. The methods are described in Lonsdorf, Gerlicher, Klingelhofer-Jens, & Krypotos (2022) <doi:10.1016/j.brat.2022.104072>. Since November 2025, this package contains modified code from the ez R package (Copyright (c) 2016-11-01, Michael A. Lawrence <mike.lwrnc@gmail.com>), originally distributed under the GPL (≥ 2) license. The included code has been adapted for internal use.
 Depends: R (>= 4.0.0)    
 License: GPL-3
 LazyData: true 
@@ -18,8 +18,8 @@ BugReports: https://github.com/AngelosPsy/multifear/issues
 Imports: 
     dplyr (>= 0.8.4),
     purrr (>= 0.3.3),
-    stats (>= 3.6.2),
-    stringr (>= 1.4.0),
+    stats,
+    stringr,
     reshape2 (>= 1.4.3),
     tibble (>= 2.1.3),
     ggplot2 (>= 3.2.1),
@@ -33,14 +33,16 @@ Imports:
     forestplot (>= 1.10),
     bootstrap (>= 2019.6),
     fastDummies,
-    rlang
+    rlang,
+    plyr,
+    maditr,
+    car
 RoxygenNote: 7.3.2
 Suggests:
     gridExtra (>= 2.3),
     vctrs (>= 0.3.1),
     tidyselect (>= 1.0.0),
     tidyr (>= 1.0.2),
-    plyr (>= 1.8.6),
     ggraph (>= 2.0.1),
     testthat (>= 2.1.0),
     cowplot (>= 1.0.0),

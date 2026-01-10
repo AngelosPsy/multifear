@@ -67,7 +67,6 @@
 #' data = example_data, time = TRUE)
 #' @importFrom stats time
 #' @importFrom stats na.omit
-#' @importFrom ez ezANOVA
 #' @export
 rm_anova_mf <- function(cs1,
                         cs2,
@@ -84,7 +83,7 @@ rm_anova_mf <- function(cs1,
 
   data <-
     data_preparation_anova(cs1 = cs1, cs2 = cs2, data = data, subj = subj,
-                     time = time, group = group)
+                           time = time, group = group)
 
   # Decide which terms you will have in order to feed in the ANOVA later on
   if (time && (!is.null(group))) {
@@ -105,23 +104,23 @@ rm_anova_mf <- function(cs1,
 
   # Run the main ANOVA
   if(is.null(group)){
-  tmpANOVA <-
-    suppressWarnings(eval(parse(
-      text =
-        paste0(
-          'ez::ezANOVA(
+    tmpANOVA <-
+      suppressWarnings(eval(parse(
+        text =
+          paste0(
+            'ez::ezANOVA(
           data = data,
           dv = resp,
           wid = subj,
           within = c(',
-          paste(anova_terms, collapse = ","),
-          '),
+            paste(anova_terms, collapse = ","),
+            '),
           between = NULL,
           type = 3,
           detailed = TRUE,
           return_aov = TRUE
         )'
-        ))))
+          ))))
   } else{
     tmpANOVA <-
       suppressWarnings(eval(parse(
@@ -139,7 +138,7 @@ rm_anova_mf <- function(cs1,
             detailed = TRUE,
             return_aov = TRUE
             )'
-        ))))
+          ))))
   }
 
   # This is what is returned from the data_preparation_anova function
