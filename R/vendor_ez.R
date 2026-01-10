@@ -12,6 +12,7 @@
 #
 # Original source: https://github.com/mike-lawrence/ez
 # @import plyr
+# @importFrom plyr ddply
 # @importFrom car Anova
 # @importFrom stringr str_count str_detect
 # @import stats
@@ -26,6 +27,8 @@
 # @import model.frame
 # @import pchisq
 # @import pf
+# @importFrom plyr .
+# @importFrom maditr dcast
 
 ezANOVA <-	function(
     data,
@@ -1591,10 +1594,10 @@ ezPerm_aov <-
   }
 
 
-`.` <- function(...) {
-  expr <- match.call(expand.dots = FALSE)$...
-  as.character(expr)
-}
+#`.` <- function(...) {
+#  expr <- match.call(expand.dots = FALSE)$...
+#  as.character(expr)
+#}
 
 
 ########

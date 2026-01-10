@@ -11,7 +11,7 @@
 #' trial 1, cs1 trial 2 ... cs1 trial \code{n}). If this is not the case, the
 #' results are not to be trusted.
 #'
-#' The function uses the \code{ez::ezANOVA} function. The function gives by default a warning regarding the collapsing of factors. This function here suppresses this warning but the user should be aware of it. Please note that at the moment no sphericity correction is performed. The reported effect size is omega squared as this is computed by \code{sjstats::omega_sq}. The meta-analytic effect size is eta squared.
+#' The function uses the \code{ezANOVA} function. The function gives by default a warning regarding the collapsing of factors. This function here suppresses this warning but the user should be aware of it. Please note that at the moment no sphericity correction is performed. The reported effect size is omega squared as this is computed by \code{sjstats::omega_sq}. The meta-analytic effect size is eta squared.
 #'
 #' @return A tibble with the following column names:
 #'
@@ -67,6 +67,12 @@
 #' data = example_data, time = TRUE)
 #' @importFrom stats time
 #' @importFrom stats na.omit
+#' @import plyr
+#' @importFrom plyr ddply
+#' @importFrom plyr .
+#' @importFrom car Anova
+#' @importFrom stringr str_count str_detect
+#' @importFrom maditr dcast
 #' @export
 rm_anova_mf <- function(cs1,
                         cs2,
@@ -108,7 +114,7 @@ rm_anova_mf <- function(cs1,
       suppressWarnings(eval(parse(
         text =
           paste0(
-            'ez::ezANOVA(
+            'ezANOVA(
           data = data,
           dv = resp,
           wid = subj,
@@ -126,7 +132,7 @@ rm_anova_mf <- function(cs1,
       suppressWarnings(eval(parse(
         text =
           paste0(
-            'ez::ezANOVA(
+            'ezANOVA(
             data = data,
             dv = resp,
             wid = subj,
