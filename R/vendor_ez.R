@@ -17,6 +17,18 @@
 # @importFrom stringr str_count str_detect
 # @importFrom plyr .
 # @importFrom maditr dcast
+#' @importFrom stats
+#'   anova
+#'   aov
+#'   coef
+#'   contrasts<-
+#'   fitted
+#'   formula
+#'   lm
+#'   median
+#'   model.frame
+#'   pchisq
+#'   pf
 
 ezANOVA <-	function(
     data,
