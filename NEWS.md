@@ -1,4 +1,5 @@
 # multifear 0.1.5
+* Removed dependency to the ez package which is planned from archival archived from CRAN.
 
 # multifear 0.1.4
 
