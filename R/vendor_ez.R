@@ -6,7 +6,7 @@
 # below are adapted from the
 # ez R package (Copyright (c)  2016-11-01, Michael A. Lawrence <mike.lwrnc@gmail.com>).
 #
-# The original code was licensed under GPL (≥ 2).
+# The original code was licensed under GPL (Higher or Equal to 2).
 # This modified version is redistributed under GPL-3 as part of the multifear package.
 # The code was copied here as the ez R package is scheduled to be removed.
 #
@@ -15,18 +15,6 @@
 # @importFrom plyr ddply
 # @importFrom car Anova
 # @importFrom stringr str_count str_detect
-# @import stats
-# @import anova
-# @import aov
-# @import coef
-# @import "contrasts<-"
-# @import fitted
-# @import formula
-# @import lm
-# @import median
-# @import model.frame
-# @import pchisq
-# @import pf
 # @importFrom plyr .
 # @importFrom maditr dcast
 
