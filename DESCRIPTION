@@ -8,7 +8,7 @@ Authors@R:
              role = c("aut", "cre", "cph"),
              email = "amkrypotos@gmail.com"))
 Maintainer: Angelos-Miltiadis Krypotos <amkrypotos@gmail.com>
-Description: A suite of functions for performing analyses, based on a multiverse approach, for conditioning data. Specifically, given the appropriate data, the functions are able to perform t-tests, analyses of variance, and mixed models for the provided data and return summary statistics and plots. The function is also able to return for all those tests p-values, confidence intervals, and Bayes factors. The methods are described in Lonsdorf, Gerlicher, Klingelhofer-Jens, & Krypotos (2022) <doi:10.1016/j.brat.2022.104072>. Since November 2025, this package contains code from the 'ez' R package (Copyright (c) 2016-11-01, Michael A. Lawrence <mike.lwrnc@gmail.com>), originally distributed under the GPL (equal and above 2) license.
+Description: A suite of functions for performing analyses, based on a multiverse approach, for conditioning data. Specifically, given the appropriate data, the functions are able to perform t-tests, analyses of variance, and mixed models for the provided data and return summary statistics and plots. The function is also able to return for all those tests p-values, confidence intervals, and Bayes factors. The methods are described in Lonsdorf, Gerlicher, Klingelhofer-Jens, & Krypotos (2022) <doi:10.1016/j.brat.2022.104072>. Since November 2025, this package contains code from the 'ez' R package (Copyright (c) 2016-11-01, Michael A. Lawrence <mike.lwrnc@gmail.com>), originally distributed under the 'GPL' (equal and above 2) license.
 Depends: R (>= 4.0.0)    
 License: GPL-3
 LazyData: true 
