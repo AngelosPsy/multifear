@@ -74,6 +74,7 @@
 #' @importFrom stringr str_count str_detect
 #' @importFrom maditr dcast
 #' @export
+
 rm_anova_mf <- function(cs1,
                         cs2,
                         data,

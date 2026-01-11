@@ -1,17 +1,12 @@
-## Resubmission
-This is a resubmission. In this version I have:
-Fixed the paired sample t-test in the t_test_mf function that caused
-the test to fail. 
+This is a new submission.
 
-Updated the code so that it reflects changes in the tidyverse package
-
+This package includes adapted functionality from the ez R package, which is
+planned for archival. This is stated in the DESCRIPTION file.
 
 ## Test environments
-* local OS X install, R 4.5.0
-* ubuntu (devel and release on github actions)
-* win-builder (devel, previous major release, and release)
+* local macOS, R 4.5.0
+* Ubuntu (GitHub Actions: devel and release)
+* win-builder (devel, release, and previous R-release)
 
 ## R CMD check results
-0 errors | 0 warnings | 0 note
-
-
+0 errors | 0 warnings | 0 notes
